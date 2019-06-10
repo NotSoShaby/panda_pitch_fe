@@ -46,7 +46,7 @@ Also, be sure to have `git` available in your PATH, `npm` might need it.
 
 ## Install
 
-    $ git clone https://github.com/Reactongraph/apollo-client-react
+    $ git clone https://github.com/NotSoShaby/panda_pitch_fe
     $ cd panda_pitch_fe
     $ npm install
 
