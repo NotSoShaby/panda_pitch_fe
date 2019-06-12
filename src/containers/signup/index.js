@@ -15,26 +15,46 @@ class Index extends UnAuthorized {
 			step: 1,
 			pitches: 25,
 			relevant: 25,
+			responses: 25,
 			topic: ''
 		};
 	}
 
+	static getDerivedStateFromProps(props, state) {
+		let { signup } = props;
+		let { step } = state;
+		if (HELPER.isSuccessInApi(signup.code) && step === 2) {
+			return {
+				step: 3
+			};
+		} else if (signup.data.user_id && step === 1) {
+			return {
+				step: 3,
+				role: signup.data.role
+			};
+		}
+	}
+
 	// handle next button and final submission
 	handleSubmit = () => {
-		let { step } = this.state;
+		let { step, role } = this.state;
 		let { signUp } = this.props;
 		if (step === 2) {
-			// validate form1
-			if (!HELPER.SignUpStep2Validation(this.state)) {
-				signUp(this.state);
-				this.goToNextForm();
-			}
-		} else if (step === 3) {
 			// validate form2
-			if (!HELPER.SignUpStep3Validation(this.state)) this.goToNextForm();
-		} else if (step === 4) {
+			if (!HELPER.SignUpStep2Validation(this.state)) signUp(this.state);
+		} else if (step === 3) {
 			// validate form3
-			if (!HELPER.SignUpStep4Validation(this.state)) this.goToNextForm();
+			let validateForm3 = HELPER.SignUpStep3Validation(this.state);
+			if (!validateForm3)
+				if (HELPER.isJournalist(role)) {
+					this.goToNextForm();
+				} else this.setState({ step: step + 2 });
+			else this.setState({ error: validateForm3 });
+		} else if (step === 4) {
+			// validate form4
+			let validateForm4 = HELPER.SignUpStep4Validation(this.state);
+			if (!validateForm4) this.goToNextForm();
+			else this.setState({ error: validateForm4 });
 		} else {
 			// final submission
 			this.goToNextForm();
@@ -68,6 +88,7 @@ class Index extends UnAuthorized {
 	// handle user selection
 	handleUserSelection = (key, value) => {
 		this.setState({ [key]: value });
+		localStorage.setItem('role', JSON.stringify(value));
 		this.goToNextForm();
 	};
 
@@ -76,6 +97,7 @@ class Index extends UnAuthorized {
 		return (
 			<SignUp
 				{...this.state}
+				{...this.props}
 				onSubmit={this.handleSubmit}
 				onBack={this.handleCancel}
 				onChange={this.handleChange}

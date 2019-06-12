@@ -346,6 +346,9 @@ ul.progress_bar li.completed:after {
 	background-color: #40c251;
 	color: #fff;
 }
+.error p {
+	color: #ec1515;
+}
 @media only screen and (min-width: 280px) and (max-width: 500px) {
 	.form_wrapper {
 		padding: 30px 10px;

@@ -94,14 +94,15 @@ class Helper {
 		});
 
 	// validate sign up form3
-	SignUpStep3Validation = ({ outlet = '', position = '', twitter = '' }) =>
-		this.ValidationService.validate({
-			outlet: {
-				value: outlet,
-				rules: {
-					required: true
-				}
-			},
+	SignUpStep3Validation = ({
+		outlet = '',
+		position = '',
+		twitter = '',
+		companyName = '',
+		linkedIn = '',
+		role = ''
+	}) => {
+		let validateRule = {
 			position: {
 				value: position,
 				rules: {
@@ -114,7 +115,30 @@ class Helper {
 					required: true
 				}
 			}
-		});
+		};
+		if (this.isJournalist(role))
+			validateRule.outlet = {
+				value: outlet,
+				rules: {
+					required: true
+				}
+			};
+		else {
+			validateRule.companyName = {
+				value: companyName,
+				rules: {
+					required: true
+				}
+			};
+			validateRule.linkedIn = {
+				value: linkedIn,
+				rules: {
+					required: true
+				}
+			};
+		}
+		return this.ValidationService.validate(validateRule);
+	};
 
 	// validate sign up form4
 	SignUpStep4Validation = ({ topic = '' }) =>
@@ -126,6 +150,16 @@ class Helper {
 				}
 			}
 		});
+
+	isSuccessInApi = (status) => status === 'SUCCESS';
+
+	isErrorInApi = (status) => status === 'ERROR';
+
+	getItemFromSession = (key) => JSON.parse(localStorage.getItem(key));
+
+	isJournalist = (type) => type === 'journalist';
+
+	isPr = (type) => type === 'pr';
 }
 
 export default new Helper();

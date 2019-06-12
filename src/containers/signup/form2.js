@@ -1,9 +1,11 @@
 import React from 'react';
 import Button from '../../components/button';
 import { Link } from 'react-router-dom';
+import HELPER from '../../utils/helper';
 
 // render form1
-const Form2 = ({ onSubmit, onBack, onChange, email, password, fullName }) => {
+const Form2 = ({ onSubmit, onBack, onChange, email, password, fullName, signup }) => {
+	let { code, message } = signup;
 	return [
 		<h2 key="heading">Sign Up</h2>,
 		<div key="form1" className="step_form_col">
@@ -41,7 +43,7 @@ const Form2 = ({ onSubmit, onBack, onChange, email, password, fullName }) => {
 				/>
 				<label htmlFor="password">Password</label>
 			</div>
-
+			{HELPER.isErrorInApi(code) && <div className="error">{message.non_field_errors.map((msg) => <p>{msg}</p>)}</div>}
 			<div className="step_btn_wrapper">
 				<Button className="white_bg_btn" onClick={onBack}>
 					Back

@@ -8,11 +8,13 @@ const SIGNUP = function* performChecks() {
 		yield put({ type: 'SIGNUP_STARTED' });
 		try {
 			const DATA = yield Request(CONSTANT.SIGN_URL, CONSTANT.POST, action.payload);
-			if (DATA.token) {
-				localStorage.setItem('token', DATA.token);
-				localStorage.setItem('role', 'client');
-				yield put({ type: 'SIGNUP_SUCCESS', payload: DATA.token });
-			} else yield put({ type: 'SIGNUP_FAILED', payload: { msg: 'Token is not defined' } });
+			if (DATA.code === 'SUCCESS') {
+				yield put({ type: 'SIGNUP_SUCCESS', payload: DATA });
+				localStorage.setItem('user', JSON.stringify(DATA.data));
+			}
+			if (DATA.status) {
+				yield put({ type: 'SIGNUP_FAILED', payload: DATA.status });
+			}
 		} catch (error) {
 			yield put({ type: 'SIGNUP_FAILED', payload: error });
 		}

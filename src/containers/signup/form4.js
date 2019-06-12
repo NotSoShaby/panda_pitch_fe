@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../../components/button';
 
 // render form3
-const Form4 = ({ topic, onSubmit, onBack, onChange, onSelect }) => {
+const Form4 = ({ topic, onSubmit, onBack, onChange, onSelect, error }) => {
 	return (
 		<div className="step_form_col">
 			<div className="full_widt">
@@ -33,6 +33,7 @@ const Form4 = ({ topic, onSubmit, onBack, onChange, onSelect }) => {
 					</li>
 				</ul>
 			</div>
+			{error && error.topic && <div className="error">{error.topic.map((msg) => <p>{msg}</p>)}</div>}
 
 			<div className="step_btn_wrapper">
 				<Button type="submit" className="white_bg_btn" onClick={onBack}>

@@ -1,29 +1,24 @@
-const setUserToken = () => {
-	if (localStorage.getItem('role') === 'user') return localStorage.getItem('token');
-	else return null;
-};
+import HELPER from '../../utils/helper';
 
 export const defaultState = {
-	data: { register: { token: setUserToken() } }
+	data: { ...HELPER.getItemFromSession('user'), role: HELPER.getItemFromSession('role') }
 };
 
 export function signup(state = defaultState, action) {
 	switch (action.type) {
 		case 'SIGNUP_INITATED': {
-			return { ...state, status: 'uninitiated' };
+			return { ...state, code: 'uninitiated' };
 		}
 		case 'SIGNUP_STARTED': {
-			return { ...state, status: 'ongoing' };
+			return { ...state, code: 'ongoing' };
 		}
 		case 'SIGNUP_SUCCESS': {
-			return { ...state, ...action.payload, error: '', status: 'success' };
+			return { ...state, ...action.payload, role: state.data.role };
 		}
 		case 'SIGNUP_FAILED': {
 			return {
 				...state,
-				...defaultState,
-				error: action.payload,
-				status: 'failed'
+				...action.payload
 			};
 		}
 		default: {

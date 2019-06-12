@@ -1,15 +1,17 @@
 import React from 'react';
 import Button from '../../components/button';
 import InputRangeSelector from '../../components/inputRange';
+import HELPER from '../../utils/helper';
 
 // render form4
-const Form5 = ({ pitches, relevant, onSubmit, onBack, onRangeChange }) => {
+const Form5 = ({ pitches, relevant, responses, onSubmit, onBack, onRangeChange, signup }) => {
+	let { data } = signup;
 	return (
 		<div className="step_form_col">
 			<h2>Just a few Questions</h2>
 
 			<div className="slidecontainer">
-				<p>How many pitches(on average) do you receive per week</p>
+				<p>How many pitches (on average) do you receive per week</p>
 				{/* pitches range selection */}
 				<InputRangeSelector
 					minValue={0}
@@ -25,23 +27,43 @@ const Form5 = ({ pitches, relevant, onSubmit, onBack, onRangeChange }) => {
 				</ul>
 				{/* <input type="range" min="1" max="100" value="50" className="slider" /> */}
 			</div>
-			<div className="slidecontainer">
-				<p>How many are relevant to you</p>
-				{/* relevant range selection */}
-				<InputRangeSelector
-					minValue={0}
-					maxValue={50}
-					value={relevant}
-					onChange={(val) => onRangeChange('relevant', val)}
-				/>
-				{/* <input type="range" min="1" max="100" value="50" className="slider" /> */}
-				<ul className="range_list">
-					<li>1-10</li>
-					<li>11-20</li>
-					<li>21-50</li>
-					<li>51+</li>
-				</ul>
-			</div>
+			{HELPER.isJournalist(data.role) ? (
+				<div className="slidecontainer">
+					<p>How many are relevant to you</p>
+					{/* relevant range selection */}
+					<InputRangeSelector
+						minValue={0}
+						maxValue={50}
+						value={relevant}
+						onChange={(val) => onRangeChange('relevant', val)}
+					/>
+					{/* <input type="range" min="1" max="100" value="50" className="slider" /> */}
+					<ul className="range_list">
+						<li>1-10</li>
+						<li>11-20</li>
+						<li>21-50</li>
+						<li>51+</li>
+					</ul>
+				</div>
+			) : (
+				<div className="slidecontainer">
+					<p>How often do you get responses to them?</p>
+					{/* relevant range selection */}
+					<InputRangeSelector
+						minValue={0}
+						maxValue={50}
+						value={responses}
+						onChange={(val) => onRangeChange('responses', val)}
+					/>
+					{/* <input type="range" min="1" max="100" value="50" className="slider" /> */}
+					<ul className="range_list">
+						<li>Less than 5%</li>
+						<li>6-19%</li>
+						<li>20-49%</li>
+						<li>50%+</li>
+					</ul>
+				</div>
+			)}
 			<div className="step_btn_wrapper">
 				<Button type="submit" className="white_bg_btn" onClick={onBack}>
 					Back
