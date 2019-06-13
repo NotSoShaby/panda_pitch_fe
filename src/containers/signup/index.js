@@ -4,7 +4,7 @@ import '../../../public/css/style.css';
 import HELPER from '../../utils/helper';
 import UnAuthorized from '../../routes/unAuthorized';
 import { bindActionCreators } from 'redux';
-import { signUp } from '../../redux/actions/signup';
+import { signUp, createPrProfile, createJournalistProfile } from '../../redux/actions/signup';
 import { connect } from 'react-redux';
 
 class Index extends UnAuthorized {
@@ -16,12 +16,12 @@ class Index extends UnAuthorized {
 			pitches: 25,
 			relevant: 25,
 			responses: 25,
-			topic: ''
+			topics: ''
 		};
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		let { signup } = props;
+		let { signup, createPrProfile } = props;
 		let { step } = state;
 		if (HELPER.isSuccessInApi(signup.code) && step === 2) {
 			return {
@@ -32,13 +32,21 @@ class Index extends UnAuthorized {
 				step: 3,
 				role: signup.data.role
 			};
+		} else if (HELPER.isSuccessInApi(createPrProfile.code) && step === 3) {
+			return {
+				step: 5
+			};
+		} else if (HELPER.isSuccessInApi(createJournalistProfile.code) && step === 3) {
+			return {
+				step: 4
+			};
 		}
 	}
 
 	// handle next button and final submission
 	handleSubmit = () => {
 		let { step, role } = this.state;
-		let { signUp } = this.props;
+		let { signUp, createPrProfile, createJournalistProfile } = this.props;
 		if (step === 2) {
 			// validate form2
 			if (!HELPER.SignUpStep2Validation(this.state)) signUp(this.state);
@@ -48,13 +56,18 @@ class Index extends UnAuthorized {
 			if (!validateForm3)
 				if (HELPER.isJournalist(role)) {
 					this.goToNextForm();
-				} else this.setState({ step: step + 2 });
+				} else {
+					createPrProfile(this.state);
+					// this.setState({ step: step + 2 });
+				}
 			else this.setState({ error: validateForm3 });
 		} else if (step === 4) {
 			// validate form4
 			let validateForm4 = HELPER.SignUpStep4Validation(this.state);
-			if (!validateForm4) this.goToNextForm();
-			else this.setState({ error: validateForm4 });
+			if (!validateForm4) {
+				createJournalistProfile(this.state);
+				// this.goToNextForm();
+			} else this.setState({ error: validateForm4 });
 		} else {
 			// final submission
 			this.goToNextForm();
@@ -118,7 +131,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
 	bindActionCreators(
 		{
-			signUp: (values) => signUp(values)
+			signUp: (values) => signUp(values),
+			createPrProfile: (values) => createPrProfile(values),
+			createJournalistProfile: (values) => createJournalistProfile(values)
 		},
 		dispatch
 	);

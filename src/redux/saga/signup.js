@@ -7,10 +7,12 @@ const SIGNUP = function* performChecks() {
 	yield takeEvery('SIGNUP', function*(action) {
 		yield put({ type: 'SIGNUP_STARTED' });
 		try {
-			const DATA = yield Request(CONSTANT.SIGN_URL, CONSTANT.POST, action.payload);
+			const DATA = yield Request(CONSTANT.SIGNUP_URL, CONSTANT.POST, action.payload);
 			if (DATA.code === 'SUCCESS') {
-				yield put({ type: 'SIGNUP_SUCCESS', payload: DATA });
-				localStorage.setItem('user', JSON.stringify(DATA.data));
+				let data = { ...DATA };
+				data.data = { ...data.data, ...action.props };
+				yield put({ type: 'SIGNUP_SUCCESS', payload: data });
+				localStorage.setItem('user', JSON.stringify(data.data));
 			}
 			if (DATA.status) {
 				yield put({ type: 'SIGNUP_FAILED', payload: DATA.status });

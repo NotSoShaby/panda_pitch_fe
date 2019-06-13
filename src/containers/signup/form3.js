@@ -3,7 +3,7 @@ import Button from '../../components/button';
 import HELPER from '../../utils/helper';
 
 // render form2
-const Form3 = ({ onSubmit, onBack, onChange, outlet, companyName, position, twitter, linkedIn, signup, error }) => {
+const Form3 = ({ onSubmit, onBack, onChange, outlet, company, position, twitter, linkedIn, signup, error }) => {
 	let { data } = signup;
 	return [
 		<div key="form2" className="step_form_col">
@@ -23,7 +23,8 @@ const Form3 = ({ onSubmit, onBack, onChange, outlet, companyName, position, twit
 							<label htmlFor="outlet">Outlet</label>
 						</div>
 					</div>
-					{error && error.outlet && <div className="error">{error.outlet.map((msg) => <p>{msg}</p>)}</div>}
+					{error &&
+					error.outlet && <div className="error">{error.outlet.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
 				</div>
 			) : (
 				<div>
@@ -32,16 +33,17 @@ const Form3 = ({ onSubmit, onBack, onChange, outlet, companyName, position, twit
 						<div className="custom_field">
 							<input
 								type="text"
-								name="companyName"
-								value={companyName}
-								id="companyName"
+								name="company"
+								value={company}
+								id="company"
 								placeholder="Company Name"
 								onChange={onChange}
 							/>
-							<label htmlFor="companyName">Company</label>
+							<label htmlFor="company">Company</label>
 						</div>
 					</div>
-					{error && error.companyName && <div className="error">{error.companyName.map((msg) => <p>{msg}</p>)}</div>}
+					{error &&
+					error.company && <div className="error">{error.company.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
 				</div>
 			)}
 
@@ -59,8 +61,8 @@ const Form3 = ({ onSubmit, onBack, onChange, outlet, companyName, position, twit
 					<label htmlFor="position">Position</label>
 				</div>
 			</div>
-			{error && error.position && <div className="error">{error.position.map((msg) => <p>{msg}</p>)}</div>}
-
+			{error &&
+			error.position && <div className="error">{error.position.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
 			<div className="full_widt">
 				<h2>Add social media</h2>
 				{HELPER.isPr(data.role) && (
@@ -76,7 +78,8 @@ const Form3 = ({ onSubmit, onBack, onChange, outlet, companyName, position, twit
 						<label htmlFor="twitter">LinkediIn</label>
 					</div>
 				)}
-				{error && error.linkedIn && <div className="error">{error.linkedIn.map((msg) => <p>{msg}</p>)}</div>}
+				{error &&
+				error.linkedIn && <div className="error">{error.linkedIn.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
 				<div className="custom_field">
 					<input
 						type="text"
@@ -89,7 +92,8 @@ const Form3 = ({ onSubmit, onBack, onChange, outlet, companyName, position, twit
 					<label htmlFor="twitter">Twitter</label>
 				</div>
 			</div>
-			{error && error.twitter && <div className="error">{error.twitter.map((msg) => <p>{msg}</p>)}</div>}
+			{error &&
+			error.twitter && <div className="error">{error.twitter.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
 
 			<div className="step_btn_wrapper">
 				<Button className="white_bg_btn" onClick={onBack}>

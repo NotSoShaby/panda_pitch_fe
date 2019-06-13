@@ -2,38 +2,45 @@ import React from 'react';
 import Button from '../../components/button';
 
 // render form3
-const Form4 = ({ topic, onSubmit, onBack, onChange, onSelect, error }) => {
+const Form4 = ({ topics, onSubmit, onBack, onChange, onSelect, error }) => {
 	return (
 		<div className="step_form_col">
 			<div className="full_widt">
 				<h2>What do you write about?</h2>
 				<div className="custom_field">
-					<input type="text" name="topic" value={topic} id="topic" placeholder="Enter Any Topic" onChange={onChange} />
-					<label htmlFor="topic">Topic</label>
+					<input
+						type="text"
+						name="topics"
+						value={topics}
+						id="topics"
+						placeholder="Enter Any Topic"
+						onChange={onChange}
+					/>
+					<label htmlFor="topics">Topic</label>
 				</div>
 
 				<ul className="topic_list">
-					<li onClick={() => onSelect('topic', 'Travel')}>
+					<li onClick={() => onSelect('topics', 'Travel')}>
 						<span>Travel</span>
 					</li>
-					<li onClick={() => onSelect('topic', 'Food')}>
+					<li onClick={() => onSelect('topics', 'Food')}>
 						<span>Food</span>
 					</li>
-					<li onClick={() => onSelect('topic', 'Liesure')}>
+					<li onClick={() => onSelect('topics', 'Liesure')}>
 						<span>Liesure</span>
 					</li>
-					<li onClick={() => onSelect('topic', 'Healthcare')}>
+					<li onClick={() => onSelect('topics', 'Healthcare')}>
 						<span>Healthcare</span>
 					</li>
-					<li onClick={() => onSelect('topic', 'Technology')}>
+					<li onClick={() => onSelect('topics', 'Technology')}>
 						<span>Technology</span>
 					</li>
-					<li onClick={() => onSelect('topic', 'News')}>
+					<li onClick={() => onSelect('topics', 'News')}>
 						<span>News</span>
 					</li>
 				</ul>
 			</div>
-			{error && error.topic && <div className="error">{error.topic.map((msg) => <p>{msg}</p>)}</div>}
+			{error && error.topics && <div className="error">{error.topics.map((msg) => <p>{msg}</p>)}</div>}
 
 			<div className="step_btn_wrapper">
 				<Button type="submit" className="white_bg_btn" onClick={onBack}>

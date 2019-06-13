@@ -13,7 +13,7 @@ export function signup(state = defaultState, action) {
 			return { ...state, code: 'ongoing' };
 		}
 		case 'SIGNUP_SUCCESS': {
-			return { ...state, ...action.payload, role: state.data.role };
+			return { ...state, ...action.payload };
 		}
 		case 'SIGNUP_FAILED': {
 			return {

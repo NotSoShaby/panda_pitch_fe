@@ -4,6 +4,7 @@ class Helper {
 	ValidationService = {
 		messages: {},
 		emailExpr: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+		linkExpr: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/,
 		required: function(field, value, param) {
 			if (value.trim().length < 1) {
 				if (this.messages.hasOwnProperty(field)) {
@@ -23,6 +24,20 @@ class Helper {
 					}
 				}
 				return 'Invalid email';
+			}
+			return false;
+		},
+		validLink: function(field, value, param) {
+			console.log('validate===1=========>', field, value, this.linkExpr.test(value));
+			if (!this.linkExpr.test(value)) {
+				console.log('validate=====2=======>', field, value, this.linkExpr.test(value));
+				if (this.messages.hasOwnProperty(field)) {
+					console.log('validate============>', this.messages, field, this.messages.hasOwnProperty(field));
+					if (this.messages[field].hasOwnProperty('validLink')) {
+						return this.messages[field].validLink;
+					}
+				}
+				return 'Invalid Link';
 			}
 			return false;
 		},
@@ -94,14 +109,7 @@ class Helper {
 		});
 
 	// validate sign up form3
-	SignUpStep3Validation = ({
-		outlet = '',
-		position = '',
-		twitter = '',
-		companyName = '',
-		linkedIn = '',
-		role = ''
-	}) => {
+	SignUpStep3Validation = ({ outlet = '', position = '', twitter = '', company = '', linkedIn = '', role = '' }) => {
 		let validateRule = {
 			position: {
 				value: position,
@@ -112,6 +120,7 @@ class Helper {
 			twitter: {
 				value: twitter,
 				rules: {
+					validLink: true,
 					required: true
 				}
 			}
@@ -124,8 +133,8 @@ class Helper {
 				}
 			};
 		else {
-			validateRule.companyName = {
-				value: companyName,
+			validateRule.company = {
+				value: company,
 				rules: {
 					required: true
 				}
@@ -133,6 +142,7 @@ class Helper {
 			validateRule.linkedIn = {
 				value: linkedIn,
 				rules: {
+					validLink: true,
 					required: true
 				}
 			};
@@ -141,10 +151,10 @@ class Helper {
 	};
 
 	// validate sign up form4
-	SignUpStep4Validation = ({ topic = '' }) =>
+	SignUpStep4Validation = ({ topics = '' }) =>
 		this.ValidationService.validate({
-			topic: {
-				value: topic,
+			topics: {
+				value: topics,
 				rules: {
 					required: true
 				}
