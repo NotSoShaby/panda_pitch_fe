@@ -28,7 +28,7 @@ class Helper {
 			return false;
 		},
 		validLink: function(field, value, param) {
-			if (!this.linkExpr.test(value)) {
+			if (value !== '' && !this.linkExpr.test(value)) {
 				if (this.messages.hasOwnProperty(field)) {
 					if (this.messages[field].hasOwnProperty('validLink')) {
 						return this.messages[field].validLink;
@@ -117,8 +117,8 @@ class Helper {
 			twitter: {
 				value: twitter,
 				rules: {
-					validLink: true,
-					required: true
+					validLink: true
+					// required: true
 				}
 			}
 		};
@@ -139,7 +139,7 @@ class Helper {
 			validateRule.linkedIn = {
 				value: linkedIn,
 				rules: {
-					validLink: true,
+					// validLink: true,
 					required: true
 				}
 			};
