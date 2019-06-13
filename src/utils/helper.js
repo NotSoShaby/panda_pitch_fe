@@ -28,11 +28,8 @@ class Helper {
 			return false;
 		},
 		validLink: function(field, value, param) {
-			console.log('validate===1=========>', field, value, this.linkExpr.test(value));
 			if (!this.linkExpr.test(value)) {
-				console.log('validate=====2=======>', field, value, this.linkExpr.test(value));
 				if (this.messages.hasOwnProperty(field)) {
-					console.log('validate============>', this.messages, field, this.messages.hasOwnProperty(field));
 					if (this.messages[field].hasOwnProperty('validLink')) {
 						return this.messages[field].validLink;
 					}

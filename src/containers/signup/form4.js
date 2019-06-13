@@ -1,8 +1,10 @@
 import React from 'react';
 import Button from '../../components/button';
+import HELPER from '../../utils/helper';
 
 // render form3
-const Form4 = ({ topics, onSubmit, onBack, onChange, onSelect, error }) => {
+const Form4 = ({ topics, onSubmit, onBack, onChange, onSelect, journalistProfile, error }) => {
+	let { code, message } = journalistProfile;
 	return (
 		<div className="step_form_col">
 			<div className="full_widt">
@@ -41,6 +43,7 @@ const Form4 = ({ topics, onSubmit, onBack, onChange, onSelect, error }) => {
 				</ul>
 			</div>
 			{error && error.topics && <div className="error">{error.topics.map((msg) => <p>{msg}</p>)}</div>}
+			{HELPER.isErrorInApi(code) && <div className="error">{message.non_field_errors.map((msg) => <p>{msg}</p>)}</div>}
 
 			<div className="step_btn_wrapper">
 				<Button type="submit" className="white_bg_btn" onClick={onBack}>

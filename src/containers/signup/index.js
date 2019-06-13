@@ -21,7 +21,7 @@ class Index extends UnAuthorized {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		let { signup, createPrProfile } = props;
+		let { signup, prProfile, journalistProfile } = props;
 		let { step } = state;
 		if (HELPER.isSuccessInApi(signup.code) && step === 2) {
 			return {
@@ -32,13 +32,12 @@ class Index extends UnAuthorized {
 				step: 3,
 				role: signup.data.role
 			};
-		} else if (HELPER.isSuccessInApi(createPrProfile.code) && step === 3) {
+		} else if (
+			(HELPER.isSuccessInApi(prProfile.code) && step === 3) ||
+			(HELPER.isSuccessInApi(journalistProfile.code) && step === 4)
+		) {
 			return {
 				step: 5
-			};
-		} else if (HELPER.isSuccessInApi(createJournalistProfile.code) && step === 3) {
-			return {
-				step: 4
 			};
 		}
 	}
@@ -56,18 +55,13 @@ class Index extends UnAuthorized {
 			if (!validateForm3)
 				if (HELPER.isJournalist(role)) {
 					this.goToNextForm();
-				} else {
-					createPrProfile(this.state);
-					// this.setState({ step: step + 2 });
-				}
+				} else createPrProfile(this.state);
 			else this.setState({ error: validateForm3 });
 		} else if (step === 4) {
 			// validate form4
 			let validateForm4 = HELPER.SignUpStep4Validation(this.state);
-			if (!validateForm4) {
-				createJournalistProfile(this.state);
-				// this.goToNextForm();
-			} else this.setState({ error: validateForm4 });
+			if (!validateForm4) createJournalistProfile(this.state);
+			else this.setState({ error: validateForm4 });
 		} else {
 			// final submission
 			this.goToNextForm();

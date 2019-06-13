@@ -1,23 +1,23 @@
 import { combineReducers } from 'redux';
 import { login } from './login';
 import { signup } from './signup';
-import { createJournalistProfile } from './journalist';
-import { createPrProfile } from './pr';
+import { journalistProfile } from './journalist';
+import { prProfile } from './pr';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
 	signup,
 	login,
-	createJournalistProfile,
-	createPrProfile
+	journalistProfile,
+	prProfile
 });
 
 //module default state for when user logout
 const defaultState = {
 	login: {},
 	signup: {},
-	createJournalistProfile: {},
-	createPrProfile: {}
+	journalistProfile: {},
+	prProfile: {}
 };
 
 // Empty state when user logout

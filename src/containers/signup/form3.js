@@ -3,8 +3,22 @@ import Button from '../../components/button';
 import HELPER from '../../utils/helper';
 
 // render form2
-const Form3 = ({ onSubmit, onBack, onChange, outlet, company, position, twitter, linkedIn, signup, error }) => {
+const Form3 = ({
+	onSubmit,
+	onBack,
+	onChange,
+	outlet,
+	company,
+	position,
+	twitter,
+	linkedIn,
+	signup,
+	prProfile,
+	error,
+	...props
+}) => {
 	let { data } = signup;
+	let { code, message } = prProfile;
 	return [
 		<div key="form2" className="step_form_col">
 			{HELPER.isJournalist(data.role) ? (
@@ -94,6 +108,7 @@ const Form3 = ({ onSubmit, onBack, onChange, outlet, company, position, twitter,
 			</div>
 			{error &&
 			error.twitter && <div className="error">{error.twitter.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
+			{HELPER.isErrorInApi(code) && <div className="error">{message.non_field_errors.map((msg) => <p>{msg}</p>)}</div>}
 
 			<div className="step_btn_wrapper">
 				<Button className="white_bg_btn" onClick={onBack}>
