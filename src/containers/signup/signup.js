@@ -4,7 +4,6 @@ import Form1 from './form1';
 import Form2 from './form2';
 import Form3 from './form3';
 import Form4 from './form4';
-import Form5 from './form5';
 
 // condition form rendering
 const RenderForm = ({ ...props }) => {
@@ -12,8 +11,7 @@ const RenderForm = ({ ...props }) => {
 	if (step === 1) return <Form1 {...props} />;
 	else if (step === 2) return <Form2 {...props} />;
 	else if (step === 3) return <Form3 {...props} />;
-	else if (step === 4) return <Form4 {...props} />;
-	else return <Form5 {...props} />;
+	else return <Form4 {...props} />;
 };
 
 // status bar and sign up form

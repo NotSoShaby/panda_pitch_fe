@@ -113,14 +113,14 @@ class Helper {
 				rules: {
 					required: true
 				}
-			},
-			twitter: {
-				value: twitter,
-				rules: {
-					validLink: true
-					// required: true
-				}
 			}
+			// twitter: {
+			// 	value: twitter,
+			// 	rules: {
+			// 		validLink: true
+			// 		// required: true
+			// 	}
+			// }
 		};
 		if (this.isJournalist(role))
 			validateRule.outlet = {
@@ -136,13 +136,13 @@ class Helper {
 					required: true
 				}
 			};
-			validateRule.linkedIn = {
-				value: linkedIn,
-				rules: {
-					// validLink: true,
-					required: true
-				}
-			};
+			// validateRule.linkedIn = {
+			// 	value: linkedIn,
+			// 	rules: {
+			// 		// validLink: true,
+			// 		required: true
+			// 	}
+			// };
 		}
 		return this.ValidationService.validate(validateRule);
 	};
@@ -167,6 +167,8 @@ class Helper {
 	isJournalist = (type) => type === 'journalist';
 
 	isPr = (type) => type === 'pr';
+
+	isEmptyObject = (obj) => Object.entries(obj).length === 0 && obj.constructor === Object;
 }
 
 export default new Helper();

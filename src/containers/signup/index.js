@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SignUp from './signup';
 import '../../../public/css/style.css';
 import HELPER from '../../utils/helper';
 import UnAuthorized from '../../routes/unAuthorized';
 import { bindActionCreators } from 'redux';
-import { signUp, createPrProfile, createJournalistProfile } from '../../redux/actions/signup';
+import { signUp, createPrProfile, createJournalistProfile, getSurvey } from '../../redux/actions/signup';
 import { connect } from 'react-redux';
 
 class Index extends UnAuthorized {
@@ -16,8 +16,14 @@ class Index extends UnAuthorized {
 			pitches: 25,
 			relevant: 25,
 			responses: 25,
-			topics: ''
+			topics: '',
+			role: this.getUserRole(props)
 		};
+	}
+
+	getUserRole(props) {
+		if (props.signup.data && props.signup.data.user_id) return 3;
+		else return 1;
 	}
 
 	static getDerivedStateFromProps(props, state) {
@@ -27,18 +33,11 @@ class Index extends UnAuthorized {
 			return {
 				step: 3
 			};
-		} else if (signup.data.user_id && step === 1) {
-			return {
-				step: 3,
-				role: signup.data.role
-			};
 		} else if (
 			(HELPER.isSuccessInApi(prProfile.code) && step === 3) ||
 			(HELPER.isSuccessInApi(journalistProfile.code) && step === 4)
 		) {
-			return {
-				step: 5
-			};
+			props.history.push({ pathname: '/survey', state: { isAuthorized: true } });
 		}
 	}
 
@@ -50,7 +49,7 @@ class Index extends UnAuthorized {
 			// validate form2
 			if (!HELPER.SignUpStep2Validation(this.state)) signUp(this.state);
 		} else if (step === 3) {
-			// validate form3
+			// validate form3 && Pr final submission
 			let validateForm3 = HELPER.SignUpStep3Validation(this.state);
 			if (!validateForm3)
 				if (HELPER.isJournalist(role)) {
@@ -58,14 +57,10 @@ class Index extends UnAuthorized {
 				} else createPrProfile(this.state);
 			else this.setState({ error: validateForm3 });
 		} else if (step === 4) {
-			// validate form4
+			// validate form4 && Journalist final submission
 			let validateForm4 = HELPER.SignUpStep4Validation(this.state);
 			if (!validateForm4) createJournalistProfile(this.state);
 			else this.setState({ error: validateForm4 });
-		} else {
-			// final submission
-			this.goToNextForm();
-			this.props.history.push({ pathname: '/', state: { isAuthorized: true } });
 		}
 	};
 
@@ -95,7 +90,6 @@ class Index extends UnAuthorized {
 	// handle user selection
 	handleUserSelection = (key, value) => {
 		this.setState({ [key]: value });
-		localStorage.setItem('role', JSON.stringify(value));
 		this.goToNextForm();
 	};
 
@@ -127,7 +121,8 @@ const mapDispatchToProps = (dispatch) =>
 		{
 			signUp: (values) => signUp(values),
 			createPrProfile: (values) => createPrProfile(values),
-			createJournalistProfile: (values) => createJournalistProfile(values)
+			createJournalistProfile: (values) => createJournalistProfile(values),
+			getSurvey: (data) => getSurvey(data)
 		},
 		dispatch
 	);

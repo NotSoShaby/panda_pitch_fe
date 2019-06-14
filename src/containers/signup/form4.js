@@ -42,8 +42,11 @@ const Form4 = ({ topics, onSubmit, onBack, onChange, onSelect, journalistProfile
 					</li>
 				</ul>
 			</div>
-			{error && error.topics && <div className="error">{error.topics.map((msg) => <p>{msg}</p>)}</div>}
-			{HELPER.isErrorInApi(code) && <div className="error">{message.non_field_errors.map((msg) => <p>{msg}</p>)}</div>}
+			{error &&
+			error.topics && <div className="error">{error.topics.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
+			{HELPER.isErrorInApi(code) && (
+				<div className="error">{message.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
+			)}
 
 			<div className="step_btn_wrapper">
 				<Button type="submit" className="white_bg_btn" onClick={onBack}>

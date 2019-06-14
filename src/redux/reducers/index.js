@@ -3,13 +3,15 @@ import { login } from './login';
 import { signup } from './signup';
 import { journalistProfile } from './journalist';
 import { prProfile } from './pr';
+import { survey } from './survey';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
 	signup,
 	login,
 	journalistProfile,
-	prProfile
+	prProfile,
+	survey
 });
 
 //module default state for when user logout
@@ -17,7 +19,8 @@ const defaultState = {
 	login: {},
 	signup: {},
 	journalistProfile: {},
-	prProfile: {}
+	prProfile: {},
+	survey: {}
 };
 
 // Empty state when user logout

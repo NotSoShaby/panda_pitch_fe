@@ -17,15 +17,33 @@ const getSignupState = (state = store.getState()) => {
 	}
 };
 
-export const getUserId = createSelector(getSignupState, (n) => n.data.user_id);
+const getJournalistState = (state = store.getState()) => {
+	if (state.journalistProfile) {
+		return state.journalistProfile;
+	} else {
+		return initialState;
+	}
+};
 
+const getPrState = (state = store.getState()) => {
+	if (state.prProfile) {
+		return state.prProfile;
+	} else {
+		return initialState;
+	}
+};
+
+export const getUserId = createSelector(getSignupState, (n) => n.data.user_id);
 export const getUserRole = createSelector(getSignupState, (n) => n.data.role);
+
+export const getJournalistStatus = createSelector(getJournalistState, (n) => n.data.code);
+export const getPrStatus = createSelector(getPrState, (n) => n.data.code);
 
 export const signUp = ({ email, password, fullName, role }) => ({
 	type: 'SIGNUP',
 	payload: {
-		email: email,
-		password: password,
+		email,
+		password,
 		full_name: fullName
 	},
 	props: {
@@ -40,8 +58,8 @@ export const createPrProfile = ({ position, company, linkedIn, twitter, userId }
 			user_id: getUserId(),
 			company: company,
 			position: position,
-			linkedin_url: linkedIn,
-			twitter_url: twitter
+			linkedin_url: linkedIn ? linkedIn : '',
+			twitter_url: twitter ? twitter : ''
 		}
 	};
 };
@@ -53,6 +71,17 @@ export const createJournalistProfile = ({ position, outlet, topics, twitter }) =
 		outlet: outlet,
 		position: position,
 		topics: topics,
-		twitter_url: twitter
+		twitter_url: twitter ? twitter : ''
 	}
 });
+
+export const getSurvey = () => {
+	if (HELPER.isSuccessInApi(getJournalistStatus()))
+		return {
+			type: 'GET_JOURNALIST_SURVEY'
+		};
+	else
+		return {
+			type: 'GET_PR_SURVEY'
+		};
+};

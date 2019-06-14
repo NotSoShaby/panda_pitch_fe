@@ -1,21 +1,19 @@
-import HELPER from '../../utils/helper';
-
 export const defaultState = {
-	data: { ...HELPER.getItemFromSession('user') }
+	data: {}
 };
 
-export function signup(state = defaultState, action) {
+export function survey(state = defaultState, action) {
 	switch (action.type) {
-		case 'SIGNUP_INITATED': {
+		case 'GET_SURVEY_INITIATED': {
 			return { ...state, code: 'uninitiated' };
 		}
-		case 'SIGNUP_STARTED': {
+		case 'GET_SURVEY_STARTED': {
 			return { ...state, code: 'ongoing' };
 		}
-		case 'SIGNUP_SUCCESS': {
+		case 'GET_SURVEY_SUCCESS': {
 			return { ...state, ...action.payload };
 		}
-		case 'SIGNUP_FAILED': {
+		case 'GET_SURVEY_FAILED': {
 			return {
 				...state,
 				...action.payload
