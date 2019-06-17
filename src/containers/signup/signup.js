@@ -4,6 +4,7 @@ import Form1 from './form1';
 import Form2 from './form2';
 import Form3 from './form3';
 import Form4 from './form4';
+import IMAGES from '../../assets/images';
 
 // condition form rendering
 const RenderForm = ({ ...props }) => {
@@ -20,7 +21,7 @@ const SignUp = ({ ...props }) => {
 	return (
 		<div className="form_section">
 			<div className="form_logo">
-				<img src="img/logo.svg" alt="" />
+				<img src={IMAGES.WHITE_LOGO} alt="" />
 			</div>
 			<div className="form_wrapper">
 				{step !== 1 && <StatusBar steps={4} active={step - 1} />}

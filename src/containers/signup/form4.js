@@ -1,46 +1,43 @@
 import React from 'react';
 import Button from '../../components/button';
 import HELPER from '../../utils/helper';
+import AutoComplete from '../../components/autoComplete';
+
+const List = [
+	{
+		id: 1,
+		name: 'Travel'
+	},
+	{
+		id: 1,
+		name: 'Food'
+	},
+	{
+		id: 1,
+		name: 'Liesure'
+	},
+	{
+		id: 1,
+		name: 'Healthcare'
+	},
+	{
+		id: 1,
+		name: 'Technology'
+	},
+	{
+		id: 1,
+		name: 'News'
+	}
+];
 
 // render form3
-const Form4 = ({ topics, onSubmit, onBack, onChange, onSelect, journalistProfile, error }) => {
+const Form4 = ({ topics, onSubmit, onBack, onCreate, onTodoSelection, journalistProfile, error }) => {
 	let { code, message } = journalistProfile;
 	return (
 		<div className="step_form_col">
 			<div className="full_widt">
 				<h2>What do you write about?</h2>
-				<div className="custom_field">
-					<input
-						type="text"
-						name="topics"
-						value={topics}
-						id="topics"
-						placeholder="Enter Any Topic"
-						onChange={onChange}
-					/>
-					<label htmlFor="topics">Topic</label>
-				</div>
-
-				<ul className="topic_list">
-					<li onClick={() => onSelect('topics', 'Travel')}>
-						<span>Travel</span>
-					</li>
-					<li onClick={() => onSelect('topics', 'Food')}>
-						<span>Food</span>
-					</li>
-					<li onClick={() => onSelect('topics', 'Liesure')}>
-						<span>Liesure</span>
-					</li>
-					<li onClick={() => onSelect('topics', 'Healthcare')}>
-						<span>Healthcare</span>
-					</li>
-					<li onClick={() => onSelect('topics', 'Technology')}>
-						<span>Technology</span>
-					</li>
-					<li onClick={() => onSelect('topics', 'News')}>
-						<span>News</span>
-					</li>
-				</ul>
+				<AutoComplete list={List} onCreate={onCreate} onSelect={onTodoSelection} boxes={topics} />
 			</div>
 			{error &&
 			error.topics && <div className="error">{error.topics.map((msg, index) => <p key={index}>{msg}</p>)}</div>}

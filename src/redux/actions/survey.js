@@ -4,6 +4,7 @@ import store from '../Store';
 import { getJournalistStatus } from './signup';
 import Request from '../../redux/ApiCaller';
 import CONSTANT from '../../utils/constant';
+import { getUserId } from './signup';
 
 const initialState = {
 	message: {},
@@ -24,6 +25,11 @@ export const getSurvey = () => {
 };
 
 export const surveySubmission = async ({ answers }) => {
-	let payload = Object.keys(answers).map((id) => ({ user_id: 2, question_id: id, answer: answers[id].value }));
+	let answersObj = {};
+	Object.keys(answers).map((id) => (answersObj[`${id}`] = `${answers[id].value} answer`));
+	let payload = {
+		user_id: getUserId(),
+		question_answer: answersObj
+	};
 	return Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST, payload);
 };

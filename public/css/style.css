@@ -24,7 +24,7 @@ body {
 	background-color: #f7f7f7;
 	width: 100%;
 	float: left;
-	height: 100%;
+	height: 100vh;
 	padding: 50px 0;
 	overflow-y: auto;
 }
@@ -346,9 +346,46 @@ ul.progress_bar li.completed:after {
 	background-color: #40c251;
 	color: #fff;
 }
+.btn_cntr {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 65%;
+}
+.sign_up_marg {
+	float: left;
+	width: 100%;
+}
 .error p {
 	color: #ec1515;
 }
+.auto-selection {
+	position: relative;
+}
+.auto-selection-list {
+	position: relative;
+	/* display: none; */
+}
+.auto-selection-list ul {
+	position: absolute;
+	top: 71px;
+	padding: 10px 15px;
+	border: 1px solid #ddd;
+	width: 100%;
+	border-radius: 4px;
+	background: #fff;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+	max-height: 140px;
+	/* overflow-y: scroll; */
+}
+.auto-selection-list ul li {
+	list-style: none;
+	padding: 5px 0;
+}
+.auto-selection-list ul li span {
+	font-weight: 700;
+}
+
 @media only screen and (min-width: 280px) and (max-width: 500px) {
 	.form_wrapper {
 		padding: 30px 10px;

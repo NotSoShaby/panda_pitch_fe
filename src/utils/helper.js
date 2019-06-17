@@ -16,6 +16,19 @@ class Helper {
 			}
 			return false;
 		},
+
+		requiredArray: function(field, value, param) {
+			if (value.length < 1) {
+				if (this.messages.hasOwnProperty(field)) {
+					if (this.messages[field].hasOwnProperty('requiredArray')) {
+						return this.messages[field].requiredArray;
+					}
+				}
+				return 'This field is required';
+			}
+			return false;
+		},
+
 		validEmail: function(field, value, param) {
 			if (!this.emailExpr.test(value)) {
 				if (this.messages.hasOwnProperty(field)) {
@@ -27,6 +40,7 @@ class Helper {
 			}
 			return false;
 		},
+
 		validLink: function(field, value, param) {
 			if (value !== '' && !this.linkExpr.test(value)) {
 				if (this.messages.hasOwnProperty(field)) {
@@ -38,6 +52,7 @@ class Helper {
 			}
 			return false;
 		},
+
 		minLength: function(field, value, param) {
 			if (value.trim()) {
 				if (value.trim().length < param) {
@@ -51,6 +66,7 @@ class Helper {
 			}
 			return false;
 		},
+
 		validate: function(options, messages) {
 			this.messages = messages ? messages : {};
 			var errors = {},
@@ -114,13 +130,6 @@ class Helper {
 					required: true
 				}
 			}
-			// twitter: {
-			// 	value: twitter,
-			// 	rules: {
-			// 		validLink: true
-			// 		// required: true
-			// 	}
-			// }
 		};
 		if (this.isJournalist(role))
 			validateRule.outlet = {
@@ -136,38 +145,37 @@ class Helper {
 					required: true
 				}
 			};
-			// validateRule.linkedIn = {
-			// 	value: linkedIn,
-			// 	rules: {
-			// 		// validLink: true,
-			// 		required: true
-			// 	}
-			// };
 		}
 		return this.ValidationService.validate(validateRule);
 	};
 
 	// validate sign up form4
-	SignUpStep4Validation = ({ topics = '' }) =>
+	SignUpStep4Validation = ({ topics = [] }) =>
 		this.ValidationService.validate({
 			topics: {
 				value: topics,
 				rules: {
-					required: true
+					requiredArray: true
 				}
 			}
 		});
 
+	// return true if API status is success
 	isSuccessInApi = (status) => status === 'SUCCESS';
 
+	// return true if API is failed
 	isErrorInApi = (status) => status === 'ERROR';
 
+	// get localstorage key
 	getItemFromSession = (key) => JSON.parse(localStorage.getItem(key));
 
+	// return true if loggedIn user is journalist
 	isJournalist = (type) => type === 'journalist';
 
+	// return true if loggedIn user is pr
 	isPr = (type) => type === 'pr';
 
+	// return true if object is empty
 	isEmptyObject = (obj) => Object.entries(obj).length === 0 && obj.constructor === Object;
 }
 
