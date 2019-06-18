@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import HELPER from '../../utils/helper';
 import Loader from '../../components/loader';
-import Question from './question';
 
 class Index extends Authorized {
 	state = {
