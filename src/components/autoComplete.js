@@ -30,6 +30,7 @@ class AutoComplete extends Component {
 			if (!isExist.length && item.name.toLowerCase().includes(val.toLowerCase())) {
 				dropdownList.push(item.name);
 			}
+			return null;
 		});
 		if (val !== '')
 			return (

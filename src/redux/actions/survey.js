@@ -1,17 +1,8 @@
 import HELPER from '../../utils/helper';
-import { createSelector } from 'reselect';
-import store from '../Store';
 import { getJournalistStatus } from './signup';
 import Request from '../../redux/ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { getUserId } from './signup';
-
-const initialState = {
-	message: {},
-	// isLoading: false,
-	data: {},
-	code: ''
-};
 
 export const getSurvey = () => {
 	if (HELPER.isSuccessInApi(getJournalistStatus()))
