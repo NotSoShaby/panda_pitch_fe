@@ -21,12 +21,12 @@ const Login = ({ onBack, onSubmit }) => {
 						<label htmlFor="password">Password</label>
 					</div>
 					<div className="step_btn_wrapper">
-						<Button type="submit" className="green_bg_btn" onClick={onSubmit}>
+						<Button type="submit" className="green_bg_btn btn_cntr" onClick={onSubmit}>
 							Submit
 						</Button>
 					</div>
 				</form>
-				<p className="text-center">
+				<p className="text-center sign_up_marg">
 					New user?<span>
 						<Link to="/signup">Signup</Link>
 					</span>

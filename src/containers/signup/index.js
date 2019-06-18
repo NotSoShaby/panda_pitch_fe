@@ -16,7 +16,7 @@ class Index extends UnAuthorized {
 			pitches: 25,
 			relevant: 25,
 			responses: 25,
-			topics: '',
+			topics: [],
 			role: this.getUserRole(props)
 		};
 	}

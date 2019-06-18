@@ -13,7 +13,7 @@ const StatusBar = ({ steps, active }) => {
 	let options = [];
 	for (let i = 1; i <= steps; i++) {
 		options.push(
-			<li key={i} className={className({ index: i, active })} key={i}>
+			<li key={i} className={className({ index: i, active })}>
 				<span>&nbsp;</span>
 			</li>
 		);

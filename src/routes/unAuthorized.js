@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 export class UnAuthorized extends Component {
 	// redirect authorized user to dashboard

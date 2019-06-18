@@ -5,6 +5,11 @@ import 'react-input-range/lib/css/index.css';
 
 // Input range definition
 const InputRangeSelector = ({ value, max, minValue, maxValue, onChange, className }) => {
+	// const handleOnChange = (newValue) => {
+	// 	// if (value < 10) onChange(newValue);
+	// 	// else if (value < 20) onChange(newValue);
+	// 	onChange(value);
+	// };
 	return (
 		<div className={className}>
 			<InputRange value={value} minValue={minValue} maxValue={maxValue} maxLabel={max} onChange={onChange} />

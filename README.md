@@ -83,6 +83,10 @@ To run those 3 commands you can just do
 
     $ npm run pull
 
+#### or
+
+    $ yarn run pull
+
 ## .gitignore
 
 A gitignore file specifies intentionally untracked files that Git should ignore.
