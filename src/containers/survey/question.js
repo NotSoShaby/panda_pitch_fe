@@ -7,15 +7,17 @@ const Question = ({ onRangeChange, answers, id, ...props }) => {
 			<p>{props.text}</p>
 			<InputRangeSelector
 				minValue={0}
+				step={40 / 4}
 				value={answers[id].value}
-				maxValue={50}
+				maxValue={40}
 				onChange={(value) => onRangeChange({ ...props, id, value })}
 			/>
 			<ul className="range_list">
+				<li>0</li>
 				<li>1-10</li>
 				<li>11-20</li>
-				<li>21-50</li>
-				<li>51+</li>
+				<li>21-30</li>
+				<li>40+</li>
 			</ul>
 		</div>
 	);

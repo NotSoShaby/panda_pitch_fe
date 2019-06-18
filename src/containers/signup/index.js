@@ -4,7 +4,13 @@ import '../../../public/css/style.css';
 import HELPER from '../../utils/helper';
 import UnAuthorized from '../../routes/unAuthorized';
 import { bindActionCreators } from 'redux';
-import { signUp, createPrProfile, createJournalistProfile, getSurvey } from '../../redux/actions/signup';
+import {
+	signUp,
+	createPrProfile,
+	createJournalistProfile,
+	getSurvey,
+	getJournalistInterests
+} from '../../redux/actions/signup';
 import { connect } from 'react-redux';
 
 class Index extends UnAuthorized {
@@ -39,6 +45,11 @@ class Index extends UnAuthorized {
 		) {
 			props.history.push({ pathname: '/survey', state: { isAuthorized: true } });
 		}
+	}
+
+	componentDidMount() {
+		let { getJournalistInterests } = this.props;
+		getJournalistInterests();
 	}
 
 	// handle next button and final submission
@@ -122,7 +133,8 @@ const mapDispatchToProps = (dispatch) =>
 			signUp: (values) => signUp(values),
 			createPrProfile: (values) => createPrProfile(values),
 			createJournalistProfile: (values) => createJournalistProfile(values),
-			getSurvey: (data) => getSurvey(data)
+			getSurvey: (data) => getSurvey(data),
+			getJournalistInterests: (data) => getJournalistInterests(data)
 		},
 		dispatch
 	);

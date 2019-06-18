@@ -43,7 +43,8 @@ const Form2 = ({ onSubmit, onBack, onChange, email, password, fullName, signup }
 				/>
 				<label htmlFor="password">Password</label>
 			</div>
-			{HELPER.isErrorInApi(code) && (
+			{HELPER.isErrorInApi(code) &&
+			message.non_field_errors && (
 				<div className="error">{message.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
 			)}
 			<div className="step_btn_wrapper">

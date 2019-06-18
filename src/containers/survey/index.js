@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import HELPER from '../../utils/helper';
 import Loader from '../../components/loader';
+import Question from './question';
 
 class Index extends Authorized {
 	state = {
@@ -21,7 +22,7 @@ class Index extends Authorized {
 			return {
 				answers: obj
 			};
-		}
+		} else return null;
 	}
 
 	// request for survey
@@ -48,7 +49,7 @@ class Index extends Authorized {
 
 	render() {
 		return (
-			<Loader isLoading={HELPER.isEmptyObject(this.props.survey.data)}>
+			<Loader isLoading={HELPER.isEmptyObject(this.props.survey.data) || false}>
 				<Survey
 					{...this.props}
 					{...this.state}

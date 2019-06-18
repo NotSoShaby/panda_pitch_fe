@@ -1,21 +1,19 @@
-import HELPER from '../../utils/helper';
-
 export const defaultState = {
-	data: { ...HELPER.getItemFromSession('user') }
+	data: {}
 };
 
-export function login(state = defaultState, action) {
+export function journalistInterests(state = defaultState, action) {
 	switch (action.type) {
-		case 'LOGIN_INITIATED': {
+		case 'GET_JOURNALIST_INITIATED': {
 			return { ...state, code: 'uninitiated' };
 		}
-		case 'LOGIN_STARTED': {
+		case 'GET_JOURNALIST_STARTED': {
 			return { ...state, code: 'ongoing' };
 		}
-		case 'LOGIN_SUCCESS': {
+		case 'GET_JOURNALIST_SUCCESS': {
 			return { ...state, ...action.payload };
 		}
-		case 'LOGIN_FAILED': {
+		case 'GET_JOURNALIST_FAILED': {
 			return {
 				...state,
 				...action.payload

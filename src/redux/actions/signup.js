@@ -64,16 +64,24 @@ export const createPrProfile = ({ position, company, linkedIn, twitter, userId }
 	};
 };
 
-export const createJournalistProfile = ({ position, outlet, topics, twitter }) => ({
-	type: 'CREATE_JOURNALIST_PROFILE',
-	payload: {
-		user_id: getUserId(),
-		outlet: outlet,
-		position: position,
-		topics: topics,
-		twitter_url: twitter ? twitter : ''
-	}
-});
+export const createJournalistProfile = ({ position, outlet, topics, twitter }) => {
+	let topicList = '';
+	topics.map((item) => {
+		if (topicList === '') topicList = item;
+		else topicList = topicList + ',' + item;
+		return null;
+	});
+	return {
+		type: 'CREATE_JOURNALIST_PROFILE',
+		payload: {
+			user_id: getUserId(),
+			outlet: outlet,
+			position: position,
+			topics: topicList,
+			twitter_url: twitter ? twitter : ''
+		}
+	};
+};
 
 export const getSurvey = () => {
 	if (HELPER.isSuccessInApi(getJournalistStatus()))
@@ -85,3 +93,5 @@ export const getSurvey = () => {
 			type: 'GET_PR_SURVEY'
 		};
 };
+
+export const getJournalistInterests = () => ({ type: 'GET_JOURNALIST_INTERESTS' });

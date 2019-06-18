@@ -21,10 +21,11 @@ const Form3 = ({
 	let { code, message } = prProfile;
 	return [
 		<div key="form2" className="step_form_col">
+			<h2 className="mbot30">Tell us a little about yourself</h2>
 			{HELPER.isJournalist(data.role) ? (
 				<div>
 					<div className="full_widt">
-						<h2>Which outlets do you write for?</h2>
+						<h3>Which outlets do you write for?</h3>
 						<div className="custom_field">
 							<input
 								type="text"
@@ -43,7 +44,7 @@ const Form3 = ({
 			) : (
 				<div>
 					<div className="full_widt">
-						<h2>What's your company name?</h2>
+						<h3>What's your company name?</h3>
 						<div className="custom_field">
 							<input
 								type="text"
@@ -62,7 +63,7 @@ const Form3 = ({
 			)}
 
 			<div className="full_widt">
-				<h2>Whats your position?</h2>
+				<h3>Whats your position?</h3>
 				<div className="custom_field">
 					<input
 						type="text"
@@ -77,8 +78,8 @@ const Form3 = ({
 			</div>
 			{error &&
 			error.position && <div className="error">{error.position.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
-			<div className="full_widt">
-				<h2>Add social media</h2>
+			<div className="full_widt mbot_zero">
+				<h3>Add social media</h3>
 				{HELPER.isPr(data.role) && (
 					<div className="custom_field">
 						<input

@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '../../components/button';
 import Question from './question';
+import IMAGES from '../../assets/images';
 
 // Login page rendering
 const Survey = ({ onBack, onSubmit, survey, answers, onRangeChange }) => {
@@ -8,14 +9,14 @@ const Survey = ({ onBack, onSubmit, survey, answers, onRangeChange }) => {
 	return (
 		<div className="form_section">
 			<div className="form_logo">
-				<img src="img/logo.svg" alt="" />
+				<img src={IMAGES.WHITE_LOGO} alt="" />
 			</div>
 			<div className="form_wrapper">
 				<div className="step_form_col">
 					<h2>Just a few Questions</h2>
 
 					{questions.map((question, index) => (
-						<Question {...question} onRangeChange={onRangeChange} answers={answers} />
+						<Question key={index} {...question} onRangeChange={onRangeChange} answers={answers} />
 					))}
 					<div className="step_btn_wrapper">
 						<Button type="submit" className="white_bg_btn" onClick={onBack}>

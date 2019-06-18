@@ -25,13 +25,14 @@ class AutoComplete extends Component {
 		let { box, val } = this.state;
 		let { onCreate, list } = this.props;
 		let dropdownList = [];
-		list.map((item, index) => {
-			let isExist = box.filter((item1) => item1 === item.name);
-			if (!isExist.length && item.name.toLowerCase().includes(val.toLowerCase())) {
-				dropdownList.push(item.name);
-			}
-			return null;
-		});
+		list.length &&
+			list.map((item, index) => {
+				let isExist = box.filter((item1) => item1 === item.name);
+				if (!isExist.length && item.name.toLowerCase().includes(val.toLowerCase())) {
+					dropdownList.push(item.name);
+				}
+				return null;
+			});
 		if (val !== '')
 			return (
 				<div className="auto-selection-list">
@@ -44,7 +45,7 @@ class AutoComplete extends Component {
 							))
 						) : (
 							<li>
-								<span onCreate={() => onCreate(val)}>create</span>
+								<span onClick={() => this.putInBox(val)}>create</span>
 							</li>
 						)}
 					</ul>
