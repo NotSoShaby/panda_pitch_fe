@@ -1,5 +1,5 @@
 export const defaultState = {
-	data: {}
+	data: {},
 };
 
 export function journalistProfile(state = defaultState, action) {
@@ -16,7 +16,7 @@ export function journalistProfile(state = defaultState, action) {
 		case 'CREATE_JOURNALIST_PROFILE_FAILED': {
 			return {
 				...state,
-				...action.payload
+				...action.payload,
 			};
 		}
 		default: {

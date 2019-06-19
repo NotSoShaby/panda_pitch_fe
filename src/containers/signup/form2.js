@@ -1,11 +1,13 @@
 import React from 'react';
-import Button from '../../components/button';
 import { Link } from 'react-router-dom';
+import Button from '../../components/button';
 import HELPER from '../../utils/helper';
 
 // render form1
-const Form2 = ({ onSubmit, onBack, onChange, email, password, fullName, signup }) => {
-	let { code, message } = signup;
+const Form2 = ({
+	onSubmit, onBack, onChange, email, password, fullName, signup,
+}) => {
+	const { code, message } = signup;
 	return [
 		<h2 key="heading">Sign Up</h2>,
 		<div key="form1" className="step_form_col">
@@ -44,7 +46,7 @@ const Form2 = ({ onSubmit, onBack, onChange, email, password, fullName, signup }
 				<label htmlFor="password">Password</label>
 			</div>
 			{HELPER.isErrorInApi(code) && (
-				<div className="error">{message.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
+				<div className="error">{message.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 			)}
 			<div className="step_btn_wrapper">
 				<Button className="white_bg_btn" onClick={onBack}>
@@ -56,10 +58,11 @@ const Form2 = ({ onSubmit, onBack, onChange, email, password, fullName, signup }
 			</div>
 		</div>,
 		<p key="login" className="text-center">
-			Already have an account?<span>
+			Already have an account?
+			<span>
 				<Link to="/login">Login</Link>
 			</span>
-		</p>
+		</p>,
 	];
 };
 

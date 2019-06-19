@@ -2,43 +2,46 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class AutoComplete extends Component {
-	state = {
-		val: '',
-		box: this.props.boxes || []
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			val: '',
+			box: props.boxes || [],
+		};
+	}
 
 	putInBox = (val) => {
-		let { box } = this.state;
-		let { onSelect } = this.props;
-		let isExist = box.filter((item) => item === val);
+		const { box } = this.state;
+		const { onSelect } = this.props;
+		const isExist = box.filter(item => item === val);
 		if (!isExist.length) {
-			let boxes = box;
+			const boxes = box;
 			boxes.push(val);
 			onSelect(boxes);
-			this.setState({ box, boxes, val: '' });
+			this.setState({ box: boxes, val: '' });
 		}
 	};
 
-	setVal = (e) => this.setState({ val: e.target.value });
+	setVal = e => this.setState({ val: e.target.value });
 
 	renderList = () => {
-		let { box, val } = this.state;
-		let { onCreate, list } = this.props;
-		let dropdownList = [];
-		list.map((item, index) => {
-			let isExist = box.filter((item1) => item1 === item.name);
+		const { box, val } = this.state;
+		const { onCreate, list } = this.props;
+		const dropdownList = [];
+		list.map((item) => {
+			const isExist = box.filter(item1 => item1 === item.name);
 			if (!isExist.length && item.name.toLowerCase().includes(val.toLowerCase())) {
 				dropdownList.push(item.name);
 			}
 			return null;
 		});
-		if (val !== '')
+		if (val !== '') {
 			return (
 				<div className="auto-selection-list">
 					<ul>
 						{dropdownList.length ? (
-							dropdownList.map((item, index) => (
-								<li key={index} onClick={() => this.putInBox(item)}>
+							dropdownList.map(item => (
+								<li key={item} onClick={() => this.putInBox(item)} role="button">
 									<span>{item}</span>
 								</li>
 							))
@@ -50,10 +53,12 @@ class AutoComplete extends Component {
 					</ul>
 				</div>
 			);
+		}
+		return null;
 	};
 
 	render() {
-		let { box, val } = this.state;
+		const { box, val } = this.state;
 		return (
 			<div className="auto-selection">
 				<div className="custom_field">
@@ -70,8 +75,8 @@ class AutoComplete extends Component {
 				</div>
 				<div />
 				<ul className="topic_list">
-					{box.map((item, index) => (
-						<li key={index}>
+					{box.map(item => (
+						<li key={item}>
 							<span>{item}</span>
 						</li>
 					))}
@@ -83,16 +88,15 @@ class AutoComplete extends Component {
 
 // props initialization ( default values )
 AutoComplete.defaultProps = {
-	list: [],
-	onCreate: () => {},
-	onSelect: () => {}
+	// onCreate: () => {},
+	onSelect: () => {},
 };
 
 // props type definition
 AutoComplete.propTypes = {
 	list: PropTypes.array.isRequired,
-	onCreate: PropTypes.func,
-	onSelect: PropTypes.func
+	// onCreate: PropTypes.func,
+	onSelect: PropTypes.func,
 };
 
 // default importing

@@ -1,16 +1,16 @@
 const setUserToken = () => {
 	if (localStorage.getItem('role') === 'user') return localStorage.getItem('token');
-	else return null;
+	return null;
 };
 
 const setUserProfile = () => {
-	let user = localStorage.getItem('user');
+	const user = localStorage.getItem('user');
 	if (localStorage.getItem('role') === 'admin' && user) return { ...JSON.parse(user), token: null };
-	else return { token: setUserToken() };
+	return { token: setUserToken() };
 };
 
 export const defaultState = {
-	data: { login: setUserProfile() }
+	data: { login: setUserProfile() },
 };
 
 export function login(state = defaultState, action) {
@@ -22,17 +22,21 @@ export function login(state = defaultState, action) {
 			return { ...state, status: 'ongoing' };
 		}
 		case 'LOGIN_SUCCESS': {
-			return { ...state, ...action.payload, error: '', status: 'success' };
+			return {
+				...state, ...action.payload, error: '', status: 'success',
+			};
 		}
 		case 'SET_USER': {
-			return { ...state, ...action.payload, error: '', status: 'success' };
+			return {
+				...state, ...action.payload, error: '', status: 'success',
+			};
 		}
 		case 'LOGIN_FAILED': {
 			return {
 				...state,
 				...defaultState,
 				error: action.payload,
-				status: 'failed'
+				status: 'failed',
 			};
 		}
 		default: {

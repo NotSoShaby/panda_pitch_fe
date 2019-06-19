@@ -4,7 +4,7 @@ import CONSTANT from '../../utils/constant';
 
 // create user signup request
 const GET_SURVEY = function* performChecks() {
-	yield takeEvery('GET_PR_SURVEY', function*(action) {
+	yield takeEvery('GET_PR_SURVEY', function* getSurvey(action) {
 		yield put({ type: 'SURVEY_STARTED' });
 		try {
 			const DATA = yield Request(CONSTANT.SURVEY31_URL, CONSTANT.GET, action.payload);
@@ -12,8 +12,8 @@ const GET_SURVEY = function* performChecks() {
 				type: 'GET_SURVEY_SUCCESS',
 				payload: {
 					CODE: 'SUCCESS',
-					data: DATA
-				}
+					data: DATA,
+				},
 			});
 		} catch (error) {
 			yield put({ type: 'GET_SURVEY_FAILED', payload: error });

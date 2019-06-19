@@ -3,8 +3,8 @@ import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 
 // create user login request
-const LOGIN = function* perform_checks() {
-	yield takeEvery('LOGIN', function*(action) {
+const LOGIN = function* performChecks() {
+	yield takeEvery('LOGIN', function* login(action) {
 		yield put({ type: 'LOGIN_STARTED' });
 		try {
 			const DATA = yield Request(CONSTANT.SIGN_URL, CONSTANT.POST, action.payload);

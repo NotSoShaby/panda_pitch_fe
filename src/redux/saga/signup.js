@@ -4,12 +4,12 @@ import CONSTANT from '../../utils/constant';
 
 // create user signup request
 const SIGNUP = function* performChecks() {
-	yield takeEvery('SIGNUP', function*(action) {
+	yield takeEvery('SIGNUP', function* signup(action) {
 		yield put({ type: 'SIGNUP_STARTED' });
 		try {
 			const DATA = yield Request(CONSTANT.SIGNUP_URL, CONSTANT.POST, action.payload);
 			if (DATA.code === 'SUCCESS') {
-				let data = { ...DATA };
+				const data = { ...DATA };
 				data.data = { ...data.data, ...action.props };
 				yield put({ type: 'SIGNUP_SUCCESS', payload: data });
 				localStorage.setItem('user', JSON.stringify(data.data));

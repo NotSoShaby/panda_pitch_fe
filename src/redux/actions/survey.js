@@ -1,26 +1,29 @@
 import HELPER from '../../utils/helper';
-import { getJournalistStatus } from './signup';
-import Request from '../../redux/ApiCaller';
+import { getJournalistStatus, getUserId } from './signup';
+import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
-import { getUserId } from './signup';
+
 
 export const getSurvey = () => {
-	if (HELPER.isSuccessInApi(getJournalistStatus()))
+	if (HELPER.isSuccessInApi(getJournalistStatus())) {
 		return {
-			type: 'GET_JOURNALIST_SURVEY'
+			type: 'GET_JOURNALIST_SURVEY',
 		};
-	else
-		return {
-			type: 'GET_PR_SURVEY'
-		};
+	}
+	return {
+		type: 'GET_PR_SURVEY',
+	};
 };
 
 export const surveySubmission = async ({ answers }) => {
-	let answersObj = {};
-	Object.keys(answers).map((id) => (answersObj[`${id}`] = `${answers[id].value} answer`));
-	let payload = {
+	const answersObj = {};
+	Object.keys(answers).map((id) => {
+		answersObj[`${id}`] = `${answers[id].value} answer`;
+		return null;
+	});
+	const payload = {
 		user_id: getUserId(),
-		question_answer: answersObj
+		question_answer: answersObj,
 	};
 	return Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST, payload);
 };

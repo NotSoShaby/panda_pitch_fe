@@ -4,7 +4,7 @@ import CONSTANT from '../../utils/constant';
 
 // create user signup request
 const CREATE_PR_PROFILE = function* performChecks() {
-	yield takeEvery('CREATE_PR_PROFILE', function*(action) {
+	yield takeEvery('CREATE_PR_PROFILE', function* createPrProfile(action) {
 		yield put({ type: 'CREATE_PR_PROFILE_STARTED' });
 		try {
 			const DATA = yield Request(CONSTANT.CREATE_PR_URL, CONSTANT.POST, action.payload);

@@ -3,8 +3,10 @@ import Button from '../../components/button';
 import Question from './question';
 
 // Login page rendering
-const Survey = ({ onBack, onSubmit, survey, answers, onRangeChange }) => {
-	let questions = survey.data.questions || [];
+const Survey = ({
+	onBack, onSubmit, survey, answers, onRangeChange,
+}) => {
+	const questions = survey.data.questions || [];
 	return (
 		<div className="form_section">
 			<div className="form_logo">
@@ -14,7 +16,7 @@ const Survey = ({ onBack, onSubmit, survey, answers, onRangeChange }) => {
 				<div className="step_form_col">
 					<h2>Just a few Questions</h2>
 
-					{questions.map((question, index) => (
+					{questions.map(question => (
 						<Question {...question} onRangeChange={onRangeChange} answers={answers} />
 					))}
 					<div className="step_btn_wrapper">

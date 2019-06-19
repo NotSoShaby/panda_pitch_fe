@@ -8,16 +8,16 @@ import IMAGES from '../../assets/images';
 
 // condition form rendering
 const RenderForm = ({ ...props }) => {
-	let { step } = props;
+	const { step } = props;
 	if (step === 1) return <Form1 {...props} />;
-	else if (step === 2) return <Form2 {...props} />;
-	else if (step === 3) return <Form3 {...props} />;
-	else return <Form4 {...props} />;
+	if (step === 2) return <Form2 {...props} />;
+	if (step === 3) return <Form3 {...props} />;
+	return <Form4 {...props} />;
 };
 
 // status bar and sign up form
 const SignUp = ({ ...props }) => {
-	let { step } = props;
+	const { step } = props;
 	return (
 		<div className="form_section">
 			<div className="form_logo">

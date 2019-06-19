@@ -11,21 +11,21 @@ const reducer = combineReducers({
 	login,
 	journalistProfile,
 	prProfile,
-	survey
+	survey,
 });
 
-//module default state for when user logout
+// module default state for when user logout
 const defaultState = {
 	login: {},
 	signup: {},
 	journalistProfile: {},
 	prProfile: {},
-	survey: {}
+	survey: {},
 };
 
 // Empty state when user logout
 export default (state, action) => {
 	if (action.type === 'LOGOUT') {
 		return defaultState;
-	} else return reducer(state, action);
+	} return reducer(state, action);
 };

@@ -6,18 +6,16 @@ import Login from '../containers/login';
 import Survey from '../containers/survey';
 
 // Switch between one screen to another screen
-const ProjectRoutes = (props) => {
-	return (
-		<Router>
-			<Switch>
-				<Route exact path="/" component={(props) => <App {...props} />} />
-				<Route exact path="/signup" component={(props) => <SignUp {...props} />} />
-				<Route exact path="/login" component={(props) => <Login {...props} />} />
-				<Route exact path="/survey" component={(props) => <Survey {...props} />} />
-			</Switch>
-		</Router>
-	);
-};
+const ProjectRoutes = () => (
+	<Router>
+		<Switch>
+			<Route exact path="/" component={props => <App {...props} />} />
+			<Route exact path="/signup" component={props => <SignUp {...props} />} />
+			<Route exact path="/login" component={props => <Login {...props} />} />
+			<Route exact path="/survey" component={props => <Survey {...props} />} />
+		</Switch>
+	</Router>
+);
 
 // default importing
 export default ProjectRoutes;

@@ -1,5 +1,5 @@
 export const defaultState = {
-	data: {}
+	data: {},
 };
 
 export function prProfile(state = defaultState, action) {
@@ -16,7 +16,7 @@ export function prProfile(state = defaultState, action) {
 		case 'CREATE_PR_PROFILE_FAILED': {
 			return {
 				...state,
-				...action.payload
+				...action.payload,
 			};
 		}
 		default: {
