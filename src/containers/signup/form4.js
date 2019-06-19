@@ -3,47 +3,37 @@ import Button from '../../components/button';
 import HELPER from '../../utils/helper';
 import AutoComplete from '../../components/autoComplete';
 
-const List = [
-	{
-		id: 1,
-		name: 'Travel',
-	},
-	{
-		id: 1,
-		name: 'Food',
-	},
-	{
-		id: 1,
-		name: 'Liesure',
-	},
-	{
-		id: 1,
-		name: 'Healthcare',
-	},
-	{
-		id: 1,
-		name: 'Technology',
-	},
-	{
-		id: 1,
-		name: 'News',
-	},
-];
-
 // render form3
 const Form4 = ({
-	topics, onSubmit, onBack, onCreate, onTodoSelection, journalistProfile, error,
+	topics,
+	onSubmit,
+	onBack,
+	onCreate,
+	onTodoSelection,
+	journalistProfile,
+	journalistInterests,
+	error,
 }) => {
 	const { code, message } = journalistProfile;
 	return (
 		<div className="step_form_col">
-			<div className="full_widt">
-				<h2>What do you write about?</h2>
-				<AutoComplete list={List} onCreate={onCreate} onSelect={onTodoSelection} boxes={topics} />
+			<h2 className="mbot30">What do you write about?</h2>
+			<div className="full_widt mbot_zero">
+				<h3>Topic</h3>
+				{HELPER.isSuccessInApi(journalistInterests.code) && (
+					<AutoComplete
+						list={journalistInterests.data}
+						onCreate={onCreate}
+						onSelect={onTodoSelection}
+						boxes={topics}
+					/>
+				)}
 			</div>
+
 			{error
 			&& error.topics && <div className="error">{error.topics.map(msg => <p key={msg}>{msg}</p>)}</div>}
-			{HELPER.isErrorInApi(code) && (
+			{HELPER.isErrorInApi(code)
+			&& message.non_field_errors && (
 				<div className="error">{message.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 			)}
 

@@ -52,7 +52,7 @@ class Index extends Authorized {
 
 	render() {
 		return (
-			<Loader isLoading={HELPER.isEmptyObject(this.props.survey.data)}>
+			<Loader isLoading={HELPER.isEmptyObject(this.props.survey.data) || false}>
 				<Survey
 					{...this.props}
 					{...this.state}

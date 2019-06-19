@@ -7,10 +7,16 @@ const LOGIN = function* performChecks() {
 	yield takeEvery('LOGIN', function* login(action) {
 		yield put({ type: 'LOGIN_STARTED' });
 		try {
-			const DATA = yield Request(CONSTANT.SIGN_URL, CONSTANT.POST, action.payload);
-			localStorage.setItem('token', DATA.token);
-			localStorage.setItem('role', 'client');
-			yield put({ type: 'LOGIN_SUCCESS', payload: DATA });
+			const DATA = yield Request(CONSTANT.LOGIN_URL, CONSTANT.POST, action.payload);
+			if (DATA.token) {
+				localStorage.setItem('token', DATA.token);
+				const data = { ...DATA };
+				data.data = { ...data.data };
+				yield put({ type: 'LOGIN_SUCCESS', payload: { data: DATA, code: 'SUCCESS' } });
+				localStorage.setItem('user', JSON.stringify(data.data));
+			} else {
+				yield put({ type: 'LOGIN_FAILED', payload: { message: DATA, code: 'ERROR' } });
+			}
 		} catch (error) {
 			yield put({ type: 'LOGIN_FAILED', payload: error });
 		}

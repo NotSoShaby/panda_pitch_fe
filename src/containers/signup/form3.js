@@ -20,15 +20,16 @@ const Form3 = ({
 	const { code, message } = prProfile;
 	return [
 		<div key="form2" className="step_form_col">
+			<h2 className="mbot30">Tell us a little about yourself</h2>
 			{HELPER.isJournalist(data.role) ? (
 				<div>
 					<div className="full_widt">
-						<h2>Which outlets do you write for?</h2>
+						<h3>Which outlets do you write for?</h3>
 						<div className="custom_field">
 							<input
 								type="text"
 								name="outlet"
-								value={outlet}
+								value={outlet || ''}
 								id="outlet"
 								placeholder="Outlet Name"
 								onChange={onChange}
@@ -42,12 +43,12 @@ const Form3 = ({
 			) : (
 				<div>
 					<div className="full_widt">
-						<h2>What's your company name?</h2>
+						<h3>What's your company name?</h3>
 						<div className="custom_field">
 							<input
 								type="text"
 								name="company"
-								value={company}
+								value={company || ''}
 								id="company"
 								placeholder="Company Name"
 								onChange={onChange}
@@ -61,12 +62,12 @@ const Form3 = ({
 			)}
 
 			<div className="full_widt">
-				<h2>Whats your position?</h2>
+				<h3>Whats your position?</h3>
 				<div className="custom_field">
 					<input
 						type="text"
 						name="position"
-						value={position}
+						value={position || ''}
 						id="position"
 						placeholder="Position Name"
 						onChange={onChange}
@@ -76,14 +77,14 @@ const Form3 = ({
 			</div>
 			{error
 			&& error.position && <div className="error">{error.position.map(msg => <p key={msg}>{msg}</p>)}</div>}
-			<div className="full_widt">
-				<h2>Add social media</h2>
+			<div className="full_widt mbot_zero">
+				<h3>Add social media</h3>
 				{HELPER.isPr(data.role) && (
 					<div className="custom_field">
 						<input
 							type="text"
 							name="linkedIn"
-							value={linkedIn}
+							value={linkedIn || ''}
 							id="linkedIn"
 							placeholder="linkedIn Name"
 							onChange={onChange}
@@ -97,7 +98,7 @@ const Form3 = ({
 					<input
 						type="text"
 						name="twitter"
-						value={twitter}
+						value={twitter || ''}
 						id="twitter"
 						placeholder="Twitter Name"
 						onChange={onChange}

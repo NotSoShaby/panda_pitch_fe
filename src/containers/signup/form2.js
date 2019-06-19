@@ -16,7 +16,7 @@ const Form2 = ({
 					type="text"
 					name="fullName"
 					id="fullName"
-					value={fullName}
+					value={fullName || ''}
 					placeholder="Jane Appleseed"
 					onChange={onChange}
 				/>
@@ -27,7 +27,7 @@ const Form2 = ({
 					type="email"
 					name="email"
 					id="email"
-					value={email}
+					value={email || ''}
 					placeholder="JaneAppleseed@gmail.com"
 					onChange={onChange}
 				/>
@@ -38,14 +38,15 @@ const Form2 = ({
 				<input
 					type="password"
 					name="password"
-					value={password}
+					value={password || ''}
 					id="password"
 					placeholder="··················"
 					onChange={onChange}
 				/>
 				<label htmlFor="password">Password</label>
 			</div>
-			{HELPER.isErrorInApi(code) && (
+			{HELPER.isErrorInApi(code)
+			&& message.non_field_errors && (
 				<div className="error">{message.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 			)}
 			<div className="step_btn_wrapper">

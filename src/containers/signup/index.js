@@ -6,7 +6,11 @@ import SignUp from './signup';
 import '../../../public/css/style.css';
 import HELPER from '../../utils/helper';
 import {
-	signUp, createPrProfile, createJournalistProfile, getSurvey,
+	signUp,
+	createPrProfile,
+	createJournalistProfile,
+	getSurvey,
+	getJournalistInterests,
 } from '../../redux/actions/signup';
 
 class Index extends UnAuthorized {
@@ -43,6 +47,11 @@ class Index extends UnAuthorized {
 			return props.history.push({ pathname: '/survey', state: { isAuthorized: true } });
 		}
 		return null;
+	}
+
+	componentDidMount() {
+		const { getJournalistInterests } = this.props;
+		getJournalistInterests();
 	}
 
 	// handle next button and final submission
@@ -130,6 +139,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		createPrProfile: values => createPrProfile(values),
 		createJournalistProfile: values => createJournalistProfile(values),
 		getSurvey: data => getSurvey(data),
+		getJournalistInterests: data => getJournalistInterests(data),
 	},
 	dispatch,
 );

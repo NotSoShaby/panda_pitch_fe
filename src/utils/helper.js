@@ -165,6 +165,22 @@ class Helper {
 		},
 	});
 
+	loginValidation = ({ username = '', password = '' }) => this.ValidationService.validate({
+		username: {
+			value: username,
+			rules: {
+				required: true,
+			},
+		},
+		password: {
+			value: password,
+			rules: {
+				required: true,
+				minLength: 8,
+			},
+		},
+	});
+
 	// return true if API status is success
 	isSuccessInApi = status => status === 'SUCCESS';
 

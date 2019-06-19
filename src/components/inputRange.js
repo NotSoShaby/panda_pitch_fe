@@ -5,10 +5,11 @@ import 'react-input-range/lib/css/index.css';
 
 // Input range definition
 const InputRangeSelector = ({
-	value, max, minValue, maxValue, onChange, className,
+	value, max, minValue, maxValue, onChange, className, step,
 }) => (
 	<div className={className}>
 		<InputRange
+			step={step}
 			value={value}
 			minValue={minValue}
 			maxValue={maxValue}
@@ -20,6 +21,7 @@ const InputRangeSelector = ({
 
 // props initialization ( default values )
 InputRangeSelector.defaultProps = {
+	step: 0,
 	className: 'input_range',
 	minValue: 0,
 	maxValue: 10,
@@ -29,6 +31,7 @@ InputRangeSelector.defaultProps = {
 
 // props type definition
 InputRangeSelector.propTypes = {
+	step: PropTypes.number,
 	value: PropTypes.number,
 	minValue: PropTypes.number,
 	maxValue: PropTypes.number,

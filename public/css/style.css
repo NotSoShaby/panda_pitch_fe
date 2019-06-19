@@ -19,6 +19,9 @@ body {
 	float: left;
 	margin-bottom: 20px;
 }
+.full_widt.mbot_zero {
+	margin-bottom: 0;
+}
 .form_section {
 	position: relative;
 	background-color: #f7f7f7;
@@ -29,13 +32,25 @@ body {
 	overflow-y: auto;
 }
 .form_section h2 {
-	font-weight: 500;
+	font-weight: 700;
 	text-align: center;
 	margin: 10px 0;
-	font-size: 20px;
+	font-size: 24px;
 	float: left;
 	width: 100%;
-	text-align: left;
+}
+.form_section h2.mbot30 {
+	margin-bottom: 30px;
+}
+
+.form_section h3 {
+	font-weight: 500;
+	color: #000;
+	margin-bottom: -8px;
+	float: left;
+	width: 100%;
+	font-size: 15px;
+	margin-top: 0;
 }
 .form_wrapper {
 	position: relative;
@@ -72,7 +87,7 @@ form.step_form_col {
 .step_form_col .custom_field input {
 	font-size: 14px;
 	border: 0;
-	border: 1px solid #ccc;
+	border: 1px solid #969696;
 	font-family: inherit;
 	-webkit-appearance: none;
 	border-radius: 0;
@@ -85,7 +100,7 @@ form.step_form_col {
 
 .step_form_col .custom_field input:focus {
 	outline: 0;
-	border-bottom: 1px solid #40c251;
+	border-bottom: 1px solid #53c251;
 }
 
 .step_form_col .custom_field input:placeholder-shown + label {
@@ -131,7 +146,7 @@ form.step_form_col {
 
 .form_wrapper .btn {
 	height: 50px;
-	border: 2px solid #40c251;
+	border: 2px solid #53c251;
 	text-transform: uppercase;
 	font-size: 16px;
 	font-weight: 700;
@@ -140,21 +155,21 @@ form.step_form_col {
 .white_bg_btn {
 	width: 38%;
 	margin-right: 5px;
-	color: #40c251;
+	color: #53c251;
 }
 .white_bg_btn:hover {
 	color: #fff;
-	background-color: #40c251;
+	background-color: #53c251;
 }
 .green_bg_btn {
 	width: 60%;
-	border: 2px solid #40c251;
-	background-color: #40c251;
+	border: 2px solid #53c251;
+	background-color: #53c251;
 	color: #fff;
 	float: right;
 }
 .green_bg_btn:hover {
-	color: #40c251;
+	color: #53c251;
 	background-color: #fff;
 }
 .form_wrapper p {
@@ -169,7 +184,7 @@ form.step_form_col {
 	margin-left: 15px;
 }
 .form_wrapper p span a {
-	color: #40c251;
+	color: #53c251;
 }
 .topic_list {
 	float: left;
@@ -213,7 +228,7 @@ ul.progress_bar li:after {
 	content: '';
 	width: 100%;
 	height: 6px;
-	background: #eaeaea;
+	background: #e9e9e9;
 	top: 12px;
 	left: 0;
 }
@@ -237,12 +252,15 @@ ul.progress_bar li span:before {
 ul.progress_bar li:last-child {
 	width: 27px;
 }
-
+ul.progress_bar li.active span:before {
+	box-shadow: 0px 2px 8px rgba(0, 0, 0, .4);
+	border: 4px solid #fff;
+}
 ul.progress_bar li.active span:after,
 ul.progress_bar li.completed span:after {
 	position: absolute;
 	content: '';
-	background: #40c251;
+	background: #53c251;
 	width: 10px;
 	height: 10px;
 	z-index: 999;
@@ -255,7 +273,7 @@ ul.progress_bar li.completed span:after {
 ul.progress_bar li.completed span:after {
 	content: '\2713';
 	color: #fff;
-	background: #40c251;
+	background: #53c251;
 	width: 100%;
 	height: 100%;
 	line-height: 27px;
@@ -263,7 +281,7 @@ ul.progress_bar li.completed span:after {
 }
 
 ul.progress_bar li.completed:after {
-	background: #40c251;
+	background: #53c251;
 }
 
 .slider {
@@ -335,7 +353,7 @@ ul.progress_bar li.completed:after {
 	text-transform: uppercase;
 	font-size: 14px;
 	font-weight: 700;
-	color: #40c251;
+	color: #53c251;
 	box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
 	width: 150px;
 	border: none;
@@ -343,7 +361,7 @@ ul.progress_bar li.completed:after {
 	transition: all 0.2s ease;
 }
 .user_selection .cstm_btn:hover {
-	background-color: #40c251;
+	background-color: #53c251;
 	color: #fff;
 }
 .btn_cntr {
@@ -385,7 +403,18 @@ ul.progress_bar li.completed:after {
 .auto-selection-list ul li span {
 	font-weight: 700;
 }
-
+.step_form_col .range_list {
+	padding-left: 0;
+	padding: 0;
+}
+.input-range {
+	height: 6px !important;
+}
+.input_range .input-range__track--active {
+	height: 15px;
+	border-radius: 5px;
+	background: #53c251 !important;
+}
 @media only screen and (min-width: 280px) and (max-width: 500px) {
 	.form_wrapper {
 		padding: 30px 10px;
