@@ -109,7 +109,7 @@ const Form3 = ({
 			</div>
 			{error &&
 			error.twitter && <div className="error">{error.twitter.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
-			{HELPER.isErrorInApi(code) && (
+			{HELPER.isErrorInApi(code) && message.non_field_errors && (
 				<div className="error">{message.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
 			)}
 
