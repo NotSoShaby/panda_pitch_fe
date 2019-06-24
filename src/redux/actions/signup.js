@@ -94,4 +94,4 @@ export const getSurvey = () => {
 		};
 };
 
-export const getJournalistInterests = () => ({ type: 'GET_JOURNALIST_INTERESTS' });
+export const getJournalistInterests = (data) => ({ type: 'GET_JOURNALIST_INTERESTS', payload:data });

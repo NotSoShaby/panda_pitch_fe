@@ -90,7 +90,7 @@ const Form3 = ({
 							placeholder="linkedIn Name"
 							onChange={onChange}
 						/>
-						<label htmlFor="twitter">LinkediIn</label>
+						<label htmlFor="linkedIn">LinkediIn</label>
 					</div>
 				)}
 				{error &&
@@ -114,10 +114,10 @@ const Form3 = ({
 			)}
 
 			<div className="step_btn_wrapper">
-				<Button className="white_bg_btn" onClick={onBack}>
+				{/* <Button className="white_bg_btn" onClick={onBack}>
 					Back
-				</Button>
-				<Button className="green_bg_btn" onClick={onSubmit}>
+				</Button> */}
+				<Button className="green_bg_btn signup_btn_cntr" onClick={onSubmit}>
 					Next
 				</Button>
 			</div>

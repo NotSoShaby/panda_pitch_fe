@@ -1,6 +1,6 @@
 // constant variables declaration
 
-const local = 'http://c3b020a6.ngrok.io';
+const local = 'http://abd0c0f1.ngrok.io';
 
 class Constant {
 	PUBLIC_PATH = process.env.PUBLIC_URL;
@@ -11,8 +11,8 @@ class Constant {
 	CREATE_PR_URL = '/api/pr/create-pr-profile';
 	SURVEY31_URL = '/api/users/survey/31/';
 	SURVEY_SUBMISSION_URL = '/api/users/survey/answer';
-	GET_JOURNALIST_INTERESTS_URL = '/api/users/interests';
-	GET = 'get';
+  GET_JOURNALIST_INTERESTS_URL = '/auto/interest-autocomplete';//'/api/users/interests';
+ 	GET = 'get';
 	POST = 'post';
 }
 

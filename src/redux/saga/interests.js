@@ -7,7 +7,7 @@ const GET_JOURNALIST_INTERESTS = function* performChecks() {
 	yield takeEvery('GET_JOURNALIST_INTERESTS', function*(action) {
 		yield put({ type: 'GET_JOURNALIST_STARTED' });
 		try {
-			const DATA = yield Request(CONSTANT.GET_JOURNALIST_INTERESTS_URL, CONSTANT.GET, action.payload);
+			const DATA = yield Request(`${CONSTANT.GET_JOURNALIST_INTERESTS_URL}?q=${action.payload}`, CONSTANT.GET);
 			yield put({
 				type: 'GET_JOURNALIST_SUCCESS',
 				payload: {

@@ -8,10 +8,11 @@ const Form4 = ({
 	topics,
 	onSubmit,
 	onBack,
-	onCreate,
+	// onCreate,
 	onTodoSelection,
 	journalistProfile,
-	journalistInterests,
+  journalistInterests,
+  getJournalistInterests,
 	error
 }) => {
 	let { code, message } = journalistProfile;
@@ -20,9 +21,13 @@ const Form4 = ({
 			<h2 className="mbot30">What do you write about?</h2>
 			<div className="full_widt mbot_zero">
 				<h3>Topic</h3>
-				{HELPER.isSuccessInApi(journalistInterests.code) && (
-					<AutoComplete list={journalistInterests.data} onCreate={onCreate} onSelect={onTodoSelection} boxes={topics} />
-				)}
+          <AutoComplete 
+            list={journalistInterests.data && journalistInterests.data.results} 
+            // onCreate={onCreate} 
+            onSelect={onTodoSelection} 
+            boxes={topics} 
+            onChange={getJournalistInterests}
+          />
 			</div>
 
 			{error &&

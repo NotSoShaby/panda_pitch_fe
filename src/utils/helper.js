@@ -131,7 +131,13 @@ class Helper {
 				rules: {
 					required: true
 				}
-			}
+      },
+      twitter: {
+        value: twitter,
+        rules: {
+          validLink:true,
+        }
+      }
 		};
 		if (this.isJournalist(role))
 			validateRule.outlet = {
@@ -145,6 +151,12 @@ class Helper {
 				value: company,
 				rules: {
 					required: true
+				}
+      };
+      validateRule.linkedIn = {
+				value: linkedIn,
+				rules: {
+					validLink: true
 				}
 			};
 		}

@@ -9,7 +9,7 @@ import {
 	createPrProfile,
 	createJournalistProfile,
 	getSurvey,
-	getJournalistInterests
+  getJournalistInterests
 } from '../../redux/actions/signup';
 import { connect } from 'react-redux';
 
@@ -44,12 +44,8 @@ class Index extends UnAuthorized {
 			(HELPER.isSuccessInApi(journalistProfile.code) && step === 4)
 		) {
 			props.history.push({ pathname: '/survey', state: { isAuthorized: true } });
-		}
-	}
-
-	componentDidMount() {
-		let { getJournalistInterests } = this.props;
-		getJournalistInterests();
+    }
+    return null
 	}
 
 	// handle next button and final submission
@@ -80,7 +76,7 @@ class Index extends UnAuthorized {
 
 	// handle back button
 	handleCancel = () => {
-		this.setState({ step: this.state.step - 1 });
+  	this.setState({ step: this.state.step - 1 });
 	};
 
 	// handle input change in form
@@ -102,11 +98,11 @@ class Index extends UnAuthorized {
 	handleUserSelection = (key, value) => {
 		this.setState({ [key]: value });
 		this.goToNextForm();
-	};
-
-	// render login sign up page
+  };
+  
+  // render login sign up page
 	render() {
-		return (
+    return (
 			<SignUp
 				{...this.state}
 				{...this.props}
@@ -115,8 +111,8 @@ class Index extends UnAuthorized {
 				onChange={this.handleChange}
 				onRangeChange={this.handleRangeChange}
 				onSelect={this.handleSelection}
-				onUserSelection={this.handleUserSelection}
-			/>
+        onUserSelection={this.handleUserSelection}
+     	/>
 		);
 	}
 }
@@ -134,8 +130,8 @@ const mapDispatchToProps = (dispatch) =>
 			createPrProfile: (values) => createPrProfile(values),
 			createJournalistProfile: (values) => createJournalistProfile(values),
 			getSurvey: (data) => getSurvey(data),
-			getJournalistInterests: (data) => getJournalistInterests(data)
-		},
+      getJournalistInterests: (data) => getJournalistInterests(data)
+    },
 		dispatch
 	);
 

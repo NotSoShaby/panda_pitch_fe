@@ -16,7 +16,7 @@ const rootSaga = function* rootSaga() {
 		CREATE_JOURNALIST_PROFILE(),
 		PR_SURVEY(),
 		JOURNALIST_SURVEY(),
-		GET_JOURNALIST_INTERESTS()
+    GET_JOURNALIST_INTERESTS()
 	]);
 };
 

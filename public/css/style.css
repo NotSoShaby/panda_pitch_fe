@@ -415,6 +415,12 @@ ul.progress_bar li.completed:after {
 	border-radius: 5px;
 	background: #53c251 !important;
 }
+.signup_btn_cntr{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 @media only screen and (min-width: 280px) and (max-width: 500px) {
 	.form_wrapper {
 		padding: 30px 10px;
