@@ -394,11 +394,12 @@ ul.progress_bar li.completed:after {
 	background: #fff;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
 	max-height: 140px;
-	/* overflow-y: scroll; */
+	overflow-y: scroll;
 }
 .auto-selection-list ul li {
 	list-style: none;
-	padding: 5px 0;
+  padding: 5px 0;
+  cursor: pointer;
 }
 .auto-selection-list ul li span {
 	font-weight: 700;

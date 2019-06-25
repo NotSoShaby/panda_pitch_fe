@@ -27,13 +27,16 @@ class AutoComplete extends Component {
 
 	renderList = () => {
 		let { box, val } = this.state;
-		let { list } = this.props;
+		let { onCreate, list } = this.props;
     let dropdownList = [];
     list.length &&
 			list.map((item) => {
 				let isExist = box.filter((item1) => item1 === item.text);
 				if (!isExist.length && item.text && item.text.toLowerCase().includes(val.toLowerCase())) {
-					dropdownList.push(item.text);
+          let isCreate = item.text.toLowerCase().split(' ')
+          if(isCreate[0] !== 'create'){
+            dropdownList.push(item.text);
+          }
 				}
 				return null;
 			});
@@ -49,7 +52,7 @@ class AutoComplete extends Component {
 							))
 						) : (
 							<li>
-								<span onClick={() => this.putInBox(val)}>create</span>
+								<span onClick={() => onCreate(val)}>create</span>
 							</li>
 						)}
 					</ul>
@@ -66,7 +69,8 @@ class AutoComplete extends Component {
 						value={val}
 						onChange={this.setVal}
 						type="text"
-						name="topics"
+            name="topics"
+            autocomplete="off"
 						id="topics"
 						placeholder="Enter Any Topic"
 					/>
@@ -89,7 +93,7 @@ class AutoComplete extends Component {
 // props initialization ( default values )
 AutoComplete.defaultProps = {
 	list: [],
-  // onCreate: () => {},
+  onCreate: () => {},
   onChange: () => {},
 	onSelect: () => {}
 };
@@ -97,7 +101,7 @@ AutoComplete.defaultProps = {
 // props type definition
 AutoComplete.propTypes = {
 	list: PropTypes.array.isRequired,
-	// onCreate: PropTypes.func,
+	onCreate: PropTypes.func,
   onSelect: PropTypes.func,
   onChange: PropTypes.func,
 };

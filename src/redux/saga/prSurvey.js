@@ -7,7 +7,7 @@ const GET_SURVEY = function* performChecks() {
 	yield takeEvery('GET_PR_SURVEY', function*(action) {
 		yield put({ type: 'SURVEY_STARTED' });
 		try {
-			const DATA = yield Request(CONSTANT.SURVEY31_URL, CONSTANT.GET, action.payload);
+			const DATA = yield Request(CONSTANT.SURVEY_PR_URL, CONSTANT.GET, action.payload);
 			yield put({
 				type: 'GET_SURVEY_SUCCESS',
 				payload: {

@@ -95,3 +95,5 @@ export const getSurvey = () => {
 };
 
 export const getJournalistInterests = (data) => ({ type: 'GET_JOURNALIST_INTERESTS', payload:data });
+
+export const createInterest = (data) => ({type:'CREATE_JOURNALIST_INTEREST', payload:{name:data}})

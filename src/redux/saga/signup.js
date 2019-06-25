@@ -7,7 +7,7 @@ const SIGNUP = function* performChecks() {
 	yield takeEvery('SIGNUP', function*(action) {
 		yield put({ type: 'SIGNUP_STARTED' });
 		try {
-			const DATA = yield Request(CONSTANT.SIGNUP_URL, CONSTANT.POST, action.payload);
+      const DATA = yield Request(CONSTANT.SIGNUP_URL, CONSTANT.POST, action.payload);
 			if (DATA.code === 'SUCCESS') {
 				let data = { ...DATA };
 				data.data = { ...data.data, ...action.props };

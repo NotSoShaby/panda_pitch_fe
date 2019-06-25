@@ -20,7 +20,7 @@ export const surveySubmission = async ({ answers }) => {
 	Object.keys(answers).map((id) => (answersObj[`${id}`] = `${answers[id].value} answer`));
 	let payload = {
 		user_id: getUserId(),
-		question_answer: answersObj
+		question_answer: JSON.stringify(answersObj)
 	};
 	return Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST, payload);
 };

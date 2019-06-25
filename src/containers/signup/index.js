@@ -9,7 +9,8 @@ import {
 	createPrProfile,
 	createJournalistProfile,
 	getSurvey,
-  getJournalistInterests
+  getJournalistInterests,
+  createInterest,
 } from '../../redux/actions/signup';
 import { connect } from 'react-redux';
 
@@ -96,9 +97,16 @@ class Index extends UnAuthorized {
 
 	// handle user selection
 	handleUserSelection = (key, value) => {
-		this.setState({ [key]: value });
+		this.setState({ [key]: value }, () => {
+      localStorage.setItem('role', this.state.role)
+    });
 		this.goToNextForm();
   };
+
+  createInterest = (val) => {
+    let { createInterest } = this.props;
+    createInterest(val);
+  }
   
   // render login sign up page
 	render() {
@@ -112,6 +120,7 @@ class Index extends UnAuthorized {
 				onRangeChange={this.handleRangeChange}
 				onSelect={this.handleSelection}
         onUserSelection={this.handleUserSelection}
+        onCreate={this.createInterest}
      	/>
 		);
 	}
@@ -130,7 +139,8 @@ const mapDispatchToProps = (dispatch) =>
 			createPrProfile: (values) => createPrProfile(values),
 			createJournalistProfile: (values) => createJournalistProfile(values),
 			getSurvey: (data) => getSurvey(data),
-      getJournalistInterests: (data) => getJournalistInterests(data)
+      getJournalistInterests: (data) => getJournalistInterests(data),
+      createInterest: (data) => createInterest(data)
     },
 		dispatch
 	);

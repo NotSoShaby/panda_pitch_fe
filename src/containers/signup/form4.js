@@ -8,7 +8,7 @@ const Form4 = ({
 	topics,
 	onSubmit,
 	onBack,
-	// onCreate,
+	onCreate,
 	onTodoSelection,
 	journalistProfile,
   journalistInterests,
@@ -23,7 +23,7 @@ const Form4 = ({
 				<h3>Topic</h3>
           <AutoComplete 
             list={journalistInterests.data && journalistInterests.data.results} 
-            // onCreate={onCreate} 
+            onCreate={onCreate} 
             onSelect={onTodoSelection} 
             boxes={topics} 
             onChange={getJournalistInterests}
