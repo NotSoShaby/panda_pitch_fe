@@ -1,6 +1,6 @@
 // constant variables declaration
 
-const local = 'http://ba308840.ngrok.io';
+const local = 'http://0f8a9cf7.ngrok.io';
 
 class Constant {
 	PUBLIC_PATH = process.env.PUBLIC_URL;
