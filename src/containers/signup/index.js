@@ -8,7 +8,6 @@ import {
 	signUp,
 	createPrProfile,
 	createJournalistProfile,
-	getSurvey,
   getJournalistInterests,
   createInterest,
 } from '../../redux/actions/signup';
@@ -26,8 +25,9 @@ class Index extends UnAuthorized {
 			topics: [],
 			role: this.getUserRole(props)
 		};
-	}
-
+  }
+  
+  // identify the type of loggedIn user (journalist/pr)
 	getUserRole(props) {
 		if (props.signup.data && props.signup.data.user_id) return 3;
 		else return 1;
@@ -51,7 +51,7 @@ class Index extends UnAuthorized {
 
 	// handle next button and final submission
 	handleSubmit = () => {
-		let { step, role } = this.state;
+    let { step, role } = this.state;
 		let { signUp, createPrProfile, createJournalistProfile } = this.props;
 		if (step === 2) {
 			// validate form2
@@ -90,11 +90,6 @@ class Index extends UnAuthorized {
 		this.setState({ [key]: value });
 	};
 
-	// handle tag selection in form
-	handleSelection = (key, value) => {
-		this.setState({ [key]: this.state[key] ? `${this.state[key]},${value}` : value });
-	};
-
 	// handle user selection
 	handleUserSelection = (key, value) => {
 		this.setState({ [key]: value }, () => {
@@ -103,9 +98,15 @@ class Index extends UnAuthorized {
 		this.goToNextForm();
   };
 
-  createInterest = (val) => {
+  // create a new interest
+	createInterest = (val) => {
     let { createInterest } = this.props;
     createInterest(val);
+  }
+
+  // handle interests selection
+	handleTodoSelection = (topics) => {
+    this.setState({topics:topics})
   }
   
   // render login sign up page
@@ -118,9 +119,9 @@ class Index extends UnAuthorized {
 				onBack={this.handleCancel}
 				onChange={this.handleChange}
 				onRangeChange={this.handleRangeChange}
-				onSelect={this.handleSelection}
-        onUserSelection={this.handleUserSelection}
+			  onUserSelection={this.handleUserSelection}
         onCreate={this.createInterest}
+        onTodoSelection={this.handleTodoSelection}
      	/>
 		);
 	}
@@ -138,7 +139,6 @@ const mapDispatchToProps = (dispatch) =>
 			signUp: (values) => signUp(values),
 			createPrProfile: (values) => createPrProfile(values),
 			createJournalistProfile: (values) => createJournalistProfile(values),
-			getSurvey: (data) => getSurvey(data),
       getJournalistInterests: (data) => getJournalistInterests(data),
       createInterest: (data) => createInterest(data)
     },

@@ -25,9 +25,17 @@ class AutoComplete extends Component {
     this.setState({ val: e.target.value });
   }
 
+  onItemSelection = (val) => this.putInBox(val);
+
+  onCreate = (val) => {
+    let { onCreate } = this.props;
+    this.putInBox(val);
+    onCreate(val)
+  }
+
 	renderList = () => {
 		let { box, val } = this.state;
-		let { onCreate, list } = this.props;
+		let { list } = this.props;
     let dropdownList = [];
     list.length &&
 			list.map((item) => {
@@ -52,7 +60,7 @@ class AutoComplete extends Component {
 							))
 						) : (
 							<li>
-								<span onClick={() => onCreate(val)}>create</span>
+								<span onClick={() => this.onCreate(val)}>create</span>
 							</li>
 						)}
 					</ul>

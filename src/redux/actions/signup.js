@@ -83,17 +83,6 @@ export const createJournalistProfile = ({ position, outlet, topics, twitter }) =
 	};
 };
 
-export const getSurvey = () => {
-	if (HELPER.isSuccessInApi(getJournalistStatus()))
-		return {
-			type: 'GET_JOURNALIST_SURVEY'
-		};
-	else
-		return {
-			type: 'GET_PR_SURVEY'
-		};
-};
-
 export const getJournalistInterests = (data) => ({ type: 'GET_JOURNALIST_INTERESTS', payload:data });
 
 export const createInterest = (data) => ({type:'CREATE_JOURNALIST_INTEREST', payload:{name:data}})

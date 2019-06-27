@@ -10,6 +10,7 @@ const CREATE_JOURNALIST_INTEREST = function* performChecks() {
       if(DATA)
         yield put({
           type: 'GET_JOURNALIST_INTERESTS',
+          payload: DATA.name
         });
 		} catch (error) {
 			yield put({ type: 'GET_JOURNALIST_FAILED', payload: error });
