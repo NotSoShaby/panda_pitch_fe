@@ -1,19 +1,39 @@
 import HELPER from '../../utils/helper';
-import { getJournalistStatus } from './signup';
 import Request from '../../redux/ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { getUserId } from './signup';
+import store from '../Store';
+import { createSelector } from 'reselect';
 
-export const getSurvey = () => {
-	if (HELPER.isSuccessInApi(getJournalistStatus()))
-		return {
-			type: 'GET_JOURNALIST_SURVEY'
-		};
-	else
-		return {
-			type: 'GET_PR_SURVEY'
-		};
+const initialState = {
+	message: {},
+	// isLoading: false,
+	data: {},
+	code: ''
 };
+
+
+const getJournalistState = (state = store.getState()) => {
+	if (state.journalistProfile) {
+		return state.journalistProfile;
+	} else {
+		return initialState;
+	}
+};
+
+const getPrState = (state = store.getState()) => {
+	if (state.prProfile) {
+		return state.prProfile;
+	} else {
+		return initialState;
+	}
+};
+
+export const getJournalistStatus = createSelector(getJournalistState, (n) => n.data.code);
+export const getPrStatus = createSelector(getPrState, (n) => n.data.code);
+
+export const getJRSurvey = () => ({type:'GET_JOURNALIST_SURVEY'});
+export const getPRSurvey = () => ({type:'GET_PR_SURVEY'});
 
 export const surveySubmission = async ({ answers }) => {
 	let answersObj = {};
