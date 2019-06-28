@@ -6,7 +6,7 @@ import IMAGES from '../../assets/images';
 
 // Login page rendering
 const Login = ({ onSubmit, onChange, login, error }) => {
-	let { code, message } = login;
+	let { code } = login;
 
 	return (
 		<div className="form_section">
@@ -32,11 +32,11 @@ const Login = ({ onSubmit, onChange, login, error }) => {
 						<input type="password" name="password" id="password" placeholder="··················" onChange={onChange} />
 						<label htmlFor="password">Password</label>
 					</div>
-					{error &&
+         	{error &&
 					error.password && <div className="error">{error.password.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
 					{HELPER.isErrorInApi(code) &&
-					message.non_field_errors && (
-						<div className="error">{message.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
+					login.error.non_field_errors && (
+						<div className="error">{login.error.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
 					)}
 					<div className="step_btn_wrapper">
 						<Button className="green_bg_btn btn_cntr" onClick={onSubmit}>

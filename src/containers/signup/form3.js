@@ -18,11 +18,11 @@ const Form3 = ({
 	...props
 }) => {
 	let { data } = signup;
-	let { code, message } = prProfile;
+	let { code } = prProfile;
 	return [
 		<div key="form2" className="step_form_col">
 			<h2 className="mbot30">Tell us a little about yourself</h2>
-			{HELPER.isJournalist(data.role) ? (
+			{HELPER.isJournalist(data.data.role) ? (
 				<div>
 					<div className="full_widt">
 						<h3>Which outlets do you write for?</h3>
@@ -80,7 +80,7 @@ const Form3 = ({
 			error.position && <div className="error">{error.position.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
 			<div className="full_widt mbot_zero">
 				<h3>Add social media</h3>
-				{HELPER.isPr(data.role) && (
+				{HELPER.isPr(data.data.role) && (
 					<div className="custom_field">
 						<input
 							type="text"
@@ -109,8 +109,8 @@ const Form3 = ({
 			</div>
 			{error &&
 			error.twitter && <div className="error">{error.twitter.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
-			{HELPER.isErrorInApi(code) && message.non_field_errors && (
-				<div className="error">{message.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
+			{HELPER.isErrorInApi(code) && prProfile.error.non_field_errors && (
+				<div className="error">{prProfile.error.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
 			)}
 
 			<div className="step_btn_wrapper">

@@ -12,10 +12,10 @@ class Index extends UnAuthorized {
 		this.state = {};
 	}
 
-	static getDerivedStateFromProps(props, state) {
-		let { login } = props;
+	static getDerivedStateFromProps(props) {
+    let { login } = props;
 		if (HELPER.isSuccessInApi(login.code)) {
-			props.history.push({ pathname: '/survey', state: { isAuthorized: true } });
+			props.history.push({ pathname: '/' });
 		}
 		return null;
 	}

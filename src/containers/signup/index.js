@@ -23,8 +23,8 @@ class Index extends UnAuthorized {
 			relevant: 25,
 			responses: 25,
 			topics: [],
-			role: this.getUserRole(props)
-		};
+      role: this.getUserRole(props),
+    };
   }
   
   // identify the type of loggedIn user (journalist/pr)
@@ -38,13 +38,13 @@ class Index extends UnAuthorized {
 		let { step } = state;
 		if (HELPER.isSuccessInApi(signup.code) && step === 2) {
 			return {
-				step: 3
+        step: 3
 			};
 		} else if (
 			(HELPER.isSuccessInApi(prProfile.code) && step === 3) ||
 			(HELPER.isSuccessInApi(journalistProfile.code) && step === 4)
 		) {
-			props.history.push({ pathname: '/survey', state: { isAuthorized: true } });
+			props.history.push({ pathname: '/survey' });
     }
     return null
 	}
@@ -52,10 +52,12 @@ class Index extends UnAuthorized {
 	// handle next button and final submission
 	handleSubmit = () => {
     let { step, role } = this.state;
-		let { signUp, createPrProfile, createJournalistProfile } = this.props;
+    let { signUp, createPrProfile, createJournalistProfile } = this.props;
 		if (step === 2) {
-			// validate form2
-			if (!HELPER.SignUpStep2Validation(this.state)) signUp(this.state);
+      // validate form2
+    	if (!HELPER.SignUpStep2Validation(this.state)) {
+        signUp(this.state);
+      }
 		} else if (step === 3) {
 			// validate form3 && Pr final submission
 			let validateForm3 = HELPER.SignUpStep3Validation(this.state);
@@ -111,6 +113,7 @@ class Index extends UnAuthorized {
   
   // render login sign up page
 	render() {
+    // if(this.state.loading) return <div>Loading.....</div>
     return (
 			<SignUp
 				{...this.state}
@@ -129,7 +132,7 @@ class Index extends UnAuthorized {
 
 const mapStateToProps = (state) => {
 	return {
-		...state
+		...state,
 	};
 };
 

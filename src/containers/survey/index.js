@@ -14,7 +14,7 @@ class Index extends Authorized {
 
 	static getDerivedStateFromProps(props, state) {
 		let { answers } = state;
-		let surveyData = props.survey.data;
+    let surveyData = props.survey.data;
 		if (HELPER.isEmptyObject(answers) && surveyData && surveyData.questions) {
 			let obj = {};
 			surveyData.questions.map((question) => (obj[question.id] = { id: question.id, value: 0 }));
@@ -55,7 +55,7 @@ class Index extends Authorized {
 
 	render() {
 		return (
-			<Loader isLoading={HELPER.isEmptyObject(this.props.survey.data) || false}>
+			<Loader isLoading={!HELPER.isSuccessInApi(this.props.survey.code)}>
 				<Survey
 					{...this.props}
 					{...this.state}

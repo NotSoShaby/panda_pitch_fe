@@ -16,9 +16,19 @@ const getSignupState = (state = store.getState()) => {
 	}
 };
 
-export const getUserId = createSelector(getSignupState, (n) => n.data.user_id);
-export const getUserRole = createSelector(getSignupState, (n) => n.data.role);
+export const getUserState = createSelector(getSignupState, (n) => n.data.user_id);
 
+export const getUserId = (state) =>{
+  let user = JSON.parse(localStorage.getItem('user'));
+  if(user)
+    return user.user_id
+}
+
+export const getUserRole = (state) =>{
+  let user = JSON.parse(localStorage.getItem('user'));
+  if(user)
+    return user.role
+}
 
 export const signUp = ({ email, password, fullName, role }) => ({
 	type: 'SIGNUP',

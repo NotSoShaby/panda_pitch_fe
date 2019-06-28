@@ -22,7 +22,7 @@ const Form4 = ({
 			<div className="full_widt mbot_zero">
 				<h3>Topic</h3>
           <AutoComplete 
-            list={journalistInterests.data && journalistInterests.data.results} 
+            list={journalistInterests.data && journalistInterests.data.data && journalistInterests.data.data.results} 
             onCreate={onCreate} 
             onSelect={onTodoSelection} 
             boxes={topics} 
@@ -33,8 +33,8 @@ const Form4 = ({
 			{error &&
 			error.topics && <div className="error">{error.topics.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
 			{HELPER.isErrorInApi(code) &&
-			message.non_field_errors && (
-				<div className="error">{message.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
+			journalistProfile.error.non_field_errors && (
+				<div className="error">{journalistProfile.error.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
 			)}
 
 			<div className="step_btn_wrapper">

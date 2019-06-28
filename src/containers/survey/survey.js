@@ -5,7 +5,7 @@ import IMAGES from '../../assets/images';
 
 // Login page rendering
 const Survey = ({ onBack, onSubmit, survey, answers, onRangeChange }) => {
-	let questions = survey.data.questions || [];
+  let questions = survey.data.questions || [];
 	return (
 		<div className="form_section">
 			<div className="form_logo">
