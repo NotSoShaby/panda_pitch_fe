@@ -1,18 +1,25 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
+import { START, DATA, ERROR } from '../handler';
 
 // create user login request
 const LOGIN = function* perform_checks() {
 	yield takeEvery('LOGIN', function*(action) {
-		yield put({ type: 'LOGIN_STARTED' });
+		yield put(START('LOGIN_STARTED'));
 		try {
-			const DATA = yield Request(CONSTANT.SIGN_URL, CONSTANT.POST, action.payload);
-			localStorage.setItem('token', DATA.token);
-			localStorage.setItem('role', 'client');
-			yield put({ type: 'LOGIN_SUCCESS', payload: DATA });
+      const RES = yield Request(CONSTANT.LOGIN_URL, CONSTANT.POST, action.payload);
+    	if (RES.token) {
+				localStorage.setItem('token', RES.token);
+				let data = { ...RES };
+        data.data = { ...RES.data };
+    		yield put({ type: 'LOGIN_SUCCESS', payload: DATA(RES) });
+				localStorage.setItem('user', JSON.stringify(data.data));
+			} else {
+    		yield put({ type: 'LOGIN_FAILED', payload: ERROR(RES) });
+			}
 		} catch (error) {
-			yield put({ type: 'LOGIN_FAILED', payload: error });
+    	yield put({ type: 'LOGIN_FAILED', payload: ERROR(error) });
 		}
 	});
 };

@@ -1,38 +1,24 @@
-const setUserToken = () => {
-	if (localStorage.getItem('role') === 'user') return localStorage.getItem('token');
-	else return null;
-};
-
-const setUserProfile = () => {
-	let user = localStorage.getItem('user');
-	if (localStorage.getItem('role') === 'admin' && user) return { ...JSON.parse(user), token: null };
-	else return { token: setUserToken() };
-};
+import HELPER from '../../utils/helper';
 
 export const defaultState = {
-	data: { login: setUserProfile() }
+	data: { ...HELPER.getItemFromSession('user') }
 };
 
 export function login(state = defaultState, action) {
 	switch (action.type) {
 		case 'LOGIN_INITIATED': {
-			return { ...state, status: 'uninitiated' };
+			return { ...state, code: 'uninitiated' };
 		}
 		case 'LOGIN_STARTED': {
-			return { ...state, status: 'ongoing' };
+			return { ...state };
 		}
 		case 'LOGIN_SUCCESS': {
-			return { ...state, ...action.payload, error: '', status: 'success' };
-		}
-		case 'SET_USER': {
-			return { ...state, ...action.payload, error: '', status: 'success' };
+			return { ...state, ...action.payload };
 		}
 		case 'LOGIN_FAILED': {
 			return {
 				...state,
-				...defaultState,
-				error: action.payload,
-				status: 'failed'
+				...action.payload
 			};
 		}
 		default: {

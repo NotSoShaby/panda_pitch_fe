@@ -19,19 +19,35 @@ class AutoComplete extends Component {
 		}
 	};
 
-	setVal = (e) => this.setState({ val: e.target.value });
+	setVal = (e) => {
+    let { onChange } = this.props;
+    onChange(e.target.value)
+    this.setState({ val: e.target.value });
+  }
+
+  onItemSelection = (val) => this.putInBox(val);
+
+  onCreate = (val) => {
+    let { onCreate } = this.props;
+    this.putInBox(val);
+    onCreate(val)
+  }
 
 	renderList = () => {
 		let { box, val } = this.state;
-		let { onCreate, list } = this.props;
-		let dropdownList = [];
-		list.map((item, index) => {
-			let isExist = box.filter((item1) => item1 === item.name);
-			if (!isExist.length && item.name.toLowerCase().includes(val.toLowerCase())) {
-				dropdownList.push(item.name);
-			}
-			return null;
-		});
+		let { list } = this.props;
+    let dropdownList = [];
+    list.length &&
+			list.map((item) => {
+				let isExist = box.filter((item1) => item1 === item.text);
+				if (!isExist.length && item.text && item.text.toLowerCase().includes(val.toLowerCase())) {
+          let isCreate = item.text.toLowerCase().split(' ')
+          if(isCreate[0] !== 'create'){
+            dropdownList.push(item.text);
+          }
+				}
+				return null;
+			});
 		if (val !== '')
 			return (
 				<div className="auto-selection-list">
@@ -44,7 +60,7 @@ class AutoComplete extends Component {
 							))
 						) : (
 							<li>
-								<span onCreate={() => onCreate(val)}>create</span>
+								<span onClick={() => this.onCreate(val)}>create</span>
 							</li>
 						)}
 					</ul>
@@ -61,7 +77,8 @@ class AutoComplete extends Component {
 						value={val}
 						onChange={this.setVal}
 						type="text"
-						name="topics"
+            name="topics"
+            autocomplete="off"
 						id="topics"
 						placeholder="Enter Any Topic"
 					/>
@@ -84,7 +101,8 @@ class AutoComplete extends Component {
 // props initialization ( default values )
 AutoComplete.defaultProps = {
 	list: [],
-	onCreate: () => {},
+  onCreate: () => {},
+  onChange: () => {},
 	onSelect: () => {}
 };
 
@@ -92,7 +110,8 @@ AutoComplete.defaultProps = {
 AutoComplete.propTypes = {
 	list: PropTypes.array.isRequired,
 	onCreate: PropTypes.func,
-	onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 // default importing

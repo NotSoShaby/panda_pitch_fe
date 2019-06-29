@@ -1,10 +1,15 @@
 import { Component } from 'react';
+import HELPER from '../utils/helper';
 
 export class Authorized extends Component {
 	// redirect unauthorized user to login screen
 	static validateAuthorization(props) {
-		let isAuthorized = props.location.state && props.location.state.isAuthorized;
-		if (!localStorage.getItem('user') && !isAuthorized) props.history.push('/login');
+    if (!localStorage.getItem('user') && 
+    !(
+      HELPER.isSuccessInApi(props.login.code) 
+      || HELPER.isSuccessInApi(props.signup.code)
+     )
+    ) props.history.push('/login');
 	}
 
 	constructor(props) {

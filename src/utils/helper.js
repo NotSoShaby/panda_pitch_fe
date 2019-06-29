@@ -131,7 +131,13 @@ class Helper {
 				rules: {
 					required: true
 				}
-			}
+      },
+      twitter: {
+        value: twitter,
+        rules: {
+          validLink:true,
+        }
+      }
 		};
 		if (this.isJournalist(role))
 			validateRule.outlet = {
@@ -146,6 +152,12 @@ class Helper {
 				rules: {
 					required: true
 				}
+      };
+      validateRule.linkedIn = {
+				value: linkedIn,
+				rules: {
+					validLink: true
+				}
 			};
 		}
 		return this.ValidationService.validate(validateRule);
@@ -158,6 +170,23 @@ class Helper {
 				value: topics,
 				rules: {
 					requiredArray: true
+				}
+			}
+		});
+
+	loginValidation = ({ username = '', password = '' }) =>
+		this.ValidationService.validate({
+			username: {
+				value: username,
+				rules: {
+					required: true
+				}
+			},
+			password: {
+				value: password,
+				rules: {
+					required: true,
+					minLength: 8
 				}
 			}
 		});

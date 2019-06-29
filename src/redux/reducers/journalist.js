@@ -8,7 +8,7 @@ export function journalistProfile(state = defaultState, action) {
 			return { ...state, code: 'uninitiated' };
 		}
 		case 'CREATE_JOURNALIST_PROFILE_STARTED': {
-			return { ...state, code: 'ongoing' };
+			return { ...state };
 		}
 		case 'CREATE_JOURNALIST_PROFILE_SUCCESS': {
 			return { ...state, ...action.payload };

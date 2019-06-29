@@ -18,13 +18,14 @@ const Form3 = ({
 	...props
 }) => {
 	let { data } = signup;
-	let { code, message } = prProfile;
+	let { code } = prProfile;
 	return [
 		<div key="form2" className="step_form_col">
-			{HELPER.isJournalist(data.role) ? (
+			<h2 className="mbot30">Tell us a little about yourself</h2>
+			{HELPER.isJournalist(data.data.role) ? (
 				<div>
 					<div className="full_widt">
-						<h2>Which outlets do you write for?</h2>
+						<h3>Which outlets do you write for?</h3>
 						<div className="custom_field">
 							<input
 								type="text"
@@ -43,7 +44,7 @@ const Form3 = ({
 			) : (
 				<div>
 					<div className="full_widt">
-						<h2>What's your company name?</h2>
+						<h3>What's your company name?</h3>
 						<div className="custom_field">
 							<input
 								type="text"
@@ -62,7 +63,7 @@ const Form3 = ({
 			)}
 
 			<div className="full_widt">
-				<h2>Whats your position?</h2>
+				<h3>Whats your position?</h3>
 				<div className="custom_field">
 					<input
 						type="text"
@@ -77,9 +78,9 @@ const Form3 = ({
 			</div>
 			{error &&
 			error.position && <div className="error">{error.position.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
-			<div className="full_widt">
-				<h2>Add social media</h2>
-				{HELPER.isPr(data.role) && (
+			<div className="full_widt mbot_zero">
+				<h3>Add social media</h3>
+				{HELPER.isPr(data.data.role) && (
 					<div className="custom_field">
 						<input
 							type="text"
@@ -89,7 +90,7 @@ const Form3 = ({
 							placeholder="linkedIn Name"
 							onChange={onChange}
 						/>
-						<label htmlFor="twitter">LinkediIn</label>
+						<label htmlFor="linkedIn">LinkediIn</label>
 					</div>
 				)}
 				{error &&
@@ -108,15 +109,15 @@ const Form3 = ({
 			</div>
 			{error &&
 			error.twitter && <div className="error">{error.twitter.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
-			{HELPER.isErrorInApi(code) && (
-				<div className="error">{message.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
+			{HELPER.isErrorInApi(code) && prProfile.error.non_field_errors && (
+				<div className="error">{prProfile.error.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
 			)}
 
 			<div className="step_btn_wrapper">
-				<Button className="white_bg_btn" onClick={onBack}>
+				{/* <Button className="white_bg_btn" onClick={onBack}>
 					Back
-				</Button>
-				<Button className="green_bg_btn" onClick={onSubmit}>
+				</Button> */}
+				<Button className="green_bg_btn signup_btn_cntr" onClick={onSubmit}>
 					Next
 				</Button>
 			</div>

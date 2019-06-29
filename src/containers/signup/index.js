@@ -4,7 +4,13 @@ import '../../../public/css/style.css';
 import HELPER from '../../utils/helper';
 import UnAuthorized from '../../routes/unAuthorized';
 import { bindActionCreators } from 'redux';
-import { signUp, createPrProfile, createJournalistProfile, getSurvey } from '../../redux/actions/signup';
+import {
+	signUp,
+	createPrProfile,
+	createJournalistProfile,
+  getJournalistInterests,
+  createInterest,
+} from '../../redux/actions/signup';
 import { connect } from 'react-redux';
 
 class Index extends UnAuthorized {
@@ -17,10 +23,11 @@ class Index extends UnAuthorized {
 			relevant: 25,
 			responses: 25,
 			topics: [],
-			role: this.getUserRole(props)
-		};
-	}
-
+      role: this.getUserRole(props),
+    };
+  }
+  
+  // identify the type of loggedIn user (journalist/pr)
 	getUserRole(props) {
 		if (props.signup.data && props.signup.data.user_id) return 3;
 		else return 1;
@@ -31,23 +38,26 @@ class Index extends UnAuthorized {
 		let { step } = state;
 		if (HELPER.isSuccessInApi(signup.code) && step === 2) {
 			return {
-				step: 3
+        step: 3
 			};
 		} else if (
 			(HELPER.isSuccessInApi(prProfile.code) && step === 3) ||
 			(HELPER.isSuccessInApi(journalistProfile.code) && step === 4)
 		) {
-			props.history.push({ pathname: '/survey', state: { isAuthorized: true } });
-		}
+			props.history.push({ pathname: '/survey' });
+    }
+    return null
 	}
 
 	// handle next button and final submission
 	handleSubmit = () => {
-		let { step, role } = this.state;
-		let { signUp, createPrProfile, createJournalistProfile } = this.props;
+    let { step, role } = this.state;
+    let { signUp, createPrProfile, createJournalistProfile } = this.props;
 		if (step === 2) {
-			// validate form2
-			if (!HELPER.SignUpStep2Validation(this.state)) signUp(this.state);
+      // validate form2
+    	if (!HELPER.SignUpStep2Validation(this.state)) {
+        signUp(this.state);
+      }
 		} else if (step === 3) {
 			// validate form3 && Pr final submission
 			let validateForm3 = HELPER.SignUpStep3Validation(this.state);
@@ -69,7 +79,7 @@ class Index extends UnAuthorized {
 
 	// handle back button
 	handleCancel = () => {
-		this.setState({ step: this.state.step - 1 });
+  	this.setState({ step: this.state.step - 1 });
 	};
 
 	// handle input change in form
@@ -82,20 +92,29 @@ class Index extends UnAuthorized {
 		this.setState({ [key]: value });
 	};
 
-	// handle tag selection in form
-	handleSelection = (key, value) => {
-		this.setState({ [key]: this.state[key] ? `${this.state[key]},${value}` : value });
-	};
-
 	// handle user selection
 	handleUserSelection = (key, value) => {
-		this.setState({ [key]: value });
+		this.setState({ [key]: value }, () => {
+      localStorage.setItem('role', this.state.role)
+    });
 		this.goToNextForm();
-	};
+  };
 
-	// render login sign up page
+  // create a new interest
+	createInterest = (val) => {
+    let { createInterest } = this.props;
+    createInterest(val);
+  }
+
+  // handle interests selection
+	handleTodoSelection = (topics) => {
+    this.setState({topics:topics})
+  }
+  
+  // render login sign up page
 	render() {
-		return (
+    // if(this.state.loading) return <div>Loading.....</div>
+    return (
 			<SignUp
 				{...this.state}
 				{...this.props}
@@ -103,16 +122,17 @@ class Index extends UnAuthorized {
 				onBack={this.handleCancel}
 				onChange={this.handleChange}
 				onRangeChange={this.handleRangeChange}
-				onSelect={this.handleSelection}
-				onUserSelection={this.handleUserSelection}
-			/>
+			  onUserSelection={this.handleUserSelection}
+        onCreate={this.createInterest}
+        onTodoSelection={this.handleTodoSelection}
+     	/>
 		);
 	}
 }
 
 const mapStateToProps = (state) => {
 	return {
-		...state
+		...state,
 	};
 };
 
@@ -122,8 +142,9 @@ const mapDispatchToProps = (dispatch) =>
 			signUp: (values) => signUp(values),
 			createPrProfile: (values) => createPrProfile(values),
 			createJournalistProfile: (values) => createJournalistProfile(values),
-			getSurvey: (data) => getSurvey(data)
-		},
+      getJournalistInterests: (data) => getJournalistInterests(data),
+      createInterest: (data) => createInterest(data)
+    },
 		dispatch
 	);
 

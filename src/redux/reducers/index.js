@@ -4,6 +4,7 @@ import { signup } from './signup';
 import { journalistProfile } from './journalist';
 import { prProfile } from './pr';
 import { survey } from './survey';
+import { journalistInterests } from './interests';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
@@ -11,16 +12,20 @@ const reducer = combineReducers({
 	login,
 	journalistProfile,
 	prProfile,
-	survey
+	survey,
+	journalistInterests
 });
+
+const initialState = { code: 'UNINITIATED', isLoading: false };
 
 //module default state for when user logout
 const defaultState = {
-	login: {},
-	signup: {},
-	journalistProfile: {},
-	prProfile: {},
-	survey: {}
+	login: initialState,
+	signup: initialState,
+	journalistProfile: initialState,
+	prProfile: initialState,
+	survey: initialState,
+	journalistInterests: initialState
 };
 
 // Empty state when user logout

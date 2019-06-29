@@ -1,4 +1,3 @@
-import HELPER from '../../utils/helper';
 import { createSelector } from 'reselect';
 import store from '../Store';
 
@@ -17,27 +16,19 @@ const getSignupState = (state = store.getState()) => {
 	}
 };
 
-const getJournalistState = (state = store.getState()) => {
-	if (state.journalistProfile) {
-		return state.journalistProfile;
-	} else {
-		return initialState;
-	}
-};
+export const getUserState = createSelector(getSignupState, (n) => n.data.user_id);
 
-const getPrState = (state = store.getState()) => {
-	if (state.prProfile) {
-		return state.prProfile;
-	} else {
-		return initialState;
-	}
-};
+export const getUserId = (state) =>{
+  let user = JSON.parse(localStorage.getItem('user'));
+  if(user)
+    return user.user_id
+}
 
-export const getUserId = createSelector(getSignupState, (n) => n.data.user_id);
-export const getUserRole = createSelector(getSignupState, (n) => n.data.role);
-
-export const getJournalistStatus = createSelector(getJournalistState, (n) => n.data.code);
-export const getPrStatus = createSelector(getPrState, (n) => n.data.code);
+export const getUserRole = (state) =>{
+  let user = JSON.parse(localStorage.getItem('user'));
+  if(user)
+    return user.role
+}
 
 export const signUp = ({ email, password, fullName, role }) => ({
 	type: 'SIGNUP',
@@ -64,24 +55,25 @@ export const createPrProfile = ({ position, company, linkedIn, twitter, userId }
 	};
 };
 
-export const createJournalistProfile = ({ position, outlet, topics, twitter }) => ({
-	type: 'CREATE_JOURNALIST_PROFILE',
-	payload: {
-		user_id: getUserId(),
-		outlet: outlet,
-		position: position,
-		topics: topics,
-		twitter_url: twitter ? twitter : ''
-	}
-});
-
-export const getSurvey = () => {
-	if (HELPER.isSuccessInApi(getJournalistStatus()))
-		return {
-			type: 'GET_JOURNALIST_SURVEY'
-		};
-	else
-		return {
-			type: 'GET_PR_SURVEY'
-		};
+export const createJournalistProfile = ({ position, outlet, topics, twitter }) => {
+	let topicList = '';
+	topics.map((item) => {
+		if (topicList === '') topicList = item;
+		else topicList = topicList + ',' + item;
+		return null;
+	});
+	return {
+		type: 'CREATE_JOURNALIST_PROFILE',
+		payload: {
+			user_id: getUserId(),
+			outlet: outlet,
+			position: position,
+			topics: topicList,
+			twitter_url: twitter ? twitter : ''
+		}
+	};
 };
+
+export const getJournalistInterests = (data) => ({ type: 'GET_JOURNALIST_INTERESTS', payload:data });
+
+export const createInterest = (data) => ({type:'CREATE_JOURNALIST_INTEREST', payload:{name:data}})

@@ -7,10 +7,10 @@ export const defaultState = {
 export function signup(state = defaultState, action) {
 	switch (action.type) {
 		case 'SIGNUP_INITATED': {
-			return { ...state, code: 'uninitiated' };
+			return { ...state, code: 'uninitiated', isLoading:false };
 		}
 		case 'SIGNUP_STARTED': {
-			return { ...state, code: 'ongoing' };
+			return { ...state, code: 'ongoing', isLoading:true };
 		}
 		case 'SIGNUP_SUCCESS': {
 			return { ...state, ...action.payload };

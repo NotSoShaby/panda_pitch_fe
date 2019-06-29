@@ -1,7 +1,7 @@
 import React from 'react';
 import Survey from './survey';
 import Authorized from '../../routes/authorized';
-import { getSurvey, surveySubmission } from '../../redux/actions/survey';
+import { getJRSurvey, getPRSurvey, surveySubmission } from '../../redux/actions/survey';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import HELPER from '../../utils/helper';
@@ -14,20 +14,25 @@ class Index extends Authorized {
 
 	static getDerivedStateFromProps(props, state) {
 		let { answers } = state;
-		let surveyData = props.survey.data;
+    let surveyData = props.survey.data;
 		if (HELPER.isEmptyObject(answers) && surveyData && surveyData.questions) {
 			let obj = {};
 			surveyData.questions.map((question) => (obj[question.id] = { id: question.id, value: 0 }));
 			return {
 				answers: obj
 			};
-		}
+		} else return null;
 	}
 
 	// request for survey
 	componentDidMount() {
-		let { getSurvey } = this.props;
-		getSurvey();
+    let {role} = this.props.signup.data;
+  	let { getJRSurvey, getPRSurvey } = this.props;
+	  if(HELPER.isJournalist(role))
+      getJRSurvey();
+    else 
+      getPRSurvey();
+		// getSurvey();
 	}
 
 	// handle survey answers
@@ -43,12 +48,14 @@ class Index extends Authorized {
 	// handle survey submission and redirect to the home screen
 	handleSubmit = async () => {
 		let res = await surveySubmission(this.state);
-		console.log('res============>', res);
+    if (HELPER.isSuccessInApi(res.code)) {
+      this.props.history.push("/")
+    }
 	};
 
 	render() {
 		return (
-			<Loader isLoading={HELPER.isEmptyObject(this.props.survey.data)}>
+			<Loader isLoading={!HELPER.isSuccessInApi(this.props.survey.code)}>
 				<Survey
 					{...this.props}
 					{...this.state}
@@ -70,7 +77,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) =>
 	bindActionCreators(
 		{
-			getSurvey: (data) => getSurvey(data)
+      getJRSurvey: () => getJRSurvey(),
+      getPRSurvey: () => getPRSurvey(),
 			// surveySubmission: (values) => surveySubmission(values)
 		},
 		dispatch
