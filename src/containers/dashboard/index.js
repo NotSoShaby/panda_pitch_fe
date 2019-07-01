@@ -6,10 +6,7 @@ import { bindActionCreators } from 'redux';
 import { logout } from '../../redux/actions/dashboard';
 
 class Index extends Authorized {
-	constructor(props) {
- 		super(props);
-		this.state = {};
-	}
+	
 
   // logout - ( empty store )
   handleLogout = () => {
@@ -20,7 +17,7 @@ class Index extends Authorized {
   };
   
 	render() {
-		return <Dashboard {...this.state} {...this.props} onLogout={this.handleLogout}/>;
+		return <Dashboard onLogout={this.handleLogout}/>;
 	}
 }
 
@@ -39,4 +36,4 @@ const mapDispatchToProps = (dispatch) =>
 	);
 
 // connect to store
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(null, mapDispatchToProps)(Index);
