@@ -5,6 +5,7 @@ import { journalistProfile } from './journalist';
 import { prProfile } from './pr';
 import { survey } from './survey';
 import { journalistInterests } from './interests';
+import history from '../../routes/history';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
@@ -31,6 +32,8 @@ const defaultState = {
 // Empty state when user logout
 export default (state, action) => {
 	if (action.type === 'LOGOUT') {
+		history.push('/login');
+		window.location.reload(true);
 		return defaultState;
 	} return reducer(state, action);
 };

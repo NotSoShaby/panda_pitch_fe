@@ -1,13 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import App from './app';
 import SignUp from '../containers/signup';
 import Login from '../containers/login';
 import Survey from '../containers/survey';
+import history from './history';
 
 // Switch between one screen to another screen
 const ProjectRoutes = () => (
-	<Router>
+	<Router history={history}>
 		<Switch>
 			<Route exact path="/" component={props => <App {...props} />} />
 			<Route exact path="/signup" component={props => <SignUp {...props} />} />

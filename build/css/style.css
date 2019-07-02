@@ -591,7 +591,7 @@ span.profile_detail {
 .srch_row {
     width: 100%;
     float: left;
-    position: relative;
+    position: relative;    min-height: 103px;
 }
 .srch_col{
   border: 1px solid #ededed;
@@ -727,11 +727,16 @@ span.slide_toggle {
     height: 40px;
     display: block;
     text-align: center;
-    line-height: 41px;padding: 0 20px;
+    line-height: 41px;
 }
-
+.menu li a span{
+  margin-right: 6px;
+}
+.cstm_dropdown span {
+  margin-right: 6px;
+}
 .slide_toggle span i {
-    font-size: 18px;
+    font-size: 18px;padding: 11px 20px;cursor: pointer;
 }
 .slide_toggle span.active{
   background: #40c252;
@@ -813,6 +818,7 @@ p.pitch_score {
     border-bottom: 2px solid #0088fe;
 }
 .pitch_num{
+  margin-left: 6px;
   color: #40c252;
 }
 .pitch_num.blue{

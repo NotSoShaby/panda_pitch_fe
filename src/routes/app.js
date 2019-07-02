@@ -17,7 +17,7 @@ class App extends Authorized {
 	render() {
 		return (
 			<div className="wrapper">
-				<Header />
+				<Header onLogout={this.handleLogout} />
 				{/* <button onClick={this.handleLogout}>logout</button> */}
 				<Route exact path="/" component={props => <Home {...props} />} />
 			</div>

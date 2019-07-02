@@ -2,6 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
+import history from '../../routes/history';
 
 // create user login request
 const LOGIN = function* performLogin() {
@@ -15,6 +16,7 @@ const LOGIN = function* performLogin() {
 				data.data = { ...RES.data };
 				yield put({ type: 'LOGIN_SUCCESS', payload: DATA(RES) });
 				localStorage.setItem('user', JSON.stringify(data.data));
+				history.push('/');
 			} else {
 				yield put({ type: 'LOGIN_FAILED', payload: ERROR(RES) });
 			}

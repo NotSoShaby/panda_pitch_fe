@@ -12,14 +12,6 @@ class Index extends UnAuthorized {
 		this.state = {};
 	}
 
-	static getDerivedStateFromProps(props) {
-		const { login } = props;
-		if (HELPER.isSuccessInApi(login.code)) {
-			props.history.push({ pathname: '/' });
-		}
-		return null;
-	}
-
 	// handle input change in form
 	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });

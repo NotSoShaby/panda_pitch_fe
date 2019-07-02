@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import IMAGES from '../assets/images';
 
 const { LOGO, USER, Message } = IMAGES;
 
-const Header = () => {
+const Header = ({ onLogout }) => {
 	const [isOpen, setOpen] = useState(false);
+	const [isNavbarOpen, setNavbarOpen] = useState(false);
+
 	return (
 		<header>
 			<div className="hdr_lft">
@@ -22,21 +25,18 @@ const Header = () => {
 							</button>
 							<ul className="dropdown-menu">
 								<li>
-									<Link to="/">HTML</Link>
+									<Link to="/">My Profile</Link>
 								</li>
 								<li>
-									<Link to="/">CSS</Link>
-								</li>
-								<li>
-									<Link to="/">JavaScript</Link>
+									<Link to="/">Logout</Link>
 								</li>
 							</ul>
 						</div>
 					</span>
-					<i className="fa fa-bars toggle_bar" aria-hidden="true" />
+					<i className="fa fa-bars toggle_bar" aria-hidden="true" onClick={() => setNavbarOpen(!isNavbarOpen)} />
 				</div>
 
-				<ul className="menu">
+				<ul className="menu" style={{ display: isNavbarOpen ? 'block' : 'none' }}>
 					<li className="active">
 						<Link to="/">Dashboard</Link>
 					</li>
@@ -74,13 +74,10 @@ const Header = () => {
 						</button>
 						<ul className="dropdown-menu">
 							<li>
-								<Link to="/">HTML</Link>
+								<Link to="/">My Profile</Link>
 							</li>
 							<li>
-								<Link to="/">CSS</Link>
-							</li>
-							<li>
-								<Link to="/">JavaScript</Link>
+								<Link to="/" onClick={onLogout}>Logout</Link>
 							</li>
 						</ul>
 					</div>
@@ -88,6 +85,15 @@ const Header = () => {
 			</div>
 		</header>
 	);
+};
+
+Header.defaultProps = {
+	onLogout: () => {},
+};
+
+// props type definition
+Header.propTypes = {
+	onLogout: PropTypes.func,
 };
 
 export default Header;
