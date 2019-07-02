@@ -5,7 +5,7 @@ import { START, DATA, ERROR } from '../handler';
 
 // create user signup request
 const CREATE_JOURNALIST_PROFILE = function* createJournalist() {
-	yield takeEvery('CREATE_JOURNALIST_PROFILE', function* (action) {
+	yield takeEvery('CREATE_JOURNALIST_PROFILE', function* generateAction(action) {
 		yield put(START('CREATE_JOURNALIST_PROFILE_STARTED'));
 		try {
 			const RES = yield Request(CONSTANT.CREATE_JOURNALIST_URL, CONSTANT.POST, action.payload);

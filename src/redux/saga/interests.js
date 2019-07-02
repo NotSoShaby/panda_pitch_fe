@@ -5,7 +5,7 @@ import { START, DATA, ERROR } from '../handler';
 
 // create user signup request
 const GET_JOURNALIST_INTERESTS = function* getInterests() {
-	yield takeEvery('GET_JOURNALIST_INTERESTS', function* (action) {
+	yield takeEvery('GET_JOURNALIST_INTERESTS', function* generateAction(action) {
 		yield put(START('GET_JOURNALIST_STARTED'));
 		try {
 			const RES = yield Request(`${CONSTANT.GET_JOURNALIST_INTERESTS_URL}?q=${action.payload}`, CONSTANT.GET);

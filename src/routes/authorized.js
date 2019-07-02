@@ -6,7 +6,12 @@ export class Authorized extends Component {
 	static validateAuthorization(props) {
 		if (
 			!localStorage.getItem('user')
-			&& !(HELPER.isSuccessInApi(props.login.code) || HELPER.isSuccessInApi(props.signup.code))
+			&& !(
+				(
+					(props.login && HELPER.isSuccessInApi(props.login.code))
+				)
+        || (props.signup && HELPER.isSuccessInApi(props.signup.code))
+			)
 		) { props.history.push('/login'); }
 	}
 

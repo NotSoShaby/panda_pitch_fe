@@ -5,7 +5,7 @@ import { START, DATA, ERROR } from '../handler';
 
 // create user signup request
 const CREATE_PR_PROFILE = function* createPrProfile() {
-	yield takeEvery('CREATE_PR_PROFILE', function* (action) {
+	yield takeEvery('CREATE_PR_PROFILE', function* generateAction(action) {
 		yield put(START('CREATE_PR_PROFILE_STARTED'));
 		try {
 			const RES = yield Request(CONSTANT.CREATE_PR_URL, CONSTANT.POST, action.payload);

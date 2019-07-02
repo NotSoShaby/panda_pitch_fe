@@ -5,7 +5,7 @@ import { START, DATA, ERROR } from '../handler';
 
 // create user signup request
 const GET_SURVEY = function* fetchSurvey() {
-	yield takeEvery('GET_JOURNALIST_SURVEY', function* (action) {
+	yield takeEvery('GET_JOURNALIST_SURVEY', function* generateAction(action) {
 		yield put(START('GET_SURVEY_STARTED'));
 		try {
 			const RES = yield Request(CONSTANT.SURVEY_JOR_URL, CONSTANT.GET, action.payload);

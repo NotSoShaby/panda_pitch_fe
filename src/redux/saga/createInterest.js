@@ -4,7 +4,7 @@ import CONSTANT from '../../utils/constant';
 
 // create user signup request
 const CREATE_JOURNALIST_INTEREST = function* createInterest() {
-	yield takeEvery('CREATE_JOURNALIST_INTEREST', function* (action) {
+	yield takeEvery('CREATE_JOURNALIST_INTEREST', function* generateAction(action) {
 		try {
 			const DATA = yield Request(
 				CONSTANT.CREATE_JOURNALIST_INTEREST_URL,

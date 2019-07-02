@@ -5,7 +5,7 @@ import { START, DATA, ERROR } from '../handler';
 
 // create user signup request
 const SIGNUP = function* performSignup() {
-	yield takeEvery('SIGNUP', function* (action) {
+	yield takeEvery('SIGNUP', function* generateAction(action) {
 		yield put(START('SIGNUP_STARTED'));
 		try {
 			const RES = yield Request(CONSTANT.SIGNUP_URL, CONSTANT.POST, action.payload);

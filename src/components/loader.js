@@ -14,7 +14,7 @@ Loader.defaultProps = {
 
 // props type definition
 Loader.propTypes = {
-	isLoading: PropTypes.boolean,
+	isLoading: PropTypes.bool,
 	className: PropTypes.string,
 };
 

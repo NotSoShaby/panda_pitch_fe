@@ -1,6 +1,6 @@
 // constant variables declaration
 
-const local = 'http://aafa63f5.ngrok.io';
+// const local = 'http://aafa63f5.ngrok.io';
 const server = 'http://18.224.60.229:2312';
 
 class Constant {

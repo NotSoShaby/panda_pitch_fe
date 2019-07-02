@@ -5,7 +5,7 @@ import { START, DATA, ERROR } from '../handler';
 
 // create user login request
 const LOGIN = function* performLogin() {
-	yield takeEvery('LOGIN', function* (action) {
+	yield takeEvery('LOGIN', function* generateAction(action) {
 		yield put(START('LOGIN_STARTED'));
 		try {
 			const RES = yield Request(CONSTANT.LOGIN_URL, CONSTANT.POST, action.payload);
