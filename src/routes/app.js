@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { logout } from '../redux/actions/app';
 import Header from '../components/header';
 import Home from '../containers/home';

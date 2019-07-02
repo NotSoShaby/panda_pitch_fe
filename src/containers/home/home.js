@@ -18,11 +18,13 @@ const Home = ({ createNewPitch }) => {
             <button className="btn new_pitch_btn" onClick={createNewPitch}>Write New Pitch</button>
         </div>
         <div className="srch_row">
+        <div className="search_auto_wrapper">
           <div className="srch_col">
               <input type="search" placeholder="Search for journalists or media outlets" value={val} onChange={(e)=>setVal(e.target.value)}/>
-              <button type="button"><img className="srch_icn" src={SEARCH_ICON}/></button>
+              <button type="button"><img className="srch_icn" src={SEARCH_ICON} alt="search"/></button>
           </div>
           <Search val={val}/>
+          </div>
         </div>
         <div className="pitches_row">
           <h4>My Pitches</h4>
@@ -38,24 +40,23 @@ const Home = ({ createNewPitch }) => {
 }
 
 const Search = ({ val }) => {
-  let searchList = []
-  val && PITCHES.map((pitch)=>{
-    if(pitch.name.toLowerCase().includes(val.toLowerCase()))
-      searchList.push({...pitch})
-  })
-  return searchList.length>0 && (<div className="srch_lst_row">
-    {searchList.map(({ name, profile, profilePic },count)=>{
-      return (<div key={count} className="srch_lst_col">
-          <div className="srch_pic">
-            <img src={profilePic}/>
-          </div>
-          <span className="pro_detail">
-              <h3>{name}</h3>
-              <p>{profile}</p>
-          </span>
-      </div>)
-  })}
+  return PITCHES.length>0 && (
+    <div className="srch_lst_row">
+      {PITCHES.map(({ name, profile, profilePic },count)=>{
+        if(val && name.toLowerCase().includes(val.toLowerCase()))
+        return (<div key={count} className="srch_lst_col">
+            <div className="srch_pic">
+              <img src={profilePic} alt="profile_pic"/>
+            </div>
+            <span className="pro_detail">
+                <h3>{name}</h3>
+                <p>{profile}</p>
+            </span>
+        </div>)
+        return null
+    })}
   </div>
+  
 )}
 
 

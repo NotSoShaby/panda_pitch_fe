@@ -1,4 +1,3 @@
-import HELPER from '../../utils/helper';
 import Request from '../../redux/ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { getUserId } from './signup';

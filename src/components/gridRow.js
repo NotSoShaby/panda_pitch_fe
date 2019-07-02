@@ -8,7 +8,7 @@ const GridRow = ({ logo, title, time, description, profilePic, name, profile, sc
   return (
     <div className="card_col">
         <div className="card_top_img">
-          <img src={logo}/>
+          <img src={logo} alt="logo"/>
         </div>
         <div className="card_contnt">
           <span className="cover">Coverage</span>
@@ -19,7 +19,7 @@ const GridRow = ({ logo, title, time, description, profilePic, name, profile, sc
         <p className="pitch_score green">Pitch Score <span className="pitch_num">{score}</span></p>
         <div className="card_pro_row">
           <div className="card_pro_img">
-            <img src={profilePic}/>
+            <img src={profilePic} alt="profile_pic"/>
           </div>
           <div className="card_pro_contnt">
             <h3>{name}</h3>

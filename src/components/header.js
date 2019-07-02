@@ -9,10 +9,10 @@ const Header = () => {
     <header>
       <div className="hdr_lft"> 
             <div className="logo">
-              <img src={LOGO}/>
+              <img src={LOGO} alt="logo"/>
                 <span className="profile_detail desktop_none">
                       <div className="user_img">
-                        <a href=""><img src={USER}/></a>
+                        <a href=""><img src={USER} alt="user"/></a>
                       </div>
                       <div className={`dropdown ${isOpen && 'open'}`}>
                         <button className="btn cstm_dropdown dropdown-toggle" type="button" data-toggle="dropdown">Jerry

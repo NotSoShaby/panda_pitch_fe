@@ -5,7 +5,7 @@ import HELPER from '../../utils/helper';
 
 // render form1
 const Form2 = ({ onSubmit, onBack, onChange, email, password, fullName, signup }) => {
-  let { code, isLoading } = signup;
+  let { code } = signup;
   // if(isLoading) return <div>Loading...</div>
 	return [
 		<h2 key="heading">Sign Up</h2>,

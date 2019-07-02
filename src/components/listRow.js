@@ -8,7 +8,7 @@ const ListRow = ({ logo, title, time, description, profilePic, name, profile }) 
   return (
     <div className="list_col">
       <div className="list_lft">
-        <img src={logo}/>
+        <img src={logo} alt="logo"/>
       </div>
       <div className="list_middle">
         <h3>{title}</h3>
@@ -17,7 +17,7 @@ const ListRow = ({ logo, title, time, description, profilePic, name, profile }) 
       </div>
       <div className="list_rgt">
         <div className="list_rgt_pro">
-          <img src={profilePic}/>
+          <img src={profilePic} alt="profile_pic"/>
         </div>
         <div className="list_rgt_cont">
           <h4>{name}</h4>

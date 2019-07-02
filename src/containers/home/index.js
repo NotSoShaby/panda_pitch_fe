@@ -22,7 +22,7 @@ class Index extends Component {
 	render() {
     let { isModalOpen } = this.state;
 		return [
-      <Modal onClose={this.handleModalClose} isOpen={isModalOpen}>
+      <Modal onClose={this.handleModalClose} isOpen={isModalOpen} autoClose>
         <p>Feature Coming Soon !</p>
         <div className="pop_btn">
           <button type="submit" className="btn btn-default green_bg_btn" onClick={this.handleModalClose}>OK</button>

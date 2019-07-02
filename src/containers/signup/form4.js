@@ -15,7 +15,7 @@ const Form4 = ({
   getJournalistInterests,
 	error
 }) => {
-	let { code, message } = journalistProfile;
+	let { code } = journalistProfile;
 	return (
 		<div className="step_form_col">
 			<h2 className="mbot30">What do you write about?</h2>

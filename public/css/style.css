@@ -468,6 +468,10 @@ ul.progress_bar li.completed:after {
 
 /*======================modal=================*/
 
+.cstm_modal{
+  padding-right: 15px;
+  display: block;
+}
 .cstm_modal .modal-content{
   border-radius: 0;
 }
@@ -491,9 +495,7 @@ ul.progress_bar li.completed:after {
     float: none;
     padding: 10px 44px;
 }
-/* .fade{
-  opacity: 1;
-} */
+
 /*======================header=================*/
 .container.cstm_container{
    width: 958px;
@@ -612,20 +614,24 @@ span.profile_detail {
 img.srch_icn {
     width: 34px;
 }
+.search_auto_wrapper{    position: absolute;
+  width: 100%;
+  float: left;}
 .srch_lst_row {
-    width: 100%;
-    float: left;border: 1px solid #ededed;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 102px;
-    bottom: 0;
-    background: #fff;
-    z-index: 9999;
-    overflow-y: auto;
-    height: 100%;
-    max-height: 242px;
-    box-shadow: 0px 6px 10px #0000000f;
+  width: 100%;
+  float: left;
+  border: 1px solid #ededed;
+  /* position: absolute; */
+  left: 0;
+  right: 0;
+  top: 102px;
+  bottom: 0;
+  background: #fff;
+  z-index: 9999;
+  overflow-y: auto;
+  /* height: 100%; */
+  max-height: 242px;
+  box-shadow: 0px 6px 10px #0000000f;
 }
 .srch_lst_col {
     width: 100%;
