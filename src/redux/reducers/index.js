@@ -16,14 +16,16 @@ const reducer = combineReducers({
 	journalistInterests,
 });
 
+const initialState = { code: 'UNINITIATED', isLoading: false };
+
 // module default state for when user logout
 const defaultState = {
-	login: {},
-	signup: {},
-	journalistProfile: {},
-	prProfile: {},
-	survey: {},
-	journalistInterests: {},
+	login: initialState,
+	signup: initialState,
+	journalistProfile: initialState,
+	prProfile: initialState,
+	survey: initialState,
+	journalistInterests: initialState,
 };
 
 // Empty state when user logout

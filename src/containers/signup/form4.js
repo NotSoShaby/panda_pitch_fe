@@ -12,38 +12,40 @@ const Form4 = ({
 	onTodoSelection,
 	journalistProfile,
 	journalistInterests,
+	getJournalistInterests,
 	error,
 }) => {
-	const { code, message } = journalistProfile;
+	const { code } = journalistProfile;
 	return (
 		<div className="step_form_col">
 			<h2 className="mbot30">What do you write about?</h2>
 			<div className="full_widt mbot_zero">
 				<h3>Topic</h3>
-				{HELPER.isSuccessInApi(journalistInterests.code) && (
-					<AutoComplete
-						list={journalistInterests.data}
-						onCreate={onCreate}
-						onSelect={onTodoSelection}
-						boxes={topics}
-					/>
-				)}
+				<AutoComplete
+					list={
+						journalistInterests.data
+						&& journalistInterests.data.data
+						&& journalistInterests.data.data.results
+					}
+					onCreate={onCreate}
+					onSelect={onTodoSelection}
+					boxes={topics}
+					onChange={getJournalistInterests}
+				/>
 			</div>
 
 			{error
 			&& error.topics && <div className="error">{error.topics.map(msg => <p key={msg}>{msg}</p>)}</div>}
 			{HELPER.isErrorInApi(code)
-			&& message.non_field_errors && (
-				<div className="error">{message.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
+			&& journalistProfile.error.non_field_errors && (
+				<div className="error">
+					{journalistProfile.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}
+				</div>
 			)}
 
 			<div className="step_btn_wrapper">
-				<Button type="submit" className="white_bg_btn" onClick={onBack}>
-					Back
-				</Button>
-				<Button type="submit" className="green_bg_btn" onClick={onSubmit}>
-					Next
-				</Button>
+				<Button type="submit" className="white_bg_btn" onClick={onBack}>Back</Button>
+				<Button type="submit" className="green_bg_btn" onClick={onSubmit}>Next</Button>
 			</div>
 		</div>
 	);

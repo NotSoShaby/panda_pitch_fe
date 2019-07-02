@@ -22,21 +22,34 @@ class AutoComplete extends Component {
 		}
 	};
 
-	setVal = e => this.setState({ val: e.target.value });
+	setVal = (e) => {
+		const { onChange } = this.props;
+		onChange(e.target.value);
+		this.setState({ val: e.target.value });
+	};
+
+	onItemSelection = val => this.putInBox(val);
+
+	onCreate = (val) => {
+		const { onCreate } = this.props;
+		this.putInBox(val);
+		onCreate(val);
+	};
 
 	renderList = () => {
 		const { box, val } = this.state;
 		const { list } = this.props;
 		const dropdownList = [];
-		if (list.length) {
-			list.map((item) => {
-				const isExist = box.filter(item1 => item1 === item.name);
-				if (!isExist.length && item.name.toLowerCase().includes(val.toLowerCase())) {
-					dropdownList.push(item.name);
+		list.map((item) => {
+			const isExist = box.filter(item1 => item1 === item.text);
+			if (!isExist.length && item.text && item.text.toLowerCase().includes(val.toLowerCase())) {
+				const isCreate = item.text.toLowerCase().split(' ');
+				if (isCreate[0] !== 'create') {
+					dropdownList.push(item.text);
 				}
-				return null;
-			});
-		}
+			}
+			return null;
+		});
 		if (val !== '') {
 			return (
 				<div className="auto-selection-list">
@@ -49,7 +62,7 @@ class AutoComplete extends Component {
 							))
 						) : (
 							<li>
-								<span onClick={() => this.putInBox(val)} role="button">create</span>
+								<span onClick={() => this.onCreate(val)} role="button">create</span>
 							</li>
 						)}
 					</ul>
@@ -69,6 +82,7 @@ class AutoComplete extends Component {
 						onChange={this.setVal}
 						type="text"
 						name="topics"
+						autoComplete="off"
 						id="topics"
 						placeholder="Enter Any Topic"
 					/>
@@ -90,15 +104,18 @@ class AutoComplete extends Component {
 
 // props initialization ( default values )
 AutoComplete.defaultProps = {
-	// onCreate: () => {},
+	list: [],
+	onCreate: () => {},
+	onChange: () => {},
 	onSelect: () => {},
 };
 
 // props type definition
 AutoComplete.propTypes = {
-	list: PropTypes.array.isRequired,
-	// onCreate: PropTypes.func,
+	list: PropTypes.array,
+	onCreate: PropTypes.func,
 	onSelect: PropTypes.func,
+	onChange: PropTypes.func,
 };
 
 // default importing

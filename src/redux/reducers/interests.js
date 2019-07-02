@@ -8,7 +8,7 @@ export function journalistInterests(state = defaultState, action) {
 			return { ...state, code: 'uninitiated' };
 		}
 		case 'GET_JOURNALIST_STARTED': {
-			return { ...state, code: 'ongoing' };
+			return { ...state };
 		}
 		case 'GET_JOURNALIST_SUCCESS': {
 			return { ...state, ...action.payload };

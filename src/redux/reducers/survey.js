@@ -8,7 +8,7 @@ export function survey(state = defaultState, action) {
 			return { ...state, code: 'uninitiated' };
 		}
 		case 'GET_SURVEY_STARTED': {
-			return { ...state, code: 'ongoing' };
+			return { ...state, ...action.payload };
 		}
 		case 'GET_SURVEY_SUCCESS': {
 			return { ...state, ...action.payload };

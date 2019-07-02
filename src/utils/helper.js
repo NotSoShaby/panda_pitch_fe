@@ -8,9 +8,7 @@ class Helper {
 	// form validation service
 	ValidationService = {
 		messages: {},
-		emailExpr: new RegExp(
-			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-		),
+		emailExpr: new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
 		linkExpr: new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/),
 		required(field, value) {
 			if (value.trim().length < 1) {
@@ -127,13 +125,24 @@ class Helper {
 
 	// validate sign up form3
 	SignUpStep3Validation = ({
-		outlet = '', position = '', company = '', role = '',
+		outlet = '',
+		position = '',
+		company = '',
+		role = '',
+		twitter = '',
+		linkedIn = '',
 	}) => {
 		const validateRule = {
 			position: {
 				value: position,
 				rules: {
 					required: true,
+				},
+			},
+			twitter: {
+				value: twitter,
+				rules: {
+					validLink: true,
 				},
 			},
 		};
@@ -149,6 +158,12 @@ class Helper {
 				value: company,
 				rules: {
 					required: true,
+				},
+			};
+			validateRule.linkedIn = {
+				value: linkedIn,
+				rules: {
+					validLink: true,
 				},
 			};
 		}

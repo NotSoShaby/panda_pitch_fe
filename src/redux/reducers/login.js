@@ -10,7 +10,7 @@ export function login(state = defaultState, action) {
 			return { ...state, code: 'uninitiated' };
 		}
 		case 'LOGIN_STARTED': {
-			return { ...state, code: 'ongoing' };
+			return { ...state };
 		}
 		case 'LOGIN_SUCCESS': {
 			return { ...state, ...action.payload };

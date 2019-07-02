@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import HELPER from '../../utils/helper';
 import store from '../Store';
 
 const initialState = {
@@ -16,25 +15,19 @@ const getSignupState = (state = store.getState()) => {
 	return initialState;
 };
 
-const getJournalistState = (state = store.getState()) => {
-	if (state.journalistProfile) {
-		return state.journalistProfile;
-	}
-	return initialState;
+export const getUserState = createSelector(getSignupState, n => n.data.user_id);
+
+export const getUserId = () => {
+	const user = JSON.parse(localStorage.getItem('user'));
+	if (user) return user.user_id;
+	return null;
 };
 
-const getPrState = (state = store.getState()) => {
-	if (state.prProfile) {
-		return state.prProfile;
-	}
-	return initialState;
+export const getUserRole = () => {
+	const user = JSON.parse(localStorage.getItem('user'));
+	if (user) return user.role;
+	return null;
 };
-
-export const getUserId = createSelector(getSignupState, n => n.data.user_id);
-export const getUserRole = createSelector(getSignupState, n => n.data.role);
-
-export const getJournalistStatus = createSelector(getJournalistState, n => n.data.code);
-export const getPrStatus = createSelector(getPrState, n => n.data.code);
 
 export const signUp = ({
 	email, password, fullName, role,
@@ -84,15 +77,6 @@ export const createJournalistProfile = ({
 	};
 };
 
-export const getSurvey = () => {
-	if (HELPER.isSuccessInApi(getJournalistStatus())) {
-		return {
-			type: 'GET_JOURNALIST_SURVEY',
-		};
-	}
-	return {
-		type: 'GET_PR_SURVEY',
-	};
-};
+export const getJournalistInterests = data => ({ type: 'GET_JOURNALIST_INTERESTS', payload: data });
 
-export const getJournalistInterests = () => ({ type: 'GET_JOURNALIST_INTERESTS' });
+export const createInterest = data => ({ type: 'CREATE_JOURNALIST_INTEREST', payload: { name: data } });

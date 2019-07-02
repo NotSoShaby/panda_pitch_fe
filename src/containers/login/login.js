@@ -8,7 +8,7 @@ import Button from '../../components/button';
 const Login = ({
 	onSubmit, onChange, login, error,
 }) => {
-	const { code, message } = login;
+	const { code } = login;
 
 	return (
 		<div className="form_section">
@@ -29,25 +29,33 @@ const Login = ({
 						<label htmlFor="username">Email Id</label>
 					</div>
 					{error
-					&& error.username && <div className="error">{error.username.map(msg => <p key={msg}>{msg}</p>)}</div>}
+					&& error.username && (
+						<div className="error">{error.username.map(msg => <p key={msg}>{msg}</p>)}</div>
+					)}
 					<div className="custom_field">
-						<input type="password" name="password" id="password" placeholder="··················" onChange={onChange} />
+						<input
+							type="password"
+							name="password"
+							id="password"
+							placeholder="··················"
+							onChange={onChange}
+						/>
 						<label htmlFor="password">Password</label>
 					</div>
 					{error
-					&& error.password && <div className="error">{error.password.map(msg => <p key={msg}>{msg}</p>)}</div>}
+					&& error.password && (
+						<div className="error">{error.password.map(msg => <p key={msg}>{msg}</p>)}</div>
+					)}
 					{HELPER.isErrorInApi(code)
-					&& message.non_field_errors && (
-						<div className="error">{message.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
+					&& login.error.non_field_errors && (
+						<div className="error">{login.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 					)}
 					<div className="step_btn_wrapper">
-						<Button className="green_bg_btn btn_cntr" onClick={onSubmit}>
-							Submit
-						</Button>
+						<Button className="green_bg_btn btn_cntr" onClick={onSubmit}>Submit</Button>
 					</div>
 				</div>
 				<p className="text-center sign_up_marg">
-					New user?
+					<span>New user?</span>
 					<span>
 						<Link to="/signup">Signup</Link>
 					</span>

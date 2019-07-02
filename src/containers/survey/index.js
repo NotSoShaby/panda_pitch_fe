@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Survey from './survey';
 import Authorized from '../../routes/authorized';
-import { getSurvey, surveySubmission } from '../../redux/actions/survey';
+import { getJRSurvey, getPRSurvey, surveySubmission } from '../../redux/actions/survey';
 import HELPER from '../../utils/helper';
 import Loader from '../../components/loader';
 
@@ -30,8 +30,14 @@ class Index extends Authorized {
 
 	// request for survey
 	componentDidMount() {
-		const { getSurvey } = this.props;
-		getSurvey();
+		const { role } = this.props.signup.data;
+		const { getJRSurvey, getPRSurvey } = this.props;
+		if (HELPER.isJournalist(role)) {
+			getJRSurvey();
+		} else {
+			getPRSurvey();
+		}
+		// getSurvey();
 	}
 
 	// handle survey answers
@@ -46,13 +52,15 @@ class Index extends Authorized {
 
 	// handle survey submission and redirect to the home screen
 	handleSubmit = async () => {
-		await surveySubmission(this.state);
-		// console.log('res============>', res);
+		const res = await surveySubmission(this.state);
+		if (HELPER.isSuccessInApi(res.code)) {
+			this.props.history.push('/');
+		}
 	};
 
 	render() {
 		return (
-			<Loader isLoading={HELPER.isEmptyObject(this.props.survey.data) || false}>
+			<Loader isLoading={!HELPER.isSuccessInApi(this.props.survey.code)}>
 				<Survey
 					{...this.props}
 					{...this.state}
@@ -71,8 +79,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{
-		getSurvey: data => getSurvey(data),
-		// surveySubmission: (values) => surveySubmission(values)
+		getJRSurvey: () => getJRSurvey(),
+		getPRSurvey: () => getPRSurvey(),
 	},
 	dispatch,
 );

@@ -9,8 +9,8 @@ import {
 	signUp,
 	createPrProfile,
 	createJournalistProfile,
-	getSurvey,
 	getJournalistInterests,
+	createInterest,
 } from '../../redux/actions/signup';
 
 class Index extends UnAuthorized {
@@ -27,13 +27,16 @@ class Index extends UnAuthorized {
 		};
 	}
 
+	// identify the type of loggedIn user (journalist/pr)
 	getUserRole = (props) => {
 		if (props.signup.data && props.signup.data.user_id) return 3;
 		return 1;
-	}
+	};
 
 	static getDerivedStateFromProps(props, state) {
-		const { signup, prProfile, journalistProfile } = props;
+		const {
+			signup, prProfile, journalistProfile, history,
+		} = props;
 		const { step } = state;
 		if (HELPER.isSuccessInApi(signup.code) && step === 2) {
 			return {
@@ -44,14 +47,9 @@ class Index extends UnAuthorized {
 			(HELPER.isSuccessInApi(prProfile.code) && step === 3)
 			|| (HELPER.isSuccessInApi(journalistProfile.code) && step === 4)
 		) {
-			return props.history.push({ pathname: '/survey', state: { isAuthorized: true } });
+			history.push({ pathname: '/survey' });
 		}
 		return null;
-	}
-
-	componentDidMount() {
-		const { getJournalistInterests } = this.props;
-		getJournalistInterests();
 	}
 
 	// handle next button and final submission
@@ -61,7 +59,9 @@ class Index extends UnAuthorized {
 		const { signUp, createPrProfile, createJournalistProfile } = this.props;
 		if (step === 2) {
 			// validate form2
-			if (!HELPER.SignUpStep2Validation(this.state)) signUp(this.state);
+			if (!HELPER.SignUpStep2Validation(this.state)) {
+				signUp(this.state);
+			}
 		} else if (step === 3) {
 			// validate form3 && Pr final submission
 			const validateForm3 = HELPER.SignUpStep3Validation(obj);
@@ -82,7 +82,7 @@ class Index extends UnAuthorized {
 	goToNextForm = () => {
 		const { step } = this.state;
 		this.setState({ step: step + 1 });
-	}
+	};
 
 	// handle back button
 	handleCancel = () => {
@@ -100,20 +100,28 @@ class Index extends UnAuthorized {
 		this.setState({ [key]: value });
 	};
 
-	// handle tag selection in form
-	handleSelection = (key, value) => {
-		const previousValue = this.state[key];
-		this.setState({ [key]: previousValue ? `${previousValue},${value}` : value });
-	};
-
 	// handle user selection
 	handleUserSelection = (key, value) => {
-		this.setState({ [key]: value });
+		this.setState({ [key]: value }, () => {
+			localStorage.setItem('role', this.state.role);
+		});
 		this.goToNextForm();
+	};
+
+	// create a new interest
+	createInterest = (val) => {
+		const { createInterest } = this.props;
+		createInterest(val);
+	};
+
+	// handle interests selection
+	handleTodoSelection = (topics) => {
+		this.setState({ topics });
 	};
 
 	// render login sign up page
 	render() {
+		// if(this.state.loading) return <div>Loading.....</div>
 		return (
 			<SignUp
 				{...this.state}
@@ -122,8 +130,9 @@ class Index extends UnAuthorized {
 				onBack={this.handleCancel}
 				onChange={this.handleChange}
 				onRangeChange={this.handleRangeChange}
-				onSelect={this.handleSelection}
 				onUserSelection={this.handleUserSelection}
+				onCreate={this.createInterest}
+				onTodoSelection={this.handleTodoSelection}
 			/>
 		);
 	}
@@ -138,8 +147,8 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		signUp: values => signUp(values),
 		createPrProfile: values => createPrProfile(values),
 		createJournalistProfile: values => createJournalistProfile(values),
-		getSurvey: data => getSurvey(data),
 		getJournalistInterests: data => getJournalistInterests(data),
+		createInterest: data => createInterest(data),
 	},
 	dispatch,
 );

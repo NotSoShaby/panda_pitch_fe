@@ -1,19 +1,36 @@
-import HELPER from '../../utils/helper';
-import { getJournalistStatus, getUserId } from './signup';
+import { createSelector } from 'reselect';
 import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
+import { getUserId } from './signup';
+import store from '../Store';
 
-
-export const getSurvey = () => {
-	if (HELPER.isSuccessInApi(getJournalistStatus())) {
-		return {
-			type: 'GET_JOURNALIST_SURVEY',
-		};
-	}
-	return {
-		type: 'GET_PR_SURVEY',
-	};
+const initialState = {
+	message: {},
+	// isLoading: false,
+	data: {},
+	code: '',
 };
+
+
+const getJournalistState = (state = store.getState()) => {
+	if (state.journalistProfile) {
+		return state.journalistProfile;
+	}
+	return initialState;
+};
+
+const getPrState = (state = store.getState()) => {
+	if (state.prProfile) {
+		return state.prProfile;
+	}
+	return initialState;
+};
+
+export const getJournalistStatus = createSelector(getJournalistState, n => n.data.code);
+export const getPrStatus = createSelector(getPrState, n => n.data.code);
+
+export const getJRSurvey = () => ({ type: 'GET_JOURNALIST_SURVEY' });
+export const getPRSurvey = () => ({ type: 'GET_PR_SURVEY' });
 
 export const surveySubmission = async ({ answers }) => {
 	const answersObj = {};
@@ -23,7 +40,7 @@ export const surveySubmission = async ({ answers }) => {
 	});
 	const payload = {
 		user_id: getUserId(),
-		question_answer: answersObj,
+		question_answer: JSON.stringify(answersObj),
 	};
 	return Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST, payload);
 };
