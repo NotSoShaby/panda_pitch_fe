@@ -5,6 +5,7 @@ import Form2 from './form2';
 import Form3 from './form3';
 import Form4 from './form4';
 import IMAGES from '../../assets/images';
+import HELPER from '../../utils/helper';
 
 // condition form rendering
 const RenderForm = ({ ...props }) => {
@@ -17,14 +18,17 @@ const RenderForm = ({ ...props }) => {
 
 // status bar and sign up form
 const SignUp = ({ ...props }) => {
-	const { step } = props;
+	const { step, role } = props;
+	let totalSteps = 4;
+	if (HELPER.isPr(role)) { totalSteps = 3; }
+
 	return (
 		<div className="form_section">
 			<div className="form_logo">
 				<img src={IMAGES.WHITE_LOGO} alt="" />
 			</div>
 			<div className="form_wrapper">
-				{step !== 1 && <StatusBar steps={4} active={step - 1} />}
+				{step !== 1 && <StatusBar steps={totalSteps} active={step - 1} />}
 				<RenderForm {...props} />
 			</div>
 		</div>

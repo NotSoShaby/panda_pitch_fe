@@ -51,12 +51,7 @@ class Index extends Authorized {
 	handleCancel = () => this.props.history.push('/');
 
 	// handle survey submission and redirect to the home screen
-	handleSubmit = async () => {
-		const res = await surveySubmission(this.state);
-		if (HELPER.isSuccessInApi(res.code)) {
-			this.props.history.push('/');
-		}
-	};
+	handleSubmit = () => surveySubmission(this.state);
 
 	render() {
 		return (

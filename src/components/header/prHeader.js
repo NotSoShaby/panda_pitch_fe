@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import IMAGES from '../assets/images';
+import IMAGES from '../../assets/images';
 
 const { LOGO, USER, Message } = IMAGES;
 
-const Header = ({ onLogout }) => {
+const PRHeader = ({ onLogout }) => {
 	const [isOpen, setOpen] = useState(false);
 	const [isNavbarOpen, setNavbarOpen] = useState(false);
 
@@ -19,7 +19,12 @@ const Header = ({ onLogout }) => {
 							<Link to="/"><img src={USER} alt="user" /></Link>
 						</div>
 						<div className={`dropdown ${isOpen && 'open'}`}>
-							<button className="btn cstm_dropdown dropdown-toggle" type="button" data-toggle="dropdown">
+							<button
+								className="btn cstm_dropdown dropdown-toggle"
+								type="button"
+								data-toggle="dropdown"
+								onClick={() => setOpen(!isOpen)}
+							>
 								<span>Jerry</span>
 								<i className="fa fa-angle-down cstm_angle" aria-hidden="true" />
 							</button>
@@ -86,13 +91,13 @@ const Header = ({ onLogout }) => {
 	);
 };
 
-Header.defaultProps = {
+PRHeader.defaultProps = {
 	onLogout: () => {},
 };
 
 // props type definition
-Header.propTypes = {
+PRHeader.propTypes = {
 	onLogout: PropTypes.func,
 };
 
-export default Header;
+export default PRHeader;

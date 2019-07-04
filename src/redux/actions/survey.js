@@ -3,6 +3,8 @@ import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { getUserId } from './signup';
 import store from '../Store';
+import history from '../../routes/history';
+import HELPER from '../../utils/helper';
 
 const initialState = {
 	message: {},
@@ -42,5 +44,8 @@ export const surveySubmission = async ({ answers }) => {
 		user_id: getUserId(),
 		question_answer: JSON.stringify(answersObj),
 	};
-	return Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST, payload);
+	const res = await Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST, payload);
+	if (HELPER.isSuccessInApi(res.code)) {
+		history.push('/');
+	}
 };

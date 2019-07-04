@@ -35,19 +35,13 @@ class Index extends UnAuthorized {
 
 	static getDerivedStateFromProps(props, state) {
 		const {
-			signup, prProfile, journalistProfile, history,
+			signup,
 		} = props;
 		const { step } = state;
 		if (HELPER.isSuccessInApi(signup.code) && step === 2) {
 			return {
 				step: 3,
 			};
-		}
-		if (
-			(HELPER.isSuccessInApi(prProfile.code) && step === 3)
-			|| (HELPER.isSuccessInApi(journalistProfile.code) && step === 4)
-		) {
-			history.push({ pathname: '/survey' });
 		}
 		return null;
 	}

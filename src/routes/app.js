@@ -2,9 +2,11 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../redux/actions/app';
-import Header from '../components/header';
 import Home from '../containers/home';
 import Authorized from './authorized';
+import HELPER from '../utils/helper';
+import JRHeader from '../components/header/jrHeader';
+import PRHeader from '../components/header/prHeader';
 
 class App extends Authorized {
 	handleLogout = () => {
@@ -14,11 +16,18 @@ class App extends Authorized {
 		history.push('/login');
 	};
 
+	renderHeader = () => {
+		const { login } = this.props;
+		if (HELPER.isPr(login.data.role)) {
+			return <PRHeader onLogout={this.handleLogout} />;
+		}
+		return <JRHeader onLogout={this.handleLogout} />;
+	};
+
 	render() {
 		return (
 			<div className="wrapper">
-				<Header onLogout={this.handleLogout} />
-				{/* <button onClick={this.handleLogout}>logout</button> */}
+				{this.renderHeader()}
 				<Route exact path="/" component={props => <Home {...props} />} />
 			</div>
 		);
@@ -30,7 +39,5 @@ const mapStateToProps = state => ({
 	signup: state.signup,
 });
 
-
 // connect to store
 export default connect(mapStateToProps, null)(App);
-// export default App;

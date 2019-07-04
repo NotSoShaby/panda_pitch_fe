@@ -20,7 +20,7 @@ const Form3 = ({
 	return [
 		<div key="form2" className="step_form_col">
 			<h2 className="mbot30">Tell us a little about yourself</h2>
-			{HELPER.isJournalist(data.data.role) ? (
+			{HELPER.isJournalist(data.role) ? (
 				<div>
 					<div className="full_widt">
 						<h3>Which outlets do you write for?</h3>
@@ -78,7 +78,7 @@ const Form3 = ({
 			&& error.position && <div className="error">{error.position.map(msg => <p key={msg}>{msg}</p>)}</div>}
 			<div className="full_widt mbot_zero">
 				<h3>Add social media</h3>
-				{HELPER.isPr(data.data.role) && (
+				{HELPER.isPr(data.role) && (
 					<div className="custom_field">
 						<input
 							type="text"
@@ -88,7 +88,7 @@ const Form3 = ({
 							placeholder="linkedIn Name"
 							onChange={onChange}
 						/>
-						<label htmlFor="linkedIn">LinkediIn</label>
+						<label htmlFor="linkedIn">LinkedIn</label>
 					</div>
 				)}
 				{error

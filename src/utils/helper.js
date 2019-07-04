@@ -209,7 +209,7 @@ class Helper {
 	isJournalist = type => type === 'journalist';
 
 	// return true if loggedIn user is pr
-	isPr = type => type === 'pr';
+	isPr = type => (type === 'pr' || type === 'Pr');
 
 	// return true if object is empty
 	isEmptyObject = obj => Object.entries(obj).length === 0 && obj.constructor === Object;

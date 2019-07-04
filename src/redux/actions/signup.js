@@ -60,9 +60,11 @@ export const createJournalistProfile = ({
 	position, outlet, topics, twitter,
 }) => {
 	let topicList = '';
-	topics.map((item) => {
-		if (topicList === '') topicList = item;
-		else topicList = `${topicList},${item}`;
+	topics.map(({ value, isActive }) => {
+		if (isActive) {
+			if (topicList === '') topicList = value;
+			else topicList = `${topicList},${value}`;
+		}
 		return null;
 	});
 	return {

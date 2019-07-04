@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import HOME from './home';
+import Home from './home';
 import Modal from '../../components/modal';
 
 class Index extends Component {
@@ -27,7 +27,7 @@ class Index extends Component {
 					</button>
 				</div>
 			</Modal>,
-			<HOME key="home" createNewPitch={this.createNewPitch} />,
+			<Home {...this.props} key="home" createNewPitch={this.createNewPitch} />,
 		];
 	}
 }

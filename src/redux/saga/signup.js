@@ -12,7 +12,7 @@ const SIGNUP = function* performSignup() {
 			if (RES.code === 'SUCCESS') {
 				const data = { ...RES };
 				data.data = { ...data.data, ...action.props };
-				yield put({ type: 'SIGNUP_SUCCESS', payload: DATA(data) });
+				yield put({ type: 'SIGNUP_SUCCESS', payload: DATA(data.data) });
 				localStorage.setItem('user', JSON.stringify(data.data));
 			}
 			if (RES.status) {

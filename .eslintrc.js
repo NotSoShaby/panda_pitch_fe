@@ -25,7 +25,8 @@ module.exports = {
 		'react/jsx-indent': [ 2, 'tab' ],
 		'react/jsx-indent-props': [ 2, 'tab' ],
 		'no-param-reassign': [ 2, { props: false } ],
-		'no-plusplus': [ 2, { allowForLoopAfterthoughts: true } ],
+    'no-plusplus': [ 2, { allowForLoopAfterthoughts: true } ],
+    'prefer-destructuring': 0,
 		'jsx-a11y/label-has-for': [
 			2,
 			{
@@ -51,5 +52,6 @@ module.exports = {
     "react/button-has-type": 0,
     "no-useless-escape": 0,
     "jsx-a11y/interactive-supports-focus": 0,
+
 	}
 };

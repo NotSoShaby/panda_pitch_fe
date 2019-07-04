@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import IMAGES from '../assets/images';
+import IMAGES from '../../assets/images';
 
 const { LOGO, USER, Message } = IMAGES;
 
-const Header = ({ onLogout }) => {
+const JRHeader = ({ onLogout }) => {
 	const [isOpen, setOpen] = useState(false);
 	const [isNavbarOpen, setNavbarOpen] = useState(false);
 
@@ -19,7 +19,12 @@ const Header = ({ onLogout }) => {
 							<Link to="/"><img src={USER} alt="user" /></Link>
 						</div>
 						<div className={`dropdown ${isOpen && 'open'}`}>
-							<button className="btn cstm_dropdown dropdown-toggle" type="button" data-toggle="dropdown">
+							<button
+								className="btn cstm_dropdown dropdown-toggle"
+								type="button"
+								data-toggle="dropdown"
+								onClick={() => setOpen(!isOpen)}
+							>
 								<span>Jerry</span>
 								<i className="fa fa-angle-down cstm_angle" aria-hidden="true" />
 							</button>
@@ -37,20 +42,20 @@ const Header = ({ onLogout }) => {
 				</div>
 				<ul className={`menu ${isNavbarOpen ? 'menu_open' : 'menu_close'}`}>
 					<li className="active">
-						<Link to="/">Dashboard</Link>
+						<Link to="/">Explorer</Link>
 					</li>
 					<li>
 						<Link to="/">
-							<span>Media Manager</span>
+							<span>Inbox</span>
 							<i className="fa fa-caret-down" aria-hidden="true" />
 						</Link>
 					</li>
 					<li>
-						<Link to="/">Clients</Link>
+						<Link to="/">Storybuilder</Link>
 					</li>
 					<li>
 						<Link to="/" className="new_pitch_btn">
-							<span>New Pitch</span>
+							<span>Request Stories</span>
 						</Link>
 					</li>
 				</ul>
@@ -68,7 +73,7 @@ const Header = ({ onLogout }) => {
 							data-toggle="dropdown"
 							onClick={() => setOpen(!isOpen)}
 						>
-							<span>Jerry</span>
+							<span>Shelly</span>
 							<i className="fa fa-angle-down cstm_angle" aria-hidden="true" />
 						</button>
 						<ul className="dropdown-menu">
@@ -86,13 +91,13 @@ const Header = ({ onLogout }) => {
 	);
 };
 
-Header.defaultProps = {
+JRHeader.defaultProps = {
 	onLogout: () => {},
 };
 
 // props type definition
-Header.propTypes = {
+JRHeader.propTypes = {
 	onLogout: PropTypes.func,
 };
 
-export default Header;
+export default JRHeader;
