@@ -87,12 +87,12 @@ a:focus {
 }
 
 .form_section h3 {
-	font-weight: 500;
+	font-weight: 600;
 	color: #000;
 	margin-bottom: -8px;
 	float: left;
 	width: 100%;
-	font-size: 15px;
+	font-size: 16px;
 	margin-top: 0;
 }
 .form_wrapper {
@@ -130,7 +130,7 @@ form.step_form_col {
 .step_form_col .custom_field input {
 	font-size: 14px;
 	border: 0;
-	border: 1px solid #969696;
+	border: 1px solid #9B9B9B;
 	font-family: inherit;
 	-webkit-appearance: none;
 	border-radius: 0;
@@ -157,6 +157,23 @@ form.step_form_col {
 	float: left;
 	padding: 0 10px;
 	margin-bottom: 0;
+}
+
+.auto-selection .topic_list .active{
+  background: #53c251;
+  color: #fff;
+}
+.auto-selection .custom_field{
+  position: relative;
+}
+.auto-selection .custom_field i {
+  bottom: 17px;
+  position: absolute;
+  right: 21px;
+  line-height: 18px;
+  margin: auto;
+  color: #53c251;
+  cursor: pointer;
 }
 
 .step_form_col .custom_field ::-webkit-input-placeholder {
@@ -188,7 +205,7 @@ form.step_form_col {
 }
 
 .form_wrapper .btn {
-	height: 50px;
+	height: 52px;
 	border: 2px solid #53c251;
 	text-transform: uppercase;
 	font-size: 16px;
@@ -223,7 +240,7 @@ form.step_form_col {
 .form_wrapper p span {
 	display: inline-block;
 	font-size: 16px;
-	font-weight: 700;
+	font-weight: 600;
 	margin-left: 15px;
 }
 .form_wrapper p span a {
@@ -239,11 +256,19 @@ form.step_form_col {
 	list-style: none;
 	display: inline-block;
 	background-color: #e7e7e7;
-	padding: 6px 10px;
-	border-radius: 4px;
-	margin: 0px 2px 10px;
-	font-weight: 600;
-	font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin: 0px 2px 10px;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: capitalize;
+  margin-right: 10px;
+}
+.auto-selection-list ul li:focus{
+  background: #ccc;
+}
+.auto-selection-list ul li:hover{
+  background: #ccc;
 }
 .form_logo {
 	text-align: center;
@@ -293,7 +318,7 @@ ul.progress_bar li span:before {
 	left: 0;
 }
 ul.progress_bar li:last-child {
-	width: 27px;
+	width: 27px !important;
 }
 ul.progress_bar li.active span:before {
 	box-shadow: 0px 2px 8px rgba(0, 0, 0, .4);
@@ -434,18 +459,20 @@ ul.progress_bar li.completed:after {
 	border: 1px solid #ddd;
 	width: 100%;
 	border-radius: 4px;
-	background: #fff;
+  background: #fff;
+  padding: 0;
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
-	max-height: 140px;
+	max-height: 156px;
 	overflow-y: scroll;
 }
 .auto-selection-list ul li {
 	list-style: none;
-  padding: 5px 0;
+  padding: 5px 18px;
   cursor: pointer;
 }
 .auto-selection-list ul li span {
-	font-weight: 700;
+  font-weight: 700;
+  text-transform: capitalize;
 }
 .step_form_col .range_list {
 	padding-left: 0;
@@ -516,6 +543,12 @@ header {
 }
 .logo {
     width: 20%;
+}
+.menu_close{
+  display: block !important;
+}
+.menu_open{
+  display: block !important;
 }
 .menu {
   margin-left: 50px;
@@ -977,6 +1010,10 @@ header {
     top: 57px;
     display: none;
 }
+
+.menu_close{
+  display: none !important;
+}
 .menu li {
     display: block;
     list-style: none;
@@ -1112,6 +1149,9 @@ header {
 }
 .menu {
     margin-left: 17px;
+}
+.menu_close{
+  display: none !important;
 }
 .menu li {
     margin-right: 17px;

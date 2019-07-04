@@ -1,6 +1,6 @@
 // constant variables declaration
 
-// const local = 'http://aafa63f5.ngrok.io';
+// const local = 'http://1a9ec8a2.ngrok.io';
 const server = 'http://18.224.60.229:2312';
 
 class Constant {
@@ -25,6 +25,8 @@ class Constant {
   GET_JOURNALIST_INTERESTS_URL = '/auto/interest-autocomplete';
 
   CREATE_JOURNALIST_INTEREST_URL = '/api/users/interest/create';
+
+  GET_PR_PITCHES_URL = '/api/pr/mypitch/2'
 
   GET = 'get';
 

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Home from './home';
 import Modal from '../../components/modal';
+import HELPER from '../../utils/helper';
+import { getPrPitches } from '../../redux/actions/pitches';
 
 class Index extends Component {
 	constructor(props) {
@@ -10,11 +12,33 @@ class Index extends Component {
 		this.state = { isModalOpen: false };
 	}
 
+	componentDidMount() {
+		console.log('iscomint11');
+		if (this.isPr()) {
+			console.log('iscomint');
+			const { getPitches } = this.props;
+			getPitches();
+		}
+	}
+
+
 	// close modal
 	handleModalClose = () => this.setState({ isModalOpen: false });
 
 	// create new pitch
 	createNewPitch = () => this.setState({ isModalOpen: true });
+
+	isPr = () => {
+		const { login: { data: { role } }, signup } = this.props;
+		let type = role;
+		if (!type) {
+			type = signup.data.role;
+		}
+		if (HELPER.isPr(type)) {
+			return true;
+		}
+		return false;
+	};
 
 	render() {
 		const { isModalOpen } = this.state;
@@ -27,14 +51,16 @@ class Index extends Component {
 					</button>
 				</div>
 			</Modal>,
-			<Home {...this.props} key="home" createNewPitch={this.createNewPitch} />,
+			<Home isPr={this.isPr()} {...this.props} key="home" createNewPitch={this.createNewPitch} />,
 		];
 	}
 }
 
 const mapStateToProps = state => state;
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+	getPitches: data => getPrPitches(data),
+}, dispatch);
 
 // connect to store
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

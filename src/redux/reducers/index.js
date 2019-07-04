@@ -5,6 +5,7 @@ import { journalistProfile } from './journalist';
 import { prProfile } from './pr';
 import { survey } from './survey';
 import { journalistInterests } from './interests';
+import { prPitches } from './pitches';
 import history from '../../routes/history';
 
 // Wrap all reducers in a container
@@ -15,6 +16,7 @@ const reducer = combineReducers({
 	prProfile,
 	survey,
 	journalistInterests,
+	prPitches,
 });
 
 const initialState = { code: 'UNINITIATED', isLoading: false };
@@ -27,6 +29,7 @@ const defaultState = {
 	prProfile: initialState,
 	survey: initialState,
 	journalistInterests: initialState,
+	prPitches: initialState,
 };
 
 // Empty state when user logout
