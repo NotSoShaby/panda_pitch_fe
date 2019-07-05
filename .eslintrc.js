@@ -52,6 +52,6 @@ module.exports = {
     "react/button-has-type": 0,
     "no-useless-escape": 0,
     "jsx-a11y/interactive-supports-focus": 0,
-
+    "camelcase": 0
 	}
 };

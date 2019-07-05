@@ -1,13 +1,13 @@
 import React, { Component, useState } from 'react';
 // import { Link } from 'react-router-dom';
-import METADATA from '../../utils/metadata';
+// import METADATA from '../../utils/metadata';
 import ListRow from '../../components/listRow';
 import GridRow from '../../components/gridRow';
 import JrHome from './jrHome';
 import PrHome from './prHome';
-// import HELPER from '../../utils/helper';
+import HELPER from '../../utils/helper';
 
-const { PITCHES } = METADATA;
+// const { PITCHES } = METADATA;
 
 const HomeScreen = ({
 	createNewPitch, requestStory, view, setView, isPr,
@@ -18,11 +18,14 @@ const HomeScreen = ({
 	return <JrHome setView={setView} requestStory={requestStory} view={view} />;
 };
 
-const Layout = ({ view }) => {
-	if (view) {
-		return <div className="card_row">{PITCHES.map(pitch => <GridRow key={pitch.name} {...pitch} />)}</div>;
+const Layout = ({ view, prPitches: { data } }) => {
+	if (HELPER.isObject(data) && data.length) {
+		if (view) {
+			return <div className="card_row">{data.map(pitch => <GridRow key={pitch.id} {...pitch} />)}</div>;
+		}
+		return data.map(pitch => <ListRow key={pitch.id} {...pitch} />);
 	}
-	return PITCHES.map(pitch => <ListRow key={pitch.name} {...pitch} />);
+	return null;
 };
 
 class Pagination extends Component {
@@ -43,7 +46,6 @@ class Pagination extends Component {
 		const { end } = this.state;
 		const list = [];
 		while (start < end) {
-			console.log('coming======>');
 			list.push(
 				<li className="active">
 					<span>{start}</span>
@@ -95,7 +97,7 @@ const Home = (props) => {
 		<div>
 			<div className="container cstm_container bg_skyblue">
 				<HomeScreen {...props} view={view} setView={setView} />
-				<Layout view={view} />
+				<Layout view={view} {...props} />
 				<Pagination />
 			</div>
 		</div>

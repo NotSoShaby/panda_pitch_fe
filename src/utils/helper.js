@@ -212,7 +212,10 @@ class Helper {
 	isPr = type => (type === 'pr' || type === 'Pr');
 
 	// return true if object is empty
-	isEmptyObject = obj => Object.entries(obj).length === 0 && obj.constructor === Object;
+  isEmptyObject = obj => Object.entries(obj).length === 0 && obj.constructor === Object;
+
+  // return true if object is empty
+  isObject = obj => ((typeof obj === 'object' || typeof obj === 'function') && (obj !== null))
 }
 
 export default new Helper();
