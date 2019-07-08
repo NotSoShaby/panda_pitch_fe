@@ -5,6 +5,7 @@ import SignUp from '../containers/signup';
 import Login from '../containers/login';
 import Survey from '../containers/survey';
 import Dashboard from '../containers/dashboard';
+import CreatePitch from '../containers/createPitch';
 
 // Switch between one screen to another screen
 const ProjectRoutes = (props) => {
@@ -15,6 +16,7 @@ const ProjectRoutes = (props) => {
 				<Route exact path="/signup" component={(props) => <SignUp {...props} />} />
 				<Route exact path="/login" component={(props) => <Login {...props} />} />
 				<Route exact path="/survey" component={(props) => <Survey {...props} />} />
+				<Route exact path="/create_pitch" component={(props) => <CreatePitch {...props} />} />
 			</Switch>
 		</Router>
 	);
