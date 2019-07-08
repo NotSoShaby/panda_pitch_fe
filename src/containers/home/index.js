@@ -51,7 +51,7 @@ class Index extends Component {
 					</button>
 				</div>
 			</Modal>,
-			<Home isPr={this.isPr()} {...this.props} key="home" createNewPitch={this.createNewPitch} />,
+			<Home isPr={this.isPr()} {...this.props} {...this.state} key="home" createNewPitch={this.createNewPitch} />,
 		];
 	}
 }

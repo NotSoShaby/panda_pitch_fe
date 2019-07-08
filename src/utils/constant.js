@@ -1,12 +1,12 @@
 // constant variables declaration
 
-const local = 'http://d8fba5a9.ngrok.io';
-// const server = 'http://18.224.60.229:2312';
+// const local = 'http://207885d0.ngrok.io';
+const server = 'http://18.224.60.229:2312';
 
 class Constant {
   PUBLIC_PATH = process.env.PUBLIC_URL;
 
-  URL = local;
+  URL = server;
 
 	SIGNUP_URL = '/api/users/signup';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import Button from '../../components/button';
 import Question from './question';
 import IMAGES from '../../assets/images';
@@ -9,7 +10,7 @@ import HELPER from '../../utils/helper';
 const Survey = ({
 	onBack, onSubmit, survey, answers, onRangeChange, login: { data }, signup,
 }) => {
-	const questions = survey.data.questions || [];
+	const questions = _.orderBy(survey.data.questions, 'id', 'asc') || [];
 	let { role } = data;
 	if (!role) {
 		const { data } = signup;

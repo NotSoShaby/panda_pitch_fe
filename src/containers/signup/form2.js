@@ -31,7 +31,7 @@ const Form2 = ({
 					placeholder="JaneAppleseed@gmail.com"
 					onChange={onChange}
 				/>
-				<label htmlFor="email">Email Id</label>
+				<label htmlFor="email">Email</label>
 			</div>
 
 			<div className="custom_field">

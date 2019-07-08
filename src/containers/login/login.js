@@ -26,7 +26,7 @@ const Login = ({
 							placeholder="JaneAppleseed@gmail.com"
 							onChange={onChange}
 						/>
-						<label htmlFor="username">Email Id</label>
+						<label htmlFor="username">Email</label>
 					</div>
 					{error
 					&& error.username && (
