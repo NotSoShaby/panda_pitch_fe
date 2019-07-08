@@ -5,7 +5,6 @@ import HELPER from '../../utils/helper';
 // render form2
 const Form3 = ({
 	onSubmit,
-	onBack,
 	onChange,
 	outlet,
 	company,
@@ -15,14 +14,13 @@ const Form3 = ({
 	signup,
 	prProfile,
 	error,
-	...props
 }) => {
-	let { data } = signup;
-	let { code } = prProfile;
+	const { data } = signup;
+	const { code } = prProfile;
 	return [
 		<div key="form2" className="step_form_col">
 			<h2 className="mbot30">Tell us a little about yourself</h2>
-			{HELPER.isJournalist(data.data.role) ? (
+			{HELPER.isJournalist(data.role) ? (
 				<div>
 					<div className="full_widt">
 						<h3>Which outlets do you write for?</h3>
@@ -30,7 +28,7 @@ const Form3 = ({
 							<input
 								type="text"
 								name="outlet"
-								value={outlet}
+								value={outlet || ''}
 								id="outlet"
 								placeholder="Outlet Name"
 								onChange={onChange}
@@ -38,8 +36,8 @@ const Form3 = ({
 							<label htmlFor="outlet">Outlet</label>
 						</div>
 					</div>
-					{error &&
-					error.outlet && <div className="error">{error.outlet.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
+					{error
+					&& error.outlet && <div className="error">{error.outlet.map(msg => <p key={msg}>{msg}</p>)}</div>}
 				</div>
 			) : (
 				<div>
@@ -49,7 +47,7 @@ const Form3 = ({
 							<input
 								type="text"
 								name="company"
-								value={company}
+								value={company || ''}
 								id="company"
 								placeholder="Company Name"
 								onChange={onChange}
@@ -57,8 +55,8 @@ const Form3 = ({
 							<label htmlFor="company">Company</label>
 						</div>
 					</div>
-					{error &&
-					error.company && <div className="error">{error.company.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
+					{error
+					&& error.company && <div className="error">{error.company.map(msg => <p key={msg}>{msg}</p>)}</div>}
 				</div>
 			)}
 
@@ -68,7 +66,7 @@ const Form3 = ({
 					<input
 						type="text"
 						name="position"
-						value={position}
+						value={position || ''}
 						id="position"
 						placeholder="Position Name"
 						onChange={onChange}
@@ -76,30 +74,30 @@ const Form3 = ({
 					<label htmlFor="position">Position</label>
 				</div>
 			</div>
-			{error &&
-			error.position && <div className="error">{error.position.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
+			{error
+			&& error.position && <div className="error">{error.position.map(msg => <p key={msg}>{msg}</p>)}</div>}
 			<div className="full_widt mbot_zero">
 				<h3>Add social media</h3>
-				{HELPER.isPr(data.data.role) && (
+				{HELPER.isPr(data.role) && (
 					<div className="custom_field">
 						<input
 							type="text"
 							name="linkedIn"
-							value={linkedIn}
+							value={linkedIn || ''}
 							id="linkedIn"
 							placeholder="linkedIn Name"
 							onChange={onChange}
 						/>
-						<label htmlFor="linkedIn">LinkediIn</label>
+						<label htmlFor="linkedIn">LinkedIn</label>
 					</div>
 				)}
-				{error &&
-				error.linkedIn && <div className="error">{error.linkedIn.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
+				{error
+				&& error.linkedIn && <div className="error">{error.linkedIn.map(msg => <p key={msg}>{msg}</p>)}</div>}
 				<div className="custom_field">
 					<input
 						type="text"
 						name="twitter"
-						value={twitter}
+						value={twitter || ''}
 						id="twitter"
 						placeholder="Twitter Name"
 						onChange={onChange}
@@ -107,21 +105,19 @@ const Form3 = ({
 					<label htmlFor="twitter">Twitter</label>
 				</div>
 			</div>
-			{error &&
-			error.twitter && <div className="error">{error.twitter.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
+			{error
+			&& error.twitter && <div className="error">{error.twitter.map(msg => <p key={msg}>{msg}</p>)}</div>}
 			{HELPER.isErrorInApi(code) && prProfile.error.non_field_errors && (
-				<div className="error">{prProfile.error.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
+				<div className="error">{prProfile.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 			)}
 
 			<div className="step_btn_wrapper">
 				{/* <Button className="white_bg_btn" onClick={onBack}>
 					Back
 				</Button> */}
-				<Button className="green_bg_btn signup_btn_cntr" onClick={onSubmit}>
-					Next
-				</Button>
+				<Button className="green_bg_btn signup_btn_cntr" onClick={onSubmit}> Next </Button>
 			</div>
-		</div>
+		</div>,
 	];
 };
 

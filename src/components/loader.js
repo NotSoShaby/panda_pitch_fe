@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 
 const Loader = ({ children, isLoading, className }) => {
 	if (isLoading) return <div className={className}>isLoading...</div>;
-	else return children;
+	return children;
 };
 
 // props initialization ( default values )
 Loader.defaultProps = {
 	isLoading: true,
-	className: ''
+	className: '',
 };
 
 // props type definition
 Loader.propTypes = {
-	isLoading: PropTypes.boolean,
-	className: PropTypes.string
+	isLoading: PropTypes.bool,
+	className: PropTypes.string,
 };
 
 // default importing

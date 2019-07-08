@@ -13,11 +13,15 @@ class App extends Authorized {
 	render() {
 		return (
 			<div className="App">
-				<button onClick={this.handleLogout}>logout</button>
+				<button onClick={this.handleLogout} type="button">logout</button>
 				<header className="App-header">
 					<img src={logo} className="App-logo" alt="logo" />
 					<p>
-						Edit <code>src/App.js</code> and save to reload.
+						Edit
+						{' '}
+						<code>src/App.js</code>
+						{' '}
+and save to reload.
 					</p>
 					<a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
 						Learn React

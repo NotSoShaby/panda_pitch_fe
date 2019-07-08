@@ -1,5 +1,5 @@
 export const defaultState = {
-	data: {}
+	data: {},
 };
 
 export function journalistInterests(state = defaultState, action) {
@@ -16,7 +16,7 @@ export function journalistInterests(state = defaultState, action) {
 		case 'GET_JOURNALIST_FAILED': {
 			return {
 				...state,
-				...action.payload
+				...action.payload,
 			};
 		}
 		default: {
