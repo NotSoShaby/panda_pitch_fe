@@ -26,7 +26,17 @@ class Constant {
 
   CREATE_JOURNALIST_INTEREST_URL = '/api/users/interest/create';
 
-  GET_PR_PITCHES_URL = '/api/pr/mypitch?pr_id=1'
+  GET_PR_PITCHES_URL = '/api/pr/mypitch?pr_id=1';
+
+  GET_PR_CLIENTS_AUTO = '/api/pr/clients-auto?q=C';
+
+  GET_PR_CLIENTS = '/api/pr/clients?pr_id=1';
+
+  CREATE_PR_CLIENT = '/api/pr/client/create';
+
+  GET_PR_MEDIALISTS = '/api/pr/medialists?pr_id=1';
+
+  CREATE_PR_MEDIALISTS = '/api/pr/medialists/create';
 
   GET = 'get';
 
