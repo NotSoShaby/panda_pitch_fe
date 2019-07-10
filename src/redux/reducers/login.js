@@ -1,7 +1,7 @@
 import HELPER from '../../utils/helper';
 
 export const defaultState = {
-	data: { ...HELPER.getItemFromSession('user') }
+	data: { ...HELPER.getItemFromSession('user') },
 };
 
 export function login(state = defaultState, action) {
@@ -18,7 +18,7 @@ export function login(state = defaultState, action) {
 		case 'LOGIN_FAILED': {
 			return {
 				...state,
-				...action.payload
+				...action.payload,
 			};
 		}
 		default: {

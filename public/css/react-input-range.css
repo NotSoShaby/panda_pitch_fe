@@ -1,5 +1,6 @@
 .input_range .input-range__track {
-	background: rgb(211, 211, 211);
+  background: rgb(211, 211, 211);
+  height: 13px;
 }
 .input_range .input-range__track--active {
 	background: rgb(211, 211, 211);
