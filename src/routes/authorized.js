@@ -4,12 +4,15 @@ import HELPER from '../utils/helper';
 export class Authorized extends Component {
 	// redirect unauthorized user to login screen
 	static validateAuthorization(props) {
-    if (!localStorage.getItem('user') && 
-    !(
-      HELPER.isSuccessInApi(props.login.code) 
-      || HELPER.isSuccessInApi(props.signup.code)
-     )
-    ) props.history.push('/login');
+		if (
+			!localStorage.getItem('user')
+			&& !(
+				(
+					(props.login && HELPER.isSuccessInApi(props.login.code))
+				)
+        || (props.signup && HELPER.isSuccessInApi(props.signup.code))
+			)
+		) { props.history.push('/login'); }
 	}
 
 	constructor(props) {

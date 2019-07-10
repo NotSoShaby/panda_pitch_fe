@@ -4,8 +4,8 @@ import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
 
 // create user signup request
-const GET_JOURNALIST_INTERESTS = function* performChecks() {
-	yield takeEvery('GET_JOURNALIST_INTERESTS', function*(action) {
+const GET_JOURNALIST_INTERESTS = function* getInterests() {
+	yield takeEvery('GET_JOURNALIST_INTERESTS', function* generateAction(action) {
 		yield put(START('GET_JOURNALIST_STARTED'));
 		try {
 			const RES = yield Request(`${CONSTANT.GET_JOURNALIST_INTERESTS_URL}?q=${action.payload}`, CONSTANT.GET);
@@ -13,8 +13,8 @@ const GET_JOURNALIST_INTERESTS = function* performChecks() {
 				type: 'GET_JOURNALIST_SUCCESS',
 				payload: {
 					code: 'SUCCESS',
-					data: DATA(RES)
-				}
+					data: DATA(RES),
+				},
 			});
 		} catch (error) {
 			yield put({ type: 'GET_JOURNALIST_FAILED', payload: ERROR(error) });

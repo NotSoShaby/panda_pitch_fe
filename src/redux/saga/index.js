@@ -7,6 +7,7 @@ import PR_SURVEY from './prSurvey';
 import JOURNALIST_SURVEY from './journalistSurvey';
 import GET_JOURNALIST_INTERESTS from './interests';
 import CREATE_JOURNALIST_INTEREST from './createInterest';
+import GET_PR_PITCHES from './pitches';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -17,8 +18,9 @@ const rootSaga = function* rootSaga() {
 		CREATE_JOURNALIST_PROFILE(),
 		PR_SURVEY(),
 		JOURNALIST_SURVEY(),
-    GET_JOURNALIST_INTERESTS(),
-    CREATE_JOURNALIST_INTEREST()
+		GET_JOURNALIST_INTERESTS(),
+		CREATE_JOURNALIST_INTEREST(),
+		GET_PR_PITCHES(),
 	]);
 };
 

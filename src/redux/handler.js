@@ -1,17 +1,13 @@
-export const DATA = (data) => {
-	return {
-		code: 'SUCCESS',
-		isLoading: false,
-		data
-	};
-};
+export const DATA = data => ({
+	code: 'SUCCESS',
+	isLoading: false,
+	data,
+});
 
-export const ERROR = (error) => {
-	return {
-		code: 'ERROR',
-		isLoading: false,
-		error: error
-	};
-};
+export const ERROR = error => ({
+	code: 'ERROR',
+	isLoading: false,
+	error,
+});
 
-export const START = (type) => ({ type, payload:{isLoading: true, code: 'ongoing'} });
+export const START = type => ({ type, payload: { isLoading: true, code: 'ongoing' } });
