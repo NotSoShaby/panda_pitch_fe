@@ -2,22 +2,24 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import IMAGES from '../assets/images';
 
+const imagepath = require('../../public/images/google.jpg');
+
 const { SEARCH_ICON } = IMAGES;
 
 const SearchBox = ({
-	val, data, onSelect, setVal,
+	searchString, data, onSelect, setSearchValue,
 }) => {
-	const search = (val) => {
+	const search = (searchString) => {
 		if (!data || data.length === 0) return null;
 		return (
 			<div className="srch_lst_row">
 				{/* {data.map(({ name, profile, profilePic }) => { */}
 				{data.map(({ id, name }) => {
-					if (val && name.toLowerCase().includes(val.toLowerCase())) {
+					if (searchString && name.toLowerCase().includes(searchString.toLowerCase())) {
 						return (
 							<div key={name} className="srch_lst_col" role="button" onClick={() => onSelect(id)}>
 								<div className="srch_pic">
-									{/* <img src={profilePic} alt="profile_pic" /> */}
+									<img src={imagepath} alt="profile_pic" />
 								</div>
 								<span className="pro_detail">
 									<h3>{name}</h3>
@@ -38,28 +40,27 @@ const SearchBox = ({
 				<input
 					type="search"
 					placeholder="Search for journalists or media outlets"
-					value={val}
-					onChange={e => setVal(e.target.value)}
+					value={searchString}
+					onChange={e => setSearchValue(e.target.value)}
 				/>
 				<button type="button">
 					<img className="srch_icn" src={SEARCH_ICON} alt="search" />
 				</button>
 			</div>
-			{search(val)}
+			{search(searchString)}
 		</React.Fragment>
 	);
 };
 
 SearchBox.defaultProps = {
 	data: [],
-	val: '',
-	// setVal: () => {},
+	searchString: '',
 };
 
 SearchBox.propTypes = {
 	data: PropTypes.array,
-	val: PropTypes.string,
-	setVal: PropTypes.func.isRequired,
+	searchString: PropTypes.string,
+	setSearchValue: PropTypes.func.isRequired,
 };
 
 export default SearchBox;

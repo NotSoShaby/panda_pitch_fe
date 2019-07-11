@@ -99,23 +99,26 @@ class AutoComplete extends Component {
 
 	render() {
 		const { box, val } = this.state;
+		const { showTextBox } = this.props;
 		return (
 			<div className="auto-selection">
-				<div className="custom_field">
-					<input
-						value={val || ''}
-						onChange={this.setVal}
-						type="text"
-						name="topics"
-						autoComplete="off"
-						id="topics"
-						placeholder="Enter Any Topic"
-					/>
+				{showTextBox && (
+					<div className="custom_field">
+						<input
+							value={val || ''}
+							onChange={this.setVal}
+							type="text"
+							name="topics"
+							autoComplete="off"
+							id="topics"
+							placeholder="Enter Any Topic"
+						/>
 
-					<label htmlFor="topics">Topic</label>
-					{this.renderCreateButton()}
-					{this.renderList()}
-				</div>
+						<label htmlFor="topics">Topic</label>
+						{this.renderCreateButton()}
+						{this.renderList()}
+					</div>
+				)}
 				<div />
 				<ul className="topic_list">
 					{box.map(({ value, isActive }, count) => (
@@ -137,6 +140,7 @@ class AutoComplete extends Component {
 // props initialization ( default values )
 AutoComplete.defaultProps = {
 	list: [],
+	showTextBox: true,
 	onCreate: () => {},
 	onChange: () => {},
 	onSelect: () => {},
@@ -144,6 +148,7 @@ AutoComplete.defaultProps = {
 
 // props type definition
 AutoComplete.propTypes = {
+	showTextBox: PropTypes.bool,
 	list: PropTypes.array,
 	onCreate: PropTypes.func,
 	onSelect: PropTypes.func,

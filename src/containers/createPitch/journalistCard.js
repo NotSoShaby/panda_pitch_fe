@@ -1,5 +1,7 @@
 import React from 'react';
 
+const imagepath = require('../../../public/images/google.jpg');
+
 const JournalistCard = ({
 	selectedJournalists,
 	addMessageForJournalist,
@@ -9,7 +11,7 @@ const JournalistCard = ({
 			<div className="pernl-pro-conts">
 				<div className="card_pro_img">
 					<img
-						src="img/card_pro.jpg"
+						src={imagepath}
 						alt="card_pro"
 					/>
 				</div>

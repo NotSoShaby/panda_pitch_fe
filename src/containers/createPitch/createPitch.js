@@ -3,12 +3,12 @@
 /* eslint-disable react/jsx-indent */
 import React, { useState } from 'react';
 import InputRangeSelector from '../../components/inputRange';
-import Button from '../../components/button';
+// import Button from '../../components/button';
 import AutoComplete from '../../components/autoComplete';
 // import HELPER from '../../utils/helper';
-import StatusBar from '../signup/statusBar';
 import IMAGES from '../../assets/images';
 import METADATA from '../../utils/metadata';
+import StatusBar from '../../components/statusBar';
 
 const { SEARCH_ICON } = IMAGES;
 const { PITCHES } = METADATA;
@@ -18,54 +18,38 @@ const CreatePitch = ({
 	active,
 	hideDiv,
 	progressValue,
-	pressReleaseImage,
-	// handleClient,
+	// pressReleaseImage,
 	handleAddNewClient,
-	// handleAddProfile,
-	// handleAddTopics,
-	handleAddMedia1,
-	handleAddMedia2,
-	handleAddMedia3,
+	// handleAddMedia1,
+	// handleAddMedia2,
+	// handleAddMedia3,
 	handleAddPressRelease,
-	topics,
 	onCreate,
 	onTodoSelection,
-	// journalistProfile,
 	journalistInterests,
 	getJournalistInterests,
-	handleInputText,
+	// handleInputText,
 	onRangeChange,
+	changeNextScreen,
+	// handleClient,
+	// handleAddProfile,
+	// handleAddTopics,
+	// topics,
+	// journalistProfile,
 	// error,
 }) => {
 	const [val, setVal] = useState('');
 	return (
-		<div className="form_section">
-			{/* <div className="form_logo">
-				<img src={IMAGES.WHITE_LOGO} alt="" />
-			</div> */}
-			<div className="form_wrapper">
-				<div
-					key="form1"
-					className="step_form_col"
-				>
+		<div className="create_new_pitch_form">
+			<div className="form_wrapper pitch_form_wraper">
+				<div key="form1" className="step_form_col">
 					<div className="slidecontainer">
-						<p>
-							Create
-							New
-							Pitch
-						</p>
-						<StatusBar
-							steps={
-								steps
-							}
-							active={
-								active
-							}
-						/>
+						<div className="ad-pernl-hdg">
+							<h2>Create	New	Pitch</h2>
+						</div>
+						<StatusBar steps={steps} active={active} />
 						<div className="full_widt">
-							<h3>
-								Client
-							</h3>
+							<h3>Client</h3>
 							<div key="search_box" className="srch_row">
 								<div className="search_auto_wrapper">
 									<div className="srch_col">
@@ -86,167 +70,184 @@ const CreatePitch = ({
 
 						{hideDiv ? (
 							<div>
-								<div className="full_widt">
-									<h3>
-										Client
-										Name
-									</h3>
-									<div className="custom_field">
-										<input
-											type="text"
-											name="clientName"
-											value=""
-											id="clientName"
-											placeholder="Client Name"
-											onChange={() => {}}
-										/>
-										<label htmlFor="clientName">
-											Client
-											Name
-										</label>
+								<div className="two_dived_col">
+									<div className="full_widt">
+										<h3>Client Name</h3>
+										<div className="new_field">
+											<input
+												type="text"
+												placeholder="Client Name"
+											/>
+
+										</div>
+									</div>
+									<div className="full_widt">
+										<h3>Client Website</h3>
+										<div className="new_field">
+											<input
+												type="text"
+												placeholder="Client Website"
+											/>
+
+										</div>
 									</div>
 								</div>
-								<div className="full_widt">
-									<h3>
-										Client
-										Website
-									</h3>
-									<div className="custom_field">
-										<input
-											type="text"
-											name="clientWebsite"
-											value=""
-											id="clientWebsite"
-											placeholder="Client Website"
-											onChange={() => {}}
-										/>
-										<label htmlFor="clientWebsite">
-											Client
-											Website
-										</label>
-									</div>
+
+								<div className="ad-pernl-conts cnp-col">
+									<span className="cnp-file" role="button" onClick={handleAddPressRelease}>
+										<i className="fa fa-plus" />
+										<input type="file" placeholder="Client Website" />
+										<span>No file Choosen</span>
+									</span>
+									<span className="view-btn-rgt add-pernl-btn cnp-col-btn">
+										<button type="button" className="btn new_pitch_btn snd-btn">ADD NEW CLIENT</button>
+									</span>
 								</div>
 							</div>
+
 						) : (
 							<div />
 						)}
-						<Button
-							className="white_bg_btn"
-							onClick={
-								handleAddNewClient
-							}
-						>
-							ADD
-							NEW
-							CLIENT
-						</Button>
+						{/* {hideDiv && (
+							<Button className="white_bg_btn" onClick={handleAddNewClient}>ADD	NEW	CLIENT </Button>
+						)} */}
+						{!hideDiv && (
+							<div className="ad-pernl-conts cnp-col">
+								<span className="cnp-file" role="button" onClick={handleAddNewClient}>
+									<i className="fa fa-plus" />
+									<input type="file" placeholder="Client Website" />
+									<span className="fnt_wght">Add New Client</span>
+								</span>
+							</div>
+						)}
+
+
 						<div>
-							<p>
-								CTA(choose
-								two)
-							</p>
+							<h3>CTA (choose two)</h3>
+							<AutoComplete
+								showTextBox={false}
+								list={
+									journalistInterests.data
+									&& journalistInterests.data.data
+									&& journalistInterests.data.data.results
+								}
+								onCreate={onCreate}
+								onSelect={onTodoSelection}
+								boxes={
+									[{
+										value: 'Interview', isActive: false,
+									}, {
+										value: 'Coverage', isActive: false,
+									}, {
+										value: 'Written Q&A', isActive: false,
+									}, {
+										value: 'Byllined Article', isActive: false,
+									}, {
+										value: 'Event Invite', isActive: false,
+									}, {
+										value: 'News', isActive: false,
+									}, {
+										value: 'Product Review', isActive: false,
+									}]
+								}
+								onChange={getJournalistInterests}
+							/>
 						</div>
 						<div className="full_widt">
-							<h3>
-								Headline
-								(up
-								to
-								50
-								characters)
-							</h3>
-							<div className="custom_field">
+							<h3>Headline (up to 50 characters)</h3>
+							<div className="new_field">
 								<input
 									type="text"
-									name="headline"
-									id="headline"
 									placeholder="This should catch your attention and give the main idea of the pitch"
-									onChange={handleInputText}
 								/>
-								<label htmlFor="headline">
-									Headline
-								</label>
+
 							</div>
 						</div>
 						<div className="full_widt">
-							<h3>
-								The
-								Pitch
-							</h3>
-							<div className="custom_field">
-								<input
-									type="text"
-									name="pitchPoints"
-									id="pitchPoints"
-									placeholder="Write your pitch here. Make sure you cover the main points."
-									onChange={handleInputText}
-								/>
-								<label htmlFor="pitchPoints">
-									The
-									Pitch
-								</label>
+							<h3>The Pitch</h3>
+							<div className="new_field">
+								<textarea placeholder="Write your pitch here. Make sure you cover the main points." />
 							</div>
 						</div>
-						<div className="full_widt">
-							<h3>
-								Add
-								Topics
-							</h3>
+						<div className="im k">
+							<h3>Add Topics</h3>
 							<div className="custom_field">
 								<AutoComplete
 									list={
 										journalistInterests.data
-									&& journalistInterests
-										.data
-										.data
-									&& journalistInterests
-										.data
-										.data
-										.results
+										&& journalistInterests.data.data
+										&& journalistInterests.data.data.results
 									}
-									onCreate={
-										onCreate
-									}
-									onSelect={
-										onTodoSelection
-									}
+									onCreate={onCreate}
+									onSelect={onTodoSelection}
 									boxes={
-										topics
+										[{
+											value: 'Travel', isActive: false,
+										}, {
+											value: 'Food', isActive: false,
+										}, {
+											value: 'Leisure', isActive: false,
+										}, {
+											value: 'Healthcare', isActive: false,
+										}, {
+											value: 'Technology', isActive: false,
+										}]
 									}
-									onChange={
-										getJournalistInterests
-									}
+									onChange={getJournalistInterests}
 								/>
 							</div>
-
-
 						</div>
-						<div>
-							<p>
-								Add
-								Media
-							</p>
+						{/* <div>
+							<p>Add Media</p>
 							<div>
 								<Button onClick={handleAddMedia1}>+</Button>
 								<Button onClick={handleAddMedia2}>+</Button>
 								<Button onClick={handleAddMedia3}>+</Button>
 							</div>
+						</div> */}
+						<div className="ad-pernl-conts add_media_col">
+							<label htmlFor="text">
+                  Add Media
+							</label>
+							<div className="cnp-snipt">
+								<div className="cnp-snipt-img">
+									<i className="fa fa-times cross" />
+									<i className="fa fa-plus plus_icn" aria-hidden="true" />
+									<input type="file" />
+								</div>
+								<div className="cnp-snipt-img">
+									<i className="fa fa-times cross" />
+									<i className="fa fa-plus plus_icn" aria-hidden="true" />
+									<input type="file" />
+								</div>
+								<div className="cnp-snipt-img">
+									<i className="fa fa-times cross" />
+									<i className="fa fa-plus plus_icn" aria-hidden="true" />
+									<input type="file" />
+								</div>
+
+							</div>
 						</div>
-						<div>
-							<p>
-								Add
-								Press
-								Release
-							</p>
-							<Button onClick={handleAddPressRelease}>+</Button>
-							<input
-								id="file"
-								type="file"
-								name="selectedFile"
-								onChange={handleAddPressRelease}
-							/>
-							<img id="target" src={pressReleaseImage} width="50" height="50" />
+						<div className="ad-pernl-conts cnp-col mgtop0">
+							<label htmlFor="text">
+                  Add Press Release
+							</label>
+							<span className="cnp-file" role="button" onClick={handleAddPressRelease}>
+								<i className="fa fa-plus" />
+								<input type="file" placeholder="Client Website" />
+								<span>No file Selected</span>
+							</span>
+
 						</div>
-						<div>
+						<div className="ad-pernl-conts togle-switch">
+							<p>Private</p>
+							<label className="switch" htmlFor="private">
+								<input type="checkbox" id="private" />
+								<span className="slider round" />
+							</label>
+						</div>
+
+						<div className="input_ranger">
 							<InputRangeSelector
 								minValue={0}
 								step={20 / 2}
@@ -262,6 +263,12 @@ const CreatePitch = ({
 						</div>
 					</div>
 				</div>
+				<div className="ad-pernl-conts mt-0">
+					<span className="view-btn-rgt add-pernl-btn">
+						<button type="button" className="btn new_pitch_btn snd-btn" onClick={changeNextScreen}>NEXT</button>
+						<button type="button" className="btn new_pitch_btn disc-btn">SAVE TEMPLATE</button>
+					</span>
+				</div>
 			</div>
 		</div>
 	);
@@ -270,7 +277,6 @@ const CreatePitch = ({
 const Search = ({ val }) => PITCHES.length > 0 && (
 	<div className="srch_lst_row">
 		{PITCHES.map(({ name, profile, profilePic }) => {
-			console.log('name', val);
 			if (val && name.toLowerCase().includes(val.toLowerCase())) {
 				return (
 					<div key={name} className="srch_lst_col">

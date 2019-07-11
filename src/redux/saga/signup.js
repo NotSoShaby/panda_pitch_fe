@@ -9,14 +9,12 @@ const SIGNUP = function* performSignup() {
 		yield put(START('SIGNUP_STARTED'));
 		try {
 			const RES = yield Request(CONSTANT.SIGNUP_URL, CONSTANT.POST, action.payload);
-			if (RES.code === 'SUCCESS') {
-				const data = { ...RES };
-				data.data = { ...data.data, ...action.props };
-				yield put({ type: 'SIGNUP_SUCCESS', payload: DATA(data.data) });
-				localStorage.setItem('user', JSON.stringify(data.data));
-			}
-			if (RES.status) {
-				yield put({ type: 'SIGNUP_FAILED', payload: ERROR(RES.status.message) });
+			if (RES.token) {
+				yield put({ type: 'SIGNUP_SUCCESS', payload: DATA(RES) });
+				localStorage.setItem('token', RES.token);
+				localStorage.setItem('user', JSON.stringify(RES.user));
+			} else {
+				yield put({ type: 'SIGNUP_FAILED', payload: ERROR(RES) });
 			}
 		} catch (error) {
 			yield put({ type: 'SIGNUP_FAILED', payload: ERROR(error) });

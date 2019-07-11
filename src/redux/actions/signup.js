@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import store from '../Store';
+import HELPER from '../../utils/helper';
 
 const initialState = {
 	message: {},
@@ -37,9 +38,8 @@ export const signUp = ({
 		email,
 		password,
 		full_name: fullName,
-	},
-	props: {
-		role,
+		is_pr: HELPER.isPr(role),
+		is_journalist: !HELPER.isPr(role),
 	},
 });
 
@@ -71,6 +71,8 @@ export const createJournalistProfile = ({
 		type: 'CREATE_JOURNALIST_PROFILE',
 		payload: {
 			user_id: getUserId(),
+			is_journalist: true,
+			is_pr: false,
 			outlet,
 			position,
 			topics: topicList,

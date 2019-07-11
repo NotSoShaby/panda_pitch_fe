@@ -29,7 +29,7 @@ class Select extends Component {
 			options, name, value, className,
 		} = this.state;
 		return (
-			<div className="">
+			<React.Fragment>
 				<select
 					className={className}
 					value={value}
@@ -42,7 +42,7 @@ class Select extends Component {
 						</option>
 					))}
 				</select>
-			</div>
+			</React.Fragment>
 		);
 	}
 }
