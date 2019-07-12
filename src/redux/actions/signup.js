@@ -10,8 +10,8 @@ const initialState = {
 };
 
 const getSignupState = (state = store.getState()) => {
-	if (state.signup) {
-		return state.signup;
+	if (state.login) {
+		return state.login;
 	}
 	return initialState;
 };
@@ -71,8 +71,6 @@ export const createJournalistProfile = ({
 		type: 'CREATE_JOURNALIST_PROFILE',
 		payload: {
 			user_id: getUserId(),
-			is_journalist: true,
-			is_pr: false,
 			outlet,
 			position,
 			topics: topicList,

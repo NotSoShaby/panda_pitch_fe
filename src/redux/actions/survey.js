@@ -31,8 +31,8 @@ const getPrState = (state = store.getState()) => {
 export const getJournalistStatus = createSelector(getJournalistState, n => n.data.code);
 export const getPrStatus = createSelector(getPrState, n => n.data.code);
 
-export const getJRSurvey = () => ({ type: 'GET_JOURNALIST_SURVEY' });
-export const getPRSurvey = () => ({ type: 'GET_PR_SURVEY' });
+export const getSurvey = data => ({ type: 'GET_SURVEY', payload: data });
+// export const getPRSurvey = data => ({ type: 'GET_PR_SURVEY', payload: data });
 
 export const surveySubmission = async ({ answers }) => {
 	const answersObj = {};

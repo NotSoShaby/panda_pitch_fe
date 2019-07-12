@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Home from './home';
 import Modal from '../../components/modal';
-import HELPER from '../../utils/helper';
+// import HELPER from '../../utils/helper';
 import { getPrPitches } from '../../redux/actions/pitches';
 
 class Index extends Component {
@@ -34,12 +34,9 @@ class Index extends Component {
 	createNewPitch = () => this.setState({ isModalOpen: true });
 
 	isPr = () => {
-		const { login: { data: { role } }, signup } = this.props;
-		let type = role;
-		if (!type) {
-			type = signup.data.role;
-		}
-		if (HELPER.isPr(type)) {
+		const { login: { data: { user } } } = this.props;
+
+		if (user && user.is_pr) {
 			return true;
 		}
 		return false;

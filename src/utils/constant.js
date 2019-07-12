@@ -1,6 +1,6 @@
 // constant variables declaration
 
-const local = 'http://39a8d222.ngrok.io';
+const local = 'https://01e72a80.ngrok.io';
 // const server = 'http://18.224.60.229:2312';
 
 class Constant {
@@ -15,15 +15,15 @@ class Constant {
 
 	// LOGIN_URL = '/api/users/log-in';
 
-	CREATE_JOURNALIST_URL = '/api/journalist/create-journalist';
+	CREATE_JOURNALIST_URL = '/api/journalist/';
 
-  CREATE_PR_URL = '/api/pr/create-pr-profile';
+  CREATE_PR_URL = '/api/pr/';
 
-  SURVEY_PR_URL = '/api/users/survey/1';
+  SURVEY_URL = '/survey/';
 
-  SURVEY_JOR_URL = '/api/users/survey/2';
+  // SURVEY_JOR_URL = '/api/users/survey/2';
 
-  SURVEY_SUBMISSION_URL = '/api/users/survey/answer';
+  SURVEY_SUBMISSION_URL = '/survey/answer/';
 
   GET_JOURNALIST_INTERESTS_URL = '/auto/interest-autocomplete';
 

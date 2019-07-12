@@ -9,7 +9,7 @@ const LOGIN = function* performLogin() {
 	yield takeEvery('LOGIN', function* generateAction(action) {
 		yield put(START('LOGIN_STARTED'));
 		try {
-			const RES = yield Request(CONSTANT.LOGIN_URL, CONSTANT.POST, action.payload);
+			const RES = yield Request(CONSTANT.LOGIN_URL, CONSTANT.POST, action.payload, false);
 			if (RES.token) {
 				yield put({ type: 'LOGIN_SUCCESS', payload: DATA(RES) });
 				localStorage.setItem('token', RES.token);

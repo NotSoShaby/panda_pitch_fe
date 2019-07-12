@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Survey from './survey';
 import Authorized from '../../routes/authorized';
-import { getJRSurvey, getPRSurvey, surveySubmission } from '../../redux/actions/survey';
+import { getSurvey, surveySubmission } from '../../redux/actions/survey';
 import HELPER from '../../utils/helper';
 import Loader from '../../components/loader';
 
@@ -30,13 +30,14 @@ class Index extends Authorized {
 
 	// request for survey
 	componentDidMount() {
-		const { role } = this.props.signup.data;
-		const { getJRSurvey, getPRSurvey } = this.props;
-		if (HELPER.isJournalist(role)) {
-			getJRSurvey();
-		} else {
-			getPRSurvey();
-		}
+		console.log('props============>', this.props);
+		// const { role } = this.props.signup.data;
+		const { getSurvey, login: { data: { user: { id } } } } = this.props;
+		// if (HELPER.isJournalist(role)) {
+		getSurvey({ userId: id });
+		// } else {
+		// 	getPRSurvey({ userId: 1 });
+		// }
 		// getSurvey();
 	}
 
@@ -74,8 +75,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{
-		getJRSurvey: () => getJRSurvey(),
-		getPRSurvey: () => getPRSurvey(),
+		getSurvey: data => getSurvey(data),
 	},
 	dispatch,
 );

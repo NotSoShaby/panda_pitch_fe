@@ -7,7 +7,7 @@ const imagepath = require('../../public/images/google.jpg');
 const { SEARCH_ICON } = IMAGES;
 
 const SearchBox = ({
-	searchString, data, onSelect, setSearchValue,
+	searchString, data, onSelect, setSearchValue, placeholder,
 }) => {
 	const search = (searchString) => {
 		if (!data || data.length === 0) return null;
@@ -39,7 +39,7 @@ const SearchBox = ({
 			<div key="search_box" className="srch_col place">
 				<input
 					type="search"
-					placeholder="Search for journalists or media outlets"
+					placeholder={placeholder}
 					value={searchString}
 					onChange={e => setSearchValue(e.target.value)}
 				/>
@@ -54,12 +54,14 @@ const SearchBox = ({
 
 SearchBox.defaultProps = {
 	data: [],
+	placeholder: 'Search',
 	searchString: '',
 };
 
 SearchBox.propTypes = {
 	data: PropTypes.array,
 	searchString: PropTypes.string,
+	placeholder: PropTypes.string,
 	setSearchValue: PropTypes.func.isRequired,
 };
 

@@ -5,9 +5,9 @@ import HELPER from '../../utils/helper';
 
 // render form1
 const Form2 = ({
-	onSubmit, onBack, onChange, email, password, fullName, signup,
+	onSubmit, onBack, onChange, email, password, fullName, login,
 }) => {
-	const { code } = signup;
+	const { code } = login;
 	return [
 		<h2 key="heading">Sign Up</h2>,
 		<div key="form1" className="step_form_col">
@@ -46,8 +46,8 @@ const Form2 = ({
 				<label htmlFor="password">Password</label>
 			</div>
 			{HELPER.isErrorInApi(code)
-			&& signup.error.non_field_errors && (
-				<div className="error">{signup.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
+			&& login.error.non_field_errors && (
+				<div className="error">{login.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 			)}
 			<div className="step_btn_wrapper">
 				<Button className="white_bg_btn" onClick={onBack}>Back</Button>

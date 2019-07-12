@@ -8,12 +8,12 @@ import HELPER from '../../utils/helper';
 
 // Login page rendering
 const Survey = ({
-	onBack, onSubmit, survey, answers, onRangeChange, login: { data }, signup,
+	onBack, onSubmit, survey, answers, onRangeChange, login: { data }, login,
 }) => {
 	const questions = _.orderBy(survey.data.questions, 'id', 'asc') || [];
 	let { role } = data;
 	if (!role) {
-		const { data } = signup;
+		const { data } = login;
 		role = data.role;
 	}
 	let totalSteps = 4;

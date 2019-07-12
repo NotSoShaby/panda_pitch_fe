@@ -34,6 +34,7 @@ const Personalization = ({
 					<SearchBox
 						data={journalists}
 						onSelect={handlePrSelect}
+						placeholder="Search for journalists or media outlets"
 						setSearchValue={setSearchValue}
 						searchString={searchString}
 					/>

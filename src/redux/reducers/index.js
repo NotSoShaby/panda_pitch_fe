@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
+// import { login } from './user';
+// import { signup } from './signup';
 import { login } from './login';
-import { signup } from './signup';
 import { journalistProfile } from './journalist';
 import { prProfile } from './pr';
 import { survey } from './survey';
@@ -13,7 +14,8 @@ import history from '../../routes/history';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
-	signup,
+	// signup,
+	// login,
 	login,
 	journalistProfile,
 	prProfile,
@@ -29,8 +31,9 @@ const initialState = { code: 'UNINITIATED', isLoading: false };
 
 // module default state for when user logout
 const defaultState = {
+	// login: initialState,
+	// signup: initialState,
 	login: initialState,
-	signup: initialState,
 	journalistProfile: initialState,
 	prProfile: initialState,
 	survey: initialState,

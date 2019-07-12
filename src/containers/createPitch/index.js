@@ -27,6 +27,7 @@ class Index extends Authorized {
 		searchString: '',
 		journalists: [{ id: 1, name: 'shhh koi h' }, { id: 2, name: 'chal be' }, { id: 3, name: 'koi nhi hai' }],
 		selectedJournalists: [],
+		mediaFiles: ['', '', ''],
 	}
 
 	componentDidMount() {
@@ -85,13 +86,13 @@ class Index extends Authorized {
 						handleAddNewClient={this.handleAddNewClient}
 						handleAddProfile={this.handleAddProfile}
 						handleAddTopics={this.handleAddTopics}
-						handleAddMedia1={this.handleAddMedia1}
-						handleAddMedia2={this.handleAddMedia2}
-						handleAddMedia3={this.handleAddMedia3}
+						handleAddMedia={this.handleAddMedia}
 						handleAddPressRelease={this.handleAddPressRelease}
 						handleInputText={this.handleInputText}
 						onRangeChange={this.handleRangeChange}
 						changeNextScreen={this.handleNextScreen}
+						setSearchValue={this.setSearchValue}
+						handlePrSelect={this.handlePrSelect}
 					/>
 				</Loader>
 			);
@@ -139,23 +140,22 @@ class Index extends Authorized {
 	handleAddTopics = () => {
 	};
 
-	handleAddMedia1 = () => {
+	handleAddMedia = (index, image) => {
+		const file = new File(image);
+		const { mediaFiles } = this.state;
+		mediaFiles[index] = file;
+		// console.log(file);
+		this.setState({ mediaFiles });
 	};
 
-	handleAddMedia2 = () => {
-	};
-
-	handleAddMedia3 = () => {
-	};
-
-	handleInputText = (e) => {
-		this.setState({ [e.target.name]: e.target.value });
-		if (e.target.name === 'headline') {
-			if (e.target.value.length > 50) {
-				e.target.value = '';
-			}
-		}
-	}
+  handleInputText = (e) => {
+  	this.setState({ [e.target.name]: e.target.value });
+  	if (e.target.name === 'headline') {
+  		if (e.target.value.length > 50) {
+  			e.target.value = '';
+  		}
+  	}
+  }
 
 	handleRangeChange = (value) => {
 		this.setState({ progressValue: value.value });
