@@ -398,10 +398,9 @@ ul.progress_bar li.completed:after {
 	width: 100%;
 }
 .slidecontainer p {
-	font-weight: 500;
+  font-weight: 600;
 	color: #000;
 	margin-bottom: 20px;
-	/* float: left; */
 	width: 100%;
 }
 .cstm_button_wrapper {

@@ -11,11 +11,11 @@ const Form3 = ({
 	position,
 	twitter,
 	linkedIn,
-	signup,
+	login,
 	prProfile,
 	error,
 }) => {
-	const { data } = signup;
+	const { data } = login;
 	const { code } = prProfile;
 	return [
 		<div key="form2" className="step_form_col">

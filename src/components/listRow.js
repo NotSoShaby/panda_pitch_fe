@@ -44,7 +44,7 @@ const ListRow = ({
 // props initialization ( default values )
 ListRow.defaultProps = {
 	logo: GOOGLE,
-	// profilePic: CARD_PRO,
+	// image: '',
 	title: '',
 	time: '',
 	description: '',
@@ -58,7 +58,7 @@ ListRow.propTypes = {
 	title: PropTypes.string,
 	time: PropTypes.string,
 	description: PropTypes.string,
-	// profilePic: PropTypes.string,
+	// image: PropTypes.string,
 	// name: PropTypes.string,
 	profile: PropTypes.string,
 };

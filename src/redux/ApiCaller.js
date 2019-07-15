@@ -2,11 +2,11 @@ import fetch from 'cross-fetch';
 import CONSTANT from '../utils/constant';
 
 // Make an api call
-export default async (url, method = 'get', body) => fetch(`${CONSTANT.URL}${url}`, {
+export default async (url, method = 'get', body, isAuthenticationRequired = true) => fetch(`${CONSTANT.URL}${url}`, {
 	method,
 	body: JSON.stringify(body),
 	headers: {
-		// Authorization: `Bearer ${localStorage.getItem('authentication_token')}`,
+		Authorization: isAuthenticationRequired && `Token ${localStorage.getItem('token')}`,
 		'Content-Type': 'application/json',
 	},
 })

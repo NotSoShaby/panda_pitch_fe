@@ -36,7 +36,7 @@ class App extends Authorized {
 
 const mapStateToProps = state => ({
 	login: state.login,
-	signup: state.signup,
+	// signup: state.signup,
 });
 
 // connect to store

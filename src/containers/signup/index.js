@@ -29,16 +29,16 @@ class Index extends UnAuthorized {
 
 	// identify the type of loggedIn user (journalist/pr)
 	getUserRole = (props) => {
-		if (props.signup.data && props.signup.data.user_id) return 3;
+		if (props.login.data && props.login.data.user_id) return 3;
 		return 1;
 	};
 
 	static getDerivedStateFromProps(props, state) {
 		const {
-			signup,
+			login,
 		} = props;
 		const { step } = state;
-		if (HELPER.isSuccessInApi(signup.code) && step === 2) {
+		if (HELPER.isSuccessInApi(login.code) && step === 2) {
 			return {
 				step: 3,
 			};

@@ -1,7 +1,7 @@
 import HELPER from '../../utils/helper';
 
 export const defaultState = {
-	data: { ...HELPER.getItemFromSession('user') },
+	data: { token: localStorage.getItem('token'), user: { ...HELPER.getItemFromSession('user') } },
 };
 
 export function signup(state = defaultState, action) {

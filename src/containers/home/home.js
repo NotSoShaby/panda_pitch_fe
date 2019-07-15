@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 // import { Link } from 'react-router-dom';
 // import METADATA from '../../utils/metadata';
 import ListRow from '../../components/listRow';
@@ -6,6 +6,7 @@ import GridRow from '../../components/gridRow';
 import JrHome from './jrHome';
 import PrHome from './prHome';
 import HELPER from '../../utils/helper';
+import Pagination from '../../components/pagination';
 
 // const { PITCHES } = METADATA;
 
@@ -18,87 +19,38 @@ const HomeScreen = ({
 	return <JrHome setView={setView} requestStory={requestStory} view={view} />;
 };
 
-const Layout = ({ view, prPitches: { data } }) => {
-	if (HELPER.isObject(data) && data.length) {
+const Layout = ({ view, prPitches: { data: { results } } }) => {
+	console.log(results);
+	if (HELPER.isObject(results) && results.length) {
 		if (view) {
-			return <div className="card_row">{data.map(pitch => <GridRow key={pitch.id} {...pitch} />)}</div>;
+			return (
+				<div className="card_row">
+					{results.map(pitch => <GridRow key={pitch.id} {...pitch} />)}
+				</div>
+			);
 		}
-		return data.map(pitch => <ListRow key={pitch.id} {...pitch} />);
+		return results.map(pitch => <ListRow key={pitch.id} {...pitch} />);
 	}
 	return null;
 };
 
-class Pagination extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			start: 1,
-			end: 9,
-		};
-	}
-
-	handleNextClick = () => {
-		this.setState({ start: 10, end: 19 });
-	};
-
-	renderList = () => {
-		let { start } = this.state;
-		const { end } = this.state;
-		const list = [];
-		while (start < end) {
-			list.push(
-				<li className="active">
-					<span>{start}</span>
-				</li>,
-			);
-		}
-		start += 1;
-		return list;
-	};
-
-	render() {
-		return (
-			<div className="page-nation">
-				<ul className="pagination pagination-large">
-					<li className="disabled">
-						<span>«</span>
-					</li>
-					<li className="active">
-						<span>1</span>
-					</li>
-					<li>
-						<span>2</span>
-					</li>
-					<li>
-						<span>3</span>
-					</li>
-					<li>
-						<span>4</span>
-					</li>
-					<li>
-						<span>5</span>
-					</li>
-					{/* {this.renderList()} */}
-					<li className="disabled">
-						<span>...</span>
-					</li>
-					<li onClick={this.handleNextClick} role="button">
-						<span>Next</span>
-					</li>
-				</ul>
-			</div>
-		);
-	}
-}
-
-const Home = (props) => {
+const Home = ({
+	pageSize, onPageChange, ...props
+}) => {
 	const [view, setView] = useState(0);
+	console.log('state11111', props);
+	const { prPitches: { data: { count } } } = props;
 	return (
 		<div>
 			<div className="container cstm_container bg_skyblue">
 				<HomeScreen {...props} view={view} setView={setView} />
 				<Layout view={view} {...props} />
-				<Pagination />
+				<Pagination
+					{...props}
+					totalCount={count}
+					pageNumberCount={5}
+					onPageChange={onPageChange}
+				/>
 			</div>
 		</div>
 	);

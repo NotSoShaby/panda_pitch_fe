@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import store from '../Store';
+import HELPER from '../../utils/helper';
 
 const initialState = {
 	message: {},
@@ -9,8 +10,8 @@ const initialState = {
 };
 
 const getSignupState = (state = store.getState()) => {
-	if (state.signup) {
-		return state.signup;
+	if (state.login) {
+		return state.login;
 	}
 	return initialState;
 };
@@ -37,9 +38,8 @@ export const signUp = ({
 		email,
 		password,
 		full_name: fullName,
-	},
-	props: {
-		role,
+		is_pr: HELPER.isPr(role),
+		is_journalist: !HELPER.isPr(role),
 	},
 });
 

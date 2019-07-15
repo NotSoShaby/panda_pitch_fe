@@ -1,18 +1,19 @@
 import React from 'react';
+import _ from 'lodash';
 import Button from '../../components/button';
 import Question from './question';
 import IMAGES from '../../assets/images';
-import StatusBar from '../signup/statusBar';
+import StatusBar from '../../components/statusBar';
 import HELPER from '../../utils/helper';
 
 // Login page rendering
 const Survey = ({
-	onBack, onSubmit, survey, answers, onRangeChange, login: { data }, signup,
+	onBack, onSubmit, survey, answers, onRangeChange, login: { data }, login,
 }) => {
-	const questions = survey.data.questions || [];
+	const questions = _.orderBy(survey.data.questions, 'id', 'asc') || [];
 	let { role } = data;
 	if (!role) {
-		const { data } = signup;
+		const { data } = login;
 		role = data.role;
 	}
 	let totalSteps = 4;

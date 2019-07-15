@@ -1,5 +1,5 @@
 import React from 'react';
-import StatusBar from './statusBar';
+import StatusBar from '../../components/statusBar';
 import Form1 from './form1';
 import Form2 from './form2';
 import Form3 from './form3';

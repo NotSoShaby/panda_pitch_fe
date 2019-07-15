@@ -1,6 +1,6 @@
 // constant variables declaration
 
-const local = 'http://d8fba5a9.ngrok.io';
+const local = 'https://01e72a80.ngrok.io';
 // const server = 'http://18.224.60.229:2312';
 
 class Constant {
@@ -8,25 +8,38 @@ class Constant {
 
   URL = local;
 
-	SIGNUP_URL = '/api/users/signup';
+  SIGNUP_URL = '/api/user/';
 
-	LOGIN_URL = '/api/users/log-in';
+	LOGIN_URL = '/login/';
+	// SIGNUP_URL = '/api/users/signup';
 
-	CREATE_JOURNALIST_URL = '/api/journalist/create-journalist';
+	// LOGIN_URL = '/api/users/log-in';
 
-  CREATE_PR_URL = '/api/pr/create-pr-profile';
+	CREATE_JOURNALIST_URL = '/api/journalist/';
 
-  SURVEY_PR_URL = '/api/users/survey/1';
+  CREATE_PR_URL = '/api/pr/';
 
-  SURVEY_JOR_URL = '/api/users/survey/2';
+  SURVEY_URL = '/survey/';
 
-  SURVEY_SUBMISSION_URL = '/api/users/survey/answer';
+  // SURVEY_JOR_URL = '/api/users/survey/2';
+
+  SURVEY_SUBMISSION_URL = '/survey/answer/';
 
   GET_JOURNALIST_INTERESTS_URL = '/auto/interest-autocomplete';
 
   CREATE_JOURNALIST_INTEREST_URL = '/api/users/interest/create';
 
-  GET_PR_PITCHES_URL = '/api/pr/mypitch?pr_id=1'
+  GET_PR_PITCHES_URL = '/api/pr/mypitch?pr_id=1';
+
+  GET_PR_CLIENTS_AUTO = '/api/pr/clients-auto?q=C';
+
+  GET_PR_CLIENTS = '/api/pr/clients?pr_id=1';
+
+  CREATE_PR_CLIENT = '/api/pr/client/create';
+
+  GET_PR_MEDIALISTS = '/api/pr/medialists?pr_id=1';
+
+  CREATE_PR_MEDIALISTS = '/api/pr/medialists/create';
 
   GET = 'get';
 
