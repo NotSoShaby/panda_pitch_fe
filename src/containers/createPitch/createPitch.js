@@ -31,6 +31,7 @@ const CreatePitch = ({
 	// pressReleaseImage,
 	handleAddNewClient,
 	handleAddMedia,
+	handleAddClientImage,
 	// handleAddMedia2,
 	// handleAddMedia3,
 	handleAddPressRelease,
@@ -112,13 +113,12 @@ const CreatePitch = ({
 											type="text"
 											placeholder="Client Website"
 										/>
-
 									</div>
 								</div>
 							</div>
 
 							<div className="ad-pernl-conts cnp-col">
-								<span className="cnp-file" role="button" onClick={handleAddPressRelease}>
+								<span className="cnp-file" role="button" onClick={e => handleAddClientImage(e.target.result)}>
 									<i className="fa fa-plus" />
 									<input type="file" placeholder="Client Website" />
 									<span>No file Choosen</span>

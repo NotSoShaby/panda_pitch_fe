@@ -7,9 +7,13 @@ import _ from 'lodash';
 import Loader from '../../components/loader';
 import Authorized from '../../routes/authorized';
 import CreatePitch from './createPitch';
-import { getPrClientsAuto } from '../../redux/actions/pitches';
+import { getPrClientsAuto, getPrMedialists } from '../../redux/actions/pitches';
 import Personalization from './personalize';
 import FinalizePitch from './finalize';
+
+// import UnAuthorized from '../../routes/unAuthorized';
+// import HELPER from '../../utils/helper';
+
 
 class Index extends Authorized {
 	state = {
@@ -32,9 +36,10 @@ class Index extends Authorized {
 
 	componentDidMount() {
 		const {
-			getPrClientsAuto,
+			getPrClientsAuto, getPrMedialists,
 		} = this.props;
 		getPrClientsAuto();
+		getPrMedialists();
 	}
 
 	onChangeSelect = (selectedValue) => { console.log('xxxxxx', selectedValue); }
@@ -93,6 +98,7 @@ class Index extends Authorized {
 						changeNextScreen={this.handleNextScreen}
 						setSearchValue={this.setSearchValue}
 						handlePrSelect={this.handlePrSelect}
+						handleAddClientImage={this.handleAddClientImage}
 					/>
 				</Loader>
 			);
@@ -148,6 +154,10 @@ class Index extends Authorized {
 		this.setState({ mediaFiles });
 	};
 
+  handleAddClientImage = (image) => {
+  	console.log(image);
+  };
+
   handleInputText = (e) => {
   	this.setState({ [e.target.name]: e.target.value });
   	if (e.target.name === 'headline') {
@@ -185,12 +195,10 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		getPrClientsAuto: data => getPrClientsAuto(
 			data,
 		),
+		getPrMedialists: () => getPrMedialists(),
 	},
 	dispatch,
 );
 
 // connect to store
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)(Index);
+export default connect(mapStateToProps,	mapDispatchToProps)(Index);

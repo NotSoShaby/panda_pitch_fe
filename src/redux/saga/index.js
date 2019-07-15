@@ -11,6 +11,7 @@ import GET_PR_PITCHES from './pitches';
 import GET_PR_CLIENTS_AUTO from './prClientsAuto';
 import GET_PR_CLIENT from './prClient';
 import GET_PR_MEDIALISTS from './prMedialists';
+import GET_MEDIALISTS from './mediaLists';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -28,6 +29,7 @@ const rootSaga = function* rootSaga() {
 			GET_PR_CLIENTS_AUTO(),
 			GET_PR_CLIENT(),
 			GET_PR_MEDIALISTS(),
+			GET_MEDIALISTS(),
 		],
 	);
 };
