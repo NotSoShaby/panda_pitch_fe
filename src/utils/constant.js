@@ -1,6 +1,6 @@
 // constant variables declaration
 
-const local = 'https://01e72a80.ngrok.io';
+const local = 'http://localhost:8000';
 // const server = 'http://18.224.60.229:2312';
 
 class Constant {
@@ -8,7 +8,7 @@ class Constant {
 
   URL = local;
 
-  SIGNUP_URL = '/api/user/';
+	SIGNUP_URL = '/api/user/';
 
 	LOGIN_URL = '/login/';
 	// SIGNUP_URL = '/api/users/signup';
@@ -38,6 +38,8 @@ class Constant {
   CREATE_PR_CLIENT = '/api/pr/client/create';
 
   GET_PR_MEDIALISTS = '/api/pr/medialists?pr_id=1';
+
+  GET_MEDIALISTS = '/api/media-list';
 
   CREATE_PR_MEDIALISTS = '/api/pr/medialists/create';
 
