@@ -15,6 +15,10 @@ body {
 	height: 100%;
 }
 
+input, select, textarea{
+  outline-color: #53c251;
+}
+
 h1,
 h2,
 h3,
@@ -663,7 +667,8 @@ img.srch_icn {
   overflow-y: auto;
   /* height: 100%; */
   max-height: 242px;
-  box-shadow: 0px 6px 10px #0000000f;
+  /* box-shadow: 0px 6px 10px #0000000f; */
+  border-top: none;
 }
 .srch_lst_col {
     width: 100%;
@@ -874,7 +879,8 @@ p.pitch_score {
 }
 .card_pro_contnt h3{font-weight: 700;font-size: 18px;}
 .card_pro_contnt p {
-    margin-top: 2px;
+  margin-top: -2px;
+  color: #333;
 }
 .bg_skyblue{
   background: #fcfdff;
@@ -1009,7 +1015,7 @@ p.pitch_score {
 }
 .view-detail.bdr_botm0 p {
   padding: 0 0 0 0 !important;
-  margin-top: 8px;line-height: 20px;
+  margin-top: 8px;line-height: 20px;font-size: 13px;
 }
 .view-detail.bdr_botm0 h3 {
   font-size: 16px !important;
@@ -1187,8 +1193,13 @@ ul.pri-link a{
   width: 100%;
   border: 1px solid #bebebe;
   border-radius: 3px;
-  color: #bebebe;
+  color: #333;
   background: transparent;
+}
+.ad-pernl-conts.cstm_selec_row{
+ width:100%;
+ float: left;
+ position: relative;
 }
 .ad-pernl-conts .srch_col button {
   border: none;
@@ -1212,19 +1223,18 @@ ul.pri-link a{
   width: 30px;
 }
 .add-pernl-text textarea::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  padding-left: 30px;
   font-size: 14px;
 }
 .add-pernl-text textarea::-moz-placeholder { /* Firefox 19+ */
-padding-left: 30px;
+
   font-size: 14px;
 }
 .add-pernl-text textarea:-ms-input-placeholder { /* IE 10+ */
-padding-left: 30px;
+
   font-size: 14px ;
 }
 .add-pernl-text textarea:-moz-placeholder { /* Firefox 18- */
-padding-left: 30px;
+
   font-size: 14px;
 }
 .srch_col.place input[type="search"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -1274,9 +1284,10 @@ padding-left: 30px;
 
 .add-pernl-pro .card_pro_contnt h3 span{
   font-style: italic;
-  color: #bebebe;
-  font-weight: normal;
-  font-size: 15px;
+    color: #8e8b8b;
+    font-weight: normal;
+    font-size: 14px;
+    margin-left: 5px;
 }
 .add-pernl-btn {
   display: block;
@@ -1349,15 +1360,15 @@ padding-left: 30px;
 }
 
 .form_wrapper.pitch_form_wraper{
-  max-width: 826px;padding: 30px 57px;
+  max-width: 807px;padding: 30px 57px;
 }
 .form_wrapper.pitch_form_wraper h2{ 
    font-size: 24px;
    font-weight: 700;
 }
 .form_wrapper.pitch_form_wraper h3{
-  font-size: 14px;
-  font-weight: 900;
+  font-size: 15px;
+  font-weight: 800;
   text-transform: capitalize;
 }
 
@@ -1391,8 +1402,6 @@ padding-left: 30px;
  margin: 14px 0 28px;
 }
  
-
-
 .new_field textarea{
   min-height: 162px;
     border-radius: 4px;
@@ -1404,6 +1413,7 @@ padding-left: 30px;
 .cnp-file .fnt_wght{
   font-weight: 700;
   border-bottom: none;
+  padding: 10px;
 }
 .new_field input{
   font-size: 14px;
@@ -1609,12 +1619,94 @@ padding-left: 30px;
   border-bottom: 0;
   margin-top: 20px;
 }
+
+.new_field.cstm_editor{
+  margin-top: 13px;
+}
+
+.ad-pernl-conts select {
+  padding: 10px 21px 10px 10px;
+  -webkit-appearance: none;
+  background: url(../images/caret_arrow.png) no-repeat;
+  background-position: 97% 14px;
+    background-size: 11px;
+}
+.hint{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.full_widt.pos_relative{
+  position: relative;
+}
+.hint {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 281px;
+  padding: 13px;
+  text-align: center;
+  position: absolute;
+  top: 29px;
+  right: -301px;
+}
+.hint img{
+  width: 33px;
+}
+.hint p {
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.pos_relative{
+  position: relative;
+}
+
+.hint.input_range_hint {
+  top: -36px;
+  right: -564px;
+}
+
+.selectUl {
+  border: .5px solid #53c251;
+  position: absolute;
+  width: 100%;
+  background: white;
+  z-index: 1;
+  top: 67px;
+}
+.srch_button{
+  background: url(../images/caret_arrow.png) no-repeat;
+    background-position: 98% 58%;
+    background-size: 11px;
+}
+.srch_button input{
+  padding: 10px 37px 10px 10px;
+}
+.selectList {
+  color: #333;
+  padding: 4px 8px;
+}
+
+.selectList:hover{
+  padding-left: 10px;
+  color: #ffffff;
+  background-color: #41c251;
+}
+
+/* ::selection {
+  background-color: #00B863 !important;
+  } */
 /*=================Media query====================*/
 
 
 
 @media only screen and (min-width:310px) and (max-width: 767px) {
 
+  .input_ranger {
+    width: 98%;margin-left: 3px;
+}
 h4{
   font-size: 16px;
 }
@@ -1882,6 +1974,11 @@ img.srch_icn {
 .form_wrapper.pitch_form_wraper .srch_row button {
   top: 14px;
 }
+.hint {
+  width: 100%;
+  position: initial;
+  margin-top: 15px;
+}
 }
 
 
@@ -1927,5 +2024,10 @@ span.profile_detail {
 }
 .form_wrapper.pitch_form_wraper {
   overflow-x: hidden;
+}
+.hint {
+  width: 100%;
+  position: initial;
+  margin-top: 15px;
 }
 }

@@ -51,7 +51,7 @@ class Select extends Component {
 						</option>
 					))}
         </select> */}
-				<div role="button" className="srch_button">
+				<div className="srch_button">
 					<input
 						onClick={this.changeListVisibility}
 						type="text"
