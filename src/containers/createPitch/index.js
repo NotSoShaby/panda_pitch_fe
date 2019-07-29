@@ -17,9 +17,7 @@ import FinalizePitch from './finalize';
 
 class Index extends Authorized {
 	state = {
-		hideDiv: false,
-		headlineText: '',
-		answers: {},
+		hideNewClientDiv: true,
 		progressValue: 0,
 		pressReleaseImage: '',
 		steps: 3,
@@ -29,6 +27,7 @@ class Index extends Authorized {
 		name: '',
 		value: '',
 		searchString: '',
+		selectedClient: '',
 		journalists: [{ id: 1, name: 'shhh koi h' }, { id: 2, name: 'chal be' }, { id: 3, name: 'koi nhi hai' }],
 		selectedJournalists: [],
 		mediaFiles: ['', '', ''],
@@ -42,7 +41,10 @@ class Index extends Authorized {
 		getPrMedialists();
 	}
 
-	onChangeSelect = (selectedValue) => { console.log('xxxxxx', selectedValue); }
+	onChangeSelect = (selectedValue) => {
+		this.setState({ value: selectedValue.value });
+		console.log('value', this.state.value);
+	}
 
 	handlePrSelect = (id) => {
 		const { journalists, selectedJournalists } = this.state;
@@ -72,6 +74,59 @@ class Index extends Authorized {
   	this.setState({ active: active - 1 });
   }
 
+  handleClient = () => {
+  };
+
+	handleAddProfile = () => {
+	};
+
+	handleAddTopics = () => {
+	};
+
+	handleAddMedia = (index, image) => {
+		const { mediaFiles } = this.state;
+		mediaFiles[index] = URL.createObjectURL(image);
+		this.setState({	mediaFiles });
+	};
+
+  handleRemoveMedia = (index) => {
+  	const { mediaFiles } = this.state;
+  	mediaFiles[index] = '';
+  	this.setState({	mediaFiles });
+  };
+
+  handleAddNewClient = () => {
+  	const { hideNewClientDiv } = this.state;
+  	this.setState({ hideNewClientDiv: !hideNewClientDiv });
+  }
+
+  handleAddClientImage = (image) => {
+  	console.log(image);
+  };
+
+  handleInputText = (e) => {
+  	this.setState({ [e.target.name]: e.target.value });
+  	if (e.target.name === 'headline') {
+  		if (e.target.value.length > 50) {
+  			e.target.value = '';
+  		}
+  	}
+  }
+
+	handleRangeChange = (value) => {
+		this.setState({ progressValue: value.value });
+	}
+
+	handleAddPressRelease = (e) => {
+		if (e && e.target.files) {
+			console.log(e.target.files[0]);
+			const pressReleaseImage = URL.createObjectURL(e.target.files[0]);
+			this.setState({ pressReleaseImage });
+		}
+	}
+
+  handlePrivate = e => console.log(e.target.checked);
+
 	displayScreen = () => {
 		const { active, steps } = this.state;
 		let render;
@@ -99,6 +154,8 @@ class Index extends Authorized {
 						setSearchValue={this.setSearchValue}
 						handlePrSelect={this.handlePrSelect}
 						handleAddClientImage={this.handleAddClientImage}
+						handlePrivate={this.handlePrivate}
+						handleRemoveMedia={this.handleRemoveMedia}
 					/>
 				</Loader>
 			);
@@ -129,59 +186,8 @@ class Index extends Authorized {
 		return render;
 	}
 
-	handleClient = () => {
-	};
-
-	handleAddNewClient = () => {
-		this.setState(
-			{
-				hideDiv: true,
-			},
-		);
-	};
-
-	handleAddProfile = () => {
-	};
-
-	handleAddTopics = () => {
-	};
-
-	handleAddMedia = (index, image) => {
-		const file = new File(image);
-		const { mediaFiles } = this.state;
-		mediaFiles[index] = file;
-		// console.log(file);
-		this.setState({ mediaFiles });
-	};
-
-  handleAddClientImage = (image) => {
-  	console.log(image);
-  };
-
-  handleInputText = (e) => {
-  	this.setState({ [e.target.name]: e.target.value });
-  	if (e.target.name === 'headline') {
-  		if (e.target.value.length > 50) {
-  			e.target.value = '';
-  		}
-  	}
-  }
-
-	handleRangeChange = (value) => {
-		this.setState({ progressValue: value.value });
-	}
-
-	handleAddPressRelease = (e) => {
-		if (e && e.target.files) {
-			this.setState({
-				pressReleaseImage: URL.createObjectURL(e.target.files[0]),
-			});
-		}
-	}
-
-
 	render() {
-		return (<React.Fragment>{ this.displayScreen() }</React.Fragment>);
+		return (<>{ this.displayScreen() }</>);
 	}
 }
 

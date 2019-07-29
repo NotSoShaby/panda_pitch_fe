@@ -24,17 +24,17 @@ const Personalization = ({
 						options={options}
 						name={name}
 						value={value}
-						onChange={onChangeSelect}
+						onChangeSelect={onChangeSelect}
 					/>
 				</div>
 				<div className="ad-pernl-conts">
 					<label htmlFor="ddd">
-            Add More Journalist
+            Add More Journalists
 					</label>
 					<SearchBox
 						data={journalists}
 						onSelect={handlePrSelect}
-						placeholder="Search for journalists or media outlets"
+						placeholder="Search for journalists"
 						setSearchValue={setSearchValue}
 						searchString={searchString}
 					/>

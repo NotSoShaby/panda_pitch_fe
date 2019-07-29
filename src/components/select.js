@@ -7,6 +7,7 @@ class Select extends Component {
 		name: '',
 		value: '',
 		className: '',
+		isListVisible: false,
 	}
 
 	componentDidMount() {
@@ -14,23 +15,31 @@ class Select extends Component {
 			options, name, value, className,
 		} = this.props;
 		this.setState({
-			options, name, value, className,
+			options, name, value: value || options[0].value || null, className,
 		});
 	}
 
-	handleChange(e) {
-		const { onChange } = this.props;
-		this.setState({ value: e.target.value });
-		onChange(e.target.value);
+	changeListVisibility = () => {
+		const { isListVisible } = this.state;
+		this.setState({ isListVisible: !isListVisible });
+	}
+
+	handleChangeInputChange = () => false
+
+	handleChange(option) {
+		const { onChangeSelect } = this.props;
+		const { isListVisible } = this.state;
+		this.setState({ value: option.value, isListVisible: !isListVisible });
+		onChangeSelect(option);
 	}
 
 	render() {
 		const {
-			options, name, value, className,
+			options, name, value, className, isListVisible,
 		} = this.state;
 		return (
 			<React.Fragment>
-				<select
+				{/* <select
 					className={className}
 					value={value}
 					onChange={e => this.handleChange(e)}
@@ -41,7 +50,27 @@ class Select extends Component {
 							{option.value}
 						</option>
 					))}
-				</select>
+        </select> */}
+				<div role="button">
+					<input
+						onClick={this.changeListVisibility}
+						type="text"
+						className={className}
+						value={value}
+						readOnly
+						name={name}
+					/>
+				</div>
+				{ isListVisible && (
+					<ul className="selectUl">
+						{options.map(option => (
+							<li className="selectList" key={option.id} value={option.value} role="button" onClick={() => this.handleChange(option)}>
+								{option.value}
+							</li>
+						))}
+					</ul>
+				)}
+
 			</React.Fragment>
 		);
 	}
@@ -51,7 +80,7 @@ class Select extends Component {
 Select.defaultProps = {
 	className: '',
 	value: '',
-	onChange: () => { },
+	onChangeSelect: () => { },
 };
 
 // props type definition
@@ -60,7 +89,7 @@ Select.propTypes = {
 	name: PropTypes.string.isRequired,
 	value: PropTypes.string,
 	className: PropTypes.string,
-	onChange: PropTypes.func,
+	onChangeSelect: PropTypes.func,
 };
 
 export default Select;

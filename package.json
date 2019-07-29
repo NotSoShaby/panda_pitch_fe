@@ -51,6 +51,7 @@
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",
     "react-router-redux": "^4.0.8",
+    "react-tinymce": "^0.7.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.2",

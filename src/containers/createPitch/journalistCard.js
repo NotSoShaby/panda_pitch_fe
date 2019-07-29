@@ -28,7 +28,7 @@ const JournalistCard = ({
 			<textarea
 				rows="5"
 				cols="50"
-				placeholder="Add Personal Message (max.200 Character)"
+				placeholder="Add Personal Message (max. 200 Characters)"
 				onChange={e => addMessageForJournalist(e, key)}
 			/>
 		</div>

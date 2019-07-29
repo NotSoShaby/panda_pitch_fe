@@ -2,15 +2,18 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-indent */
 import React from 'react';
+import TinyMCE from 'react-tinymce';
 import InputRangeSelector from '../../components/inputRange';
 import SearchBox from '../../components/searchbox';
 import AutoComplete from '../../components/autoComplete';
 import StatusBar from '../../components/statusBar';
+import METADATA from '../../utils/metadata';
+
 // import Button from '../../components/button';
 // import HELPER from '../../utils/helper';
 // import IMAGES from '../../assets/images';
-// import METADATA from '../../utils/metadata';
 
+const { CTA, TOPICS } = METADATA;
 // const { SEARCH_ICON } = IMAGES;
 // const { PITCHES } = METADATA;
 
@@ -22,36 +25,43 @@ import StatusBar from '../../components/statusBar';
 // 	return null;
 // };
 
+const renderMediaFiles = (index, handleAddMedia) => (
+	<div className="cnp-snipt-img">
+		<i className="fa fa-plus plus_icn" aria-hidden="true" />
+		<input type="file" onChange={e => handleAddMedia(index, e.target.files[0])} />
+	</div>
+);
+
+const renderMediaImages = (index, mediaFile, handleRemoveMedia) => (
+	<div className="cnp-snipt-img">
+		<i className="fa fa-times cross" role="button" onClick={() => handleRemoveMedia(index)} />
+		<img src={mediaFile} alt="mediaFiles" />
+	</div>
+);
+
 const CreatePitch = ({
 	steps,
 	active,
-	hideDiv,
+	hideNewClientDiv,
 	mediaFiles,
+	pressReleaseImage,
 	progressValue,
-	// pressReleaseImage,
 	handleAddNewClient,
 	handleAddMedia,
 	handleAddClientImage,
-	// handleAddMedia2,
-	// handleAddMedia3,
 	handleAddPressRelease,
 	onCreate,
 	onTodoSelection,
 	journalistInterests,
 	getJournalistInterests,
-	// handleInputText,
 	onRangeChange,
 	changeNextScreen,
-	// handleClient,
-	// handleAddProfile,
-	// handleAddTopics,
-	// topics,
-	// journalistProfile,
-	// error,
 	journalists,
 	handlePrSelect,
 	setSearchValue,
 	searchString,
+	handlePrivate,
+	handleRemoveMedia,
 }) => (
 	<div className="create_new_pitch_form">
 		<div className="form_wrapper pitch_form_wraper">
@@ -61,28 +71,9 @@ const CreatePitch = ({
 						<h2>Create	New	Pitch</h2>
 					</div>
 					<StatusBar steps={steps} active={active} />
-					{/* <div className="full_widt">
-							<h3>Client</h3>
-							<div key="search_box" className="srch_row">
-								<div className="search_auto_wrapper">
-									<div className="srch_col">
-										<input
-											type="search"
-											placeholder="client"
-											value={val}
-											onChange={e => setVal(e.target.value)}
-										/>
-										<button type="button">
-											<img className="srch_icn" src={SEARCH_ICON} alt="search" />
-										</button>
-									</div>
-									<Search val={val} />
-								</div>
-							</div>
-						</div> */}
 					<div className="ad-pernl-conts">
 						<label htmlFor="ddd">
-              Client
+								Client
 						</label>
 						<SearchBox
 							data={journalists}
@@ -93,7 +84,7 @@ const CreatePitch = ({
 						/>
 					</div>
 
-					{hideDiv ? (
+					{!hideNewClientDiv ? (
 						<div>
 							<div className="two_dived_col">
 								<div className="full_widt">
@@ -103,7 +94,6 @@ const CreatePitch = ({
 											type="text"
 											placeholder="Client Name"
 										/>
-
 									</div>
 								</div>
 								<div className="full_widt">
@@ -132,19 +122,15 @@ const CreatePitch = ({
 					) : (
 						<div />
 					)}
-					{/* {hideDiv && (
-							<Button className="white_bg_btn" onClick={handleAddNewClient}>ADD	NEW	CLIENT </Button>
-						)} */}
-					{!hideDiv && (
+					{hideNewClientDiv && (
 						<div className="ad-pernl-conts cnp-col">
 							<span className="cnp-file" role="button" onClick={handleAddNewClient}>
 								<i className="fa fa-plus" />
-								<input type="file" placeholder="Client Website" />
+								{/* <input type="file" placeholder="Client Website" /> */}
 								<span className="fnt_wght">Add New Client</span>
 							</span>
 						</div>
 					)}
-
 
 					<div>
 						<h3>CTA (choose two)</h3>
@@ -157,23 +143,7 @@ const CreatePitch = ({
 							}
 							onCreate={onCreate}
 							onSelect={onTodoSelection}
-							boxes={
-								[{
-									value: 'Interview', isActive: false,
-								}, {
-									value: 'Coverage', isActive: false,
-								}, {
-									value: 'Written Q&A', isActive: false,
-								}, {
-									value: 'Byllined Article', isActive: false,
-								}, {
-									value: 'Event Invite', isActive: false,
-								}, {
-									value: 'News', isActive: false,
-								}, {
-									value: 'Product Review', isActive: false,
-								}]
-							}
+							boxes={CTA}
 							onChange={getJournalistInterests}
 						/>
 					</div>
@@ -182,15 +152,35 @@ const CreatePitch = ({
 						<div className="new_field">
 							<input
 								type="text"
+								maxLength="50"
 								placeholder="This should catch your attention and give the main idea of the pitch"
 							/>
 
 						</div>
 					</div>
-					<div className="full_widt">
+					<div className="full_widt pos_relative">
 						<h3>The Pitch</h3>
-						<div className="new_field">
-							<textarea placeholder="Write your pitch here. Make sure you cover the main points." />
+						<div className="new_field cstm_editor">
+							<TinyMCE
+								content="Write your pitch here. Make sure you cover the main points."
+								config={{
+									plugins: 'autolink link image lists print preview',
+									toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
+									browser_spellcheck: true,
+								}}
+							// onChange={x => xxx(x)}
+							/>
+						</div>
+						<div className="hint">
+							<img src="images/bulb_icn.png" alt="alert" />
+							<p>
+								{' '}
+								<b>
+Hint:
+									{' '}
+								</b>
+                  Write a general Pitch.Save Journalist Personalization for the Next Step!
+							</p>
 						</div>
 					</div>
 					<div className="im k">
@@ -211,83 +201,58 @@ const CreatePitch = ({
 								}
 								onCreate={onCreate}
 								onSelect={onTodoSelection}
-								boxes={
-									[{
-										value: 'Travel', isActive: false,
-									}, {
-										value: 'Food', isActive: false,
-									}, {
-										value: 'Leisure', isActive: false,
-									}, {
-										value: 'Healthcare', isActive: false,
-									}, {
-										value: 'Technology', isActive: false,
-									}]
-								}
+								boxes={TOPICS}
 								onChange={getJournalistInterests}
 							/>
 						</div>
 					</div>
-					{/* <div>
-							<p>Add Media</p>
-							<div>
-								<Button onClick={handleAddMedia1}>+</Button>
-								<Button onClick={handleAddMedia2}>+</Button>
-								<Button onClick={handleAddMedia3}>+</Button>
-							</div>
-						</div> */}
-					<div className="ad-pernl-conts add_media_col">
+					<div className="ad-pernl-conts add_media_col pos_relative">
 						<label htmlFor="text">
-                  Add Media
+								Add Media
 						</label>
 						<div className="cnp-snipt">
-							{!mediaFiles[0] && (
-								<div className="cnp-snipt-img">
-									<i className="fa fa-times cross" />
-									<i className="fa fa-plus plus_icn" aria-hidden="true" />
-									<input type="file" onChange={e => handleAddMedia(0, e.target.files[0])} />
-								</div>
-							)}
-							{mediaFiles[0] && (
-								<div className="cnp-snipt-img">
-									<i className="fa fa-times cross" />
-									<i className="fa fa-plus plus_icn" aria-hidden="true" />
-									<img src={mediaFiles[0]} />
-								</div>
-							)}
-							<div className="cnp-snipt-img">
-								<i className="fa fa-times cross" />
-								<i className="fa fa-plus plus_icn" aria-hidden="true" />
-								<input type="file" onChange={e => handleAddMedia(1, e.target.files[0])} />
-							</div>
-							<div className="cnp-snipt-img">
-								<i className="fa fa-times cross" />
-								<i className="fa fa-plus plus_icn" aria-hidden="true" />
-								<input type="file" onChange={e => handleAddMedia(2, e.target.files[0])} />
-							</div>
-
+							{mediaFiles.map((media, index) => (
+								media ? renderMediaImages(index, media, handleRemoveMedia)
+									: renderMediaFiles(index, handleAddMedia)))}
+						</div>
+						<div className="hint">
+							<img src="images/bulb_icn.png" alt="alert" />
+							<p>
+								{' '}
+								<b>
+Hint:
+									{' '}
+								</b>
+                  Write a general Pitch.Save Journalist Personalization for the Next Step!
+							</p>
 						</div>
 					</div>
 					<div className="ad-pernl-conts cnp-col mgtop0">
 						<label htmlFor="text">
-                  Add Press Release
+								Add Press Release
 						</label>
-						<span className="cnp-file" role="button" onClick={handleAddPressRelease}>
+						<span className="cnp-file">
 							<i className="fa fa-plus" />
-							<input type="file" placeholder="Client Website" />
-							<span>No file Selected</span>
+							<input type="file" placeholder="Client Website" onChange={e => handleAddPressRelease(e)} />
+							{!pressReleaseImage && <span>No file Selected</span>}
+							{pressReleaseImage
+									&& (
+										<div className="cnp-snipt-img">
+											<img src={pressReleaseImage} alt="pressReleaseImage" />
+										</div>
+									)}
 						</span>
 
 					</div>
 					<div className="ad-pernl-conts togle-switch">
 						<p>Private</p>
 						<label className="switch" htmlFor="private">
-							<input type="checkbox" id="private" />
+							<input type="checkbox" id="private" onChange={e => handlePrivate(e)} />
 							<span className="slider round" />
 						</label>
 					</div>
 
-					<div className="input_ranger">
+					<div className="input_ranger pos_relative">
 						<InputRangeSelector
 							minValue={0}
 							step={20 / 2}
@@ -300,6 +265,17 @@ const CreatePitch = ({
 							<li>Embargo</li>
 							<li>Exclusive</li>
 						</ul>
+						<div className="hint input_range_hint">
+							<img src="images/bulb_icn.png" alt="alert" />
+							<p>
+								{' '}
+								<b>
+Hint:
+									{' '}
+								</b>
+                  Write a general Pitch.Save Journalist Personalization for the Next Step!
+							</p>
+						</div>
 					</div>
 				</div>
 			</div>

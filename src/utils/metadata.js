@@ -41,7 +41,25 @@ class MetaData {
 		},
 	];
 
-  PIT
+	CTA = [
+		{ value: 'Interview', isActive: false },
+		{ value: 'Coverage', isActive: false },
+		{ value: 'Written Q&A', isActive: false },
+		{ value: 'Byllined Article', isActive: false },
+		{ value: 'Event Invite', isActive: false },
+		{ value: 'News', isActive: false },
+		{ value: 'Product Review', isActive: false },
+	];
+
+	TOPICS = [
+		{ value: 'Travel', isActive: false },
+		{ value: 'Food', isActive: false },
+		{ value: 'Leisure', isActive: false },
+		{ value: 'Healthcare', isActive: false },
+		{ value: 'Technology', isActive: false },
+	]
+
+	PIT
 }
 
 export default new MetaData();
