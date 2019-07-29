@@ -1193,8 +1193,13 @@ ul.pri-link a{
   width: 100%;
   border: 1px solid #bebebe;
   border-radius: 3px;
-  color: #bebebe;
+  color: #333;
   background: transparent;
+}
+.ad-pernl-conts.cstm_selec_row{
+ width:100%;
+ float: left;
+ position: relative;
 }
 .ad-pernl-conts .srch_col button {
   border: none;
@@ -1663,13 +1668,25 @@ ul.pri-link a{
   right: -564px;
 }
 
-.selectUl{
+.selectUl {
   border: .5px solid #53c251;
+  position: absolute;
+  width: 100%;
+  background: white;
+  z-index: 1;
+  top: 67px;
 }
-
-.selectList{
-  padding-left: 10px;
-  color: #bebebe;
+.srch_button{
+  background: url(../images/caret_arrow.png) no-repeat;
+    background-position: 98% 58%;
+    background-size: 11px;
+}
+.srch_button input{
+  padding: 10px 37px 10px 10px;
+}
+.selectList {
+  color: #333;
+  padding: 4px 8px;
 }
 
 .selectList:hover{

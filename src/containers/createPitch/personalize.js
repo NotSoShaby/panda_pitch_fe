@@ -16,7 +16,7 @@ const Personalization = ({
 			</div>
 			<StatusBar steps={steps} active={active} />
 			<form>
-				<div className="ad-pernl-conts">
+				<div className="ad-pernl-conts cstm_selec_row">
 					<label htmlFor="ss">
             Choose Media list
 					</label>
