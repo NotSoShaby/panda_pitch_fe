@@ -180,9 +180,9 @@ class Helper {
 		},
 	});
 
-	loginValidation = ({ username = '', password = '' }) => this.ValidationService.validate({
-		username: {
-			value: username,
+	loginValidation = ({ email = '', password = '' }) => this.ValidationService.validate({
+		email: {
+			value: email,
 			rules: {
 				required: true,
 			},

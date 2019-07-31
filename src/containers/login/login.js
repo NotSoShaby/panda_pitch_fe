@@ -21,16 +21,16 @@ const Login = ({
 					<div className="custom_field">
 						<input
 							type="text"
-							name="username"
-							id="username"
+							name="email"
+							id="email"
 							placeholder="JaneAppleseed@gmail.com"
 							onChange={onChange}
 						/>
-						<label htmlFor="username">Email</label>
+						<label htmlFor="email">Email</label>
 					</div>
 					{error
-					&& error.username && (
-						<div className="error">{error.username.map(msg => <p key={msg}>{msg}</p>)}</div>
+					&& error.email && (
+						<div className="error">{error.email.map(msg => <p key={msg}>{msg}</p>)}</div>
 					)}
 					<div className="custom_field">
 						<input
