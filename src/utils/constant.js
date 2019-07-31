@@ -1,12 +1,12 @@
 // constant variables declaration
 
-const local = 'http://localhost:8000';
-// const server = 'http://18.224.60.229:2312';
+// const local = 'http://localhost:8000';
+const server = 'http://18.191.42.149:8000';
 
 class Constant {
   PUBLIC_PATH = process.env.PUBLIC_URL;
 
-  URL = local;
+  URL = server;
 
 	SIGNUP_URL = '/api/user/';
 

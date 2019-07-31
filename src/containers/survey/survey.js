@@ -4,22 +4,18 @@ import Button from '../../components/button';
 import Question from './question';
 import IMAGES from '../../assets/images';
 import StatusBar from '../../components/statusBar';
-import HELPER from '../../utils/helper';
+// import HELPER from '../../utils/helper';
 
 // Login page rendering
 const Survey = ({
-	onBack, onSubmit, survey, answers, onRangeChange, login: { data }, login,
+	onBack, onSubmit, survey, answers, onRangeChange, login: { data: { user } },
 }) => {
 	const questions = _.orderBy(survey.data.questions, 'id', 'asc') || [];
-	let { role } = data;
-	if (!role) {
-		const { data } = login;
-		role = data.role;
-	}
 	let totalSteps = 4;
-	if (HELPER.isPr(role)) {
+	if (user && user.is_pr) {
 		totalSteps = 3;
 	}
+
 	return (
 		<div className="form_section">
 			<div className="form_logo">

@@ -23,20 +23,27 @@ class Index extends UnAuthorized {
 			relevant: 25,
 			responses: 25,
 			topics: [],
-			role: this.getUserRole(props),
+			isPr: this.getUserRole(props, 'isPR'),
+			role: this.getUserRole(props, 'isJR'),
 		};
 	}
 
 	// identify the type of loggedIn user (journalist/pr)
-	getUserRole = (props) => {
-		if (props.login.data && props.login.data.user_id) return 3;
-		return 1;
+	getUserRole = (props, key) => {
+		const { login: { data: { user } } } = props;
+		if (user) return user[key];
+		return false;
 	};
 
+	// // identify the type of loggedIn user (journalist/pr)
+	// getUserRole = (props) => {
+	// 	const { login: { data: { user } } } = props;
+	// 	if (user && user.isPr) return 3;
+	// 	return 1;
+	// };
+
 	static getDerivedStateFromProps(props, state) {
-		const {
-			login,
-		} = props;
+		const { login } = props;
 		const { step } = state;
 		if (HELPER.isSuccessInApi(login.code) && step === 2) {
 			return {

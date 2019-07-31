@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { logout } from '../redux/actions/app';
 import Home from '../containers/home';
 import Authorized from './authorized';
-import HELPER from '../utils/helper';
+// import HELPER from '../utils/helper';
 import JRHeader from '../components/header/jrHeader';
 import PRHeader from '../components/header/prHeader';
 
@@ -17,8 +17,8 @@ class App extends Authorized {
 	};
 
 	renderHeader = () => {
-		const { login } = this.props;
-		if (HELPER.isPr(login.data.role)) {
+		const { login: { user } } = this.props;
+		if (user && user.is_pr) {
 			return <PRHeader onLogout={this.handleLogout} />;
 		}
 		return <JRHeader onLogout={this.handleLogout} />;
