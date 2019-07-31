@@ -11,10 +11,13 @@ const SIGNUP = function* performSignup() {
 		try {
 			const RES = yield Request(CONSTANT.SIGNUP_URL, CONSTANT.POST, action.payload, false);
 			const signup = toStoreConfig(RES);
-			console.log('signup==========>', signup);
-			localStorage.setItem('token', signup.token);
-			yield put({ type: 'SIGNUP_SUCCESS', payload: DATA(signup) });
-			// localStorage.setItem('user', JSON.stringify(RES.user));
+			if (RES.token) {
+				localStorage.setItem('token', signup.token);
+				localStorage.setItem('user', JSON.stringify(signup));
+				yield put({ type: 'SIGNUP_SUCCESS', payload: DATA(signup) });
+			} else {
+				yield put({ type: 'SIGNUP_FAILED', payload: ERROR(RES) });
+			}
 		} catch (error) {
 			yield put({ type: 'SIGNUP_FAILED', payload: ERROR(error) });
 		}

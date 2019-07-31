@@ -1,14 +1,14 @@
 function Login({
-	token = '', user: {
-		email = '', id = '', is_journalist = '', is_pr = '', url = '',
+	token = '', user = {
+		email: '', id: '', is_journalist: '', is_pr: '', url: '',
 	},
 }) {
 	this.token = token;
-	this.email = email;
-	this.id = id;
-	this.is_journalist = is_journalist;
-	this.is_pr = is_pr;
-	this.url = url;
+	this.email = user.email;
+	this.id = user.id;
+	this.isJournalist = user.is_journalist;
+	this.isPr = user.is_pr;
+	this.url = user.url;
 }
 
 

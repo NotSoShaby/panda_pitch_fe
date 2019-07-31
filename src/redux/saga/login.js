@@ -14,8 +14,8 @@ const LOGIN = function* performLogin() {
 			if (RES.token) {
 				const login = toStoreConfig(RES);
 				localStorage.setItem('token', login.token);
+				localStorage.setItem('user', JSON.stringify(login));
 				yield put({ type: 'LOGIN_SUCCESS', payload: DATA(login) });
-				// localStorage.setItem('user', JSON.stringify(RES.user));
 				history.push('/');
 			} else {
 				yield put({ type: 'LOGIN_FAILED', payload: ERROR(RES) });

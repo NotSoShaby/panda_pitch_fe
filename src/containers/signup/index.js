@@ -23,16 +23,15 @@ class Index extends UnAuthorized {
 			relevant: 25,
 			responses: 25,
 			topics: [],
-			isPr: this.getUserRole(props, 'isPR'),
-			role: this.getUserRole(props, 'isJR'),
+			isPr: this.getUserRole(props, 'isPr') || false,
+			isJournalist: this.getUserRole(props, 'isJournalist') || false,
 		};
 	}
 
 	// identify the type of loggedIn user (journalist/pr)
 	getUserRole = (props, key) => {
-		const { login: { data: { user } } } = props;
-		if (user) return user[key];
-		return false;
+		const { login: { data } } = props;
+		return data[key];
 	};
 
 	// // identify the type of loggedIn user (journalist/pr)
@@ -56,7 +55,7 @@ class Index extends UnAuthorized {
 	// handle next button and final submission
 	handleSubmit = () => {
 		const obj = this.state;
-		const { step, role } = this.state;
+		const { step, isJournalist } = this.state;
 		const { signUp, createPrProfile, createJournalistProfile } = this.props;
 		if (step === 2) {
 			// validate form2
@@ -67,7 +66,7 @@ class Index extends UnAuthorized {
 			// validate form3 && Pr final submission
 			const validateForm3 = HELPER.SignUpStep3Validation(obj);
 			if (!validateForm3) {
-				if (HELPER.isJournalist(role)) {
+				if (isJournalist) {
 					this.goToNextForm();
 				} else createPrProfile(this.state);
 			} else this.setState({ error: validateForm3 });
@@ -102,10 +101,8 @@ class Index extends UnAuthorized {
 	};
 
 	// handle user selection
-	handleUserSelection = (key, value) => {
-		this.setState({ [key]: value }, () => {
-			localStorage.setItem('role', this.state.role);
-		});
+	handleUserSelection = (key) => {
+		this.setState({ [key]: true });
 		this.goToNextForm();
 	};
 
@@ -122,6 +119,7 @@ class Index extends UnAuthorized {
 
 	// render login sign up page
 	render() {
+		console.log('pppppppppp==========>', this.props, 'stta=========>', this.state);
 		// if(this.state.loading) return <div>Loading.....</div>
 		return (
 			<SignUp

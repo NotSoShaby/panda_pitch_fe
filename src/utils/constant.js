@@ -1,6 +1,7 @@
 // constant variables declaration
 
 // const local = 'http://localhost:8000';
+// const server = 'http://18.224.60.229:2312';
 const server = 'http://18.191.42.149:8000';
 
 class Constant {
@@ -10,14 +11,14 @@ class Constant {
 
 	SIGNUP_URL = '/api/user/';
 
-	LOGIN_URL = '/login/';
+	LOGIN_URL = '/api/log-in/';
 	// SIGNUP_URL = '/api/users/signup';
 
 	// LOGIN_URL = '/api/users/log-in';
 
-	CREATE_JOURNALIST_URL = '/api/journalist/';
+	CREATE_JOURNALIST_URL = '/api/profile/';
 
-  CREATE_PR_URL = '/api/pr/';
+  CREATE_PR_URL = '/api/profile/';
 
   SURVEY_URL = '/survey/';
 
@@ -25,7 +26,7 @@ class Constant {
 
   SURVEY_SUBMISSION_URL = '/survey/answer/';
 
-  GET_JOURNALIST_INTERESTS_URL = '/auto/interest-autocomplete';
+  GET_JOURNALIST_INTERESTS_URL = '/api/interest/autocomplete/';
 
   CREATE_JOURNALIST_INTEREST_URL = '/api/users/interest/create';
 

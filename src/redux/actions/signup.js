@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import store from '../Store';
-import HELPER from '../../utils/helper';
+// import HELPER from '../../utils/helper';
 
 const initialState = {
 	message: {},
@@ -31,15 +31,15 @@ export const getUserRole = () => {
 };
 
 export const signUp = ({
-	email, password, fullName, role,
+	email, password, fullName, isJournalist, isPr,
 }) => ({
 	type: 'SIGNUP',
 	payload: {
 		email,
 		password,
 		full_name: fullName,
-		is_pr: HELPER.isPr(role),
-		is_journalist: !HELPER.isPr(role),
+		is_pr: isPr,
+		is_journalist: isJournalist,
 	},
 });
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../components/button';
-import HELPER from '../../utils/helper';
+// import HELPER from '../../utils/helper';
 
 // render form1
 const Form2 = ({
 	onSubmit, onBack, onChange, email, password, fullName, login,
 }) => {
-	const { code } = login;
+	const { error } = login;
 	return [
 		<h2 key="heading">Sign Up</h2>,
 		<div key="form1" className="step_form_col">
@@ -22,6 +22,9 @@ const Form2 = ({
 				/>
 				<label htmlFor="fullName">Full Name</label>
 			</div>
+			{error
+				&& error.full_name && <div className="error">{error.full_name.map(msg => <p key={msg}>{msg}</p>)}</div>}
+
 			<div className="custom_field">
 				<input
 					type="email"
@@ -33,6 +36,8 @@ const Form2 = ({
 				/>
 				<label htmlFor="email">Email</label>
 			</div>
+			{error
+      && error.email && <div className="error">{error.email.map(msg => <p key={msg}>{msg}</p>)}</div>}
 
 			<div className="custom_field">
 				<input
@@ -45,9 +50,11 @@ const Form2 = ({
 				/>
 				<label htmlFor="password">Password</label>
 			</div>
-			{HELPER.isErrorInApi(code)
-			&& login.error.non_field_errors && (
-				<div className="error">{login.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
+			{error
+				&& error.password && <div className="error">{error.password.map(msg => <p key={msg}>{msg}</p>)}</div>}
+
+			{error && error.non_field_errors && (
+				<div className="error">{error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 			)}
 			<div className="step_btn_wrapper">
 				<Button className="white_bg_btn" onClick={onBack}>Back</Button>

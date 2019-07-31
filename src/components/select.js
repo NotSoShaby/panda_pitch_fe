@@ -15,7 +15,7 @@ class Select extends Component {
 			options, name, value, className,
 		} = this.props;
 		this.setState({
-			options, name, value: value || options[0].value || null, className,
+			options, name, value: value || options[0].value, className,
 		});
 	}
 

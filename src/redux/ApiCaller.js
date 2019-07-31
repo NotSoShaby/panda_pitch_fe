@@ -2,14 +2,15 @@ import fetch from 'cross-fetch';
 import CONSTANT from '../utils/constant';
 
 // Make an api call
+console.log('token====>', localStorage.getItem('token'));
 
-const { token_type, access_token } = JSON.parse(localStorage.getItem('user')) || { token_type: '', access_token: '' };
+// const token = localStorage.getItem('token') || '';
 export default async (url, method = 'get', body, isAuthenticationRequired = true) => fetch(`${CONSTANT.URL}${url}`, {
 	method,
 	body: JSON.stringify(body),
 	headers: {
 		// Authorization: isAuthenticationRequired && `Token ${localStorage.getItem('token')}`,
-		Authorization: isAuthenticationRequired && `${token_type} ${access_token}`,
+		Authorization: isAuthenticationRequired && `JWT ${localStorage.getItem('token')}`,
 		'Content-Type': 'application/json',
 	},
 })
@@ -20,4 +21,5 @@ export default async (url, method = 'get', body, isAuthenticationRequired = true
 		}
 		return json;
 	})
-	.then(response => response, error => error);
+	.then(response => response, error => error)
+	.catch(err => err);

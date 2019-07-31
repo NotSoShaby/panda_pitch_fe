@@ -128,7 +128,7 @@ class Helper {
 		outlet = '',
 		position = '',
 		company = '',
-		role = '',
+		isJournalist = '',
 		twitter = '',
 		linkedIn = '',
 	}) => {
@@ -146,7 +146,7 @@ class Helper {
 				},
 			},
 		};
-		if (this.isJournalist(role)) {
+		if (isJournalist) {
 			validateRule.outlet = {
 				value: outlet,
 				rules: {
@@ -180,9 +180,9 @@ class Helper {
 		},
 	});
 
-	loginValidation = ({ username = '', password = '' }) => this.ValidationService.validate({
-		username: {
-			value: username,
+	loginValidation = ({ email = '', password = '' }) => this.ValidationService.validate({
+		email: {
+			value: email,
 			rules: {
 				required: true,
 			},

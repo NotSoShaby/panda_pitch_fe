@@ -9,10 +9,10 @@ const Form1 = ({ onUserSelection }) => (
 		</h2>
 		<div key="form1" className="step_form_col">
 			<div className="step_btn_wrapper cstm_button_wrapper">
-				<Button className="cstm_btn " onClick={() => onUserSelection('role', 'journalist')}>
+				<Button className="cstm_btn " onClick={() => onUserSelection('isJournalist')}>
 						JOURNALIST
 				</Button>
-				<Button className="cstm_btn mgrt0" onClick={() => onUserSelection('role', 'pr')}>
+				<Button className="cstm_btn mgrt0" onClick={() => onUserSelection('isPr')}>
 						PR
 				</Button>
 			</div>
