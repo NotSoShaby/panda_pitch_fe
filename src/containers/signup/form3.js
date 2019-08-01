@@ -12,13 +12,13 @@ const Form3 = ({
 	twitter,
 	linkedIn,
 	isPr,
-	// isJournalist,
+	isJournalist,
 	// prProfile,
 	error,
 }) => [
 	<div key="form2" className="step_form_col">
 		<h2 className="mbot30">Tell us a little about yourself</h2>
-		{isPr ? (
+		{isJournalist ? (
 			<div>
 				<div className="full_widt">
 					<h3>Which outlets do you write for?</h3>

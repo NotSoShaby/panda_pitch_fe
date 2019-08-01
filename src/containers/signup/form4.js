@@ -23,7 +23,6 @@ const Form4 = ({
 				list={
 					journalistInterests.data
 						&& journalistInterests.data.data
-						&& journalistInterests.data.data.results
 				}
 				onCreate={onCreate}
 				onSelect={onTodoSelection}
