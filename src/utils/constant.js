@@ -28,7 +28,7 @@ class Constant {
 
   GET_JOURNALIST_INTERESTS_URL = '/api/interest/autocomplete/';
 
-  CREATE_JOURNALIST_INTEREST_URL = '/api/users/interest/create';
+  CREATE_JOURNALIST_INTEREST_URL = '/api/interest/';
 
   GET_PR_PITCHES_URL = '/api/pr/mypitch?pr_id=1';
 

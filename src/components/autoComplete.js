@@ -75,16 +75,18 @@ class AutoComplete extends Component {
 		const { box, val } = this.state;
 		const { list } = this.props;
 		const dropdownList = [];
-		list.map((item) => {
-			const isExist = box.filter(item1 => item1.value.toLowerCase() === item.text.toLowerCase());
-			if (!isExist.length && item.text && item.text.toLowerCase().includes(val.toLowerCase())) {
-				const isCreate = item.text.toLowerCase().split(' ');
-				if (isCreate[0] !== 'create') {
-					dropdownList.push(item.text);
+		if (list && list.length) {
+			list.map((item) => {
+				const isExist = box.filter(item1 => item1.value.toLowerCase() === item.name.toLowerCase());
+				if (!isExist.length && item.name && item.name.toLowerCase().includes(val.toLowerCase())) {
+					const isCreate = item.name.toLowerCase().split(' ');
+					if (isCreate[0] !== 'create') {
+						dropdownList.push(item.name);
+					}
 				}
-			}
-			return null;
-		});
+				return null;
+			});
+		}
 		return dropdownList;
 	};
 
