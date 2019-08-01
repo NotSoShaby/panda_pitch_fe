@@ -5,9 +5,9 @@ import Button from '../../components/button';
 
 // render form1
 const Form2 = ({
-	onSubmit, onBack, onChange, email, password, fullName, login,
+	onSubmit, onBack, onChange, email, password, fullName, login, ...rest
 }) => {
-	const { error } = login;
+	const error = login && login.error && Object.keys(login.error).length ? login.error : rest.error;
 	return [
 		<h2 key="heading">Sign Up</h2>,
 		<div key="form1" className="step_form_col">
@@ -23,7 +23,7 @@ const Form2 = ({
 				<label htmlFor="fullName">Full Name</label>
 			</div>
 			{error
-				&& error.full_name && <div className="error">{error.full_name.map(msg => <p key={msg}>{msg}</p>)}</div>}
+				&& error.fullName && <div className="error">{error.fullName.map(msg => <p key={msg}>{msg}</p>)}</div>}
 
 			<div className="custom_field">
 				<input

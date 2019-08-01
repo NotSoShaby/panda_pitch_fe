@@ -445,9 +445,15 @@ ul.progress_bar li.completed:after {
 	float: left;
 	width: 100%;
 }
-.error p {
+/* .error p {
 	color: #ec1515;
+} */
+
+.error p {
+  color: #ec1515;
+  font-size: 14px;
 }
+
 .auto-selection {
 	position: relative;
 }

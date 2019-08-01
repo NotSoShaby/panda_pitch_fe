@@ -25,6 +25,7 @@ class Index extends UnAuthorized {
 			topics: [],
 			isPr: this.getUserRole(props, 'isPr') || false,
 			isJournalist: this.getUserRole(props, 'isJournalist') || false,
+			error: {},
 		};
 	}
 
@@ -59,8 +60,15 @@ class Index extends UnAuthorized {
 		const { signUp, createPrProfile, createJournalistProfile } = this.props;
 		if (step === 2) {
 			// validate form2
-			if (!HELPER.SignUpStep2Validation(this.state)) {
+			const validateForm2 = HELPER.SignUpStep2Validation(obj);
+			console.log('validateForm2', validateForm2, !validateForm2);
+			if (!validateForm2) {
+				this.setState({ error: {} });
 				signUp(this.state);
+			} else {
+				this.setState({ error: validateForm2 }, () => {
+					console.log(this.state);
+				});
 			}
 		} else if (step === 3) {
 			// validate form3 && Pr final submission
@@ -119,7 +127,6 @@ class Index extends UnAuthorized {
 
 	// render login sign up page
 	render() {
-		console.log('pppppppppp==========>', this.props, 'stta=========>', this.state);
 		// if(this.state.loading) return <div>Loading.....</div>
 		return (
 			<SignUp
