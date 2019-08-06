@@ -63,7 +63,6 @@ class Index extends UnAuthorized {
 
 	// handle next button and final submission
 	handleSubmit = () => {
-		console.log('submit ', this.state);
 		const obj = this.state;
 		const { step, role } = this.state;
 		const {
@@ -135,7 +134,6 @@ class Index extends UnAuthorized {
 	handleSelection = (list, data, item) => {
 		const urlObject = data.find((datum => datum.name === item.value)); // finding url
 		if (urlObject) list[item.index].url = urlObject.url; // assigning url in list object
-		console.log('list-------', list);
 		return list; // returning list to update state
 	}
 
@@ -175,7 +173,6 @@ class Index extends UnAuthorized {
 	// // handle position selection
 	// onJrOutletSelection = (outlets, newItem) => {
 	// 	const { outlet } = this.state;
-	// 	console.log('outlet', outlet);
 	// 	if (!outlet.length) {
 	// 		const { prCompanies: { data } } = this.props;
 	// 		this.setState({ outlet: this.handleSelection(outlets, data, newItem) });
@@ -185,13 +182,11 @@ class Index extends UnAuthorized {
 	// // handle companies for outlet
 	// onInputChange = (value) => {
 	// 	getPrCompanies(value);
-	// 	console.log('onInputChange', value, 'this.state ', this.state);
 	// }
 
 	// On Selecting Outlet
 	onSelectOutlet = (outlet) => {
 		this.setState({ outlet: [outlet] });
-		console.log('this.state', this.state, outlet);
 	}
 
 	// render login sign up page
@@ -212,7 +207,6 @@ class Index extends UnAuthorized {
 				onCompanySelection={this.handleCompanySelection}
 				onCreatePosition={this.createPosition}
 				onPositionSelection={this.handlePositionSelection}
-				// onChangeInput={this.onInputChange}
 				onChangeSelect={this.onSelectOutlet}
 			/>
 		);

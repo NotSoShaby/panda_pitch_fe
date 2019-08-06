@@ -83,11 +83,6 @@ const CreatePitch = ({
 							searchString={searchString}
 						/>
 					</div>
-					{/* {selectedClients && selectedClients.length && (
-						<div>
-							{selectedClients.map(client => <span className="badge">{client.name}</span>)}
-						</div>
-					)} */}
 					{!hideNewClientDiv ? (
 						<div>
 							<div className="two_dived_col">
@@ -189,13 +184,6 @@ const CreatePitch = ({
 					</div>
 					<div className="im k">
 						<h3>Add Topics</h3>
-						{/* <div className="new_field">
-							<input
-								type="text"
-								placeholder="Topics"
-								onChange={e => renderCreateButton(e.target.value)}
-							/>
-						</div> */}
 						<div className="custom_field">
 							<AutoComplete
 								list={

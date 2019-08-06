@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 class SelectBox extends Component {
 	state = {
-		// options: [],
 		value: '',
 		className: '',
 		isListVisible: false,
@@ -39,7 +38,6 @@ class SelectBox extends Component {
 			value, className, isListVisible,
 		} = this.state;
 		const { labelName, options } = this.props;
-		console.log('options', options);
 		return (
 			<React.Fragment>
 				<div className="srch_button">
