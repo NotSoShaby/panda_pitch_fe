@@ -4,15 +4,12 @@ import PropTypes from 'prop-types';
 class SelectBox extends Component {
 	state = {
 		value: '',
-		className: '',
 		isListVisible: false,
 	}
 
 	componentDidMount() {
-		const {
-			value, className,
-		} = this.props;
-		this.setState({ value, className });
+		const { value } = this.props;
+		this.setState({ value });
 	}
 
 	changeListVisibility = () => {
@@ -35,7 +32,7 @@ class SelectBox extends Component {
 
 	render() {
 		const {
-			value, className, isListVisible,
+			value, isListVisible,
 		} = this.state;
 		const { labelName, options } = this.props;
 		return (
@@ -46,7 +43,6 @@ class SelectBox extends Component {
 						type="text"
 						placeholder="Type to search..."
 						onChange={e => this.handleChange(e.target.value)}
-						className={className}
 						value={value}
 					/>
 				</div>
@@ -67,7 +63,6 @@ class SelectBox extends Component {
 
 // props initialization ( default values )
 SelectBox.defaultProps = {
-	className: '',
 	options: [],
 	value: '',
 	labelName: 'name',
@@ -80,7 +75,6 @@ SelectBox.propTypes = {
 	options: PropTypes.array,
 	value: PropTypes.string,
 	labelName: PropTypes.string,
-	className: PropTypes.string,
 	changeInput: PropTypes.func,
 	onChangeSelect: PropTypes.func,
 };

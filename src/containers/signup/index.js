@@ -40,6 +40,7 @@ class Index extends UnAuthorized {
 	// identify the type of loggedIn user (journalist/pr)
 	getUserRole = (props, key) => {
 		const { login: { data } } = props;
+		console.log('data[key]', data[key], 'props', this.props);
 		return data[key];
 	};
 
@@ -65,6 +66,7 @@ class Index extends UnAuthorized {
 	handleSubmit = () => {
 		const obj = this.state;
 		const { step, role } = this.state;
+		console.log('role', role);
 		const {
 			signUp, createPrProfile, createJournalistProfile, login: { data: { url } },
 		} = this.props;
@@ -120,7 +122,7 @@ class Index extends UnAuthorized {
 
 	// handle user selection
 	handleUserSelection = (key) => {
-		this.setState({ role: key });
+		this.setState({ role: key, isPr: key === 'Pr', isJournalist: key === 'Journalist' });
 		this.goToNextForm();
 	};
 
@@ -179,10 +181,13 @@ class Index extends UnAuthorized {
 	// 	}
 	// };
 
-	// // handle companies for outlet
-	// onInputChange = (value) => {
-	// 	getPrCompanies(value);
-	// }
+	// handle companies for outlet
+	onInputChange = (value) => {
+		const { getPrCompanies } = this.props;
+		this.setState({ outlet: [] });
+		getPrCompanies(value);
+		console.log('value', value, 'state', this.state);
+	}
 
 	// On Selecting Outlet
 	onSelectOutlet = (outlet) => {
@@ -208,6 +213,7 @@ class Index extends UnAuthorized {
 				onCreatePosition={this.createPosition}
 				onPositionSelection={this.handlePositionSelection}
 				onChangeSelect={this.onSelectOutlet}
+				changeInput={this.onInputChange}
 			/>
 		);
 	}

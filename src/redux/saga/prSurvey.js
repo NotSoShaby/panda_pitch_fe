@@ -8,7 +8,7 @@ const GET_SURVEY = function* prSurvey() {
 	yield takeEvery('GET_PR_SURVEY', function* generateAction(action) {
 		yield put(START('GET_SURVEY_STARTED'));
 		try {
-			const RES = yield Request(`${CONSTANT.SURVEY_URL}/${action.payload.userId}`, CONSTANT.GET, action.payload);
+			const RES = yield Request(`${CONSTANT.SURVEY_URL}${action.payload.id}`, CONSTANT.GET);
 			yield put({
 				type: 'GET_SURVEY_SUCCESS',
 				payload: DATA(RES),

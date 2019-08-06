@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
-import { getUserId } from './signup';
+// import { getUserId } from './signup';
 import store from '../Store';
 import history from '../../routes/history';
-import HELPER from '../../utils/helper';
+// import HELPER from '../../utils/helper';
 
 const initialState = {
 	message: {},
@@ -35,17 +35,22 @@ export const getSurvey = data => ({ type: 'GET_SURVEY', payload: data });
 // export const getPRSurvey = data => ({ type: 'GET_PR_SURVEY', payload: data });
 
 export const surveySubmission = async ({ answers }) => {
-	const answersObj = {};
+	const answersObj = [];
 	Object.keys(answers).map((id) => {
-		answersObj[`${id}`] = `${answers[id].value} answer`;
+		answersObj.push({ question: `${id}`, answer: `${answers[id].value} answer` });
 		return null;
 	});
-	const payload = {
-		user_id: getUserId(),
-		question_answer: JSON.stringify(answersObj),
-	};
-	const res = await Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST, payload);
-	if (HELPER.isSuccessInApi(res.code)) {
+	console.log('answersObj', answersObj);
+	// const payload = {
+	// 	user_id: getUserId(),
+	// 	question_answer: JSON.stringify(answersObj),
+	// };
+	const res = await Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST, answersObj);
+	console.log('resssss', res);
+	// if (HELPER.isSuccessInApi(res.code)) {
+	// 	history.push('/');
+	// }
+	if (res) {
 		history.push('/');
 	}
 };

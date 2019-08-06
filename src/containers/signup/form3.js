@@ -26,7 +26,7 @@ const Form3 = ({
 	// onJrOutletSelection,
 	positionList,
 	getPositions,
-	// changeInput,
+	changeInput,
 	onChangeSelect,
 }) => [
 	<div key="form2" className="step_form_col">
@@ -43,7 +43,7 @@ const Form3 = ({
 							<SelectBox
 								options={prCompanies.data || []}
 								labelName="name"
-								changeInput={getPrCompanies}
+								changeInput={changeInput}
 								onChangeSelect={onChangeSelect}
 							/>
 						</div>

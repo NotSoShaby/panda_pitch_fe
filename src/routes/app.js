@@ -17,8 +17,8 @@ class App extends Authorized {
 	};
 
 	renderHeader = () => {
-		const { login: { user } } = this.props;
-		if (user && user.is_pr) {
+		const { login: { data } } = this.props;
+		if (data && !data.isJournalist) {
 			return <PRHeader onLogout={this.handleLogout} />;
 		}
 		return <JRHeader onLogout={this.handleLogout} />;

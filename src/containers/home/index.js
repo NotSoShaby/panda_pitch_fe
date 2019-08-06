@@ -14,11 +14,12 @@ class Index extends Component {
 
 	componentDidMount() {
 		this.getPitches();
+		console.log('this.state', this.state, this.props);
 	}
 
 	getPitches = () => {
-		if (this.isPr()) {
-			console.log('iscomint');
+		const { login: { data: { isJournalist } } } = this.props;
+		if (!isJournalist) {
 			const { getPitches } = this.props;
 			const prId = 1;
 			// if (data.role) { role = data.role; } else role = signup.data.role;
@@ -26,24 +27,24 @@ class Index extends Component {
 		}
 	}
 
-
 	// close modal
 	handleModalClose = () => this.setState({ isModalOpen: false });
 
 	// create new pitch
 	createNewPitch = () => this.setState({ isModalOpen: true });
 
-	isPr = () => {
-		const { login: { data: { user } } } = this.props;
+	// isPr = () => {
+	// 	const { login: { data: { user } } } = this.props;
 
-		if (user && user.is_pr) {
-			return true;
-		}
-		return false;
-	};
+	// 	if (user && user.is_pr) {
+	// 		return true;
+	// 	}
+	// 	return false;
+	// };
 
 	render() {
 		const { isModalOpen } = this.state;
+		const { login: { data: { isJournalist } } } = this.props;
 		return [
 			<Modal key="modal" onClose={this.handleModalClose} isOpen={isModalOpen} autoClose>
 				<p>Feature Coming Soon !</p>
@@ -53,7 +54,7 @@ class Index extends Component {
 					</button>
 				</div>
 			</Modal>,
-			<Home isPr={this.isPr()} {...this.props} {...this.state} key="home" createNewPitch={this.createNewPitch} />,
+			<Home isPr={!isJournalist} {...this.props} {...this.state} key="home" createNewPitch={this.createNewPitch} />,
 		];
 	}
 }

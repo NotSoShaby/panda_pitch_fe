@@ -5,6 +5,7 @@ export const defaultState = {
 };
 
 export function login(state = defaultState, action) {
+	console.log('state', state);
 	switch (action.type) {
 		case 'LOGIN_INITIATED': {
 			return { ...state, code: 'uninitiated' };

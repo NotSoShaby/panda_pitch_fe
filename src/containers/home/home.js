@@ -15,8 +15,7 @@ const HomeScreen = ({
 }) => {
 	if (isPr) {
 		return <PrHome setView={setView} createNewPitch={createNewPitch} view={view} />;
-	}
-	return <JrHome setView={setView} requestStory={requestStory} view={view} />;
+	} return <JrHome setView={setView} requestStory={requestStory} view={view} />;
 };
 
 const Layout = ({ view, prPitches: { data: { results } } }) => {
@@ -38,7 +37,6 @@ const Home = ({
 	pageSize, onPageChange, ...props
 }) => {
 	const [view, setView] = useState(0);
-	console.log('state11111', props);
 	const { prPitches: { data: { count } } } = props;
 	return (
 		<div>

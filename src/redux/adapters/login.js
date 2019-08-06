@@ -7,7 +7,7 @@ function Login({
 	this.email = user.email;
 	this.id = user.id;
 	this.isJournalist = user.is_journalist;
-	this.isPr = user.is_pr;
+	// this.isPr = user.is_pr;
 	this.url = user.url;
 }
 
