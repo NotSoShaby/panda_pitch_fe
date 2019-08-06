@@ -14,10 +14,10 @@ const SearchBox = ({
 		return (
 			<div className="srch_lst_row">
 				{/* {data.map(({ name, profile, profilePic }) => { */}
-				{data.map(({ id, name }) => {
+				{data && data.length && data.map(({ url, name }) => {
 					if (searchString && name.toLowerCase().includes(searchString.toLowerCase())) {
 						return (
-							<div key={name} className="srch_lst_col" role="button" onClick={() => onSelect(id)}>
+							<div key={name} className="srch_lst_col" role="button" onClick={() => onSelect({ url, name })}>
 								<div className="srch_pic">
 									<img src={imagepath} alt="profile_pic" />
 								</div>

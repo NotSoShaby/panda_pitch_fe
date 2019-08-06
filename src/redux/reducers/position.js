@@ -2,19 +2,18 @@ export const defaultState = {
 	data: {},
 };
 
-export function prProfile(state = defaultState, action) {
-	console.log('pr state ---------------------------', state);
+export function positions(state = defaultState, action) {
 	switch (action.type) {
-		case 'CREATE_PR_PROFILE_INITIATED': {
+		case 'GET_POSITIONS_INITIATED': {
 			return { ...state, code: 'uninitiated' };
 		}
-		case 'CREATE_PR_PROFILE_STARTED': {
+		case 'GET_POSITIONS_STARTED': {
 			return { ...state };
 		}
-		case 'CREATE_PR_PROFILE_SUCCESS': {
+		case 'GET_POSITIONS_SUCCESS': {
 			return { ...state, ...action.payload };
 		}
-		case 'CREATE_PR_PROFILE_FAILED': {
+		case 'GET_POSITIONS_FAILED': {
 			return {
 				...state,
 				...action.payload,

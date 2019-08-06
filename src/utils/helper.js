@@ -35,7 +35,7 @@ class Helper {
 		},
 
 		validEmail(field, value) {
-			if (!this.emailExpr.test(value)) {
+			if (value !== '' && !this.emailExpr.test(value)) {
 				if (Object.prototype.hasOwnProperty.call(this.messages, field)) {
 					if (Object.prototype.hasOwnProperty.call(this.messages[field], 'validEmail')) {
 						return this.messages[field].validEmail;
@@ -125,18 +125,19 @@ class Helper {
 
 	// validate sign up form3
 	SignUpStep3Validation = ({
-		outlet = '',
-		position = '',
-		company = '',
-		isJournalist = '',
+		outlet = [],
+		allPositions = '',
+		companiesList = '',
+		// isJournalist = '',
+		role = '',
 		twitter = '',
 		linkedIn = '',
 	}) => {
 		const validateRule = {
-			position: {
-				value: position,
+			allPositions: {
+				value: allPositions,
 				rules: {
-					required: true,
+					requiredArray: true,
 				},
 			},
 			twitter: {
@@ -146,18 +147,18 @@ class Helper {
 				},
 			},
 		};
-		if (isJournalist) {
+		if (role === 'Journalist') {
 			validateRule.outlet = {
 				value: outlet,
 				rules: {
-					required: true,
+					requiredArray: true,
 				},
 			};
 		} else {
-			validateRule.company = {
-				value: company,
+			validateRule.companiesList = {
+				value: companiesList,
 				rules: {
-					required: true,
+					requiredArray: true,
 				},
 			};
 			validateRule.linkedIn = {
@@ -168,12 +169,13 @@ class Helper {
 			};
 		}
 		return this.ValidationService.validate(validateRule);
+		// return null;
 	};
 
 	// validate sign up form4
-	SignUpStep4Validation = ({ topics = [] }) => this.ValidationService.validate({
-		topics: {
-			value: topics,
+	SignUpStep4Validation = ({ interests = [] }) => this.ValidationService.validate({
+		interests: {
+			value: interests,
 			rules: {
 				requiredArray: true,
 			},
@@ -206,16 +208,16 @@ class Helper {
 	getItemFromSession = key => JSON.parse(localStorage.getItem(key));
 
 	// return true if loggedIn user is journalist
-	isJournalist = type => type === 'journalist';
+	isJournalist = type => type === 'journalist' || type === 'Journalist';
 
 	// return true if loggedIn user is pr
 	isPr = type => (type === 'pr' || type === 'Pr');
 
 	// return true if object is empty
-  isEmptyObject = obj => Object.entries(obj).length === 0 && obj.constructor === Object;
+	isEmptyObject = obj => Object.entries(obj).length === 0 && obj.constructor === Object;
 
-  // return true if object is empty
-  isObject = obj => ((typeof obj === 'object' || typeof obj === 'function') && (obj !== null))
+	// return true if object is empty
+	isObject = obj => ((typeof obj === 'object' || typeof obj === 'function') && (obj !== null))
 }
 
 export default new Helper();

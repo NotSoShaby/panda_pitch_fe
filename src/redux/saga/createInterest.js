@@ -11,13 +11,14 @@ const CREATE_JOURNALIST_INTEREST = function* createInterest() {
 				CONSTANT.POST, action.payload,
 			);
 			if (DATA) {
+				const interest = { data: [{ ...DATA }] };
 				yield put({
-					type: 'GET_JOURNALIST_INTERESTS',
-					payload: DATA.name,
+					type: 'GET_JOURNALIST_INTEREST_SUCCESS',
+					payload: interest,
 				});
 			}
 		} catch (error) {
-			yield put({ type: 'GET_JOURNALIST_FAILED', payload: error });
+			yield put({ type: 'GET_JOURNALIST_INTEREST_FAILED', payload: error });
 		}
 	});
 };

@@ -5,7 +5,7 @@ import AutoComplete from '../../components/autoComplete';
 
 // render form3
 const Form4 = ({
-	topics,
+	interests,
 	onSubmit,
 	onBack,
 	onCreate,
@@ -18,21 +18,19 @@ const Form4 = ({
 	<div className="step_form_col">
 		<h2 className="mbot30">What do you write about?</h2>
 		<div className="full_widt mbot_zero">
-			<h3>Topic</h3>
+			<h3>Interests</h3>
 			<AutoComplete
-				list={
-					journalistInterests.data
-						&& journalistInterests.data.data
-				}
+				list={journalistInterests.data}
+				name="Interest"
 				onCreate={onCreate}
 				onSelect={onTodoSelection}
-				boxes={topics}
+				boxes={interests}
 				onChange={getJournalistInterests}
 			/>
 		</div>
 
 		{error
-			&& error.topics && <div className="error">{error.topics.map(msg => <p key={msg}>{msg}</p>)}</div>}
+				&& error.interests && <div className="error">{error.interests.map(msg => <p key={msg}>{msg}</p>)}</div>}
 		{/* {HELPER.isErrorInApi(code)
 			&& journalistProfile.error.non_field_errors && (
 				<div className="error">

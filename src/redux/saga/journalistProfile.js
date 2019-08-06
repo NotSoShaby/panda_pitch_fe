@@ -10,7 +10,7 @@ const CREATE_JOURNALIST_PROFILE = function* createJournalist() {
 		yield put(START('CREATE_JOURNALIST_PROFILE_STARTED'));
 		try {
 			const RES = yield Request(CONSTANT.CREATE_JOURNALIST_URL, CONSTANT.POST, action.payload);
-			if (RES.code === 'SUCCESS') {
+			if (RES) {
 				yield put({ type: 'CREATE_JOURNALIST_PROFILE_SUCCESS', payload: DATA(RES) });
 				history.push('/survey');
 			}

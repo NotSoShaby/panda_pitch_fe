@@ -18,7 +18,7 @@ class AutoComplete extends Component {
 		if (!isExist.length) {
 			const boxes = box;
 			boxes.push({ value: val, isActive: true });
-			onSelect(boxes);
+			onSelect(boxes, { value: val, isActive: true, index: box.length - 1 });
 			this.setState({ box: boxes, val: '' });
 		}
 	};
@@ -34,10 +34,10 @@ class AutoComplete extends Component {
 	onItemSelection = val => this.putInBox(val);
 
 	// create a new tag
-	onCreate = (val) => {
+	onCreate = async (val) => {
 		const { onCreate } = this.props;
-		this.putInBox(val);
-		onCreate(val);
+		await onCreate(val);
+		// this.putInBox(val);
 	};
 
 	// render dropdown list
@@ -96,12 +96,12 @@ class AutoComplete extends Component {
 		const { box } = this.state;
 		box[index].isActive = !box[index].isActive;
 		this.setState({ box });
-		onSelect(box);
+		onSelect(box, { ...box[index], index });
 	};
 
 	render() {
 		const { box, val } = this.state;
-		const { showTextBox } = this.props;
+		const { showTextBox, name, errors } = this.props;
 		return (
 			<div className="auto-selection">
 				{showTextBox && (
@@ -110,18 +110,19 @@ class AutoComplete extends Component {
 							value={val || ''}
 							onChange={this.setVal}
 							type="text"
-							name="topics"
+							name={name}
 							autoComplete="off"
-							id="topics"
-							placeholder="Enter Any Topic"
+							id={name}
+							placeholder="Type to search or create new ..."
 						/>
 
-						<label htmlFor="topics">Topic</label>
+						<label htmlFor={name}>{name}</label>
 						{this.renderCreateButton()}
 						{this.renderList()}
 					</div>
 				)}
 				<div />
+				{errors && <div className="error">{errors.map(msg => <p key={msg}>{msg}</p>)}</div>}
 				<ul className="topic_list">
 					{box.map(({ value, isActive }, count) => (
 						<li
@@ -143,9 +144,9 @@ class AutoComplete extends Component {
 AutoComplete.defaultProps = {
 	list: [],
 	showTextBox: true,
-	onCreate: () => {},
-	onChange: () => {},
-	onSelect: () => {},
+	onCreate: () => { },
+	onChange: () => { },
+	onSelect: () => { },
 };
 
 // props type definition

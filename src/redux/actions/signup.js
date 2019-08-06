@@ -1,6 +1,7 @@
+// import { Component } from 'react';
 import { createSelector } from 'reselect';
 import store from '../Store';
-// import HELPER from '../../utils/helper';
+import HELPER from '../../utils/helper';
 
 const initialState = {
 	message: {},
@@ -20,7 +21,7 @@ export const getUserState = createSelector(getSignupState, n => n.data.user_id);
 
 export const getUserId = () => {
 	const user = JSON.parse(localStorage.getItem('user'));
-	if (user) return user.user_id;
+	if (user) return user.id;
 	return null;
 };
 
@@ -31,49 +32,54 @@ export const getUserRole = () => {
 };
 
 export const signUp = ({
-	email, password, fullName, isJournalist, isPr,
+	email, password, fullName, role,
 }) => ({
 	type: 'SIGNUP',
 	payload: {
 		email,
 		password,
 		full_name: fullName,
-		is_pr: isPr,
-		is_journalist: isJournalist,
+		is_pr: HELPER.isPr(role),
+		is_journalist: HELPER.isJournalist(role),
 	},
 });
 
 export const createPrProfile = ({
-	position, company, linkedIn, twitter,
-}) => ({
-	type: 'CREATE_PR_PROFILE',
-	payload: {
-		user_id: getUserId(),
-		company,
-		position,
-		linkedin_url: linkedIn || '',
-		twitter_url: twitter || '',
-	},
-});
+	positionList, companiesList, linkedIn, twitter, url, fullName = null,
+}) => {
+	let company = companiesList.filter(company => company.isActive && company.value);
+	company = company.map(({ url }) => url);
+	let position = positionList.filter(position => position.isActive && position.value);
+	position = position.map(({ url }) => url);
+	return ({
+		type: 'CREATE_PR_PROFILE',
+		payload: {
+			user: url,
+			full_name: fullName,
+			company,
+			position,
+			linkedin_url: linkedIn || '',
+			twitter_url: twitter || '',
+		},
+	});
+};
 
 export const createJournalistProfile = ({
-	position, outlet, topics, twitter,
+	positionList, outlet, twitter, interests, fullName = null,
 }) => {
-	let topicList = '';
-	topics.map(({ value, isActive }) => {
-		if (isActive) {
-			if (topicList === '') topicList = value;
-			else topicList = `${topicList},${value}`;
-		}
-		return null;
-	});
+	let position = positionList.filter(position => position.isActive && position.value);
+	position = position.map(({ url }) => url);
+	let interestsList = interests.filter(interestsList => interestsList.isActive
+    && interestsList.value);
+	interestsList = interestsList.map(({ url }) => url);
 	return {
 		type: 'CREATE_JOURNALIST_PROFILE',
 		payload: {
+			full_name: fullName,
 			user_id: getUserId(),
-			outlet,
+			outlet: outlet[0].url,
 			position,
-			topics: topicList,
+			interests: interestsList,
 			twitter_url: twitter || '',
 		},
 	};
@@ -82,3 +88,11 @@ export const createJournalistProfile = ({
 export const getJournalistInterests = data => ({ type: 'GET_JOURNALIST_INTERESTS', payload: data });
 
 export const createInterest = data => ({ type: 'CREATE_JOURNALIST_INTEREST', payload: { name: data } });
+
+export const createPrCompany = data => ({ type: 'CREATE_PR_COMPANY', payload: { name: data } });
+
+export const getPrCompanies = data => ({ type: 'GET_PR_COMPANIES', payload: data });
+
+export const createPosition = data => ({ type: 'CREATE_POSITION', payload: { name: data } });
+
+export const getPositions = data => ({ type: 'GET_POSITIONS', payload: data });

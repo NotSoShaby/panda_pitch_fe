@@ -56,8 +56,10 @@ const CreatePitch = ({
 	getJournalistInterests,
 	onRangeChange,
 	changeNextScreen,
-	journalists,
-	handlePrSelect,
+	clientAutoComplete: { data },
+	// handlePrSelect,
+	// selectedClients,
+	handleClient,
 	setSearchValue,
 	searchString,
 	handlePrivate,
@@ -72,18 +74,20 @@ const CreatePitch = ({
 					</div>
 					<StatusBar steps={steps} active={active} />
 					<div className="ad-pernl-conts">
-						<label htmlFor="ddd">
-								Client
-						</label>
+						<label htmlFor="ddd">Client</label>
 						<SearchBox
-							data={journalists}
+							data={data}
 							placeholder="Client"
-							onSelect={handlePrSelect}
+							onSelect={handleClient}
 							setSearchValue={setSearchValue}
 							searchString={searchString}
 						/>
 					</div>
-
+					{/* {selectedClients && selectedClients.length && (
+						<div>
+							{selectedClients.map(client => <span className="badge">{client.name}</span>)}
+						</div>
+					)} */}
 					{!hideNewClientDiv ? (
 						<div>
 							<div className="two_dived_col">
@@ -168,7 +172,7 @@ const CreatePitch = ({
 									toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
 									browser_spellcheck: true,
 								}}
-							// onChange={x => xxx(x)}
+								// onChange={x => xxx(x)}
 							/>
 						</div>
 						<div className="hint">
@@ -176,10 +180,10 @@ const CreatePitch = ({
 							<p>
 								{' '}
 								<b>
-Hint:
+										Hint:
 									{' '}
 								</b>
-                  Write a general Pitch.Save Journalist Personalization for the Next Step!
+									Write a general Pitch.Save Journalist Personalization for the Next Step!
 							</p>
 						</div>
 					</div>
@@ -220,10 +224,10 @@ Hint:
 							<p>
 								{' '}
 								<b>
-Hint:
+										Hint:
 									{' '}
 								</b>
-                  Write a general Pitch.Save Journalist Personalization for the Next Step!
+									Write a general Pitch.Save Journalist Personalization for the Next Step!
 							</p>
 						</div>
 					</div>
@@ -270,10 +274,10 @@ Hint:
 							<p>
 								{' '}
 								<b>
-Hint:
+										Hint:
 									{' '}
 								</b>
-                  Write a general Pitch.Save Journalist Personalization for the Next Step!
+									Write a general Pitch.Save Journalist Personalization for the Next Step!
 							</p>
 						</div>
 					</div>

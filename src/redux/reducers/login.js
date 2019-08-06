@@ -13,7 +13,7 @@ export function login(state = defaultState, action) {
 			return { ...state };
 		}
 		case 'LOGIN_SUCCESS': {
-			return { ...state, ...action.payload };
+			return { ...state, ...action.payload, error: {} };
 		}
 		case 'LOGIN_FAILED': {
 			return {
@@ -25,7 +25,7 @@ export function login(state = defaultState, action) {
 			return { ...state, code: 'ongoing', isLoading: true };
 		}
 		case 'SIGNUP_SUCCESS': {
-			return { ...state, ...action.payload };
+			return { ...state, ...action.payload, error: {} };
 		}
 		case 'SIGNUP_FAILED': {
 			return {

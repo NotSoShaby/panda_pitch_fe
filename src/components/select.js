@@ -29,7 +29,7 @@ class Select extends Component {
 	handleChange(option) {
 		const { onChangeSelect } = this.props;
 		const { isListVisible } = this.state;
-		this.setState({ value: option.value, isListVisible: !isListVisible });
+		this.setState({ value: option.value || option.name, isListVisible: !isListVisible });
 		onChangeSelect(option);
 	}
 
@@ -39,18 +39,6 @@ class Select extends Component {
 		} = this.state;
 		return (
 			<React.Fragment>
-				{/* <select
-					className={className}
-					value={value}
-					onChange={e => this.handleChange(e)}
-					name={name}
-				>
-					{options.map(option => (
-						<option key={option.id} value={option.value}>
-							{option.value}
-						</option>
-					))}
-        </select> */}
 				<div className="srch_button">
 					<input
 						onClick={this.changeListVisibility}
@@ -61,7 +49,7 @@ class Select extends Component {
 						name={name}
 					/>
 				</div>
-				{ isListVisible && (
+				{isListVisible && (
 					<ul className="selectUl">
 						{options.map(option => (
 							<li className="selectList" key={option.id} value={option.value} role="button" onClick={() => this.handleChange(option)}>

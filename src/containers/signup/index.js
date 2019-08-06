@@ -11,6 +11,10 @@ import {
 	createJournalistProfile,
 	getJournalistInterests,
 	createInterest,
+	createPrCompany,
+	getPrCompanies,
+	createPosition,
+	getPositions,
 } from '../../redux/actions/signup';
 
 class Index extends UnAuthorized {
@@ -22,10 +26,14 @@ class Index extends UnAuthorized {
 			pitches: 25,
 			relevant: 25,
 			responses: 25,
-			topics: [],
+			outlet: [],
+			interests: [],
+			companiesList: [],
+			positionList: [],
 			isPr: this.getUserRole(props, 'isPr') || false,
 			isJournalist: this.getUserRole(props, 'isJournalist') || false,
 			error: {},
+			selectedCompanyUrl: [],
 		};
 	}
 
@@ -55,28 +63,31 @@ class Index extends UnAuthorized {
 
 	// handle next button and final submission
 	handleSubmit = () => {
+		console.log('submit ', this.state);
 		const obj = this.state;
-		const { step, isJournalist } = this.state;
-		const { signUp, createPrProfile, createJournalistProfile } = this.props;
+		const { step, role } = this.state;
+		const {
+			signUp, createPrProfile, createJournalistProfile, login: { data: { url } },
+		} = this.props;
 		if (step === 2) {
 			// validate form2
 			const validateForm2 = HELPER.SignUpStep2Validation(obj);
-			console.log('validateForm2', validateForm2, !validateForm2);
 			if (!validateForm2) {
 				this.setState({ error: {} });
 				signUp(this.state);
 			} else {
 				this.setState({ error: validateForm2 }, () => {
-					console.log(this.state);
 				});
 			}
 		} else if (step === 3) {
 			// validate form3 && Pr final submission
 			const validateForm3 = HELPER.SignUpStep3Validation(obj);
 			if (!validateForm3) {
-				if (isJournalist) {
+				if (role === 'Journalist') {
 					this.goToNextForm();
-				} else createPrProfile(this.state);
+				} else {
+					createPrProfile({ ...this.state, url });
+				}
 			} else this.setState({ error: validateForm3 });
 		} else if (step === 4) {
 			// validate form4 && Journalist final submission
@@ -110,7 +121,7 @@ class Index extends UnAuthorized {
 
 	// handle user selection
 	handleUserSelection = (key) => {
-		this.setState({ [key]: true });
+		this.setState({ role: key });
 		this.goToNextForm();
 	};
 
@@ -120,10 +131,68 @@ class Index extends UnAuthorized {
 		createInterest(val);
 	};
 
+	// handle Selection
+	handleSelection = (list, data, item) => {
+		const urlObject = data.find((datum => datum.name === item.value)); // finding url
+		if (urlObject) list[item.index].url = urlObject.url; // assigning url in list object
+		console.log('list-------', list);
+		return list; // returning list to update state
+	}
+
 	// handle interests selection
-	handleTodoSelection = (topics) => {
-		this.setState({ topics });
+	handleJournoInterestSelection = (journoInterests, newItem) => {
+		const { journalistInterests: { data } } = this.props;
+		this.setState({
+			journoInterests:
+				this.handleSelection(journoInterests, data, newItem),
+		});
 	};
+
+	// create a new company
+	createPrCompany = (val) => {
+		const { createPrCompany } = this.props;
+		createPrCompany(val);
+	};
+
+	// handle company selection
+	handleCompanySelection = (companiesList, newItem) => {
+		const { prCompanies: { data } } = this.props;
+		this.setState({ companiesList: this.handleSelection(companiesList, data, newItem) });
+	};
+
+	// create a new position
+	createPosition = (val) => {
+		const { createPosition } = this.props;
+		createPosition(val);
+	};
+
+	// handle position selection
+	handlePositionSelection = (allPositions, newItem) => {
+		const { positions: { data } } = this.props;
+		this.setState({ allPositions: this.handleSelection(allPositions, data, newItem) });
+	};
+
+	// // handle position selection
+	// onJrOutletSelection = (outlets, newItem) => {
+	// 	const { outlet } = this.state;
+	// 	console.log('outlet', outlet);
+	// 	if (!outlet.length) {
+	// 		const { prCompanies: { data } } = this.props;
+	// 		this.setState({ outlet: this.handleSelection(outlets, data, newItem) });
+	// 	}
+	// };
+
+	// // handle companies for outlet
+	// onInputChange = (value) => {
+	// 	getPrCompanies(value);
+	// 	console.log('onInputChange', value, 'this.state ', this.state);
+	// }
+
+	// On Selecting Outlet
+	onSelectOutlet = (outlet) => {
+		this.setState({ outlet: [outlet] });
+		console.log('this.state', this.state, outlet);
+	}
 
 	// render login sign up page
 	render() {
@@ -138,7 +207,13 @@ class Index extends UnAuthorized {
 				onRangeChange={this.handleRangeChange}
 				onUserSelection={this.handleUserSelection}
 				onCreate={this.createInterest}
-				onTodoSelection={this.handleTodoSelection}
+				onTodoSelection={this.handleJournoInterestSelection}
+				onCreateCompany={this.createPrCompany}
+				onCompanySelection={this.handleCompanySelection}
+				onCreatePosition={this.createPosition}
+				onPositionSelection={this.handlePositionSelection}
+				// onChangeInput={this.onInputChange}
+				onChangeSelect={this.onSelectOutlet}
 			/>
 		);
 	}
@@ -155,6 +230,10 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		createJournalistProfile: values => createJournalistProfile(values),
 		getJournalistInterests: data => getJournalistInterests(data),
 		createInterest: data => createInterest(data),
+		getPrCompanies: data => getPrCompanies(data),
+		createPrCompany: data => createPrCompany(data),
+		getPositions: data => getPositions(data),
+		createPosition: data => createPosition(data),
 	},
 	dispatch,
 );

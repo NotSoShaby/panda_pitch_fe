@@ -8,9 +8,11 @@ import { survey } from './survey';
 import { journalistInterests } from './interests';
 import { prPitches } from './pitches';
 import { prClientsAuto } from './prClientsAuto';
-import { prClient } from './prClient';
+import { prClient, client, clientAutoComplete } from './prClient';
 import { prMedialists } from './prMedialists';
 import history from '../../routes/history';
+import { prCompanies } from './company';
+import { positions } from './position';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
@@ -25,6 +27,10 @@ const reducer = combineReducers({
 	prClientsAuto,
 	prClient,
 	prMedialists,
+	prCompanies,
+	positions,
+	client,
+	clientAutoComplete,
 });
 
 const initialState = { code: 'UNINITIATED', isLoading: false };
@@ -42,13 +48,18 @@ const defaultState = {
 	prClientsAuto: initialState,
 	prClient: initialState,
 	prMedialists: initialState,
+	prCompanies: initialState,
+	positions: initialState,
+	client: initialState,
+	getClientsAuto: initialState,
+	clientAutoComplete: initialState,
 };
 
 // Empty state when user logout
 export default (state, action) => {
 	if (
 		action.type
-		=== 'LOGOUT'
+    === 'LOGOUT'
 	) {
 		history.push(
 			'/login',
