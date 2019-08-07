@@ -34,9 +34,8 @@ class Index extends Authorized {
 
 	componentDidMount() {
 		const {
-			getClientsAuto, getPrMedialists,
+			getPrMedialists,
 		} = this.props;
-		getClientsAuto('a');
 		getPrMedialists();
 	}
 
@@ -61,6 +60,7 @@ class Index extends Authorized {
 	}
 
 	setSearchValue = (searchString) => {
+		const { getClientsAuto } = this.props;
 		getClientsAuto(searchString);
 		this.setState({ searchString });
 	}
@@ -82,11 +82,10 @@ class Index extends Authorized {
 	}
 
 	handleClient = (client) => {
-		const { selectedClients } = this.state;
-		if (_.findLastIndex(selectedClients, client) === -1) {
-			selectedClients.push(client);
-		}
-		this.setState({ selectedClients, searchString: '' });
+		// if (_.findLastIndex(selectedClients, client) === -1) {
+		// 	selectedClients.push(client);
+		// }
+		this.setState({ selectedClients: [client] });
 	};
 
 	handleAddProfile = () => {

@@ -13,12 +13,14 @@ class AutoComplete extends Component {
 	// add item in selected tag list
 	putInBox = (val) => {
 		const { box } = this.state;
-		const { onSelect } = this.props;
+		const { onSelect, list } = this.props;
 		const isExist = box.filter(({ value }) => value === val);
 		if (!isExist.length) {
 			const boxes = box;
 			boxes.push({ value: val, isActive: true });
-			onSelect(boxes, { value: val, isActive: true, index: box.length - 1 });
+			onSelect(this.handleSelection(
+				boxes, list, { value: val, isActive: true, index: box.length - 1 },
+			));
 			this.setState({ box: boxes, val: '' });
 		}
 	};
@@ -98,6 +100,13 @@ class AutoComplete extends Component {
 		this.setState({ box });
 		onSelect(box, { ...box[index], index });
 	};
+
+	// handle Selection
+	handleSelection = (list, data, item) => {
+		const urlObject = data.find((datum => datum.name === item.value)); // finding url
+		if (urlObject) list[item.index].url = urlObject.url; // assigning url in list object
+		return list; // returning list to update state
+	}
 
 	render() {
 		const { box, val } = this.state;

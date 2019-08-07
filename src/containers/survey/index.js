@@ -52,7 +52,10 @@ class Index extends Authorized {
 	handleCancel = () => this.props.history.push('/');
 
 	// handle survey submission and redirect to the home screen
-	handleSubmit = () => surveySubmission(this.state);
+	handleSubmit = () => {
+		const { login: { data: { isJournalist } } } = this.props;
+		surveySubmission({ ...this.state, survey: isJournalist ? 2 : 1 });
+	}
 
 	render() {
 		return (

@@ -34,18 +34,18 @@ export const getPrStatus = createSelector(getPrState, n => n.data.code);
 export const getSurvey = data => ({ type: 'GET_SURVEY', payload: data });
 // export const getPRSurvey = data => ({ type: 'GET_PR_SURVEY', payload: data });
 
-export const surveySubmission = async ({ answers }) => {
+export const surveySubmission = async ({ answers, survey }) => {
 	const answersObj = [];
 	Object.keys(answers).map((id) => {
 		answersObj.push({ question: `${id}`, answer: `${answers[id].value} answer` });
 		return null;
 	});
-	console.log('answersObj', answersObj);
 	// const payload = {
 	// 	user_id: getUserId(),
 	// 	question_answer: JSON.stringify(answersObj),
 	// };
-	const res = await Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST, answersObj);
+	const res = await Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST,
+		{ answers: answersObj, survey });
 	console.log('resssss', res);
 	// if (HELPER.isSuccessInApi(res.code)) {
 	// 	history.push('/');

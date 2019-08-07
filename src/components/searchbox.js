@@ -6,18 +6,36 @@ const imagepath = require('../../public/images/google.jpg');
 
 const { SEARCH_ICON } = IMAGES;
 
-const SearchBox = ({
-	searchString, data, onSelect, setSearchValue, placeholder,
-}) => {
-	const search = (searchString) => {
+class SearchBox extends React.Component {
+	state = {
+		value: '',
+		listVisible: false,
+	}
+
+	changeSelection = ({ url, name }) => {
+		const { onSelect } = this.props;
+		this.setState({ value: name, listVisible: false });
+		onSelect({ url, name });
+	}
+
+	onChange = (value) => {
+		const { setSearchValue } = this.props;
+		this.setState({ value, listVisible: true });
+		setSearchValue(value);
+	}
+
+	search = () => {
+		const { searchString, data } = this.props;
+		const { listVisible } = this.state;
 		if (!data || data.length === 0) return null;
 		return (
 			<div className="srch_lst_row">
 				{/* {data.map(({ name, profile, profilePic }) => { */}
 				{data && data.length && data.map(({ url, name }) => {
-					if (searchString && name.toLowerCase().includes(searchString.toLowerCase())) {
+					if (listVisible && searchString
+						&& name.toLowerCase().includes(searchString.toLowerCase())) {
 						return (
-							<div key={name} className="srch_lst_col" role="button" onClick={() => onSelect({ url, name })}>
+							<div key={name} className="srch_lst_col" role="button" onClick={() => this.changeSelection({ url, name })}>
 								<div className="srch_pic">
 									<img src={imagepath} alt="profile_pic" />
 								</div>
@@ -34,23 +52,27 @@ const SearchBox = ({
 		);
 	};
 
-	return (
-		<React.Fragment>
-			<div key="search_box" className="srch_col place">
-				<input
-					type="search"
-					placeholder={placeholder}
-					value={searchString}
-					onChange={e => setSearchValue(e.target.value)}
-				/>
-				<button type="button">
-					<img className="srch_icn" src={SEARCH_ICON} alt="search" />
-				</button>
-			</div>
-			{search(searchString)}
-		</React.Fragment>
-	);
-};
+	render() {
+		const { searchString, placeholder } = this.props;
+		const { value } = this.state;
+		return (
+			<React.Fragment>
+				<div key="search_box" className="srch_col place">
+					<input
+						type="search"
+						placeholder={placeholder}
+						value={value}
+						onChange={e => this.onChange(e.target.value)}
+					/>
+					<button type="button">
+						<img className="srch_icn" src={SEARCH_ICON} alt="search" />
+					</button>
+				</div>
+				{this.search(searchString)}
+			</React.Fragment>
+		);
+	}
+}
 
 SearchBox.defaultProps = {
 	data: [],

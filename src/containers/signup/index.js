@@ -132,21 +132,8 @@ class Index extends UnAuthorized {
 		createInterest(val);
 	};
 
-	// handle Selection
-	handleSelection = (list, data, item) => {
-		const urlObject = data.find((datum => datum.name === item.value)); // finding url
-		if (urlObject) list[item.index].url = urlObject.url; // assigning url in list object
-		return list; // returning list to update state
-	}
-
 	// handle interests selection
-	handleJournoInterestSelection = (journoInterests, newItem) => {
-		const { journalistInterests: { data } } = this.props;
-		this.setState({
-			journoInterests:
-				this.handleSelection(journoInterests, data, newItem),
-		});
-	};
+	handleJournoInterestSelection = journoInterests => this.setState({ journoInterests });
 
 	// create a new company
 	createPrCompany = (val) => {
@@ -155,10 +142,7 @@ class Index extends UnAuthorized {
 	};
 
 	// handle company selection
-	handleCompanySelection = (companiesList, newItem) => {
-		const { prCompanies: { data } } = this.props;
-		this.setState({ companiesList: this.handleSelection(companiesList, data, newItem) });
-	};
+	handleCompanySelection = companiesList => this.setState({ companiesList });
 
 	// create a new position
 	createPosition = (val) => {
@@ -167,35 +151,21 @@ class Index extends UnAuthorized {
 	};
 
 	// handle position selection
-	handlePositionSelection = (allPositions, newItem) => {
-		const { positions: { data } } = this.props;
-		this.setState({ allPositions: this.handleSelection(allPositions, data, newItem) });
-	};
-
-	// // handle position selection
-	// onJrOutletSelection = (outlets, newItem) => {
-	// 	const { outlet } = this.state;
-	// 	if (!outlet.length) {
-	// 		const { prCompanies: { data } } = this.props;
-	// 		this.setState({ outlet: this.handleSelection(outlets, data, newItem) });
-	// 	}
-	// };
+	handlePositionSelection = allPositions => this.setState({ allPositions });
 
 	// handle companies for outlet
 	onInputChange = (value) => {
 		const { getPrCompanies } = this.props;
 		this.setState({ outlet: [] });
 		getPrCompanies(value);
-		console.log('value', value, 'state', this.state);
 	}
 
 	// On Selecting Outlet
-	onSelectOutlet = (outlet) => {
-		this.setState({ outlet: [outlet] });
-	}
+	onSelectOutlet = outlet => this.setState({ outlet: [outlet] });
 
 	// render login sign up page
 	render() {
+		console.log('stateeeeeeee', this.state);
 		// if(this.state.loading) return <div>Loading.....</div>
 		return (
 			<SignUp
