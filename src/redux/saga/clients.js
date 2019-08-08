@@ -7,8 +7,6 @@ const GET_CLIENTS_AUTOCOMPLETE = function* fetchSurvey() {
 	yield takeEvery('GET_CLIENTS_AUTOCOMPLETE', function* generateAction(action) {
 		yield put(START('GET_CLIENTS_AUTOCOMPLETE_STARTED'));
 		try {
-			console.log('action', action);
-			console.log('.payload}', `${CONSTANT.GET_CLIENTS_AUTOCOMPLETE_URL}${action.payload}/`);
 			const RES = yield Request(`${CONSTANT.GET_CLIENTS_AUTOCOMPLETE_URL}${action.payload}/`, CONSTANT.GET);
 			yield put({
 				type: 'GET_CLIENTS_AUTOCOMPLETE_SUCCESS',

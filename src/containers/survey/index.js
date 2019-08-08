@@ -30,7 +30,6 @@ class Index extends Authorized {
 
 	// request for survey
 	componentDidMount() {
-		console.log('props============>', this.props);
 		// const { role } = this.props.signup.data;
 		const { getSurvey, login: { data: { isJournalist } } } = this.props;
 		// if (HELPER.isJournalist(role)) {

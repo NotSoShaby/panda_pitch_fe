@@ -5,7 +5,7 @@ import CREATE_JOURNALIST_PROFILE from './journalistProfile';
 import CREATE_PR_PROFILE from './prProfile';
 import PR_SURVEY from './prSurvey';
 import JOURNALIST_SURVEY from './journalistSurvey';
-import GET_JOURNALIST_INTERESTS from './interests';
+import GET_JOURNALIST_INTERESTS from './journalistInterests';
 import CREATE_JOURNALIST_INTEREST from './createInterest';
 import GET_PR_PITCHES from './pitches';
 import GET_PR_CLIENTS_AUTO from './prClientsAuto';
@@ -18,6 +18,7 @@ import GET_POSITIONS from './positions';
 import CREATE_POSITION from './createPosition';
 import GET_CLIENTS from './prClient';
 import GET_CLIENTS_AUTOCOMPLETE from './clients';
+import GET_INTERESTS from './interests';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -42,6 +43,7 @@ const rootSaga = function* rootSaga() {
 			GET_POSITIONS(),
 			CREATE_POSITION(),
 			GET_CLIENTS_AUTOCOMPLETE(),
+			GET_INTERESTS(),
 		],
 	);
 };

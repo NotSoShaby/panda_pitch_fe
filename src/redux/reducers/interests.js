@@ -24,3 +24,26 @@ export function journalistInterests(state = defaultState, action) {
 		}
 	}
 }
+
+export function interests(state = { data: [] }, action) {
+	switch (action.type) {
+		case 'GET_INTEREST_INITIATED': {
+			return { ...state, code: 'uninitiated' };
+		}
+		case 'GET_INTEREST_STARTED': {
+			return { ...state };
+		}
+		case 'GET_INTEREST_SUCCESS': {
+			return { ...state, ...action.payload };
+		}
+		case 'GET_INTEREST_FAILED': {
+			return {
+				...state,
+				...action.payload,
+			};
+		}
+		default: {
+			return state;
+		}
+	}
+}

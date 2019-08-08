@@ -46,7 +46,6 @@ export const surveySubmission = async ({ answers, survey }) => {
 	// };
 	const res = await Request(CONSTANT.SURVEY_SUBMISSION_URL, CONSTANT.POST,
 		{ answers: answersObj, survey });
-	console.log('resssss', res);
 	// if (HELPER.isSuccessInApi(res.code)) {
 	// 	history.push('/');
 	// }

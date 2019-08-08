@@ -13,7 +13,7 @@ import METADATA from '../../utils/metadata';
 // import HELPER from '../../utils/helper';
 // import IMAGES from '../../assets/images';
 
-const { CTA, TOPICS } = METADATA;
+const { CTA } = METADATA;
 // const { SEARCH_ICON } = IMAGES;
 // const { PITCHES } = METADATA;
 
@@ -28,13 +28,20 @@ const { CTA, TOPICS } = METADATA;
 const renderMediaFiles = (index, handleAddMedia) => (
 	<div className="cnp-snipt-img">
 		<i className="fa fa-plus plus_icn" aria-hidden="true" />
-		<input type="file" onChange={e => handleAddMedia(index, e.target.files[0])} />
+		<input
+			type="file"
+			onChange={e => handleAddMedia(index, e.target.files[0])}
+		/>
 	</div>
 );
 
 const renderMediaImages = (index, mediaFile, handleRemoveMedia) => (
 	<div className="cnp-snipt-img">
-		<i className="fa fa-times cross" role="button" onClick={() => handleRemoveMedia(index)} />
+		<i
+			className="fa fa-times cross"
+			role="button"
+			onClick={() => handleRemoveMedia(index)}
+		/>
 		<img src={mediaFile} alt="mediaFiles" />
 	</div>
 );
@@ -51,26 +58,27 @@ const CreatePitch = ({
 	handleAddClientImage,
 	handleAddPressRelease,
 	onCreate,
-	onTodoSelection,
+	onCTASelection,
+	onSelectInterest,
 	journalistInterests,
 	getJournalistInterests,
+	onCreateInterest,
 	onRangeChange,
 	changeNextScreen,
 	clientAutoComplete: { data },
-	// handlePrSelect,
-	// selectedClients,
 	handleClient,
 	setSearchValue,
 	searchString,
 	handlePrivate,
 	handleRemoveMedia,
+	allInterests,
 }) => (
 	<div className="create_new_pitch_form">
 		<div className="form_wrapper pitch_form_wraper">
 			<div key="form1" className="step_form_col">
 				<div className="slidecontainer">
 					<div className="ad-pernl-hdg">
-						<h2>Create	New	Pitch</h2>
+						<h2>Create New Pitch</h2>
 					</div>
 					<StatusBar steps={steps} active={active} />
 					<div className="ad-pernl-conts">
@@ -89,41 +97,43 @@ const CreatePitch = ({
 								<div className="full_widt">
 									<h3>Client Name</h3>
 									<div className="new_field">
-										<input
-											type="text"
-											placeholder="Client Name"
-										/>
+										<input type="text" placeholder="Client Name" />
 									</div>
 								</div>
 								<div className="full_widt">
 									<h3>Client Website</h3>
 									<div className="new_field">
-										<input
-											type="text"
-											placeholder="Client Website"
-										/>
+										<input type="text" placeholder="Client Website" />
 									</div>
 								</div>
 							</div>
 
 							<div className="ad-pernl-conts cnp-col">
-								<span className="cnp-file" role="button" onClick={e => handleAddClientImage(e.target.result)}>
+								<span
+									className="cnp-file"
+									role="button"
+								>
 									<i className="fa fa-plus" />
-									<input type="file" placeholder="Client Website" />
+									<input type="file" placeholder="Client Website" onChange={e => handleAddClientImage(e.target.files)} />
 									<span>No file Choosen</span>
 								</span>
 								<span className="view-btn-rgt add-pernl-btn cnp-col-btn">
-									<button type="button" className="btn new_pitch_btn snd-btn">ADD NEW CLIENT</button>
+									<button type="button" className="btn new_pitch_btn snd-btn">
+                      ADD NEW CLIENT
+									</button>
 								</span>
 							</div>
 						</div>
-
 					) : (
 						<div />
 					)}
 					{hideNewClientDiv && (
 						<div className="ad-pernl-conts cnp-col">
-							<span className="cnp-file" role="button" onClick={handleAddNewClient}>
+							<span
+								className="cnp-file"
+								role="button"
+								onClick={handleAddNewClient}
+							>
 								<i className="fa fa-plus" />
 								{/* <input type="file" placeholder="Client Website" /> */}
 								<span className="fnt_wght">Add New Client</span>
@@ -137,11 +147,11 @@ const CreatePitch = ({
 							showTextBox={false}
 							list={
 								journalistInterests.data
-									&& journalistInterests.data.data
-									&& journalistInterests.data.data.results
+                  && journalistInterests.data.data
+                  && journalistInterests.data.data.results
 							}
 							onCreate={onCreate}
-							onSelect={onTodoSelection}
+							onSelect={onCTASelection}
 							boxes={CTA}
 							onChange={getJournalistInterests}
 						/>
@@ -154,7 +164,6 @@ const CreatePitch = ({
 								maxLength="50"
 								placeholder="This should catch your attention and give the main idea of the pitch"
 							/>
-
 						</div>
 					</div>
 					<div className="full_widt pos_relative">
@@ -164,7 +173,8 @@ const CreatePitch = ({
 								content="Write your pitch here. Make sure you cover the main points."
 								config={{
 									plugins: 'autolink link image lists print preview',
-									toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
+									toolbar:
+                      'undo redo | bold italic | alignleft aligncenter alignright',
 									browser_spellcheck: true,
 								}}
 								// onChange={x => xxx(x)}
@@ -174,72 +184,66 @@ const CreatePitch = ({
 							<img src="images/bulb_icn.png" alt="alert" />
 							<p>
 								{' '}
-								<b>
-										Hint:
-									{' '}
-								</b>
-									Write a general Pitch.Save Journalist Personalization for the Next Step!
+								<b>Hint: </b>
+                  Write a general Pitch.Save Journalist Personalization for the
+                  Next Step!
 							</p>
 						</div>
 					</div>
-					<div className="im k">
+					<div className="full_widt top_mg">
 						<h3>Add Topics</h3>
 						<div className="custom_field">
 							<AutoComplete
-								list={
-									journalistInterests.data
-										&& journalistInterests.data.data
-										&& journalistInterests.data.data.results
-								}
-								onCreate={onCreate}
-								onSelect={onTodoSelection}
-								boxes={TOPICS}
+								list={journalistInterests.data}
+								onCreate={onCreateInterest}
+								onSelect={onSelectInterest}
+								boxes={allInterests}
 								onChange={getJournalistInterests}
 							/>
 						</div>
 					</div>
 					<div className="ad-pernl-conts add_media_col pos_relative">
-						<label htmlFor="text">
-								Add Media
-						</label>
+						<label htmlFor="text">Add Media</label>
 						<div className="cnp-snipt">
-							{mediaFiles.map((media, index) => (
-								media ? renderMediaImages(index, media, handleRemoveMedia)
-									: renderMediaFiles(index, handleAddMedia)))}
+							{mediaFiles.map((media, index) => (media
+								? renderMediaImages(index, media, handleRemoveMedia)
+								: renderMediaFiles(index, handleAddMedia)))}
 						</div>
 						<div className="hint">
 							<img src="images/bulb_icn.png" alt="alert" />
 							<p>
 								{' '}
-								<b>
-										Hint:
-									{' '}
-								</b>
-									Write a general Pitch.Save Journalist Personalization for the Next Step!
+								<b>Hint: </b>
+                  Write a general Pitch.Save Journalist Personalization for the
+                  Next Step!
 							</p>
 						</div>
 					</div>
 					<div className="ad-pernl-conts cnp-col mgtop0">
-						<label htmlFor="text">
-								Add Press Release
-						</label>
+						<label htmlFor="text">Add Press Release</label>
 						<span className="cnp-file">
 							<i className="fa fa-plus" />
-							<input type="file" placeholder="Client Website" onChange={e => handleAddPressRelease(e)} />
+							<input
+								type="file"
+								placeholder="Client Website"
+								onChange={e => handleAddPressRelease(e)}
+							/>
 							{!pressReleaseImage && <span>No file Selected</span>}
-							{pressReleaseImage
-									&& (
-										<div className="cnp-snipt-img">
-											<img src={pressReleaseImage} alt="pressReleaseImage" />
-										</div>
-									)}
+							{pressReleaseImage && (
+								<div className="cnp-snipt-img">
+									<img src={pressReleaseImage} alt="pressReleaseImage" />
+								</div>
+							)}
 						</span>
-
 					</div>
 					<div className="ad-pernl-conts togle-switch">
 						<p>Private</p>
 						<label className="switch" htmlFor="private">
-							<input type="checkbox" id="private" onChange={e => handlePrivate(e)} />
+							<input
+								type="checkbox"
+								id="private"
+								onChange={e => handlePrivate(e)}
+							/>
 							<span className="slider round" />
 						</label>
 					</div>
@@ -250,7 +254,10 @@ const CreatePitch = ({
 							step={20 / 2}
 							value={progressValue}
 							maxValue={20}
-							onChange={value => onRangeChange({ value })}
+							onChange={value => onRangeChange({
+								value,
+							})
+							}
 						/>
 						<ul className="range_list">
 							<li>Regular</li>
@@ -261,11 +268,9 @@ const CreatePitch = ({
 							<img src="images/bulb_icn.png" alt="alert" />
 							<p>
 								{' '}
-								<b>
-										Hint:
-									{' '}
-								</b>
-									Write a general Pitch.Save Journalist Personalization for the Next Step!
+								<b>Hint: </b>
+                  Write a general Pitch.Save Journalist Personalization for the
+                  Next Step!
 							</p>
 						</div>
 					</div>
@@ -273,8 +278,16 @@ const CreatePitch = ({
 			</div>
 			<div className="ad-pernl-conts mt-0">
 				<span className="view-btn-rgt add-pernl-btn">
-					<button type="button" className="btn new_pitch_btn snd-btn" onClick={changeNextScreen}>NEXT</button>
-					<button type="button" className="btn new_pitch_btn disc-btn">SAVE TEMPLATE</button>
+					<button
+						type="button"
+						className="btn new_pitch_btn snd-btn"
+						onClick={changeNextScreen}
+					>
+              NEXT
+					</button>
+					<button type="button" className="btn new_pitch_btn disc-btn">
+              SAVE TEMPLATE
+					</button>
 				</span>
 			</div>
 		</div>

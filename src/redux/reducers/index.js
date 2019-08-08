@@ -5,7 +5,7 @@ import { login } from './login';
 import { journalistProfile } from './journalist';
 import { prProfile } from './pr';
 import { survey } from './survey';
-import { journalistInterests } from './interests';
+import { journalistInterests, interests } from './interests';
 import { prPitches } from './pitches';
 import { prClientsAuto } from './prClientsAuto';
 import { prClient, client, clientAutoComplete } from './prClient';
@@ -13,6 +13,7 @@ import { prMedialists } from './prMedialists';
 import history from '../../routes/history';
 import { prCompanies } from './company';
 import { positions } from './position';
+import { createClient } from '../actions/clients';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
@@ -31,6 +32,8 @@ const reducer = combineReducers({
 	positions,
 	client,
 	clientAutoComplete,
+	interests,
+	createClient,
 });
 
 const initialState = { code: 'UNINITIATED', isLoading: false };
@@ -53,6 +56,9 @@ const defaultState = {
 	client: initialState,
 	getClientsAuto: initialState,
 	clientAutoComplete: initialState,
+	interests: initialState,
+	createClient: initialState,
+
 };
 
 // Empty state when user logout

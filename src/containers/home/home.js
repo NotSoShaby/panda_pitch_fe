@@ -19,7 +19,6 @@ const HomeScreen = ({
 };
 
 const Layout = ({ view, prPitches: { data: { results } } }) => {
-	console.log(results);
 	if (HELPER.isObject(results) && results.length) {
 		if (view) {
 			return (

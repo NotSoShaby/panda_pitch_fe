@@ -14,7 +14,6 @@ class Index extends Component {
 
 	componentDidMount() {
 		this.getPitches();
-		console.log('this.state', this.state, this.props);
 	}
 
 	getPitches = () => {

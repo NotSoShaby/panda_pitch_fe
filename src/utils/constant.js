@@ -19,6 +19,8 @@ class Constant {
 
   GET_CLIENTS_URL = '/api/client/';
 
+  CREATE_CLIENT_URL = '/api/client/';
+
   GET_CLIENTS_AUTOCOMPLETE_URL = '/api/client/autocomplete/';
 
   CREATE_JOURNALIST_URL = '/api/profile/';
@@ -30,6 +32,8 @@ class Constant {
   // SURVEY_JOR_URL = '/api/users/survey/2';
 
   SURVEY_SUBMISSION_URL = '/survey/answer/';
+
+  GET_INTERESTS_URL = '/api/interest/';
 
   GET_JOURNALIST_INTERESTS_URL = '/api/interest/autocomplete/';
 

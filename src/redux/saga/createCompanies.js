@@ -4,7 +4,6 @@ import CONSTANT from '../../utils/constant';
 
 // create user signup request
 const CREATE_PR_COMPANY = function* createCompany() {
-	console.log('dummm duma dummmm');
 	yield takeEvery('CREATE_PR_COMPANY', function* generateAction(action) {
 		try {
 			const DATA = yield Request(

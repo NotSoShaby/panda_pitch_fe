@@ -11,5 +11,4 @@ function Login({
 	this.url = user.url;
 }
 
-
 export default props => new Login(props);

@@ -14,8 +14,8 @@ class SearchBox extends React.Component {
 
 	changeSelection = ({ url, name }) => {
 		const { onSelect } = this.props;
-		this.setState({ value: name, listVisible: false });
-		onSelect({ url, name });
+		this.setState({ value: '', listVisible: false });
+		onSelect({ id: url, name });
 	}
 
 	onChange = (value) => {
@@ -31,7 +31,7 @@ class SearchBox extends React.Component {
 		return (
 			<div className="srch_lst_row">
 				{/* {data.map(({ name, profile, profilePic }) => { */}
-				{data && data.length && data.map(({ url, name }) => {
+				{data && data.length && data.map(({ id: url, name }) => {
 					if (listVisible && searchString
 						&& name.toLowerCase().includes(searchString.toLowerCase())) {
 						return (

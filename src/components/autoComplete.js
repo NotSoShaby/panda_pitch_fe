@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 class AutoComplete extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			val: '',
+			singleValidationError: '',
 			box: props.boxes || [],
 		};
 	}
@@ -13,13 +15,18 @@ class AutoComplete extends Component {
 	// add item in selected tag list
 	putInBox = (val) => {
 		const { box } = this.state;
-		const { onSelect, list } = this.props;
+		const { onSelect, list, multiselect } = this.props;
 		const isExist = box.filter(({ value }) => value === val);
 		if (!isExist.length) {
 			const boxes = box;
-			boxes.push({ value: val, isActive: true });
+			let isActive = true;
+			if (!multiselect) {
+				const activeItem = _.find(boxes, 'isActive');
+				isActive = !activeItem;
+			}
+			boxes.push({ value: val, isActive });
 			onSelect(this.handleSelection(
-				boxes, list, { value: val, isActive: true, index: box.length - 1 },
+				boxes, list, { value: val, isActive, index: box.length - 1 },
 			));
 			this.setState({ box: boxes, val: '' });
 		}
@@ -94,10 +101,21 @@ class AutoComplete extends Component {
 
 	// toggle status of selected tag
 	toggleStatus = (index) => {
-		const { onSelect } = this.props;
+		const { onSelect, multiselect } = this.props;
 		const { box } = this.state;
+		let activeItem;
+		if (!multiselect) {
+			activeItem = _.find(box, 'isActive');
+			if (activeItem && activeItem !== box[index]) {
+				this.setState({
+					singleValidationError:
+					'This is single select. Please deselect the selected one and then select another.',
+				});
+				return;
+			}
+		}
 		box[index].isActive = !box[index].isActive;
-		this.setState({ box });
+		this.setState({ box, singleValidationError: '' });
 		onSelect(box, { ...box[index], index });
 	};
 
@@ -109,7 +127,7 @@ class AutoComplete extends Component {
 	}
 
 	render() {
-		const { box, val } = this.state;
+		const { box, val, singleValidationError } = this.state;
 		const { showTextBox, name, errors } = this.props;
 		return (
 			<div className="auto-selection">
@@ -130,6 +148,7 @@ class AutoComplete extends Component {
 						{this.renderList()}
 					</div>
 				)}
+				{ singleValidationError ? <div className="error">{singleValidationError}</div> : null}
 				<div />
 				{errors && <div className="error">{errors.map(msg => <p key={msg}>{msg}</p>)}</div>}
 				<ul className="topic_list">
@@ -153,6 +172,7 @@ class AutoComplete extends Component {
 AutoComplete.defaultProps = {
 	list: [],
 	showTextBox: true,
+	multiselect: true,
 	onCreate: () => { },
 	onChange: () => { },
 	onSelect: () => { },
@@ -161,6 +181,7 @@ AutoComplete.defaultProps = {
 // props type definition
 AutoComplete.propTypes = {
 	showTextBox: PropTypes.bool,
+	multiselect: PropTypes.bool,
 	list: PropTypes.array,
 	onCreate: PropTypes.func,
 	onSelect: PropTypes.func,

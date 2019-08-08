@@ -8,12 +8,12 @@ import Loader from '../../components/loader';
 import Authorized from '../../routes/authorized';
 import CreatePitch from './createPitch';
 import { getClientsAuto, getPrMedialists } from '../../redux/actions/pitches';
+import { getJournalistInterests, createInterest } from '../../redux/actions/signup';
 import Personalization from './personalize';
 import FinalizePitch from './finalize';
 
 // import UnAuthorized from '../../routes/unAuthorized';
 // import HELPER from '../../utils/helper';
-
 
 class Index extends Authorized {
 	state = {
@@ -27,31 +27,30 @@ class Index extends Authorized {
 		value: '',
 		searchString: '',
 		selectedClients: [],
+		allInterests: [],
 		journalists: [{ id: 1, name: 'shhh koi h' }, { id: 2, name: 'chal be' }, { id: 3, name: 'koi nhi hai' }],
 		selectedJournalists: [],
 		mediaFiles: ['', '', ''],
 	}
 
 	componentDidMount() {
-		const {
-			getPrMedialists,
-		} = this.props;
+		const { getPrMedialists } = this.props;
 		getPrMedialists();
 	}
 
 	changeInput = (value) => {
-		console.log('vvvvvvvvvvchangeInputbbbbbbbbbb', value);
+		console.log('input', value);
 	}
 
 	onChangeSelect = (value) => {
-		console.log('vvvvvvvvvvonChangeSelectbbbbbbbbbb', value);
+		console.log('select', value);
 	}
 
 	onChangeSelect = (selectedValue) => {
 		this.setState({ value: selectedValue.value });
 	}
 
-	handlePrSelect = (id) => {
+	handlePrSelect = ({ id }) => {
 		const { journalists, selectedJournalists } = this.state;
 		const journalistSelected = _.find(selectedJournalists, o => o.id === id);
 		const journal = journalistSelected ? [...selectedJournalists]
@@ -62,7 +61,7 @@ class Index extends Authorized {
 	setSearchValue = (searchString) => {
 		const { getClientsAuto } = this.props;
 		getClientsAuto(searchString);
-		this.setState({ searchString });
+		this.setState({ searchString, selectedClients: [] });
 	}
 
 	handleJournalistMessageChange = (e, id) => {
@@ -112,7 +111,8 @@ class Index extends Authorized {
 	}
 
 	handleAddClientImage = (image) => {
-		console.log(image);
+		this.setState({ image });
+		console.log('state', this.state);
 	};
 
 	handleInputText = (e) => {
@@ -130,13 +130,22 @@ class Index extends Authorized {
 
 	handleAddPressRelease = (e) => {
 		if (e && e.target.files) {
-			console.log(e.target.files[0]);
 			const pressReleaseImage = URL.createObjectURL(e.target.files[0]);
 			this.setState({ pressReleaseImage });
 		}
 	}
 
 	handlePrivate = e => console.log(e.target.checked);
+
+	handleInterestSelection = (allInterests) => {
+		this.setState({ allInterests });
+	}
+
+	// create a new interest
+	createInterest = (val) => {
+		const { createInterest } = this.props;
+		createInterest(val);
+	};
 
 	displayScreen = () => {
 		const { active, steps } = this.state;
@@ -168,7 +177,9 @@ class Index extends Authorized {
 						handlePrivate={this.handlePrivate}
 						handleRemoveMedia={this.handleRemoveMedia}
 						changeInput={this.changeInput}
+						onSelectInterest={this.handleInterestSelection}
 						onChangeSelect={this.onChangeSelect}
+						onCreateInterest={this.createInterest}
 					/>
 				</Loader>
 			);
@@ -215,6 +226,8 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 			data,
 		),
 		getPrMedialists: () => getPrMedialists(),
+		getJournalistInterests: data => getJournalistInterests(data),
+		createInterest: data => createInterest(data),
 	},
 	dispatch,
 );

@@ -40,7 +40,6 @@ class Index extends UnAuthorized {
 	// identify the type of loggedIn user (journalist/pr)
 	getUserRole = (props, key) => {
 		const { login: { data } } = props;
-		console.log('data[key]', data[key], 'props', this.props);
 		return data[key];
 	};
 
@@ -66,7 +65,6 @@ class Index extends UnAuthorized {
 	handleSubmit = () => {
 		const obj = this.state;
 		const { step, role } = this.state;
-		console.log('role', role);
 		const {
 			signUp, createPrProfile, createJournalistProfile, login: { data: { url } },
 		} = this.props;
@@ -165,7 +163,6 @@ class Index extends UnAuthorized {
 
 	// render login sign up page
 	render() {
-		console.log('stateeeeeeee', this.state);
 		// if(this.state.loading) return <div>Loading.....</div>
 		return (
 			<SignUp
