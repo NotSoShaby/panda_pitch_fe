@@ -47,8 +47,8 @@ export const signUp = ({
 export const createPrProfile = ({
 	positionList, companiesList, linkedIn, twitter, url, fullName = null,
 }) => {
-	let company = companiesList.filter(company => company.isActive && company.value);
-	company = company.map(({ url }) => url);
+	// let company = companiesList.filter(company => company.isActive && company.value);
+	// company = company.map(({ url }) => url);
 	let position = positionList.filter(position => position.isActive && position.value);
 	position = position.map(({ url }) => url);
 	return ({
@@ -56,7 +56,7 @@ export const createPrProfile = ({
 		payload: {
 			user: url,
 			full_name: fullName,
-			company,
+			company: companiesList[0].url,
 			position,
 			linkedin_url: linkedIn || '',
 			twitter_url: twitter || '',
@@ -77,7 +77,7 @@ export const createJournalistProfile = ({
 		payload: {
 			full_name: fullName,
 			user_id: getUserId(),
-			outlet: outlet[0].url,
+			company: outlet[0].url,
 			position,
 			interests: interestsList,
 			twitter_url: twitter || '',

@@ -19,6 +19,7 @@ import CREATE_POSITION from './createPosition';
 import GET_CLIENTS from './prClient';
 import GET_CLIENTS_AUTOCOMPLETE from './clients';
 import GET_INTERESTS from './interests';
+import CREATE_CLIENT from './createClient';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -44,6 +45,7 @@ const rootSaga = function* rootSaga() {
 			CREATE_POSITION(),
 			GET_CLIENTS_AUTOCOMPLETE(),
 			GET_INTERESTS(),
+			CREATE_CLIENT(),
 		],
 	);
 };

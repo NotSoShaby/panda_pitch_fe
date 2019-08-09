@@ -6,3 +6,4 @@ export const getInterests = () => ({ type: 'GET_INTERESTS' });
 export const getClientsAuto = data => ({ type: 'GET_CLIENTS_AUTOCOMPLETE', payload: data });
 // export const getPrMedialists = () => ({ type: 'GET_PR_MEDIALISTS' });
 export const getPrMedialists = () => ({ type: 'GET_MEDIALISTS' });
+export const getPr = () => ({ type: 'GET_PR' });

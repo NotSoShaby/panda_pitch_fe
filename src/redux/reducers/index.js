@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 // import { signup } from './signup';
 import { login } from './login';
 import { journalistProfile } from './journalist';
-import { prProfile } from './pr';
+import { prProfile, pr } from './pr';
 import { survey } from './survey';
 import { journalistInterests, interests } from './interests';
 import { prPitches } from './pitches';
@@ -34,6 +34,7 @@ const reducer = combineReducers({
 	clientAutoComplete,
 	interests,
 	createClient,
+	pr,
 });
 
 const initialState = { code: 'UNINITIATED', isLoading: false };
@@ -58,7 +59,7 @@ const defaultState = {
 	clientAutoComplete: initialState,
 	interests: initialState,
 	createClient: initialState,
-
+	pr: initialState,
 };
 
 // Empty state when user logout

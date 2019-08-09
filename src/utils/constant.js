@@ -2,8 +2,8 @@
 
 // const local = 'http://localhost:8000';
 // const server = 'http://18.224.60.229:2312';
-const server = 'http://18.191.42.149:8000';
-// const server = 'http://192.168.2.84:8000';
+// const server = 'http://18.191.42.149:8000';
+const server = 'http://192.168.2.84:8000';
 
 class Constant {
   PUBLIC_PATH = process.env.PUBLIC_URL;
@@ -26,6 +26,8 @@ class Constant {
   CREATE_JOURNALIST_URL = '/api/profile/';
 
   CREATE_PR_URL = '/api/profile/';
+
+  GET_PR_URL = '/api/profile/pr/';
 
   SURVEY_URL = '/survey/';
 

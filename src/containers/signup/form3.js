@@ -58,14 +58,6 @@ const Form3 = ({
 					<div className="full_widt">
 						<h3>What's your company name?</h3>
 						<div className="custom_field">
-							<SelectBox
-								options={prCompanies.data || []}
-								labelName="name"
-								changeInput={changeInput}
-								onChangeSelect={onChangeSelect}
-							/>
-						</div>
-						<div className="custom_field">
 							<AutoComplete
 								list={
 									prCompanies.data

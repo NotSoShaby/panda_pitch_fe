@@ -14,7 +14,7 @@ class SearchBox extends React.Component {
 
 	changeSelection = ({ url, name }) => {
 		const { onSelect } = this.props;
-		this.setState({ value: '', listVisible: false });
+		this.setState({ value: name, listVisible: false });
 		onSelect({ id: url, name });
 	}
 

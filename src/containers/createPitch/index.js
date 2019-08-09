@@ -9,6 +9,7 @@ import Authorized from '../../routes/authorized';
 import CreatePitch from './createPitch';
 import { getClientsAuto, getPrMedialists } from '../../redux/actions/pitches';
 import { getJournalistInterests, createInterest } from '../../redux/actions/signup';
+import { createClient } from '../../redux/actions/clients';
 import Personalization from './personalize';
 import FinalizePitch from './finalize';
 
@@ -19,6 +20,7 @@ class Index extends Authorized {
 	state = {
 		hideNewClientDiv: true,
 		progressValue: 0,
+		newClient: { name: '', website: '', image: null },
 		pressReleaseImage: '',
 		steps: 3,
 		active: 1,
@@ -110,11 +112,6 @@ class Index extends Authorized {
 		this.setState({ hideNewClientDiv: !hideNewClientDiv });
 	}
 
-	handleAddClientImage = (image) => {
-		this.setState({ image });
-		console.log('state', this.state);
-	};
-
 	handleInputText = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 		if (e.target.name === 'headline') {
@@ -147,6 +144,26 @@ class Index extends Authorized {
 		createInterest(val);
 	};
 
+	handleClientPropertyChange = (name, value) => {
+		const { newClient } = this.state;
+		newClient[name] = value;
+		this.setState({ newClient });
+	}
+
+	// create a new interest
+	createClient = () => {
+		const { newClient } = this.state;
+		const { name, website, image } = newClient;
+		if (!name) return;
+		const { createClient } = this.props;
+		const formData = new FormData();
+		formData.append('name', name);
+		formData.append('website', website);
+		formData.append('image', image);
+		// const blob = new Blob(newClient.image, { type: 'application/json' });
+		createClient(formData);
+	};
+
 	displayScreen = () => {
 		const { active, steps } = this.state;
 		let render;
@@ -173,13 +190,14 @@ class Index extends Authorized {
 						changeNextScreen={this.handleNextScreen}
 						setSearchValue={this.setSearchValue}
 						handlePrSelect={this.handlePrSelect}
-						handleAddClientImage={this.handleAddClientImage}
 						handlePrivate={this.handlePrivate}
 						handleRemoveMedia={this.handleRemoveMedia}
 						changeInput={this.changeInput}
 						onSelectInterest={this.handleInterestSelection}
 						onChangeSelect={this.onChangeSelect}
 						onCreateInterest={this.createInterest}
+						createClient={this.createClient}
+						onChangeClientProperty={this.handleClientPropertyChange}
 					/>
 				</Loader>
 			);
@@ -222,9 +240,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{
-		getClientsAuto: data => getClientsAuto(
-			data,
-		),
+		getClientsAuto: data => getClientsAuto(data),
+		createClient: data => createClient(data),
 		getPrMedialists: () => getPrMedialists(),
 		getJournalistInterests: data => getJournalistInterests(data),
 		createInterest: data => createInterest(data),

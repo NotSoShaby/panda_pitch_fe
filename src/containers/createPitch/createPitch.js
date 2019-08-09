@@ -55,7 +55,6 @@ const CreatePitch = ({
 	progressValue,
 	handleAddNewClient,
 	handleAddMedia,
-	handleAddClientImage,
 	handleAddPressRelease,
 	onCreate,
 	onCTASelection,
@@ -72,6 +71,8 @@ const CreatePitch = ({
 	handlePrivate,
 	handleRemoveMedia,
 	allInterests,
+	createClient,
+	onChangeClientProperty,
 }) => (
 	<div className="create_new_pitch_form">
 		<div className="form_wrapper pitch_form_wraper">
@@ -97,13 +98,13 @@ const CreatePitch = ({
 								<div className="full_widt">
 									<h3>Client Name</h3>
 									<div className="new_field">
-										<input type="text" placeholder="Client Name" />
+										<input type="text" placeholder="Client Name" onChange={e => onChangeClientProperty('name', e.target.value)} on />
 									</div>
 								</div>
 								<div className="full_widt">
 									<h3>Client Website</h3>
 									<div className="new_field">
-										<input type="text" placeholder="Client Website" />
+										<input type="text" placeholder="Client Website" onChange={e => onChangeClientProperty('website', e.target.value)} />
 									</div>
 								</div>
 							</div>
@@ -114,11 +115,11 @@ const CreatePitch = ({
 									role="button"
 								>
 									<i className="fa fa-plus" />
-									<input type="file" placeholder="Client Website" onChange={e => handleAddClientImage(e.target.files)} />
+									<input type="file" placeholder="Client Website" onChange={e => onChangeClientProperty('image', e.target.files)} />
 									<span>No file Choosen</span>
 								</span>
 								<span className="view-btn-rgt add-pernl-btn cnp-col-btn">
-									<button type="button" className="btn new_pitch_btn snd-btn">
+									<button type="button" className="btn new_pitch_btn snd-btn" onClick={createClient}>
                       ADD NEW CLIENT
 									</button>
 								</span>
