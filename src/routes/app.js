@@ -7,6 +7,7 @@ import Authorized from './authorized';
 import HELPER from '../utils/helper';
 import JRHeader from '../components/header/jrHeader';
 import PRHeader from '../components/header/prHeader';
+import Chat from '../containers/chat';
 
 class App extends Authorized {
 	handleLogout = () => {
@@ -29,6 +30,7 @@ class App extends Authorized {
 			<div className="wrapper">
 				{this.renderHeader()}
 				<Route exact path="/" component={props => <Home {...props} />} />
+				<Route exact path="/chat" component={props => <Chat {...props} />} />
 			</div>
 		);
 	}

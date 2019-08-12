@@ -10,10 +10,10 @@ import history from './history';
 const ProjectRoutes = () => (
 	<Router history={history}>
 		<Switch>
-			<Route exact path="/" component={props => <App {...props} />} />
 			<Route exact path="/signup" component={props => <SignUp {...props} />} />
 			<Route exact path="/login" component={props => <Login {...props} />} />
 			<Route exact path="/survey" component={props => <Survey {...props} />} />
+			<Route path="/" component={props => <App {...props} />} />
 		</Switch>
 	</Router>
 );
