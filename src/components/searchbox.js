@@ -25,14 +25,13 @@ class SearchBox extends React.Component {
 	}
 
 	search = () => {
-		const { searchString, data } = this.props;
+		const { searchString = '', data } = this.props;
 		const { listVisible } = this.state;
 		if (!data || data.length === 0) return null;
 		return (
 			<div className="srch_lst_row">
-				{/* {data.map(({ name, profile, profilePic }) => { */}
-				{data && data.length && data.map(({ id: url, name }) => {
-					if (listVisible && searchString
+				{listVisible && data && data.length && data.map(({ id: url, name }) => {
+					if (searchString
 						&& name.toLowerCase().includes(searchString.toLowerCase())) {
 						return (
 							<div key={name} className="srch_lst_col" role="button" onClick={() => this.changeSelection({ url, name })}>
@@ -41,7 +40,6 @@ class SearchBox extends React.Component {
 								</div>
 								<span className="pro_detail">
 									<h3>{name}</h3>
-									{/* <p>{profile}</p> */}
 								</span>
 							</div>
 						);
@@ -53,7 +51,7 @@ class SearchBox extends React.Component {
 	};
 
 	render() {
-		const { searchString, placeholder } = this.props;
+		const { searchString = '', placeholder } = this.props;
 		const { value } = this.state;
 		return (
 			<React.Fragment>
@@ -62,6 +60,7 @@ class SearchBox extends React.Component {
 						type="search"
 						placeholder={placeholder}
 						value={value}
+						onFocus={() => this.setState({ listVisible: true })}
 						onChange={e => this.onChange(e.target.value)}
 					/>
 					<button type="button">

@@ -3,17 +3,19 @@ import { combineReducers } from 'redux';
 // import { signup } from './signup';
 import { login } from './login';
 import { journalistProfile } from './journalist';
+import { journalists } from './journalists';
 import { prProfile, pr } from './pr';
 import { survey } from './survey';
 import { journalistInterests, interests } from './interests';
 import { prPitches } from './pitches';
 import { prClientsAuto } from './prClientsAuto';
 import { prClient, client, clientAutoComplete } from './prClient';
-import { prMedialists } from './prMedialists';
+// import { prMediaList } from './prMedialist';
 import history from '../../routes/history';
 import { prCompanies } from './company';
 import { positions } from './position';
 import { createClient } from '../actions/clients';
+import { mediaList } from './mediaList';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
@@ -27,7 +29,7 @@ const reducer = combineReducers({
 	prPitches,
 	prClientsAuto,
 	prClient,
-	prMedialists,
+	mediaList,
 	prCompanies,
 	positions,
 	client,
@@ -35,6 +37,7 @@ const reducer = combineReducers({
 	interests,
 	createClient,
 	pr,
+	journalists,
 });
 
 const initialState = { code: 'UNINITIATED', isLoading: false };
@@ -51,7 +54,7 @@ const defaultState = {
 	prPitches: initialState,
 	prClientsAuto: initialState,
 	prClient: initialState,
-	prMedialists: initialState,
+	mediaList: initialState,
 	prCompanies: initialState,
 	positions: initialState,
 	client: initialState,
@@ -60,6 +63,7 @@ const defaultState = {
 	interests: initialState,
 	createClient: initialState,
 	pr: initialState,
+	journalists: initialState,
 };
 
 // Empty state when user logout

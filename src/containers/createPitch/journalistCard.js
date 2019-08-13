@@ -5,8 +5,9 @@ const imagepath = require('../../../public/images/google.jpg');
 const JournalistCard = ({
 	selectedJournalists,
 	addMessageForJournalist,
-}) => selectedJournalists.map((journalist, key) => (
-	<div className="add-pernl-info pt-1" key={journalist.id}>
+}) => selectedJournalists.map(({ full_name, id }, key) => (
+	<div className="add-pernl-info pt-1" key={id}>
+		{console.log('kkkkkkkkk=========>', full_name)}
 		<div className="card_pro_row add-pernl-pro">
 			<div className="pernl-pro-conts">
 				<div className="card_pro_img">
@@ -17,7 +18,7 @@ const JournalistCard = ({
 				</div>
 				<div className="card_pro_contnt">
 					<h3>
-						{journalist.name}
+						{full_name}
 						<span>Tech Reporter</span>
 					</h3>
 					<p>New York Times</p>

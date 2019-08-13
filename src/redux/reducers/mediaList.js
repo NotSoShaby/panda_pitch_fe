@@ -2,18 +2,18 @@ export const defaultState = {
 	data: {},
 };
 
-export function medialists(state = defaultState, action) {
+export function mediaList(state = defaultState, action) {
 	switch (action.type) {
-		case 'GET_MEDIALISTS': {
+		case 'GET_MEDIA_LIST': {
 			return { ...state, code: 'uninitiated' };
 		}
-		case 'GET_MEDIALISTS_STARTED': {
+		case 'GET_MEDIA_LIST_STARTED': {
 			return { ...state };
 		}
-		case 'GET_MEDIALISTS_SUCCESS': {
+		case 'GET_MEDIA_LIST_SUCCESS': {
 			return { ...state, ...action.payload };
 		}
-		case 'GET_MEDIALISTS_FAILED': {
+		case 'GET_MEDIA_LIST_FAILED': {
 			return {
 				...state,
 				...action.payload,

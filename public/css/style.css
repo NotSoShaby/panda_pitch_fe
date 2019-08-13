@@ -1792,6 +1792,9 @@ ul.pri-link a {
 .top_mg ul{
   top: 52px;
 }
+.media_list ul{
+  top: -5px !important
+}
 /*=================Media query====================*/
 
 @media only screen and (min-width: 310px) and (max-width: 767px) {
@@ -2121,4 +2124,7 @@ ul.pri-link a {
     position: initial;
     margin-top: 15px;
   }
+}
+.slick-next{
+  background: url('../images/srch_icn.svg')
 }

@@ -2,18 +2,18 @@ export const defaultState = {
 	data: {},
 };
 
-export function prMedialists(state = defaultState, action) {
+export function journalists(state = defaultState, action) {
 	switch (action.type) {
-		case 'GET_PR_MEDIALISTS': {
+		case 'FIND_JOURNALIST_INITIATED': {
 			return { ...state, code: 'uninitiated' };
 		}
-		case 'GET_PR_MEDIALISTS_STARTED': {
+		case 'FIND_JOURNALIST_STARTED': {
 			return { ...state };
 		}
-		case 'GET_PR_MEDIALISTS_SUCCESS': {
+		case 'FIND_JOURNALIST_SUCCESS': {
 			return { ...state, ...action.payload };
 		}
-		case 'GET_PR_MEDIALISTS_FAILED': {
+		case 'FIND_JOURNALIST_FAILED': {
 			return {
 				...state,
 				...action.payload,

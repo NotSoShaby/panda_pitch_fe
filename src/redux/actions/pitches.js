@@ -4,6 +4,7 @@ export const getPrClient = () => ({ type: 'GET_PR_CLIENT' });
 export const getClients = () => ({ type: 'GET_CLIENTS' });
 export const getInterests = () => ({ type: 'GET_INTERESTS' });
 export const getClientsAuto = data => ({ type: 'GET_CLIENTS_AUTOCOMPLETE', payload: data });
+export const findJournalist = data => ({ type: 'FIND_JOURNALIST', payload: data });
 // export const getPrMedialists = () => ({ type: 'GET_PR_MEDIALISTS' });
-export const getPrMedialists = () => ({ type: 'GET_MEDIALISTS' });
+export const getMediaList = data => ({ type: 'GET_MEDIA_LIST', payload: data });
 export const getPr = () => ({ type: 'GET_PR' });

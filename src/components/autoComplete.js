@@ -121,16 +121,20 @@ class AutoComplete extends Component {
 
 	// handle Selection
 	handleSelection = (list, data, item) => {
+		const { index } = this.props;
 		const urlObject = data.find((datum => datum.name === item.value)); // finding url
 		if (urlObject) list[item.index].url = urlObject.url; // assigning url in list object
+		if (index && urlObject) list[item.index][index] = urlObject[index];
 		return list; // returning list to update state
 	}
 
 	render() {
 		const { box, val, singleValidationError } = this.state;
-		const { showTextBox, name, errors } = this.props;
+		const {
+			showTextBox, name, errors, className,
+		} = this.props;
 		return (
-			<div className="auto-selection">
+			<div className={`auto-selection ${className}`}>
 				{showTextBox && (
 					<div className="custom_field">
 						<input
@@ -171,8 +175,10 @@ class AutoComplete extends Component {
 // props initialization ( default values )
 AutoComplete.defaultProps = {
 	list: [],
+	index: '',
 	showTextBox: true,
 	multiselect: true,
+	className: '',
 	onCreate: () => { },
 	onChange: () => { },
 	onSelect: () => { },
@@ -183,9 +189,11 @@ AutoComplete.propTypes = {
 	showTextBox: PropTypes.bool,
 	multiselect: PropTypes.bool,
 	list: PropTypes.array,
+	index: PropTypes.string,
 	onCreate: PropTypes.func,
 	onSelect: PropTypes.func,
 	onChange: PropTypes.func,
+	className: PropTypes.string,
 };
 
 // default importing

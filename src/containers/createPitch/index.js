@@ -7,7 +7,7 @@ import _ from 'lodash';
 import Loader from '../../components/loader';
 import Authorized from '../../routes/authorized';
 import CreatePitch from './createPitch';
-import { getClientsAuto, getPrMedialists } from '../../redux/actions/pitches';
+import { findJournalist, getMediaList } from '../../redux/actions/pitches';
 import { getJournalistInterests, createInterest } from '../../redux/actions/signup';
 import { createClient } from '../../redux/actions/clients';
 import Personalization from './personalize';
@@ -24,7 +24,7 @@ class Index extends Authorized {
 		pressReleaseImage: '',
 		steps: 3,
 		active: 1,
-		options: [{ id: 1, value: 'Yahoo' }, { id: 2, value: 'Google' }, { id: 3, value: 'Microsoft' }, { id: 4, value: 'Facebook' }],
+		selectedMediaList: [],
 		name: '',
 		value: '',
 		searchString: '',
@@ -35,10 +35,10 @@ class Index extends Authorized {
 		mediaFiles: ['', '', ''],
 	}
 
-	componentDidMount() {
-		const { getPrMedialists } = this.props;
-		getPrMedialists();
-	}
+	// componentDidMount() {
+	// 	const { mediaList } = this.props;
+	// 	mediaList();
+	// }
 
 	changeInput = (value) => {
 		console.log('input', value);
@@ -53,22 +53,29 @@ class Index extends Authorized {
 	}
 
 	handlePrSelect = ({ id }) => {
-		const { journalists, selectedJournalists } = this.state;
+		const { journalists: { data } } = this.props;
+		const { selectedJournalists } = this.state;
 		const journalistSelected = _.find(selectedJournalists, o => o.id === id);
-		const journal = journalistSelected ? [...selectedJournalists]
-			: [...selectedJournalists, _.find(journalists, o => o.id === id)];
-		this.setState({ selectedJournalists: journal, searchString: '' });
+		if (!journalistSelected) {
+			const selectedJR = _.find(data, o => o.id === id);
+			this.setState({ selectedJournalists: [...selectedJournalists, selectedJR] });
+		}
 	}
 
 	setSearchValue = (searchString) => {
-		const { getClientsAuto } = this.props;
-		getClientsAuto(searchString);
+		const { findJournalist } = this.props;
+		findJournalist(searchString);
 		this.setState({ searchString, selectedClients: [] });
 	}
 
 	handleJournalistMessageChange = (e, id) => {
-		const { selectedJournalists } = this.state;
-		selectedJournalists[id].personalMessage = e.target.value;
+		let { selectedJournalists } = this.state;
+		if (selectedJournalists[id]) {
+			selectedJournalists[id].personalMessage = e.target.value;
+		} else {
+			selectedJournalists = this.getSelectedJR();
+			selectedJournalists[id].personalMessage = e.target.value;
+		}
 		this.setState({ selectedJournalists });
 	}
 
@@ -164,6 +171,43 @@ class Index extends Authorized {
 		createClient(formData);
 	};
 
+  getJRMediaList = (val) => {
+  	const { getMediaList } = this.props;
+  	getMediaList(val);
+  }
+
+  onSelectMediaList = (list) => {
+  	this.setState({ selectedMediaList: list, selectedJournalists: this.getSelectedJR(list) });
+  }
+
+  getFilteredJR = () => {
+  	const { journalists: { data } } = this.props;
+  	if (Array.isArray(data)) {
+  		return data.map(item => ({ ...item, name: item.full_name }));
+  	}
+  	return [];
+  }
+
+  getSelectedJR = (selectedMediaList) => {
+  	const selectedJournalists = [];
+  	const map = new Map();
+  	if (selectedMediaList) {
+  		selectedMediaList.map((item) => {
+  			if (item.isActive === true) {
+  				return item.journalists_data.map((jrData) => {
+  					if (!map.has(jrData.id)) {
+  						map.set(jrData.id, true);
+  						selectedJournalists.push({ ...jrData, name: jrData.full_name });
+  					}
+  					return true;
+  				});
+  			}
+  			return true;
+  		});
+  	}
+  	return selectedJournalists;
+  }
+
 	displayScreen = () => {
 		const { active, steps } = this.state;
 		let render;
@@ -207,6 +251,9 @@ class Index extends Authorized {
 				<Personalization
 					{...this.state}
 					{...this.props}
+					journalists={this.getFilteredJR()}
+					onSelectMediaList={this.onSelectMediaList}
+					getJRMediaList={this.getJRMediaList}
 					onChangeSelect={this.onChangeSelect}
 					handlePrSelect={this.handlePrSelect}
 					setSearchValue={this.setSearchValue}
@@ -221,6 +268,7 @@ class Index extends Authorized {
 				<FinalizePitch
 					active={active}
 					steps={steps}
+					{...this.state}
 					changeToPreviousScreen={this.handlePreviousScreen}
 				/>
 			);
@@ -240,9 +288,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{
-		getClientsAuto: data => getClientsAuto(data),
+		findJournalist: data => findJournalist(data),
 		createClient: data => createClient(data),
-		getPrMedialists: () => getPrMedialists(),
+		getMediaList: data => getMediaList(data),
 		getJournalistInterests: data => getJournalistInterests(data),
 		createInterest: data => createInterest(data),
 	},

@@ -57,11 +57,13 @@ class Constant {
 
   CREATE_PR_CLIENT = '/api/pr/client/create';
 
-  GET_PR_MEDIALISTS = '/api/pr/medialists?pr_id=1';
+  // GET_PR_MEDIALISTS = '/api/pr/medialists?pr_id=1';
 
-  GET_MEDIALISTS = '/api/media-list';
+  GET_MEDIA_LIST = '/api/media-list/autocomplete/';
 
   CREATE_PR_MEDIALISTS = '/api/pr/medialists/create';
+
+  FIND_JOURNALIST_URL = '/api/profile/autocomplete/journalist/'
 
   GET = 'get';
 
