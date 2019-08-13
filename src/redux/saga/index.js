@@ -20,6 +20,7 @@ import GET_CLIENTS from './prClient';
 import GET_CLIENTS_AUTOCOMPLETE from './clients';
 import GET_INTERESTS from './interests';
 import CREATE_CLIENT from './createClient';
+import CREATE_PITCH from './createPitch';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -46,6 +47,7 @@ const rootSaga = function* rootSaga() {
 			GET_CLIENTS_AUTOCOMPLETE(),
 			GET_INTERESTS(),
 			CREATE_CLIENT(),
+			CREATE_PITCH(),
 		],
 	);
 };

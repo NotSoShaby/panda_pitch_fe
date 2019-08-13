@@ -17,6 +17,8 @@ class Constant {
 
   // LOGIN_URL = '/api/users/log-in';
 
+  CREATE_PITCH_URL = '/api/pitch/';
+
   GET_CLIENTS_URL = '/api/client/';
 
   CREATE_CLIENT_URL = '/api/client/';

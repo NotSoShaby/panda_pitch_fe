@@ -1,5 +1,5 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import Request from '../ApiCaller';
+import Request from '../multipartApiCallier';
 import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
 
@@ -10,7 +10,7 @@ const CREATE_CLIENT = function* fetchSurvey() {
 			const RES = yield Request(CONSTANT.CREATE_CLIENT_URL, CONSTANT.POST, action.payload);
 			yield put({
 				type: 'CREATE_CLIENT_SUCCESS',
-				payload: DATA(RES),
+				payload: RES ? DATA(RES) : ERROR('Bad request'),
 			});
 		} catch (error) {
 			yield put({ type: 'CREATE_CLIENT_FAILED', payload: ERROR(error) });

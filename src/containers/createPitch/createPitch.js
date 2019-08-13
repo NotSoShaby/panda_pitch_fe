@@ -30,6 +30,7 @@ const renderMediaFiles = (index, handleAddMedia) => (
 		<i className="fa fa-plus plus_icn" aria-hidden="true" />
 		<input
 			type="file"
+			accept="image/png, image/jpeg"
 			onChange={e => handleAddMedia(index, e.target.files[0])}
 		/>
 	</div>
@@ -68,11 +69,14 @@ const CreatePitch = ({
 	handleClient,
 	setSearchValue,
 	searchString,
-	handlePrivate,
 	handleRemoveMedia,
 	allInterests,
 	createClient,
 	onChangeClientProperty,
+	newClient,
+	saveScreenData,
+	onChangeState,
+	onChangeContent,
 }) => (
 	<div className="create_new_pitch_form">
 		<div className="form_wrapper pitch_form_wraper">
@@ -98,7 +102,7 @@ const CreatePitch = ({
 								<div className="full_widt">
 									<h3>Client Name</h3>
 									<div className="new_field">
-										<input type="text" placeholder="Client Name" onChange={e => onChangeClientProperty('name', e.target.value)} on />
+										<input type="text" placeholder="Client Name" onChange={e => onChangeClientProperty('name', e.target.value)} />
 									</div>
 								</div>
 								<div className="full_widt">
@@ -115,12 +119,19 @@ const CreatePitch = ({
 									role="button"
 								>
 									<i className="fa fa-plus" />
-									<input type="file" placeholder="Client Website" onChange={e => onChangeClientProperty('image', e.target.files)} />
-									<span>No file Choosen</span>
+									<input
+										type="file"
+										placeholder="Client Website"
+										accept="image/png, image/jpeg"
+										onChange={e => onChangeClientProperty('image', e.target.files[0])}
+									/>
+									{newClient.image
+										? <span>{newClient.image.name}</span>
+										: <span>No file Choosen</span>}
 								</span>
 								<span className="view-btn-rgt add-pernl-btn cnp-col-btn">
 									<button type="button" className="btn new_pitch_btn snd-btn" onClick={createClient}>
-                      ADD NEW CLIENT
+                      ADD CLIENT TO LIST
 									</button>
 								</span>
 							</div>
@@ -163,6 +174,8 @@ const CreatePitch = ({
 							<input
 								type="text"
 								maxLength="50"
+								name="title"
+								onChange={onChangeState}
 								placeholder="This should catch your attention and give the main idea of the pitch"
 							/>
 						</div>
@@ -171,14 +184,14 @@ const CreatePitch = ({
 						<h3>The Pitch</h3>
 						<div className="new_field cstm_editor">
 							<TinyMCE
-								content="Write your pitch here. Make sure you cover the main points."
+								content=""
 								config={{
 									plugins: 'autolink link image lists print preview',
 									toolbar:
                       'undo redo | bold italic | alignleft aligncenter alignright',
 									browser_spellcheck: true,
 								}}
-								// onChange={x => xxx(x)}
+								onChange={x => onChangeContent(x)}
 							/>
 						</div>
 						<div className="hint">
@@ -226,6 +239,7 @@ const CreatePitch = ({
 							<i className="fa fa-plus" />
 							<input
 								type="file"
+								accept="image/png, image/jpeg"
 								placeholder="Client Website"
 								onChange={e => handleAddPressRelease(e)}
 							/>
@@ -243,7 +257,8 @@ const CreatePitch = ({
 							<input
 								type="checkbox"
 								id="private"
-								onChange={e => handlePrivate(e)}
+								name="is_private"
+								onChange={onChangeState}
 							/>
 							<span className="slider round" />
 						</label>
@@ -286,7 +301,7 @@ const CreatePitch = ({
 					>
               NEXT
 					</button>
-					<button type="button" className="btn new_pitch_btn disc-btn">
+					<button type="button" onClick={saveScreenData} className="btn new_pitch_btn disc-btn">
               SAVE TEMPLATE
 					</button>
 				</span>

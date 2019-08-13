@@ -42,13 +42,13 @@ class MetaData {
 	];
 
 	CTA = [
-		{ value: 'Interview', isActive: false },
-		{ value: 'Coverage', isActive: false },
-		{ value: 'Written Q&A', isActive: false },
-		{ value: 'Byllined Article', isActive: false },
-		{ value: 'Event Invite', isActive: false },
-		{ value: 'News', isActive: false },
-		{ value: 'Product Review', isActive: false },
+		{ value: 'Interview', isActive: false, apiValue: 'interview' },
+		{ value: 'Coverage', isActive: false, apiValue: 'coverage' },
+		{ value: 'Written Q&A', isActive: false, apiValue: 'written_qa' },
+		{ value: 'Byllined Article', isActive: false, apiValue: 'bylined_article' },
+		{ value: 'Event Invite', isActive: false, apiValue: 'event_invite' },
+		{ value: 'News', isActive: false, apiValue: 'news' },
+		{ value: 'Product Review', isActive: false, apiValue: 'product_review' },
 	];
 
 	TOPICS = [
