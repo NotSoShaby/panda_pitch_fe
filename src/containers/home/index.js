@@ -30,7 +30,11 @@ class Index extends Component {
 	handleModalClose = () => this.setState({ isModalOpen: false });
 
 	// create new pitch
-	createNewPitch = () => this.setState({ isModalOpen: true });
+	createNewPitch = () => {
+		const { history: { push } } = this.props;
+		push('/create_pitch');
+	}
+	// this.setState({ isModalOpen: true });
 
 	// isPr = () => {
 	// 	const { login: { data: { user } } } = this.props;
