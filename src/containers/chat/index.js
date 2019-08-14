@@ -10,7 +10,9 @@ const username = 'admin';
 class Index extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			tabName: 'Latest',
+		};
 		const currentUser = username;
 		this.waitForSocketConnection(() => {
 			WebSocketInstance.addCallbacks(this.setMessages.bind(this), this.addMessage.bind(this));
@@ -26,6 +28,14 @@ class Index extends Component {
 
 	setMessages(messages) {
 		this.setState({ messages: messages.reverse() });
+	}
+
+	onTabChange = (tabName) => {
+		this.setState({ tabName });
+	}
+
+	handleSearchUser = (e) => {
+		alert('eeeeeeeeeeeeeeee', e);
 	}
 
 	renderMessages = () => {
@@ -111,6 +121,8 @@ class Index extends Component {
 				renderMessages={this.renderMessages}
 				messageChangeHandler={this.messageChangeHandler}
 				sendMessageHandler={this.sendMessageHandler}
+				onTabChange={this.onTabChange}
+				handleSearchUser={this.handleSearchUser}
 			/>
 		);
 	}
