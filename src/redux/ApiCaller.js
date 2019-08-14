@@ -2,7 +2,6 @@ import fetch from 'cross-fetch';
 import CONSTANT from '../utils/constant';
 
 // Make an api call
-console.log('token====>', localStorage.getItem('token'));
 
 // const token = localStorage.getItem('token') || '';
 export default async (url, method = 'get', body, isAuthenticationRequired = true) => fetch(`${CONSTANT.URL}${url}`, {

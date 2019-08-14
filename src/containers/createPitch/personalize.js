@@ -11,17 +11,19 @@ const Personalization = ({
 	options,
 	name,
 	value,
-	onChangeSelect,
+	// onChangeSelect,
 	journalists,
 	mediaList,
 	getJRMediaList,
 	onSelectMediaList,
 	handlePrSelect,
 	setSearchValue,
+	selectedMediaList,
 	searchString,
 	changeNextScreen,
 	changeToPreviousScreen,
 	selectedJournalists,
+	savePersonalizeData,
 	...props
 }) => (
 	<div className="create_new_pitch_form">
@@ -38,7 +40,7 @@ const Personalization = ({
 						list={mediaList.data}
 						className="media_list"
 						onSelect={onSelectMediaList}
-						boxes={[]}
+						boxes={selectedMediaList}
 						onChange={getJRMediaList}
 					/>
 				</div>
@@ -55,9 +57,11 @@ const Personalization = ({
 					}
 				</div>
 				<div className="ad-pernl-conts mt-0">
-					<label htmlFor="sss">Add Personal Message for Journalist</label>
 					{selectedJournalists.length > 0 && (
-						<JournalistCard {...props} selectedJournalists={selectedJournalists} />
+						<React.Fragment>
+							<label htmlFor="sss">Add Personal Message for Journalist</label>
+							<JournalistCard {...props} selectedJournalists={selectedJournalists} />
+						</React.Fragment>
 					)}
 				</div>
 				<div className="ad-pernl-conts mt-0">
@@ -68,7 +72,7 @@ const Personalization = ({
 						<button type="button" className="btn new_pitch_btn snd-btn" onClick={changeNextScreen}>
 							NEXT
 						</button>
-						<button type="button" className="btn new_pitch_btn disc-btn">
+						<button type="button" className="btn new_pitch_btn disc-btn" onClick={savePersonalizeData}>
 							SAVE TEMPLATE
 						</button>
 					</span>

@@ -14,7 +14,8 @@ import { prClient, client, clientAutoComplete } from './prClient';
 import history from '../../routes/history';
 import { prCompanies } from './company';
 import { positions } from './position';
-import { createClient } from '../actions/clients';
+import { createClient } from './clients';
+import { createPitch } from './createPitch';
 import { mediaList } from './mediaList';
 
 // Wrap all reducers in a container
@@ -35,7 +36,8 @@ const reducer = combineReducers({
 	client,
 	clientAutoComplete,
 	interests,
-	createClient,
+	createClientReducer: createClient,
+	createPitchReducer: createPitch,
 	pr,
 	journalists,
 });
@@ -61,7 +63,8 @@ const defaultState = {
 	getClientsAuto: initialState,
 	clientAutoComplete: initialState,
 	interests: initialState,
-	createClient: initialState,
+	createClientReducer: initialState,
+	createPitchReducer: initialState,
 	pr: initialState,
 	journalists: initialState,
 };

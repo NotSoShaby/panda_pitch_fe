@@ -10,12 +10,26 @@ class Constant {
 
   URL = server;
 
+  GET = 'get';
+
+  POST = 'post';
+
+  PATCH = 'patch';
+
+  DELETE = 'delete';
+
   SIGNUP_URL = '/api/user/';
 
   LOGIN_URL = '/api/log-in/';
   // SIGNUP_URL = '/api/users/signup';
 
   // LOGIN_URL = '/api/users/log-in';
+
+  CREATE_PITCH_FORM1_URL = '/api/pitch/';
+
+  CREATE_PITCH_FORM2_URL = '/api/personalization/';
+
+  // CREATE_PITCH_FORM3_URL = '/api/pitch/'
 
   GET_CLIENTS_URL = '/api/client/';
 
@@ -65,9 +79,7 @@ class Constant {
 
   FIND_JOURNALIST_URL = '/api/profile/autocomplete/journalist/'
 
-  GET = 'get';
-
-  POST = 'post';
+	// REMOVE_SELECTED_JOURNALIST = ''
 }
 
 export default new Constant();

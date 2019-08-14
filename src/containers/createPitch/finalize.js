@@ -1,5 +1,4 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import StatusBar from '../../components/statusBar';
 // import SimpleSlider from '../../components/slider';
@@ -16,8 +15,10 @@ const settings = {
 };
 
 const FinalizePitch = ({
-	steps, active, changeToPreviousScreen, selectedJournalists,
+	changeToPreviousScreen, selectedJournalists, removeJournalist, changeNextScreen,
+	title, content,
 }) => {
+	const [index, changeSlide] = useState(0);
 	let slider = null;
 	return (
 		<div className="create_new_pitch_form">
@@ -25,17 +26,16 @@ const FinalizePitch = ({
 				<div className="ad-pernl-hdg">
 					<h2>Finalize your Pitches</h2>
 				</div>
-				{/* {console.log('s=======>', this.slider)} */}
-				<StatusBar steps={steps} active={active} />
+				<StatusBar steps={3} active={3} />
 				<div className="ad-pernl-hdg">
 					<div className="move-btn">
 						<span className="click_pitch">Click on a pitch to edit the details</span>
 						<div className="arrow_btn">
-							<span onClick={() => slider.slickNext()} role="button">
+							<span onClick={() => slider.slickPrev()} role="button">
 							Previous
 								<i className="fa fa-chevron-left" />
 							</span>
-							<span onClick={() => slider.slickPrev()} role="button">
+							<span onClick={() => slider.slickNext()} role="button">
 								<i className="fa fa-chevron-right" />
 							Next
 							</span>
@@ -43,12 +43,15 @@ const FinalizePitch = ({
 					</div>
 
 					<div className="view-information padd">
-						<Slider settings={settings} ref={(c) => { slider = c; return true; }}>
+						<Slider
+							afterChange={index => changeSlide(index)}
+							settings={settings}
+							ref={(c) => { slider = c; return true; }}
+						>
 							{selectedJournalists.map(({
 								personalMessage, full_name, company_data, position_data, interests_data,
 							}) => (
-								<div className="wrap_view">
-									{console.log('selectedJournalists==========>', slider, selectedJournalists)}
+								<div key={personalMessage} className="wrap_view">
 
 									<div className="view-lft">
 										<div className="view-pro">
@@ -96,9 +99,9 @@ Coverage
 
 						<div className="finalize_contnt">
 							<div className="view-conts">
-								<h2>The Pitch</h2>
-								<p>
-								Lorem Ipsum is simply dummy text of the printing and typesetting
+								<h2>{title}</h2>
+								<div dangerouslySetInnerHTML={{ __html: content }}>
+									{/* Lorem Ipsum is simply dummy text of the printing and typesetting
 								industry. Lorem Ipsum has been the industry's standard dummy text
 								ever since the 1500s, when an unknown printer took a galley of type
 								and scrambled it to make a type specimen book. It has survived not
@@ -106,34 +109,16 @@ Coverage
 								remaining essentially unchanged. It was popularised in the 1960s with
 								the release of Letraset sheets containing Lorem Ipsum passages, and more
 								recently with desktop publishing software like Aldus PageMaker including
-								versions of Lorem Ipsum.
+								versions of Lorem Ipsum. */}
 
-								</p>
-								<p>
-								Lorem Ipsum is simply dummy text of the printing and typesetting
-								industry. Lorem Ipsum has been the industry's standard dummy text
-								ever since the 1500s, when an unknown printer took a galley of type
-									and scrambled it to make a type specimen book. It has survived not
-									only five centuries, but also the leap into electronic typesetting,
-									remaining essentially unchanged. It was popularised in the 1960s with
-										the release of Letraset sheets containing Lorem Ipsum passages, and
-										more recently with desktop publishing software like Aldus PageMaker
-										including versions of Lorem Ipsum.
+								</div>
 
-								</p>
-								<p>
-								Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-							Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-								when an unknown printer took a galley of type and scrambled it to make a type
-								specimen book.
-
-								</p>
 							</div>
 							<div className="view-img">
 								<img src={imagepath} alt="" />
 							</div>
 
-							<div className="dlete_icn_row">
+							<div className="dlete_icn_row" role="button" onClick={() => removeJournalist(index)}>
 								<i className="fa fa-trash" aria-hidden="true" />
 							</div>
 
@@ -145,7 +130,7 @@ Coverage
 
 						<span className="view-btn-rgt">
 							<button type="button" className="btn new_pitch_btn disc-btn" onClick={changeToPreviousScreen}>Back</button>
-							<button type="button" className="btn new_pitch_btn snd-btn">Send Pitches</button>
+							<button type="button" className="btn new_pitch_btn snd-btn" onClick={changeNextScreen}>Send Pitches</button>
 							<button type="button" className="btn new_pitch_btn disc-btn">Save Template</button>
 						</span>
 					</div>
@@ -157,10 +142,5 @@ Coverage
 	);
 };
 // }
-
-FinalizePitch.propTypes = {
-	steps: PropTypes.number.isRequired,
-	active: PropTypes.number.isRequired,
-};
 
 export default FinalizePitch;

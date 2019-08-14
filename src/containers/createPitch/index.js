@@ -7,14 +7,14 @@ import _ from 'lodash';
 import Loader from '../../components/loader';
 import Authorized from '../../routes/authorized';
 import CreatePitch from './createPitch';
-import { findJournalist, getMediaList } from '../../redux/actions/pitches';
+import {
+	getClientsAuto, findJournalist, getMediaList, removeJournalist,
+} from '../../redux/actions/pitches';
 import { getJournalistInterests, createInterest } from '../../redux/actions/signup';
 import { createClient } from '../../redux/actions/clients';
+import { createPitchActionForm1, createPitchActionForm2, createPitchActionForm3 } from '../../redux/actions/pitch';
 import Personalization from './personalize';
 import FinalizePitch from './finalize';
-
-// import UnAuthorized from '../../routes/unAuthorized';
-// import HELPER from '../../utils/helper';
 
 class Index extends Authorized {
 	state = {
@@ -28,30 +28,47 @@ class Index extends Authorized {
 		name: '',
 		value: '',
 		searchString: '',
-		selectedClients: [],
+		selectedClient: {},
 		allInterests: [],
 		journalists: [{ id: 1, name: 'shhh koi h' }, { id: 2, name: 'chal be' }, { id: 3, name: 'koi nhi hai' }],
 		selectedJournalists: [],
 		mediaFiles: ['', '', ''],
+		MediaImages: ['', '', ''],
+		cta: [],
+		title: '',
+		is_private: false,
+		press_release: '',
+		saveAndNext: false,
+		selectedForm: 1,
 	}
 
-	// componentDidMount() {
-	// 	const { mediaList } = this.props;
-	// 	mediaList();
-	// }
-
-	changeInput = (value) => {
-		console.log('input', value);
+	componentWillReceiveProps(nextProps) {
+		const { createPitchReducer, createClientReducer } = nextProps;
+		const { props } = this;
+		if (createClientReducer !== props.createClientReducer) {
+			const { data, error } = createClientReducer;
+			if (data && (typeof data === 'object') && Object.keys(data).length) {
+				this.setState({ hideNewClientDiv: true, newClient: {} });
+			} else if (error) {
+				// console.log('createClientReducer.error show toster', error);
+			}
+		}
+		// if (createPitchReducer !== props.createPitchReducer) {
+		const {
+			data, form1, form2,
+		} = createPitchReducer;
+		const { selectedForm } = this.state;
+		if (data && (typeof data === 'object')) {
+			if (form1 && selectedForm === 2) {
+				this.setState({ active: 2 });
+			} else if (form2 && selectedForm === 3) {
+				this.setState({ active: 3 });
+			}
+			this.setState({ saveAndNext: false });
+		}
 	}
 
-	onChangeSelect = (value) => {
-		console.log('select', value);
-	}
-
-	onChangeSelect = (selectedValue) => {
-		this.setState({ value: selectedValue.value });
-	}
-
+	// handle a specialized journalist selection
 	handlePrSelect = ({ id }) => {
 		const { journalists: { data } } = this.props;
 		const { selectedJournalists } = this.state;
@@ -62,12 +79,21 @@ class Index extends Authorized {
 		}
 	}
 
+	// return filtered clients
 	setSearchValue = (searchString) => {
 		const { findJournalist } = this.props;
 		findJournalist(searchString);
-		this.setState({ searchString, selectedClients: [] });
+		this.setState({ searchString });
 	}
 
+  // return filtered clients
+  filterClients = (searchString) => {
+  	const { getClientsAuto } = this.props;
+  	getClientsAuto(searchString);
+  	this.setState({ searchString, selectedClient: {} });
+  }
+
+  // add a personalized message for journalist
 	handleJournalistMessageChange = (e, id) => {
 		let { selectedJournalists } = this.state;
 		if (selectedJournalists[id]) {
@@ -79,85 +105,177 @@ class Index extends Authorized {
 		this.setState({ selectedJournalists });
 	}
 
+  savePersonalizeData = async () => {
+  	const { active, selectedJournalists } = this.state;
+  	if (active === 2) {
+  		const { createPitchActionForm2, createPitchReducer: { form1: { url } } } = this.props;
+  		const data = selectedJournalists.map(journalist => ({
+  			message_to: journalist.url,
+  			pitch: url,
+  			message: journalist.personalMessage,
+  		}));
+  		if (data) { this.setState({ active: active + 1 }); }
+  		createPitchActionForm2(data);
+  	}
+  }
+
+  finalSubmission = async () => {
+  	const { active } = this.state;
+  	if (active === 3) {
+  		const { createPitchReducer: { form1 }, createPitchActionForm3 } = this.props;
+  		if (form1) {
+  			const { url } = form1;
+  			const user = url.split('/');
+  			createPitchActionForm3(user[5]);
+  		}
+  	}
+  }
+
+  // redirect to next form
 	handleNextScreen = () => {
 		const { active } = this.state;
-		this.setState({ active: active + 1 });
+		if (active === 1) {
+			this.saveScreenData();
+			this.setState({ saveAndNext: true, selectedForm: 2 });
+		} else if (active === 2) {
+			this.savePersonalizeData();
+			this.setState({ saveAndNext: true, selectedForm: 3 });
+		} else if (active === 3) {
+			this.finalSubmission();
+		}
 	}
 
-	handlePreviousScreen = () => {
+	availabilityType = () => {
+		const { progressValue } = this.state;
+		switch (progressValue) {
+			case 20:
+				return 'exclusive';
+			case 10:
+				return 'embargo';
+			default:
+				return 'regular';
+		}
+	}
+
+	createPitchData = async () => {
+		const {
+			MediaImages, selectedClient, press_release, cta, title, allInterests, is_private, content,
+		} = this.state;
+		const form_data = new FormData();
+		form_data.append('press_release', press_release);
+		await MediaImages.map((data) => {
+			if (data) {
+				form_data.append('images', data);
+			}
+			return null;
+		});
+		form_data.append('title', title);
+		form_data.append('client', selectedClient.url);
+		form_data.append('is_public', !(is_private === 'on'));
+		await allInterests.map((data) => {
+			if (data.isActive) {
+				form_data.append('topics', data.url);
+			}
+			return null;
+		});
+		await cta.map((data) => {
+			if (data.isActive) {
+				form_data.append('cta', data.apiValue);
+			}
+			return null;
+		});
+		form_data.append('content', content);
+		form_data.append('availability', this.availabilityType());
+		return form_data;
+	}
+
+	// save create pitch form (form 1)
+	saveScreenData = async () => {
 		const { active } = this.state;
-		this.setState({ active: active - 1 });
+		if (active === 1) {
+			const { createPitchActionForm1 } = this.props;
+			const DATA = await this.createPitchData();
+			createPitchActionForm1(DATA);
+		}
 	}
 
+	// redirect to previous screen
+	handlePreviousScreen = () => {
+		const { active, selectedForm } = this.state;
+		this.setState({ active: active - 1, selectedForm: selectedForm - 1 });
+	}
+
+	// handle client search box
 	handleClient = (client) => {
-		// if (_.findLastIndex(selectedClients, client) === -1) {
-		// 	selectedClients.push(client);
-		// }
-		this.setState({ selectedClients: [client] });
+		this.setState({ selectedClient: client });
 	};
 
-	handleAddProfile = () => {
-	};
-
-	handleAddTopics = () => {
-	};
-
+	// handle media input
 	handleAddMedia = (index, image) => {
-		const { mediaFiles } = this.state;
+		const { mediaFiles, MediaImages } = this.state;
 		mediaFiles[index] = URL.createObjectURL(image);
-		this.setState({ mediaFiles });
+		MediaImages[index] = image;
+		this.setState({ mediaFiles, MediaImages });
 	};
 
+	// remove selected media
 	handleRemoveMedia = (index) => {
-		const { mediaFiles } = this.state;
+		const { mediaFiles, MediaImages } = this.state;
 		mediaFiles[index] = '';
-		this.setState({ mediaFiles });
+		MediaImages[index] = '';
+		this.setState({ mediaFiles, MediaImages });
 	};
 
+	// add a new client
 	handleAddNewClient = () => {
 		const { hideNewClientDiv } = this.state;
 		this.setState({ hideNewClientDiv: !hideNewClientDiv });
 	}
 
-	handleInputText = (e) => {
-		this.setState({ [e.target.name]: e.target.value });
-		if (e.target.name === 'headline') {
-			if (e.target.value.length > 50) {
-				e.target.value = '';
-			}
-		}
-	}
-
+	// handle range selection
 	handleRangeChange = (value) => {
 		this.setState({ progressValue: value.value });
 	}
 
+	// handle press release
 	handleAddPressRelease = (e) => {
 		if (e && e.target.files) {
 			const pressReleaseImage = URL.createObjectURL(e.target.files[0]);
-			this.setState({ pressReleaseImage });
+			this.setState({ pressReleaseImage, press_release: e.target.files[0] });
 		}
 	}
 
-	handlePrivate = e => console.log(e.target.checked);
-
+	// handle selected topic
 	handleInterestSelection = (allInterests) => {
 		this.setState({ allInterests });
 	}
 
-	// create a new interest
-	createInterest = (val) => {
-		const { createInterest } = this.props;
-		createInterest(val);
-	};
-
+	// handle client form input
 	handleClientPropertyChange = (name, value) => {
 		const { newClient } = this.state;
 		newClient[name] = value;
 		this.setState({ newClient });
 	}
 
-	// create a new interest
+	// handle CTA selection
+	onCTASelection = (data) => {
+		this.setState({ cta: data });
+	}
+
+	// handle create pitch form input fields
+	onChangeState = (event) => {
+		if (event.target.name === 'is_private') {
+			const { is_private } = this.state;
+			this.setState({ [event.target.name]: !is_private });
+		} else this.setState({ [event.target.name]: event.target.value });
+	}
+
+	// handle tiny-input change
+	onChangeContent = (value) => {
+		this.setState({ content: value.level.content });
+	}
+
+	// create a new client
 	createClient = () => {
 		const { newClient } = this.state;
 		const { name, website, image } = newClient;
@@ -167,19 +285,21 @@ class Index extends Authorized {
 		formData.append('name', name);
 		formData.append('website', website);
 		formData.append('image', image);
-		// const blob = new Blob(newClient.image, { type: 'application/json' });
 		createClient(formData);
 	};
 
+  // return filter media list
   getJRMediaList = (val) => {
   	const { getMediaList } = this.props;
   	getMediaList(val);
   }
 
+  // handle media-list selection
   onSelectMediaList = (list) => {
   	this.setState({ selectedMediaList: list, selectedJournalists: this.getSelectedJR(list) });
   }
 
+  // return selected journalists
   getFilteredJR = () => {
   	const { journalists: { data } } = this.props;
   	if (Array.isArray(data)) {
@@ -188,6 +308,7 @@ class Index extends Authorized {
   	return [];
   }
 
+  // handle new selected journalist and put in list
   getSelectedJR = (selectedMediaList) => {
   	const selectedJournalists = [];
   	const map = new Map();
@@ -208,8 +329,21 @@ class Index extends Authorized {
   	return selectedJournalists;
   }
 
+  removeJournalist = async (index) => {
+  	const { selectedJournalists } = this.state;
+  	const { createPitchReducer: { form2 } } = this.props;
+  	const user = _.find(form2, o => o.message === selectedJournalists[index].personalMessage);
+  	const url = user.url.split('/');
+  	if (removeJournalist(url[5])) {
+  	selectedJournalists.splice(index, 1);
+  		this.setState({ selectedJournalists });
+  	}
+  }
+
+  // return conditional form rendering
 	displayScreen = () => {
-		const { active, steps } = this.state;
+		const { active } = this.state;
+		const { createInterest } = this.props;
 		let render;
 		if (active === 1) {
 			render = (
@@ -221,27 +355,22 @@ class Index extends Authorized {
 					<CreatePitch
 						{...this.state}
 						{...this.props}
-						steps={3}
-						active={1}
 						handleClient={this.handleClient}
 						handleAddNewClient={this.handleAddNewClient}
-						handleAddProfile={this.handleAddProfile}
-						handleAddTopics={this.handleAddTopics}
 						handleAddMedia={this.handleAddMedia}
 						handleAddPressRelease={this.handleAddPressRelease}
-						handleInputText={this.handleInputText}
 						onRangeChange={this.handleRangeChange}
 						changeNextScreen={this.handleNextScreen}
-						setSearchValue={this.setSearchValue}
-						handlePrSelect={this.handlePrSelect}
-						handlePrivate={this.handlePrivate}
+						saveScreenData={this.saveScreenData}
+						setSearchValue={this.filterClients}
 						handleRemoveMedia={this.handleRemoveMedia}
-						changeInput={this.changeInput}
 						onSelectInterest={this.handleInterestSelection}
-						onChangeSelect={this.onChangeSelect}
-						onCreateInterest={this.createInterest}
+						onCreateInterest={val => createInterest(val)}
 						createClient={this.createClient}
 						onChangeClientProperty={this.handleClientPropertyChange}
+						onCTASelection={this.onCTASelection}
+						onChangeState={this.onChangeState}
+						onChangeContent={this.onChangeContent}
 					/>
 				</Loader>
 			);
@@ -254,11 +383,11 @@ class Index extends Authorized {
 					journalists={this.getFilteredJR()}
 					onSelectMediaList={this.onSelectMediaList}
 					getJRMediaList={this.getJRMediaList}
-					onChangeSelect={this.onChangeSelect}
 					handlePrSelect={this.handlePrSelect}
 					setSearchValue={this.setSearchValue}
 					addMessageForJournalist={this.handleJournalistMessageChange}
 					changeNextScreen={this.handleNextScreen}
+					savePersonalizeData={this.savePersonalizeData}
 					changeToPreviousScreen={this.handlePreviousScreen}
 				/>
 			);
@@ -266,9 +395,9 @@ class Index extends Authorized {
 		if (active === 3) {
 			render = (
 				<FinalizePitch
-					active={active}
-					steps={steps}
 					{...this.state}
+					removeJournalist={this.removeJournalist}
+					changeNextScreen={this.handleNextScreen}
 					changeToPreviousScreen={this.handlePreviousScreen}
 				/>
 			);
@@ -288,11 +417,15 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{
+		getClientsAuto: data => getClientsAuto(data),
 		findJournalist: data => findJournalist(data),
 		createClient: data => createClient(data),
 		getMediaList: data => getMediaList(data),
 		getJournalistInterests: data => getJournalistInterests(data),
 		createInterest: data => createInterest(data),
+		createPitchActionForm1: data => createPitchActionForm1(data),
+		createPitchActionForm2: data => createPitchActionForm2(data),
+		createPitchActionForm3: data => createPitchActionForm3(data),
 	},
 	dispatch,
 );

@@ -8,7 +8,7 @@ const FIND_JOURNALIST = function* getInterests() {
 	yield takeEvery('FIND_JOURNALIST', function* generateAction(action) {
 		yield put(START('FIND_JOURNALIST_STARTED'));
 		try {
-			const RES = yield Request(`${CONSTANT.FIND_JOURNALIST_URL}${action.payload}/`, CONSTANT.GET);
+			const RES = yield Request(`${CONSTANT.FIND_JOURNALIST_URL}${action.payload}`, CONSTANT.GET);
 			yield put({
 				type: 'FIND_JOURNALIST_SUCCESS',
 				payload: DATA(RES),

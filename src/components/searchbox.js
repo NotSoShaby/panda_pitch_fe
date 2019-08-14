@@ -12,10 +12,11 @@ class SearchBox extends React.Component {
 		listVisible: false,
 	}
 
-	changeSelection = ({ url, name }) => {
+	changeSelection = (dataValue) => {
 		const { onSelect } = this.props;
-		this.setState({ value: name, listVisible: false });
-		onSelect({ id: url, name });
+		this.setState({ value: dataValue.name, listVisible: false });
+		// dataValue.id = dataValue.url;
+		onSelect(dataValue);
 	}
 
 	onChange = (value) => {
@@ -26,15 +27,15 @@ class SearchBox extends React.Component {
 
 	search = () => {
 		const { searchString = '', data } = this.props;
-		const { listVisible } = this.state;
 		if (!data || data.length === 0) return null;
 		return (
 			<div className="srch_lst_row">
-				{listVisible && data && data.length && data.map(({ id: url, name }) => {
+				{data && data.length && data.map((dataValue) => {
+					const { name } = dataValue;
 					if (searchString
 						&& name.toLowerCase().includes(searchString.toLowerCase())) {
 						return (
-							<div key={name} className="srch_lst_col" role="button" onClick={() => this.changeSelection({ url, name })}>
+							<div key={name} className="srch_lst_col" role="button" onClick={() => this.changeSelection(dataValue)}>
 								<div className="srch_pic">
 									<img src={imagepath} alt="profile_pic" />
 								</div>
@@ -52,7 +53,7 @@ class SearchBox extends React.Component {
 
 	render() {
 		const { searchString = '', placeholder } = this.props;
-		const { value } = this.state;
+		const { value, listVisible } = this.state;
 		return (
 			<React.Fragment>
 				<div key="search_box" className="srch_col place">
@@ -67,7 +68,7 @@ class SearchBox extends React.Component {
 						<img className="srch_icn" src={SEARCH_ICON} alt="search" />
 					</button>
 				</div>
-				{this.search(searchString)}
+				{listVisible && this.search(searchString)}
 			</React.Fragment>
 		);
 	}
