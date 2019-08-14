@@ -173,9 +173,9 @@ class Helper {
 	};
 
 	// validate sign up form4
-	SignUpStep4Validation = ({ interests = [] }) => this.ValidationService.validate({
+	SignUpStep4Validation = ({ journoInterests }) => this.ValidationService.validate({
 		interests: {
-			value: interests,
+			value: journoInterests,
 			rules: {
 				requiredArray: true,
 			},

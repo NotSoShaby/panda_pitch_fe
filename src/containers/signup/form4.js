@@ -24,7 +24,7 @@ const Form4 = ({
 				name="Interest"
 				onCreate={onCreate}
 				onSelect={onTodoSelection}
-				boxes={interests}
+				boxes={interests.data}
 				onChange={getJournalistInterests}
 			/>
 		</div>
