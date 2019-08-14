@@ -38,6 +38,7 @@ const Personalization = ({
 					<AutoComplete
 						index="journalists_data"
 						list={mediaList.data}
+						showAddButton={false}
 						className="media_list"
 						onSelect={onSelectMediaList}
 						boxes={selectedMediaList}
