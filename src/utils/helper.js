@@ -165,6 +165,37 @@ class Helper {
 		// return null;
 	};
 
+	validateCreatePitchStep1 = (data) => {
+		const {
+			selectedClient, cta, title, allInterests,
+		} = data;
+		const Errors = {};
+		if (!title) {
+			Errors.title = 'Headline is required';
+		}
+		if (!selectedClient || !selectedClient.url) {
+			Errors.selectedClient = 'client is required';
+		}
+		if (!allInterests || !allInterests.filter(data => data.isActive).length) {
+			Errors.allInterests = 'At least one active topic is required';
+		}
+		if (!cta || !cta.filter(data => data.isActive).length) {
+			Errors.cta = 'At least one active cta is required';
+		}
+		return Errors;
+	}
+
+	validateCreateClient = (data) => {
+		const { name, website } = data;
+		const Errors = {};
+		if (!name) {
+			Errors.clientName = 'Client Name is required';
+		} if (website && !this.ValidationService.linkExpr.test(website)) {
+			Errors.clientWebSite = 'Enter a valid website url';
+		}
+		return Errors;
+	}
+
 	// validate sign up form4
 	SignUpStep4Validation = ({ journoInterests }) => this.ValidationService.validate({
 		interests: {

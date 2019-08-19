@@ -64,6 +64,8 @@ const CreatePitch = ({
 	onChangeContent,
 	content,
 	title,
+	errors,
+	onLodingImgError,
 }) => (
 	<div className="create_new_pitch_form">
 		<div className="form_wrapper pitch_form_wraper">
@@ -74,7 +76,7 @@ const CreatePitch = ({
 					</div>
 					<StatusBar steps={3} active={1} />
 					<div className="ad-pernl-conts">
-						<label htmlFor="ddd">Client</label>
+						<label htmlFor="ddd">Client *</label>
 						<SearchBox
 							data={data}
 							placeholder="Client"
@@ -82,25 +84,35 @@ const CreatePitch = ({
 							setSearchValue={setSearchValue}
 							searchString={searchString}
 						/>
+						<div className="error">
+							<p>{errors.selectedClient}</p>
+						</div>
 					</div>
 					{!hideNewClientDiv ? (
 						<div>
 							<div className="two_dived_col">
 								<div className="full_widt">
-									<h3>Client Name</h3>
+									<h3>Client Name *</h3>
 									<div className="new_field">
 										<input type="text" placeholder="Client Name" onChange={e => onChangeClientProperty('name', e.target.value)} />
+										<div className="error">
+											<p>{errors.clientName}</p>
+										</div>
 									</div>
 								</div>
 								<div className="full_widt">
 									<h3>Client Website</h3>
 									<div className="new_field">
-										<input type="text" placeholder="Client Website" onChange={e => onChangeClientProperty('website', e.target.value)} />
+										<input type="url" placeholder="Client Website" onChange={e => onChangeClientProperty('website', e.target.value)} />
+										<div className="error">
+											<p>{errors.clientWebSite}</p>
+										</div>
 									</div>
 								</div>
 							</div>
 
 							<div className="ad-pernl-conts cnp-col">
+								<h3>Add Client Logo</h3>
 								<span
 									className="cnp-file"
 									role="button"
@@ -114,8 +126,11 @@ const CreatePitch = ({
 									/>
 									{image
 										? <span>{image.name}</span>
-										: <span>No file Choosen</span>}
+										: <span>No file Chosen</span>}
 								</span>
+								<div className="error">
+									<p>{errors.clientApiError}</p>
+								</div>
 								<span className="view-btn-rgt add-pernl-btn cnp-col-btn">
 									<button type="button" className="btn new_pitch_btn snd-btn" onClick={createClient}>
                       ADD CLIENT TO LIST
@@ -126,22 +141,19 @@ const CreatePitch = ({
 					) : (
 						<div />
 					)}
-					{hideNewClientDiv && (
-						<div className="ad-pernl-conts cnp-col">
-							<span
-								className="cnp-file"
-								role="button"
-								onClick={handleAddNewClient}
-							>
-								<i className="fa fa-plus" />
-								{/* <input type="file" placeholder="Client Website" /> */}
-								<span className="fnt_wght">Add New Client</span>
-							</span>
-						</div>
-					)}
-
+					<div className="ad-pernl-conts cnp-col">
+						<span
+							className="cnp-file"
+							role="button"
+							onClick={handleAddNewClient}
+						>
+							<i className={hideNewClientDiv ? 'fa fa-plus' : 'fa fa-minus'} />
+							{/* <input type="file" placeholder="Client Website" /> */}
+							<span className="fnt_wght">{hideNewClientDiv ? 'Add New Client' : 'Don\'t want to add client now'}</span>
+						</span>
+					</div>
 					<div>
-						<h3>CTA (choose two)</h3>
+						<h3>CTA (choose two) *</h3>
 						<AutoComplete
 							showTextBox={false}
 							list={
@@ -152,11 +164,15 @@ const CreatePitch = ({
 							onCreate={onCreate}
 							onSelect={onCTASelection}
 							boxes={CTA}
+							maxLength={2}
 							onChange={getJournalistInterests}
 						/>
+						<div className="error">
+							<p>{errors.cta}</p>
+						</div>
 					</div>
 					<div className="full_widt">
-						<h3>Headline (up to 50 characters)</h3>
+						<h3>Headline (up to 50 characters) *</h3>
 						<div className="new_field">
 							<input
 								type="text"
@@ -166,6 +182,9 @@ const CreatePitch = ({
 								onChange={onChangeState}
 								placeholder="This should catch your attention and give the main idea of the pitch"
 							/>
+							<div className="error">
+								<p>{errors.title}</p>
+							</div>
 						</div>
 					</div>
 					<div className="full_widt pos_relative">
@@ -193,7 +212,7 @@ const CreatePitch = ({
 						</div>
 					</div>
 					<div className="full_widt top_mg">
-						<h3>Add Topics</h3>
+						<h3>Add Topics *</h3>
 						<div className="custom_field">
 							<AutoComplete
 								list={journalistInterests.data}
@@ -203,6 +222,9 @@ const CreatePitch = ({
 								onChange={getJournalistInterests}
 							/>
 						</div>
+						<div className="error">
+							<p>{errors.allInterests}</p>
+						</div>
 					</div>
 					<div className="ad-pernl-conts add_media_col pos_relative">
 						<label htmlFor="text">Add Media</label>
@@ -210,6 +232,9 @@ const CreatePitch = ({
 							{mediaFiles.map((media, index) => (media
 								? renderMediaImages(index, media, handleRemoveMedia)
 								: renderMediaFiles(index, handleAddMedia)))}
+						</div>
+						<div className="error">
+							<p>{errors.mediaImages}</p>
 						</div>
 						<div className="hint">
 							<img src="images/bulb_icn.png" alt="alert" />
@@ -227,14 +252,13 @@ const CreatePitch = ({
 							<i className="fa fa-plus" />
 							<input
 								type="file"
-								accept="image/png, image/jpeg"
 								placeholder="Client Website"
 								onChange={e => handleAddPressRelease(e)}
 							/>
 							{!pressReleaseImage && <span>No file Selected</span>}
 							{pressReleaseImage && (
 								<div className="cnp-snipt-img">
-									<img src={pressReleaseImage} alt="pressReleaseImage" />
+									<img src={pressReleaseImage} onError={onLodingImgError} alt="pressReleaseImage" />
 								</div>
 							)}
 						</span>
@@ -248,7 +272,7 @@ const CreatePitch = ({
 								name="is_private"
 								value={is_private}
 								checked={is_private}
-								onChange={onChangeState}
+								// onChange={onChangeState}
 							/>
 							<span className="slider round" />
 						</label>
@@ -275,9 +299,12 @@ const CreatePitch = ({
 							<p>
 								{' '}
 								<b>Hint: </b>
-                  Write a general Pitch.Save Journalist Personalization for the
+                  Write a general Pitch. Save Journalist Personalization for the
                   Next Step!
 							</p>
+						</div>
+						<div className="error">
+							<p>{errors.createPitchApiError}</p>
 						</div>
 					</div>
 				</div>
