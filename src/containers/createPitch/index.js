@@ -15,6 +15,10 @@ import { createClient } from '../../redux/actions/clients';
 import { createPitchActionForm1, createPitchActionForm2, createPitchActionForm3 } from '../../redux/actions/pitch';
 import Personalization from './personalize';
 import FinalizePitch from './finalize';
+import CommonHelper from '../../utils/helper';
+import IMAGES from '../../assets/images';
+
+const { DOCUMENT } = IMAGES;
 
 class Index extends Authorized {
 	state = {
@@ -40,6 +44,7 @@ class Index extends Authorized {
 		press_release: '',
 		saveAndNext: false,
 		selectedForm: 1,
+		errors: {},
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -48,9 +53,9 @@ class Index extends Authorized {
 		if (createClientReducer !== props.createClientReducer) {
 			const { data, error } = createClientReducer;
 			if (data && (typeof data === 'object') && Object.keys(data).length) {
-				this.setState({ hideNewClientDiv: true, newClient: {} });
+				this.setState({ hideNewClientDiv: true, newClient: {}, errors: {} });
 			} else if (error) {
-				// console.log('createClientReducer.error show toster', error);
+				this.setState({ errors: { clientApiError: error } });
 			}
 		}
 		// if (createPitchReducer !== props.createPitchReducer) {
@@ -162,7 +167,9 @@ class Index extends Authorized {
 			MediaImages, selectedClient, press_release, cta, title, allInterests, is_private, content,
 		} = this.state;
 		const form_data = new FormData();
-		form_data.append('press_release', press_release);
+		if (press_release) {
+			form_data.append('press_release', press_release);
+		}
 		await MediaImages.map((data) => {
 			if (data) {
 				form_data.append('images', data);
@@ -171,7 +178,7 @@ class Index extends Authorized {
 		});
 		form_data.append('title', title);
 		form_data.append('client', selectedClient.url);
-		form_data.append('is_public', !(is_private === 'on'));
+		form_data.append('is_public', !is_private);
 		await allInterests.map((data) => {
 			if (data.isActive) {
 				form_data.append('topics', data.url);
@@ -194,8 +201,14 @@ class Index extends Authorized {
 		const { active } = this.state;
 		if (active === 1) {
 			const { createPitchActionForm1 } = this.props;
-			const DATA = await this.createPitchData();
-			createPitchActionForm1(DATA);
+			const ValidatePitchStep1 = CommonHelper.validateCreatePitchStep1(this.state);
+			if (Object.keys(ValidatePitchStep1).length) {
+				this.setState({ errors: ValidatePitchStep1 });
+			} else {
+				this.setState({ errors: {} });
+				const DATA = await this.createPitchData();
+				createPitchActionForm1(DATA);
+			}
 		}
 	}
 
@@ -212,10 +225,14 @@ class Index extends Authorized {
 
 	// handle media input
 	handleAddMedia = (index, image) => {
-		const { mediaFiles, MediaImages } = this.state;
-		mediaFiles[index] = URL.createObjectURL(image);
-		MediaImages[index] = image;
-		this.setState({ mediaFiles, MediaImages });
+		if (image && (image.size < 1048577)) {
+			const { mediaFiles, MediaImages } = this.state;
+			mediaFiles[index] = URL.createObjectURL(image);
+			MediaImages[index] = image;
+			this.setState({ mediaFiles, MediaImages, errors: {} });
+		} else {
+			this.setState({ errors: { mediaImages: 'image size should be less than 2.5 mb' } });
+		}
 	};
 
 	// remove selected media
@@ -235,11 +252,16 @@ class Index extends Authorized {
 	// handle range selection
 	handleRangeChange = (value) => {
 		this.setState({ progressValue: value.value });
+		if (value.value) {
+			this.setState({ is_private: true });
+		} else {
+			this.setState({ is_private: false });
+		}
 	}
 
 	// handle press release
 	handleAddPressRelease = (e) => {
-		if (e && e.target.files) {
+		if (e && e.target.files && e.target.files[0]) {
 			const pressReleaseImage = URL.createObjectURL(e.target.files[0]);
 			this.setState({ pressReleaseImage, press_release: e.target.files[0] });
 		}
@@ -264,10 +286,7 @@ class Index extends Authorized {
 
 	// handle create pitch form input fields
 	onChangeState = (event) => {
-		if (event.target.name === 'is_private') {
-			const { is_private } = this.state;
-			this.setState({ [event.target.name]: !is_private });
-		} else this.setState({ [event.target.name]: event.target.value });
+		this.setState({ [event.target.name]: event.target.value });
 	}
 
 	// handle tiny-input change
@@ -279,13 +298,19 @@ class Index extends Authorized {
 	createClient = () => {
 		const { newClient } = this.state;
 		const { name, website, image } = newClient;
-		if (!name) return;
-		const { createClient } = this.props;
-		const formData = new FormData();
-		formData.append('name', name);
-		formData.append('website', website);
-		formData.append('image', image);
-		createClient(formData);
+		const validateData = CommonHelper.validateCreateClient(newClient);
+		if (Object.keys(validateData).length) {
+			this.setState({ errors: validateData });
+		} else {
+			const { createClient } = this.props;
+			const formData = new FormData();
+			formData.append('name', name);
+			formData.append('website', website);
+			if (image) {
+				formData.append('image', image);
+			}
+			createClient(formData);
+		}
 	};
 
   // return filter media list
@@ -340,7 +365,11 @@ class Index extends Authorized {
   	}
   }
 
-  // return conditional form rendering
+	onLodingImgError = () => {
+		this.setState({ pressReleaseImage: DOCUMENT });
+	}
+
+	// return conditional form rendering
 	displayScreen = () => {
 		const { active } = this.state;
 		const { createInterest } = this.props;
@@ -371,6 +400,7 @@ class Index extends Authorized {
 						onCTASelection={this.onCTASelection}
 						onChangeState={this.onChangeState}
 						onChangeContent={this.onChangeContent}
+						onLodingImgError={this.onLodingImgError}
 					/>
 				</Loader>
 			);

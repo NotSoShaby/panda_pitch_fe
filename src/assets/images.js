@@ -22,6 +22,8 @@ class Images {
   APPLE = `${publicPath}/images/apple_logo.png`;
 
   GOOGLE = `${publicPath}/images/google.png`;
+
+  DOCUMENT = `${publicPath}/images/documentImg.png`;
 }
 
 export default new Images();

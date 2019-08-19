@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 class AutoComplete extends Component {
 	constructor(props) {
@@ -15,20 +14,31 @@ class AutoComplete extends Component {
 	// add item in selected tag list
 	putInBox = (val) => {
 		const { box } = this.state;
-		const { onSelect, list, multiselect } = this.props;
+		const {
+			onSelect, list, maxLength,
+		} = this.props;
 		const isExist = box.filter(({ value }) => value === val);
 		if (!isExist.length) {
-			const boxes = box;
-			let isActive = true;
-			if (!multiselect) {
-				const activeItem = _.find(boxes, 'isActive');
-				isActive = !activeItem;
+			let pushItem = true;
+			if (maxLength) {
+				const activeItem = box.filter(dataValue => dataValue.isActive);
+				if (activeItem.length === maxLength) {
+					pushItem = false;
+				}
 			}
-			boxes.push({ value: val, isActive });
-			onSelect(this.handleSelection(
-				boxes, list, { value: val, isActive, index: box.length - 1 },
-			));
-			this.setState({ box: boxes, val: '' });
+			if (pushItem) {
+				const boxes = box;
+				boxes.push({ value: val, isActive: true });
+				onSelect(this.handleSelection(
+					boxes, list, { value: val, isActive: true, index: box.length - 1 },
+				));
+				this.setState({ box: boxes, val: '' });
+			} else {
+				this.setState({
+					singleValidationError: `Only ${maxLength} item can be select. Disable other item to add this item.`,
+					val: '',
+				});
+			}
 		}
 	};
 
@@ -102,22 +112,24 @@ class AutoComplete extends Component {
 
 	// toggle status of selected tag
 	toggleStatus = (index) => {
-		const { onSelect, multiselect } = this.props;
+		const { onSelect, maxLength } = this.props;
 		const { box } = this.state;
-		let activeItem;
-		if (!multiselect) {
-			activeItem = _.find(box, 'isActive');
-			if (activeItem && activeItem !== box[index]) {
-				this.setState({
-					singleValidationError:
-					'This is single select. Please deselect the selected one and then select another.',
-				});
-				return;
+		let pushItem = true;
+		if (!box[index].isActive && maxLength) {
+			const activeItem = box.filter(dataValue => dataValue.isActive);
+			if (activeItem.length === maxLength) {
+				pushItem = false;
 			}
 		}
-		box[index].isActive = !box[index].isActive;
-		this.setState({ box, singleValidationError: '' });
-		onSelect(box, { ...box[index], index });
+		if (pushItem) {
+			box[index].isActive = !box[index].isActive;
+			this.setState({ box, singleValidationError: '' });
+			onSelect(box, { ...box[index], index });
+		} else {
+			this.setState({
+				singleValidationError: `Only ${maxLength} item can be select. Disable other item to add this item.`,
+			});
+		}
 	};
 
 	// handle Selection
@@ -153,7 +165,11 @@ class AutoComplete extends Component {
 						{this.renderList()}
 					</div>
 				)}
-				{ singleValidationError ? <div className="error">{singleValidationError}</div> : null}
+				{ singleValidationError ? (
+					<div className="error">
+						<p>{singleValidationError}</p>
+					</div>
+				) : null}
 				<div />
 				{errors && <div className="error">{errors.map(msg => <p key={msg}>{msg}</p>)}</div>}
 				<ul className="topic_list">
@@ -178,18 +194,17 @@ AutoComplete.defaultProps = {
 	list: [],
 	index: '',
 	showTextBox: true,
-	multiselect: true,
 	className: '',
 	showAddButton: true,
 	onCreate: () => { },
 	onChange: () => { },
 	onSelect: () => { },
+	maxLength: 0,
 };
 
 // props type definition
 AutoComplete.propTypes = {
 	showTextBox: PropTypes.bool,
-	multiselect: PropTypes.bool,
 	showAddButton: PropTypes.bool,
 	list: PropTypes.array,
 	index: PropTypes.string,
@@ -197,6 +212,7 @@ AutoComplete.propTypes = {
 	onSelect: PropTypes.func,
 	onChange: PropTypes.func,
 	className: PropTypes.string,
+	maxLength: PropTypes.number,
 };
 
 // default importing
