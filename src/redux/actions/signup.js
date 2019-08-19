@@ -46,30 +46,24 @@ export const signUp = ({
 
 export const createPrProfile = ({
 	positionList, companiesList, linkedIn, twitter, url, fullName = null,
-}) => {
-	// let company = companiesList.filter(company => company.isActive && company.value);
-	// company = company.map(({ url }) => url);
-	let position = positionList.filter(position => position.isActive && position.value);
-	position = position.map(({ url }) => url);
-	return ({
-		type: 'CREATE_PR_PROFILE',
-		payload: {
-			user: url,
-			full_name: fullName,
-			company: companiesList[0].url,
-			position,
-			linkedin_url: linkedIn || '',
-			twitter_url: twitter || '',
-		},
-	});
-};
+}) => ({
+	type: 'CREATE_PR_PROFILE',
+	payload: {
+		user: url,
+		full_name: fullName,
+		company: companiesList.url,
+		position: [positionList.url],
+		linkedin_url: linkedIn || '',
+		twitter_url: twitter || '',
+	},
+});
 
 export const createJournalistProfile = ({
-	positionList, outlet, twitter, interests, fullName = null,
+	positionList, companiesList, twitter, journoInterests, fullName = null,
 }) => {
-	let position = positionList.filter(position => position.isActive && position.value);
-	position = position.map(({ url }) => url);
-	let interestsList = interests.filter(interestsList => interestsList.isActive
+	// let position = positionList.filter(position => position.isActive && position.value);
+	// position = position.map(({ url }) => url);
+	let interestsList = journoInterests.filter(interestsList => interestsList.isActive
     && interestsList.value);
 	interestsList = interestsList.map(({ url }) => url);
 	return {
@@ -77,8 +71,8 @@ export const createJournalistProfile = ({
 		payload: {
 			full_name: fullName,
 			user_id: getUserId(),
-			company: outlet[0].url,
-			position,
+			company: companiesList.url,
+			position: [positionList.url],
 			interests: interestsList,
 			twitter_url: twitter || '',
 		},

@@ -62,7 +62,8 @@ class Index extends UnAuthorized {
 	}
 
 	// handle next button and final submission
-	handleSubmit = () => {
+	handleSubmit = (e) => {
+		e.preventDefault();
 		const obj = this.state;
 		const { step, role } = this.state;
 		const {
@@ -75,8 +76,7 @@ class Index extends UnAuthorized {
 				this.setState({ error: {} });
 				signUp(this.state);
 			} else {
-				this.setState({ error: validateForm2 }, () => {
-				});
+				this.setState({ error: validateForm2 }, () => {});
 			}
 		} else if (step === 3) {
 			// validate form3 && Pr final submission
@@ -140,7 +140,10 @@ class Index extends UnAuthorized {
 	};
 
 	// handle company selection
-	handleCompanySelection = companiesList => this.setState({ companiesList });
+	handleCompanySelection = companiesList => this.setState({
+		companiesList,
+		companyString: companiesList.name,
+	});
 
 	// create a new position
 	createPosition = (val) => {
@@ -149,17 +152,32 @@ class Index extends UnAuthorized {
 	};
 
 	// handle position selection
-	handlePositionSelection = allPositions => this.setState({ allPositions });
+	handlePositionSelection = positionList => this.setState({
+		positionList,
+		positionString: positionList.name,
+	});
 
 	// handle companies for outlet
-	onInputChange = (value) => {
+	onInputChange = (outletString) => {
 		const { getPrCompanies } = this.props;
-		this.setState({ outlet: [] });
-		getPrCompanies(value);
-	}
+		this.setState({ outlet: [], outletString });
+		getPrCompanies(outletString);
+	};
+
+	filterCompany = (companyString) => {
+		const { getPrCompanies } = this.props;
+		this.setState({ companyString });
+		getPrCompanies(companyString);
+	};
+
+	filterPosition = (positionString) => {
+		const { getPositions } = this.props;
+		this.setState({ positionString });
+		getPositions(positionString);
+	};
 
 	// On Selecting Outlet
-	onSelectOutlet = outlet => this.setState({ outlet: [outlet] });
+	onSelectOutlet = outletList => this.setState({ outletList });
 
 	// render login sign up page
 	render() {
@@ -181,6 +199,9 @@ class Index extends UnAuthorized {
 				onPositionSelection={this.handlePositionSelection}
 				onChangeSelect={this.onSelectOutlet}
 				changeInput={this.onInputChange}
+				filterCompany={this.filterCompany}
+				filterPosition={this.filterPosition}
+				// onSubmit={this.handleSubmit}
 			/>
 		);
 	}
