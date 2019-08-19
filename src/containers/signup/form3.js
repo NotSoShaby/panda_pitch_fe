@@ -63,7 +63,7 @@ const Form3 = ({
 									prCompanies.data
 										|| []
 								}
-								multiselect={false}
+								maxLength={1}
 								name="Company"
 								onCreate={createPrCompany}
 								onSelect={onCompanySelection}
