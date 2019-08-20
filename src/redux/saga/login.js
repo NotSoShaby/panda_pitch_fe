@@ -11,14 +11,14 @@ const LOGIN = function* performLogin() {
 		yield put(START('LOGIN_STARTED'));
 		try {
 			const RES = yield Request(CONSTANT.LOGIN_URL, CONSTANT.POST, action.payload, false);
-			if (RES.token) {
-				const login = toStoreConfig(RES);
+			if (RES.status) {
+				const login = toStoreConfig(RES.data);
 				localStorage.setItem('token', login.token);
 				localStorage.setItem('user', JSON.stringify(login));
 				yield put({ type: 'LOGIN_SUCCESS', payload: DATA(login) });
 				history.push('/');
 			} else {
-				yield put({ type: 'LOGIN_FAILED', payload: ERROR(RES) });
+				yield put({ type: 'LOGIN_FAILED', payload: ERROR(RES.data) });
 			}
 		} catch (error) {
 			yield put({ type: 'LOGIN_FAILED', payload: ERROR(error) });

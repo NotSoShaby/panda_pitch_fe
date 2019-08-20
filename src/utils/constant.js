@@ -10,6 +10,8 @@ class Constant {
 
   URL = server;
 
+  AUTHENTICATION_ERROR = 'Authentication error'
+
   GET = 'get';
 
   POST = 'post';
