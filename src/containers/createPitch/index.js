@@ -123,16 +123,17 @@ class Index extends Authorized {
 	}
 
   savePersonalizeData = async () => {
-  	const { active, selectedJournalists } = this.state;
-  	if (active === 2) {
+  	const { selectedJournalists } = this.state;
+  	if (selectedJournalists.length) {
   		const { createPitchActionForm2, createPitchReducer: { form1: { url } } } = this.props;
   		const data = selectedJournalists.map(journalist => ({
   			message_to: journalist.url,
   			pitch: url,
   			message: journalist.personalMessage,
   		}));
-  		if (data) { this.setState({ active: active + 1 }); }
   		createPitchActionForm2(data);
+  	} else {
+  		this.setState({ errors: { journalistCount: 'Please select at least one journalist' } });
   	}
   }
 
