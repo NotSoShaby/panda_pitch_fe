@@ -261,6 +261,9 @@ const CreatePitch = ({
 									<img src={pressReleaseImage} onError={onLodingImgError} alt="pressReleaseImage" />
 								</div>
 							)}
+							<div className="error">
+								<p>{errors.pressRelease}</p>
+							</div>
 						</span>
 					</div>
 					<div className="ad-pernl-conts togle-switch">
