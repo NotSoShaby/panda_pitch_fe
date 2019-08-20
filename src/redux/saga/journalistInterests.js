@@ -2,7 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
-import history from '../../routes/history';
+import HELPER from '../../utils/helper';
 
 // create user signup request
 const GET_JOURNALIST_INTERESTS = function* getInterests() {
@@ -11,17 +11,12 @@ const GET_JOURNALIST_INTERESTS = function* getInterests() {
 		try {
 			const RES = yield Request(`${CONSTANT.GET_JOURNALIST_INTERESTS_URL}${action.payload}/`, CONSTANT.GET);
 			if (RES.status) {
-				console.log('dasda', RES);
 				yield put({
 					type: 'GET_JOURNALIST_INTEREST_SUCCESS',
-					payload: {
-						code: 'SUCCESS',
-						data: DATA(RES.data.data),
-					},
+					payload: DATA(RES.data),
 				});
 			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
-				localStorage.clear();
-				history.push('/login');
+				HELPER.logout();
 				yield put({ type: 'LOGOUT' });
 			} else {
 				yield put({ type: 'GET_JOURNALIST_INTEREST_FAILED', payload: ERROR(RES.data) });

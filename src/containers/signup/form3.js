@@ -63,7 +63,7 @@ const Form3 = ({
 				/>
 			</div>
 		</div>
-		{error && error.allPositions && <div className="error">{error.allPositions.map(msg => <p key={msg}>{msg}</p>)}</div>}
+		{error && error.positionList && <div className="error">{error.positionList.map(msg => <p key={msg}>{msg}</p>)}</div>}
 
 		<div className="full_widt mbot_zero">
 			<h3>Add social media</h3>

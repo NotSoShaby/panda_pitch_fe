@@ -75,9 +75,6 @@ export default (state, action) => {
 		action.type
     === 'LOGOUT'
 	) {
-		window.location.reload(
-			true,
-		);
 		return defaultState;
 	}
 	return reducer(

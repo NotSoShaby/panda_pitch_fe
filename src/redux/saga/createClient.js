@@ -11,7 +11,6 @@ const CREATE_CLIENT = function* fetchSurvey() {
 			const RES = yield Request(
 				CONSTANT.CREATE_CLIENT_URL, CONSTANT.POST, action.payload, undefined, undefined, true,
 			);
-			console.log('sdada', RES);
 			if (RES.status) {
 				yield put({
 					type: 'CREATE_CLIENT_SUCCESS',

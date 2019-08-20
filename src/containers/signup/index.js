@@ -40,7 +40,8 @@ class Index extends UnAuthorized {
 	// identify the type of loggedIn user (journalist/pr)
 	getUserRole = (props, key) => {
 		const { login: { data } } = props;
-		return data[key];
+		if (data) { return data[key]; }
+		return null;
 	};
 
 	// // identify the type of loggedIn user (journalist/pr)
@@ -67,7 +68,7 @@ class Index extends UnAuthorized {
 		const obj = this.state;
 		const { step, role } = this.state;
 		const {
-			signUp, createPrProfile, createJournalistProfile, login: { data: { url } },
+			signUp, createPrProfile, createJournalistProfile, login: { data },
 		} = this.props;
 		if (step === 2) {
 			// validate form2
@@ -85,7 +86,7 @@ class Index extends UnAuthorized {
 				if (role === 'Journalist') {
 					this.goToNextForm();
 				} else {
-					createPrProfile({ ...this.state, url });
+					createPrProfile({ ...this.state, url: data.url });
 				}
 			} else this.setState({ error: validateForm3 });
 		} else if (step === 4) {
