@@ -11,13 +11,9 @@ const GET_JOURNALIST_INTERESTS = function* getInterests() {
 		try {
 			const RES = yield Request(`${CONSTANT.GET_JOURNALIST_INTERESTS_URL}${action.payload}/`, CONSTANT.GET);
 			if (RES.status) {
-				console.log('dasda', RES);
 				yield put({
 					type: 'GET_JOURNALIST_INTEREST_SUCCESS',
-					payload: {
-						code: 'SUCCESS',
-						data: DATA(RES.data.data),
-					},
+					payload: DATA(RES.data),
 				});
 			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
 				localStorage.clear();

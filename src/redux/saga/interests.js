@@ -13,10 +13,7 @@ const GET_INTERESTS = function* getInterests() {
 			if (RES.status) {
 				yield put({
 					type: 'GET_INTEREST_SUCCESS',
-					payload: {
-						code: 'SUCCESS',
-						data: DATA(RES.data),
-					},
+					payload: DATA(RES.data),
 				});
 			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
 				localStorage.clear();

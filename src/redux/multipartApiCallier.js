@@ -14,8 +14,5 @@ export default async (url, method = 'get', body, isAuthenticationRequired = true
 		'Content-Type': 'multipart/form-data',
 	},
 })
-	.then((res) => {
-		console.log('dasd data', res);
-		return res.data;
-	})
+	.then((res) => res.data)
 	.catch(err => console.log(err));
