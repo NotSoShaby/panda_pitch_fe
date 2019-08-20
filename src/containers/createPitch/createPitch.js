@@ -309,6 +309,9 @@ const CreatePitch = ({
 						<div className="error">
 							<p>{errors.createPitchApiError}</p>
 						</div>
+						<div className="success">
+							<p>{errors.createPitchApiSuccess}</p>
+						</div>
 					</div>
 				</div>
 			</div>

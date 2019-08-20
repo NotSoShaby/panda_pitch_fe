@@ -71,18 +71,23 @@ class Index extends Authorized {
 			error, data, form1, form2,
 		} = createPitchReducer;
 		const { saveAndNext } = this.state;
-		if (data && (typeof data === 'object') && saveAndNext) {
-			const { selectedForm } = this.state;
-			if ((form1 && (typeof form1 === 'object')) && (selectedForm === 2)) {
-				this.setState({ active: 2, saveAndNext: false, errors: {} });
-			} else if ((form2 && (typeof form2 === 'object')) && (selectedForm === 3)) {
-				this.setState({ active: 3, saveAndNext: false, errors: {} });
+		if (data && (typeof data === 'object')) {
+			if (saveAndNext) {
+				const { selectedForm } = this.state;
+				if ((form1 && (typeof form1 === 'object')) && (selectedForm === 2)) {
+					this.setState({ active: 2, errors: {} });
+				} else if ((form2 && (typeof form2 === 'object')) && (selectedForm === 3)) {
+					this.setState({ active: 3, errors: {} });
+				}
+			} else {
+				this.setState({ errors: { createPitchApiSuccess: 'Data Saved Successfully' } });
 			}
 		} else if (error && (typeof error === 'string')) {
 			this.setState({ errors: { createPitchApiError: error } });
 		} else {
 			this.setState({ errors: { createPitchApiError: 'Internal Server Error' } });
 		}
+		this.setState({ saveAndNext: false });
 	}
 
 	// handle a specialized journalist selection
@@ -153,12 +158,14 @@ class Index extends Authorized {
 	handleNextScreen = () => {
 		const { active, selectedJournalists } = this.state;
 		if (active === 1) {
-			this.setState({ saveAndNext: true, selectedForm: 2 });
-			this.saveScreenData();
+			this.setState({ saveAndNext: true, selectedForm: 2 }, () => {
+				this.saveScreenData();
+			});
 		} else if (active === 2) {
 			if (selectedJournalists.length) {
-				this.setState({ saveAndNext: true, selectedForm: 3, errors: {} });
-				this.savePersonalizeData();
+				this.setState({ saveAndNext: true, selectedForm: 3, errors: {} }, () => {
+					this.savePersonalizeData();
+				});
 			} else {
 				this.setState({ errors: { journalistCount: 'Please select at least one journalist' } });
 			}
