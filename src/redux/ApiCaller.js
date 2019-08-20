@@ -27,9 +27,9 @@ import { checkStatus, handleError } from './handler';
 
 // const queryString = require('query-string');
 
-const headerData = isAuthenticationRequired => ({
+const headerData = (isAuthenticationRequired, multipart) => ({
 	Authorization: isAuthenticationRequired && `JWT ${localStorage.getItem('token')}`,
-	'content-type': 'application/json',
+	'content-type': multipart ? 'multipart/form-data' : 'application/json',
 });
 
 // const BodyConversion = (body, header) => {
@@ -47,12 +47,12 @@ export default (
 	method = CONSTANT.GET,
 	body,
 	isAuthenticationRequired = true,
-	// header,
 	hostName = CONSTANT.URL,
+	multipart = false,
 ) => axios(`${hostName}${endpoint}`, {
-	headers: headerData(isAuthenticationRequired),
+	headers: headerData(isAuthenticationRequired, multipart),
 	method,
-	data: JSON.stringify(body),
+	data: multipart ? body : JSON.stringify(body),
 })
 	.then(checkStatus)
 	// .then(parseJSON)

@@ -65,7 +65,7 @@ class Constant {
 
   CREATE_POSITION_URL = '/api/position/';
 
-  GET_PR_PITCHES_URL = '/api/pr/mypitch?pr_id=1';
+  GET_PR_PITCHES_URL = '/api/pitch/pr/';
 
   GET_PR_CLIENTS_AUTO = '/api/pr/clients-auto?q=C';
 
