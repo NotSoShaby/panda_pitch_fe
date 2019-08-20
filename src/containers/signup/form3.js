@@ -1,95 +1,65 @@
 import React from 'react';
 import Button from '../../components/button';
-import SelectBox from '../../components/selectBox';
-import AutoComplete from '../../components/autoComplete';
-// import HELPER from '../../utils/helper';
+import SearchBox from '../../components/searchbox';
 
 // render form2
 const Form3 = ({
 	onSubmit,
 	onChange,
-	// outlet,
-	// company,
 	positions,
 	twitter,
 	linkedIn,
 	role,
-	// prProfile,
 	error,
 	prCompanies,
+	companyString,
 	createPrCompany,
 	onCompanySelection,
-	getPrCompanies,
-	companiesList,
+	filterCompany,
+	filterPosition,
 	createPosition,
 	onPositionSelection,
-	// onJrOutletSelection,
-	positionList,
-	getPositions,
-	changeInput,
-	onChangeSelect,
+	positionString,
+	onKeyPress,
 }) => [
 	<div key="form2" className="step_form_col">
 		<h2 className="mbot30">Tell us a little about yourself</h2>
-		{(role === 'Journalist') ? (
-			<div>
-				<div className="full_widt">
-					<div className="ad-pernl-conts mg_btm20 cstm_selec_row">
-						<label htmlFor="ss">
-							{/* Which outlets do you write for? */}
-						</label>
-						<h3>Which outlets do you write for?</h3>
-						<div className="custom_field">
-							<SelectBox
-								options={prCompanies.data || []}
-								labelName="name"
-								changeInput={changeInput}
-								onChangeSelect={onChangeSelect}
-							/>
-						</div>
-					</div>
+		<div>
+			<div className="full_widt ">
+				<h3 className="mg0">
+					{(role === 'Journalist')
+						? 'Which outlets do you write for?'
+						: "What's your company name?"}
+
+				</h3>
+				<div className="custom_field cstm_drop_down">
+					<SearchBox
+						showCreateButton
+						data={prCompanies.data || []}
+						onSelect={onCompanySelection}
+						value={companyString}
+						placeholder="Search for Company"
+						setSearchValue={filterCompany}
+						searchString={companyString}
+						onCreate={createPrCompany}
+					/>
 				</div>
-				{error && error.outlet
-						&& <div className="error">{error.outlet.map(msg => <p key={msg}>{msg}</p>)}</div>}
 			</div>
-		)
-			: (
-				<div>
-					<div className="full_widt">
-						<h3>What's your company name?</h3>
-						<div className="custom_field">
-							<AutoComplete
-								list={
-									prCompanies.data
-										|| []
-								}
-								maxLength={1}
-								name="Company"
-								onCreate={createPrCompany}
-								onSelect={onCompanySelection}
-								boxes={companiesList}
-								onChange={getPrCompanies}
-							/>
-							{/* <label htmlFor="company">Company</label> */}
-						</div>
-					</div>
-					{error && error.companiesList && <div className="error">{error.companiesList.map(msg => <p key={msg}>{msg}</p>)}</div>}
-				</div>
-			)}
+			{error && error.companiesList && <div className="error">{error.companiesList.map(msg => <p key={msg}>{msg}</p>)}</div>}
+		</div>
 
 		<div className="full_widt">
-			<h3>What is your job position?</h3>
-			<div className="custom_field">
-				<AutoComplete
-					list={
-						positions.data
-							|| []
-					}
-					name="Position"
-					onCreate={createPosition}
+			<h3 className="mg0">What is your job position?</h3>
+			<div className="custom_field cstm_drop_down">
+				<SearchBox
+					showCreateButton
+					data={positions.data || []}
 					onSelect={onPositionSelection}
-					boxes={positionList}
-					onChange={getPositions}
+					value={positionString}
+					placeholder="Search for Position"
+					setSearchValue={filterPosition}
+					searchString={positionString}
+					onCreate={createPosition}
 				/>
 			</div>
 		</div>
@@ -119,21 +89,14 @@ const Form3 = ({
 					id="twitter"
 					placeholder="Twitter Name"
 					onChange={onChange}
+					onKeyPress={onKeyPress}
 				/>
 				<label htmlFor="twitter">Twitter</label>
 			</div>
 		</div>
 		{error && error.twitter && <div className="error">{error.twitter.map(msg => <p key={msg}>{msg}</p>)}</div>}
-		{/* {HELPER.isErrorInApi(code) && prProfile.error.non_field_errors && (
-        <div className="error">{prProfile.error.non_field_errors.map(msg =>
-          <p key={msg}>{msg}</p>)}</div>
-			)} */}
-
 		<div className="step_btn_wrapper">
-			{/* <Button className="white_bg_btn" onClick={onBack}>
-					Back
-				</Button> */}
-			<Button className="green_bg_btn signup_btn_cntr" onClick={onSubmit}> Next </Button>
+			<Button type="submit" className="green_bg_btn signup_btn_cntr" onClick={onSubmit}> Next </Button>
 		</div>
 	</div>,
 ];

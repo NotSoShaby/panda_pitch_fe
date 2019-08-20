@@ -1276,8 +1276,10 @@ ul.pri-link a {
 .srch_col.place button {
   position: absolute;
   padding: 0;
-  top: 8px;
-  left: 6px;
+  top: 10px;
+    left: 6px;
+    background: transparent;
+    border: none;
 }
 .srch_col.place .srch_icn {
   width: 30px;
@@ -2127,4 +2129,18 @@ ul.pri-link a {
 }
 .slick-next{
   background: url('../images/srch_icn.svg')
+}
+.custom_field.cstm_drop_down{
+  flex-direction: column;
+    position: relative;
+}
+
+.custom_field.cstm_drop_down .srch_lst_row{
+  position: absolute;
+    min-height: 180px;
+    background: #fff;
+    top: 54px;
+}
+.form_section h3.mg0{
+  margin-bottom: 10px;
 }

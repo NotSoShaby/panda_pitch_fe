@@ -39,7 +39,7 @@ const Form4 = ({
 			)} */}
 
 		<div className="step_btn_wrapper">
-			<Button type="submit" className="white_bg_btn" onClick={onBack}>Back</Button>
+			<Button className="white_bg_btn" onClick={onBack}>Back</Button>
 			<Button type="submit" className="green_bg_btn" onClick={onSubmit}>Next</Button>
 		</div>
 	</div>

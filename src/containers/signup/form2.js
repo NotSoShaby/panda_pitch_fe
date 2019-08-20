@@ -58,7 +58,7 @@ const Form2 = ({
 			)}
 			<div className="step_btn_wrapper">
 				<Button className="white_bg_btn" onClick={onBack}>Back</Button>
-				<Button className="green_bg_btn" onClick={onSubmit}>Next</Button>
+				<Button type="submit" className="green_bg_btn" onClick={onSubmit}>Next</Button>
 			</div>
 		</div>,
 		<p key="login" className="text-center">

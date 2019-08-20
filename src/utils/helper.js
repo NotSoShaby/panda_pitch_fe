@@ -125,8 +125,7 @@ class Helper {
 
 	// validate sign up form3
 	SignUpStep3Validation = ({
-		outlet = [],
-		allPositions = '',
+		positionList = '',
 		companiesList = '',
 		// isJournalist = '',
 		role = '',
@@ -134,8 +133,8 @@ class Helper {
 		linkedIn = '',
 	}) => {
 		const validateRule = {
-			allPositions: {
-				value: allPositions,
+			positionList: {
+				value: positionList,
 				rules: {
 					requiredArray: true,
 				},
@@ -146,21 +145,15 @@ class Helper {
 					validLink: true,
 				},
 			},
-		};
-		if (role === 'Journalist') {
-			validateRule.outlet = {
-				value: outlet,
-				rules: {
-					requiredArray: true,
-				},
-			};
-		} else {
-			validateRule.companiesList = {
+			companiesList: {
 				value: companiesList,
 				rules: {
 					requiredArray: true,
 				},
-			};
+			},
+		};
+
+		if (role !== 'Journalist') {
 			validateRule.linkedIn = {
 				value: linkedIn,
 				rules: {
