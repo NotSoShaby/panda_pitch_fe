@@ -828,6 +828,7 @@ span.slide_toggle {
   display: flex;
   justify-content: space-between;
   margin-bottom: 40px;
+  flex-wrap: wrap;
 }
 span.cover {
   font-weight: 700;
@@ -840,6 +841,7 @@ span.cover {
 .card_col {
   width: 32%;
   box-shadow: 0px 2px 19px #e4ecfb;
+  margin-bottom: 19px;
 }
 .card_top_img {
   width: 100%;

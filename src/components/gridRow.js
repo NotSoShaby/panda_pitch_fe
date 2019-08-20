@@ -4,41 +4,49 @@ import IMAGES from '../assets/images';
 
 const { GOOGLE } = IMAGES;
 
-const GridRow = ({
-	logo, title, time, description, score,
-}) => (
-	<div className="card_col">
-		<div className="card_top_img">
-			<img src={logo} alt="logo" />
-		</div>
-		<div className="card_contnt">
-			<span className="cover">Coverage</span>
-			<h3>{title}</h3>
-			<p>{description}</p>
-			<span className="time">{time}</span>
-		</div>
-		<p className="pitch_score green">
-			<span>Pitch Score</span>
-			<span className="pitch_num">{score}</span>
-		</p>
-		{/* <div className="card_pro_row">
+const GridRow = (props) => {
+	const {
+		title, score, description, date_posted, logo, owner_data,
+	} = props;
+	const { full_name, position_data } = owner_data;
+	const time = new Date(date_posted);
+	return (
+		<div className="card_col">
+			<div className="card_top_img">
+				<img src={logo} alt="logo" />
+			</div>
+			<div className="card_contnt">
+				<span className="cover">Coverage</span>
+				<h3>{title}</h3>
+				<p>{description}</p>
+				<span className="time">
+					{time.toLocaleString(
+						'en-US', { hour: 'numeric', minute: 'numeric', hour12: true },
+					)}
+				</span>
+			</div>
+			<p className="pitch_score green">
+				<span>Pitch Score</span>
+				<span className="pitch_num">{score}</span>
+			</p>
+			<div className="card_pro_row">
 				<div className="card_pro_img">
-					<img src={image} alt="profile_pic" />
+					<img src={GOOGLE} alt="profile_pic" />
 				</div>
 				<div className="card_pro_contnt">
-					<h3>{`${first_name} ${last_name}`}</h3>
-					<p>{profile}</p>
+					<h3>{full_name}</h3>
+					<p>{position_data['0'].name}</p>
 				</div>
-			</div> */}
-	</div>
-);
+			</div>
+		</div>
+	);
+};
 
 // props initialization ( default values )
 GridRow.defaultProps = {
 	logo: GOOGLE,
 	// image: '',
 	title: '',
-	time: '',
 	description: '',
 	// name: '',
 	score: '',
@@ -48,7 +56,6 @@ GridRow.defaultProps = {
 GridRow.propTypes = {
 	logo: PropTypes.string,
 	title: PropTypes.string,
-	time: PropTypes.string,
 	description: PropTypes.string,
 	// image: PropTypes.string,
 	// name: PropTypes.string,
