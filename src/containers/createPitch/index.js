@@ -54,23 +54,40 @@ class Index extends Authorized {
 			const { data, error } = createClientReducer;
 			if (data && (typeof data === 'object') && Object.keys(data).length) {
 				this.setState({ hideNewClientDiv: true, newClient: {}, errors: {} });
-			} else if (error) {
+			} else if (error && (typeof error === 'string')) {
 				this.setState({ errors: { clientApiError: error } });
+			} else {
+				this.setState({ errors: { clientApiError: 'Internal Server Error' } });
 			}
 		}
-		// if (createPitchReducer !== props.createPitchReducer) {
+		if (createPitchReducer !== props.createPitchReducer) {
+			this.handleFormSubmit(createPitchReducer);
+		}
+	}
+
+
+	handleFormSubmit = (createPitchReducer) => {
 		const {
-			data, form1, form2,
+			error, data, form1, form2,
 		} = createPitchReducer;
-		const { selectedForm } = this.state;
+		const { saveAndNext } = this.state;
 		if (data && (typeof data === 'object')) {
-			if (form1 && selectedForm === 2) {
-				this.setState({ active: 2 });
-			} else if (form2 && selectedForm === 3) {
-				this.setState({ active: 3 });
+			if (saveAndNext) {
+				const { selectedForm } = this.state;
+				if ((form1 && (typeof form1 === 'object')) && (selectedForm === 2)) {
+					this.setState({ active: 2, errors: {} });
+				} else if ((form2 && (typeof form2 === 'object')) && (selectedForm === 3)) {
+					this.setState({ active: 3, errors: {} });
+				}
+			} else {
+				this.setState({ errors: { createPitchApiSuccess: 'Data Saved Successfully' } });
 			}
-			this.setState({ saveAndNext: false });
+		} else if (error && (typeof error === 'string')) {
+			this.setState({ errors: { createPitchApiError: error } });
+		} else {
+			this.setState({ errors: { createPitchApiError: 'Internal Server Error' } });
 		}
+		this.setState({ saveAndNext: false });
 	}
 
 	// handle a specialized journalist selection
@@ -111,16 +128,17 @@ class Index extends Authorized {
 	}
 
   savePersonalizeData = async () => {
-  	const { active, selectedJournalists } = this.state;
-  	if (active === 2) {
+  	const { selectedJournalists } = this.state;
+  	if (selectedJournalists.length) {
   		const { createPitchActionForm2, createPitchReducer: { form1: { url } } } = this.props;
   		const data = selectedJournalists.map(journalist => ({
   			message_to: journalist.url,
   			pitch: url,
   			message: journalist.personalMessage,
   		}));
-  		if (data) { this.setState({ active: active + 1 }); }
   		createPitchActionForm2(data);
+  	} else {
+  		this.setState({ errors: { journalistCount: 'Please select at least one journalist' } });
   	}
   }
 
@@ -138,13 +156,19 @@ class Index extends Authorized {
 
   // redirect to next form
 	handleNextScreen = () => {
-		const { active } = this.state;
+		const { active, selectedJournalists } = this.state;
 		if (active === 1) {
-			this.saveScreenData();
-			this.setState({ saveAndNext: true, selectedForm: 2 });
+			this.setState({ saveAndNext: true, selectedForm: 2 }, () => {
+				this.saveScreenData();
+			});
 		} else if (active === 2) {
-			this.savePersonalizeData();
-			this.setState({ saveAndNext: true, selectedForm: 3 });
+			if (selectedJournalists.length) {
+				this.setState({ saveAndNext: true, selectedForm: 3, errors: {} }, () => {
+					this.savePersonalizeData();
+				});
+			} else {
+				this.setState({ errors: { journalistCount: 'Please select at least one journalist' } });
+			}
 		} else if (active === 3) {
 			this.finalSubmission();
 		}
@@ -225,7 +249,7 @@ class Index extends Authorized {
 
 	// handle media input
 	handleAddMedia = (index, image) => {
-		if (image && (image.size < 1048577)) {
+		if (image && (image.size < 2621440)) {
 			const { mediaFiles, MediaImages } = this.state;
 			mediaFiles[index] = URL.createObjectURL(image);
 			MediaImages[index] = image;
@@ -262,8 +286,13 @@ class Index extends Authorized {
 	// handle press release
 	handleAddPressRelease = (e) => {
 		if (e && e.target.files && e.target.files[0]) {
-			const pressReleaseImage = URL.createObjectURL(e.target.files[0]);
-			this.setState({ pressReleaseImage, press_release: e.target.files[0] });
+			const UPLODED_DATA = e.target.files[0];
+			if (UPLODED_DATA && (UPLODED_DATA.size < 2621440)) {
+				const pressReleaseImage = URL.createObjectURL(UPLODED_DATA);
+				this.setState({ pressReleaseImage, press_release: UPLODED_DATA, errors: {} });
+			} else {
+				this.setState({ errors: { pressRelease: 'Press release size should be less than 2.5 mb' } });
+			}
 		}
 	}
 

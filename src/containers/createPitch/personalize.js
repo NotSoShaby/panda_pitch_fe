@@ -24,6 +24,7 @@ const Personalization = ({
 	changeToPreviousScreen,
 	selectedJournalists,
 	savePersonalizeData,
+	errors,
 	...props
 }) => (
 	<div className="create_new_pitch_form">
@@ -64,6 +65,9 @@ const Personalization = ({
 							<JournalistCard {...props} selectedJournalists={selectedJournalists} />
 						</React.Fragment>
 					)}
+				</div>
+				<div className="error">
+					<p>{errors.journalistCount}</p>
 				</div>
 				<div className="ad-pernl-conts mt-0">
 					<span className="view-btn-rgt add-pernl-btn">
