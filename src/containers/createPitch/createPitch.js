@@ -129,7 +129,7 @@ const CreatePitch = ({
 										: <span>No file Chosen</span>}
 								</span>
 								<div className="error">
-									<p>{errors.clientApiError}</p>
+									<p>{errors.clientApiError || errors.clientLogo}</p>
 								</div>
 								<span className="view-btn-rgt add-pernl-btn cnp-col-btn">
 									<button type="button" className="btn new_pitch_btn snd-btn" onClick={createClient}>

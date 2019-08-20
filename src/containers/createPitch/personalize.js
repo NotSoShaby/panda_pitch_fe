@@ -69,6 +69,9 @@ const Personalization = ({
 				<div className="error">
 					<p>{errors.journalistCount}</p>
 				</div>
+				<div className="success">
+					<p>{errors.createPitchApiSuccess}</p>
+				</div>
 				<div className="ad-pernl-conts mt-0">
 					<span className="view-btn-rgt add-pernl-btn">
 						<button type="button" className="btn new_pitch_btn disc-btn" onClick={changeToPreviousScreen}>

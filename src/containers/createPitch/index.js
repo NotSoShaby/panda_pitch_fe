@@ -54,10 +54,8 @@ class Index extends Authorized {
 			const { data, error } = createClientReducer;
 			if (data && (typeof data === 'object') && Object.keys(data).length) {
 				this.setState({ hideNewClientDiv: true, newClient: {}, errors: {} });
-			} else if (error && (typeof error === 'string')) {
-				this.setState({ errors: { clientApiError: error } });
-			} else {
-				this.setState({ errors: { clientApiError: 'Internal Server Error' } });
+			} else if (error && ((typeof error === 'object') || (typeof error === 'string'))) {
+				this.setState({ errors: { clientApiError: (typeof error === 'object') ? JSON.stringify(error) : error } });
 			}
 		}
 		if (createPitchReducer !== props.createPitchReducer) {
@@ -71,7 +69,7 @@ class Index extends Authorized {
 			error, data, form1, form2,
 		} = createPitchReducer;
 		const { saveAndNext } = this.state;
-		if (data && (typeof data === 'object')) {
+		if (data && (typeof data === 'object') && Object.keys(data).length) {
 			if (saveAndNext) {
 				const { selectedForm } = this.state;
 				if ((form1 && (typeof form1 === 'object')) && (selectedForm === 2)) {
@@ -82,10 +80,8 @@ class Index extends Authorized {
 			} else {
 				this.setState({ errors: { createPitchApiSuccess: 'Data Saved Successfully' } });
 			}
-		} else if (error && (typeof error === 'string')) {
-			this.setState({ errors: { createPitchApiError: error } });
-		} else {
-			this.setState({ errors: { createPitchApiError: 'Internal Server Error' } });
+		} else if (error && ((typeof error === 'object') || (typeof error === 'string'))) {
+			this.setState({ errors: { createPitchApiError: (typeof error === 'object') ? JSON.stringify(error) : error } });
 		}
 		this.setState({ saveAndNext: false });
 	}
@@ -132,9 +128,9 @@ class Index extends Authorized {
   	if (selectedJournalists.length) {
   		const { createPitchActionForm2, createPitchReducer: { form1: { url } } } = this.props;
   		const data = selectedJournalists.map(journalist => ({
-  			message_to: journalist.url,
+  			journalist: journalist.url,
   			pitch: url,
-  			message: journalist.personalMessage,
+  			content: journalist.personalMessage,
   		}));
   		createPitchActionForm2(data);
   	} else {
@@ -303,9 +299,13 @@ class Index extends Authorized {
 
 	// handle client form input
 	handleClientPropertyChange = (name, value) => {
-		const { newClient } = this.state;
-		newClient[name] = value;
-		this.setState({ newClient });
+		if ((name !== 'image' || (value && value.size < 2621440))) {
+			const { newClient } = this.state;
+			newClient[name] = value;
+			this.setState({ newClient, errors: {} });
+		} else {
+			this.setState({ errors: { clientLogo: 'Logo size should be less than 2.5 mb' } });
+		}
 	}
 
 	// handle CTA selection
