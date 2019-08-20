@@ -11,7 +11,7 @@ import { prPitches } from './pitches';
 import { prClientsAuto } from './prClientsAuto';
 import { prClient, client, clientAutoComplete } from './prClient';
 // import { prMediaList } from './prMedialist';
-import history from '../../routes/history';
+// import history from '../../routes/history';
 import { prCompanies } from './company';
 import { positions } from './position';
 import { createClient } from './clients';
@@ -75,9 +75,6 @@ export default (state, action) => {
 		action.type
     === 'LOGOUT'
 	) {
-		history.push(
-			'/login',
-		);
 		window.location.reload(
 			true,
 		);

@@ -11,7 +11,7 @@ const CREATE_PITCH_FORM1 = function* fetchSurvey() {
 			if (RES) {
 				yield put({
 					type: 'CREATE_PITCH_FORM1_SUCCESS',
-					payload: DATA(RES),
+					payload: DATA(RES.data),
 				});
 			} else yield put({ type: 'CREATE_PITCH_FAILED', payload: ERROR('Bad request') });
 		} catch (error) {
