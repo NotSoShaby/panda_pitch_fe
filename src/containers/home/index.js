@@ -13,16 +13,16 @@ class Index extends Component {
 	}
 
 	componentDidMount() {
-		this.getPitches();
+		this.getPitches(1);
 	}
 
-	getPitches = () => {
+	getPitches = (page) => {
 		const { login: { data: { isJournalist } } } = this.props;
 		if (!isJournalist) {
 			const { getPitches } = this.props;
 			const prId = 1;
 			// if (data.role) { role = data.role; } else role = signup.data.role;
-			getPitches({ pageSize: 10, prId, page: 1 });
+			getPitches({ pageSize: 10, prId, page });
 		}
 	}
 
@@ -34,6 +34,7 @@ class Index extends Component {
 		const { history: { push } } = this.props;
 		push('/create_pitch');
 	}
+
 	// this.setState({ isModalOpen: true });
 
 	// isPr = () => {
@@ -57,7 +58,14 @@ class Index extends Component {
 					</button>
 				</div>
 			</Modal>,
-			<Home isPr={!isJournalist} {...this.props} {...this.state} key="home" createNewPitch={this.createNewPitch} />,
+			<Home
+				isPr={!isJournalist}
+				{...this.props}
+				{...this.state}
+				key="home"
+				createNewPitch={this.createNewPitch}
+				onPageChange={this.getPitches}
+			/>,
 		];
 	}
 }

@@ -19,7 +19,7 @@ const GET_CLIENTS_AUTOCOMPLETE = function* fetchSurvey() {
 				history.push('/login');
 				yield put({ type: 'LOGOUT' });
 			} else {
-				yield put({ type: 'LOGIN_FAILED', payload: ERROR(RES.data) });
+				yield put({ type: 'GET_CLIENTS_AUTOCOMPLETE_FAILED', payload: ERROR(RES.data) });
 			}
 		} catch (error) {
 			yield put({ type: 'GET_CLIENTS_AUTOCOMPLETE_FAILED', payload: ERROR(error) });

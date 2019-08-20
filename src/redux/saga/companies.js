@@ -2,6 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
+import history from '../../routes/history';
 
 // create user signup request
 const GET_PR_COMPANIES = function* getCompanies() {
@@ -9,10 +10,18 @@ const GET_PR_COMPANIES = function* getCompanies() {
 		yield put(START('GET_PR_COMPANIES_STARTED'));
 		try {
 			const RES = yield Request(`${CONSTANT.GET_COMPAINES_URL}${action.payload}/`, CONSTANT.GET);
-			yield put({
-				type: 'GET_PR_COMPANIES_SUCCESS',
-				payload: DATA(RES),
-			});
+			if (RES.status) {
+				yield put({
+					type: 'GET_PR_COMPANIES_SUCCESS',
+					payload: DATA(RES.data),
+				});
+			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
+				localStorage.clear();
+				history.push('/login');
+				yield put({ type: 'LOGOUT' });
+			} else {
+				yield put({ type: 'GET_PR_COMPANIES_FAILED', payload: ERROR(RES.data) });
+			}
 		} catch (error) {
 			yield put({ type: 'GET_PR_COMPANIES_FAILED', payload: ERROR(error) });
 		}

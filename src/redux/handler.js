@@ -18,6 +18,7 @@ export const START = type => ({ type, payload: { isLoading: true, code: 'ongoing
 
 export const checkStatus = (response) => {
 	console.log('res=========pppppp==>', response);
+	console.log('eeerer check', response);
 	if (response.status >= 200 && response.status < 300) {
 		return {
 			status: true,
@@ -69,6 +70,15 @@ export const checkStatus = (response) => {
 // };
 
 export const handleError = ({ response }) => {
+	console.log('eeerer handl', response);
+	if (response.status === 413) {
+		const error = {
+			status: false,
+			data: response.data,
+			message: 'Document size is more than 2.4MB',
+		};
+		return error;
+	}
 	if (response.status === 400) {
 		const error = {
 			status: false,

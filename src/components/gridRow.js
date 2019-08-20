@@ -5,26 +5,23 @@ import IMAGES from '../assets/images';
 const { GOOGLE } = IMAGES;
 
 const GridRow = ({
-	logo, title, time, description, profile, score, author: { image },
-	author: { user },
-}) => {
-	const { first_name, last_name } = user;
-	return (
-		<div className="card_col">
-			<div className="card_top_img">
-				<img src={logo} alt="logo" />
-			</div>
-			<div className="card_contnt">
-				<span className="cover">Coverage</span>
-				<h3>{title}</h3>
-				<p>{description}</p>
-				<span className="time">{time}</span>
-			</div>
-			<p className="pitch_score green">
-				<span>Pitch Score</span>
-				<span className="pitch_num">{score}</span>
-			</p>
-			<div className="card_pro_row">
+	logo, title, time, description, score,
+}) => (
+	<div className="card_col">
+		<div className="card_top_img">
+			<img src={logo} alt="logo" />
+		</div>
+		<div className="card_contnt">
+			<span className="cover">Coverage</span>
+			<h3>{title}</h3>
+			<p>{description}</p>
+			<span className="time">{time}</span>
+		</div>
+		<p className="pitch_score green">
+			<span>Pitch Score</span>
+			<span className="pitch_num">{score}</span>
+		</p>
+		{/* <div className="card_pro_row">
 				<div className="card_pro_img">
 					<img src={image} alt="profile_pic" />
 				</div>
@@ -32,10 +29,9 @@ const GridRow = ({
 					<h3>{`${first_name} ${last_name}`}</h3>
 					<p>{profile}</p>
 				</div>
-			</div>
-		</div>
-	);
-};
+			</div> */}
+	</div>
+);
 
 // props initialization ( default values )
 GridRow.defaultProps = {
@@ -45,7 +41,6 @@ GridRow.defaultProps = {
 	time: '',
 	description: '',
 	// name: '',
-	profile: '',
 	score: '',
 };
 
@@ -57,7 +52,6 @@ GridRow.propTypes = {
 	description: PropTypes.string,
 	// image: PropTypes.string,
 	// name: PropTypes.string,
-	profile: PropTypes.string,
 	score: PropTypes.number,
 };
 

@@ -10,8 +10,16 @@ const CREATE_PR_PROFILE = function* createPrProfile() {
 		yield put(START('CREATE_PR_PROFILE_STARTED'));
 		try {
 			const RES = yield Request(CONSTANT.CREATE_PR_URL, CONSTANT.POST, action.payload);
-			yield put({ type: 'CREATE_PR_PROFILE_SUCCESS', payload: DATA(RES) });
-			history.push('/survey');
+			if (RES.status) {
+				yield put({ type: 'CREATE_PR_PROFILE_SUCCESS', payload: DATA(RES.data) });
+				history.push('/survey');
+			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
+				localStorage.clear();
+				history.push('/login');
+				yield put({ type: 'LOGOUT' });
+			} else {
+				yield put({ type: 'CREATE_PR_PROFILE_FAILED', payload: ERROR(RES.data) });
+			}
 		} catch (error) {
 			yield put({ type: 'CREATE_PR_PROFILE_FAILED', payload: ERROR(error) });
 		}

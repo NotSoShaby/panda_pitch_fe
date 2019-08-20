@@ -18,16 +18,16 @@ const HomeScreen = ({
 	} return <JrHome setView={setView} requestStory={requestStory} view={view} />;
 };
 
-const Layout = ({ view, prPitches: { data: { results } } }) => {
-	if (HELPER.isObject(results) && results.length) {
+const Layout = ({ view, prPitches }) => {
+	if (HELPER.isObject(prPitches.data) && prPitches.data.length) {
 		if (view) {
 			return (
 				<div className="card_row">
-					{results.map(pitch => <GridRow key={pitch.id} {...pitch} />)}
+					{prPitches.data.map(pitch => <GridRow key={pitch.id} {...pitch} />)}
 				</div>
 			);
 		}
-		return results.map(pitch => <ListRow key={pitch.id} {...pitch} />);
+		return prPitches.data.map(pitch => <ListRow key={pitch.id} {...pitch} />);
 	}
 	return null;
 };
@@ -36,18 +36,22 @@ const Home = ({
 	pageSize, onPageChange, ...props
 }) => {
 	const [view, setView] = useState(0);
-	const { prPitches: { data: { count } } } = props;
+	const { prPitches } = props;
+	const { code, data } = prPitches;
 	return (
 		<div>
 			<div className="container cstm_container bg_skyblue">
 				<HomeScreen {...props} view={view} setView={setView} />
 				<Layout view={view} {...props} />
-				<Pagination
-					{...props}
-					totalCount={count}
-					pageNumberCount={5}
-					onPageChange={onPageChange}
-				/>
+				{((code === 'SUCCESS') && data && (typeof data === 'object') && data.length)
+					? (
+						<Pagination
+							{...props}
+							totalCount={data.length}
+							pageNumberCount={5}
+							onPageChange={onPageChange}
+						/>
+					) : null}
 			</div>
 		</div>
 	);
