@@ -3,12 +3,15 @@
 // console.log = function (logMessage) {
 // 	_log.apply(console, arguments);
 // };
+import history from '../routes/history';
 
 class Helper {
 	// form validation service
 	ValidationService = {
 		messages: {},
-		emailExpr: new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+		emailExpr: new RegExp(
+			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+		),
 		linkExpr: new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/),
 		required(field, value) {
 			if (value.trim().length < 1) {
@@ -128,9 +131,7 @@ class Helper {
 		positionList = '',
 		companiesList = '',
 		// isJournalist = '',
-		role = '',
-		twitter = '',
-		linkedIn = '',
+		// role = '',
 	}) => {
 		const validateRule = {
 			positionList: {
@@ -139,12 +140,12 @@ class Helper {
 					requiredArray: true,
 				},
 			},
-			twitter: {
-				value: twitter,
-				rules: {
-					validLink: true,
-				},
-			},
+			// twitter: {
+			// 	value: twitter,
+			// 	rules: {
+			// 		validLink: true,
+			// 	},
+			// },
 			companiesList: {
 				value: companiesList,
 				rules: {
@@ -153,14 +154,14 @@ class Helper {
 			},
 		};
 
-		if (role !== 'Journalist') {
-			validateRule.linkedIn = {
-				value: linkedIn,
-				rules: {
-					validLink: true,
-				},
-			};
-		}
+		// if (role !== 'Journalist') {
+		// 	validateRule.linkedIn = {
+		// 		value: linkedIn,
+		// 		rules: {
+		// 			validLink: true,
+		// 		},
+		// 	};
+		// }
 		return this.ValidationService.validate(validateRule);
 		// return null;
 	};
@@ -183,18 +184,19 @@ class Helper {
 			Errors.cta = 'At least one active cta is required';
 		}
 		return Errors;
-	}
+	};
 
 	validateCreateClient = (data) => {
 		const { name, website } = data;
 		const Errors = {};
 		if (!name) {
 			Errors.clientName = 'Client Name is required';
-		} if (website && !this.ValidationService.linkExpr.test(website)) {
+		}
+		if (website && !this.ValidationService.linkExpr.test(website)) {
 			Errors.clientWebSite = 'Enter a valid website url';
 		}
 		return Errors;
-	}
+	};
 
 	// validate sign up form4
 	SignUpStep4Validation = ({ journoInterests }) => this.ValidationService.validate({
@@ -235,13 +237,18 @@ class Helper {
 	isJournalist = type => type === 'journalist' || type === 'Journalist';
 
 	// return true if loggedIn user is pr
-	isPr = type => (type === 'pr' || type === 'Pr');
+	isPr = type => type === 'pr' || type === 'Pr';
 
 	// return true if object is empty
 	isEmptyObject = obj => Object.entries(obj).length === 0 && obj.constructor === Object;
 
 	// return true if object is empty
-	isObject = obj => ((typeof obj === 'object' || typeof obj === 'function') && (obj !== null))
+	isObject = obj => (typeof obj === 'object' || typeof obj === 'function') && obj !== null;
+
+	logout = () => {
+		localStorage.clear();
+		history.push('/login');
+	};
 }
 
 export default new Helper();

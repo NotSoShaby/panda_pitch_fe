@@ -17,8 +17,10 @@ class Index extends Component {
 	}
 
 	getPitches = (page) => {
-		const { login: { data: { isJournalist } } } = this.props;
-		if (!isJournalist) {
+		const { login: { data } } = this.props;
+		let isPr = true;
+		if (data && data.isJournalist) isPr = false;
+		if (isPr) {
 			const { getPitches } = this.props;
 			const prId = 1;
 			// if (data.role) { role = data.role; } else role = signup.data.role;
@@ -48,7 +50,11 @@ class Index extends Component {
 
 	render() {
 		const { isModalOpen } = this.state;
-		const { login: { data: { isJournalist } } } = this.props;
+		const { login: { data } } = this.props;
+		let isPr = true;
+		if (data && data.isJournalist) {
+			isPr = false;
+		}
 		return [
 			<Modal key="modal" onClose={this.handleModalClose} isOpen={isModalOpen} autoClose>
 				<p>Feature Coming Soon !</p>
@@ -59,7 +65,7 @@ class Index extends Component {
 				</div>
 			</Modal>,
 			<Home
-				isPr={!isJournalist}
+				isPr={isPr}
 				{...this.props}
 				{...this.state}
 				key="home"
