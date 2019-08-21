@@ -17,7 +17,6 @@ export const ERROR = error => ({
 export const START = type => ({ type, payload: { isLoading: true, code: 'ongoing' } });
 
 export const checkStatus = (response) => {
-	console.log('res=======>', response);
 	if (response.status >= 200 && response.status < 300) {
 		return {
 			status: true,
