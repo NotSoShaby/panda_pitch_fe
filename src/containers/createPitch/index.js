@@ -50,7 +50,8 @@ class Index extends Authorized {
 	componentWillReceiveProps(nextProps) {
 		const { createPitchReducer, createClientReducer } = nextProps;
 		const { props } = this;
-		if (createClientReducer !== props.createClientReducer) {
+		const { isLoading } = createClientReducer;
+		if ((createClientReducer !== props.createClientReducer) && (!isLoading && (typeof isLoading === 'boolean'))) {
 			const { data, error } = createClientReducer;
 			if (data && (typeof data === 'object') && Object.keys(data).length) {
 				this.setState({ hideNewClientDiv: true, newClient: {}, errors: {} });
@@ -59,7 +60,10 @@ class Index extends Authorized {
 			}
 		}
 		if (createPitchReducer !== props.createPitchReducer) {
-			this.handleFormSubmit(createPitchReducer);
+			const { isLoading } = createPitchReducer;
+			if (!isLoading && (typeof isLoading === 'boolean')) {
+				this.handleFormSubmit(createPitchReducer);
+			}
 		}
 	}
 
@@ -386,12 +390,19 @@ class Index extends Authorized {
   removeJournalist = async (index) => {
   	const { selectedJournalists } = this.state;
   	const { createPitchReducer: { form2 } } = this.props;
-  	const user = _.find(form2, o => o.message === selectedJournalists[index].personalMessage);
+  	const user = _.find(form2, o => o.journalist === selectedJournalists[index].url);
   	const url = user.url.split('/');
-  	if (removeJournalist(url[5])) {
-  	selectedJournalists.splice(index, 1);
-  		this.setState({ selectedJournalists });
-  	}
+  	await removeJournalist(url[5]).then((data) => {
+  		if (data.status) {
+  			selectedJournalists.splice(index, 1);
+  			this.setState({ selectedJournalists });
+  		} else {
+  			this.setState({ errors: { deleteIssue: 'There is an issue in deleting journalist' } });
+  		}
+  	}).catch((e) => {
+  		const DATA = (typeof e === 'string') ? e : 'There is an issue in deleting journalist';
+  		this.setState({ errors: { deleteIssue: DATA } });
+  	});
   }
 
 	onLodingImgError = () => {

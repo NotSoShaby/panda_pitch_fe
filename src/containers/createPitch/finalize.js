@@ -131,7 +131,9 @@ Coverage
 						<span className="view-btn-rgt">
 							<button type="button" className="btn new_pitch_btn disc-btn" onClick={changeToPreviousScreen}>Back</button>
 							<button type="button" className="btn new_pitch_btn snd-btn" onClick={changeNextScreen}>Send Pitches</button>
-							<button type="button" className="btn new_pitch_btn disc-btn">Save Template</button>
+							{/*
+								<button type="button" className="btn new_pitch_btn disc-btn">Save Template</button>
+							*/}
 						</span>
 					</div>
 

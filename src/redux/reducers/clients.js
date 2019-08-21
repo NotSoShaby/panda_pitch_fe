@@ -5,10 +5,10 @@ export const defaultState = {
 export function createClient(state = defaultState, action) {
 	switch (action.type) {
 		case 'CREATE_CLIENT_INITIATED': {
-			return { ...state, code: 'uninitiated' };
+			return { ...state, code: 'uninitiated', isLoading: true };
 		}
 		case 'CREATE_CLIENT_STARTED': {
-			return { ...state };
+			return { ...state, code: 'initiated', isLoading: true };
 		}
 		case 'CREATE_CLIENT_SUCCESS': {
 			return { ...state, ...action.payload };
