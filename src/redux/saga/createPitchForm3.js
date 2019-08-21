@@ -9,7 +9,7 @@ const CREATE_PITCH_FORM3 = function* fetchSurvey() {
 	yield takeEvery('CREATE_PITCH_FORM3', function* generateAction(action) {
 		yield put(START('CREATE_PITCH_STARTED'));
 		try {
-			const RES = yield Request(`${CONSTANT.CREATE_PITCH_FORM1_URL}${action.payload}/`, CONSTANT.PATCH, undefined, undefined, undefined, true);
+			const RES = yield Request(`${CONSTANT.CREATE_PITCH_FORM1_URL}${action.payload}/`, CONSTANT.PATCH, { status: true }, undefined, undefined, true);
 			if (RES.status) {
 				yield put({
 					type: 'CREATE_PITCH_FORM3_SUCCESS',

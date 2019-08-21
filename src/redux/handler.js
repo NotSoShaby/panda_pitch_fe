@@ -17,6 +17,7 @@ export const ERROR = error => ({
 export const START = type => ({ type, payload: { isLoading: true, code: 'ongoing' } });
 
 export const checkStatus = (response) => {
+	console.log('res=======>', response);
 	if (response.status >= 200 && response.status < 300) {
 		return {
 			status: true,
@@ -51,7 +52,13 @@ export const checkStatus = (response) => {
 };
 
 export const handleError = ({ response }) => {
-	if (response.status === 413) {
+	console.log('ddsada handleError', response);
+	if (response.status === 204) {
+		return {
+			status: false,
+			message: 'Success with 204',
+		};
+	} if (response.status === 413) {
 		const error = {
 			status: false,
 			data: response.data,
@@ -84,11 +91,15 @@ export const handleError = ({ response }) => {
 		};
 		return error;
 	}
-	return response.json().then((errorData) => {
-		const error = {
-			status: false,
-			message: errorData,
-		};
-		return error;
-	});
+	return {
+		status: false,
+		message: response.statusText,
+	};
+	// return response.json().then((errorData) => {
+	// 	const error = {
+	// 		status: false,
+	// 		message: errorData,
+	// 	};
+	// 	return error;
+	// });
 };
