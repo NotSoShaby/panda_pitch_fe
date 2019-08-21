@@ -33,7 +33,7 @@ const PRHeader = ({ onLogout }) => {
 									<Link to="/">My Profile</Link>
 								</li>
 								<li>
-									<Link to="/">Logout</Link>
+									<Link to="/" onClick={onLogout}>Logout</Link>
 								</li>
 							</ul>
 						</div>

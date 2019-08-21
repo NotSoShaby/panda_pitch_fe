@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '../../components/button';
-// import HELPER from '../../utils/helper';
 import AutoComplete from '../../components/autoComplete';
 
 // render form3
@@ -10,7 +9,6 @@ const Form4 = ({
 	onBack,
 	onCreate,
 	onTodoSelection,
-	// journalistProfile,
 	journalistInterests,
 	getJournalistInterests,
 	error,
@@ -31,12 +29,6 @@ const Form4 = ({
 
 		{error
 				&& error.interests && <div className="error">{error.interests.map(msg => <p key={msg}>{msg}</p>)}</div>}
-		{/* {HELPER.isErrorInApi(code)
-			&& journalistProfile.error.non_field_errors && (
-				<div className="error">
-					{journalistProfile.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}
-				</div>
-			)} */}
 
 		<div className="step_btn_wrapper">
 			<Button className="white_bg_btn" onClick={onBack}>Back</Button>

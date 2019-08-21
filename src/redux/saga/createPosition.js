@@ -3,6 +3,7 @@ import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import HELPER from '../../utils/helper';
 import { ERROR } from '../handler';
+import toStoreConfig from '../adapters/autocomplete';
 
 // create user signup request
 const CREATE_POSITION = function* createPosition() {
@@ -13,7 +14,7 @@ const CREATE_POSITION = function* createPosition() {
 				CONSTANT.POST, action.payload,
 			);
 			if (RES.status) {
-				const position = { data: [{ ...RES.data }] };
+				const position = { data: [toStoreConfig(RES.data)] };
 				yield put({
 					type: 'GET_POSITIONS_SUCCESS',
 					payload: position,

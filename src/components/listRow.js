@@ -6,9 +6,9 @@ const { GOOGLE } = IMAGES;
 
 const ListRow = (props) => {
 	const {
-		title, description, date_posted, logo, owner_data,
+		title, description, date_posted, logo, ownerData,
 	} = props;
-	const { full_name, position_data } = owner_data;
+	const { full_name, position_data } = ownerData;
 	const time = new Date(date_posted);
 	return (
 		<div className="list_col">

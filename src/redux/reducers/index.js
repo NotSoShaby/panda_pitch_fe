@@ -46,8 +46,6 @@ const initialState = { code: 'UNINITIATED', isLoading: false };
 
 // module default state for when user logout
 const defaultState = {
-	// login: initialState,
-	// signup: initialState,
 	login: initialState,
 	journalistProfile: initialState,
 	prProfile: initialState,

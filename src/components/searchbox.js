@@ -18,7 +18,6 @@ class SearchBox extends React.Component {
 	changeSelection = (dataValue) => {
 		const { onSelect } = this.props;
 		this.setState({ value: dataValue.name, listVisible: false });
-		// dataValue.id = dataValue.url;
 		onSelect(dataValue);
 	};
 
@@ -69,9 +68,6 @@ class SearchBox extends React.Component {
 		return (
 			<div className="srch_lst_row" style={{ minHeight: '54px' }} onClick={() => onCreate(value)} role="button">
 				<div className="srch_lst_col" role="button">
-					{/* <div className="srch_pic">
-									<img src={imagepath} alt="profile_pic" />
-								</div> */}
 					<span className="pro_detail">
 						<h3>Create</h3>
 					</span>
@@ -97,7 +93,6 @@ class SearchBox extends React.Component {
 						<img className="srch_icn" src={SEARCH_ICON} alt="search" />
 					</button>
 				</div>
-				{/* {showCreateButton && this.createButton()} */}
 				{listVisible && this.search(searchString)}
 			</React.Fragment>
 		);

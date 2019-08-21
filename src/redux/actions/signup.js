@@ -1,11 +1,9 @@
-// import { Component } from 'react';
 import { createSelector } from 'reselect';
 import store from '../Store';
 import HELPER from '../../utils/helper';
 
 const initialState = {
 	message: {},
-	// isLoading: false,
 	data: {},
 	code: '',
 };
@@ -61,8 +59,6 @@ export const createPrProfile = ({
 export const createJournalistProfile = ({
 	positionList, companiesList, twitter, journoInterests, fullName = null,
 }) => {
-	// let position = positionList.filter(position => position.isActive && position.value);
-	// position = position.map(({ url }) => url);
 	let interestsList = journoInterests.filter(interestsList => interestsList.isActive
     && interestsList.value);
 	interestsList = interestsList.map(({ url }) => url);

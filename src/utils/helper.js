@@ -1,8 +1,4 @@
 // common methods definition
-// const _log = console.log;
-// console.log = function (logMessage) {
-// 	_log.apply(console, arguments);
-// };
 import history from '../routes/history';
 
 class Helper {

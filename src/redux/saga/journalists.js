@@ -2,7 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
-import history from '../../routes/history';
+import HELPER from '../../utils/helper';
 
 // create user signup request
 const FIND_JOURNALIST = function* getInterests() {
@@ -16,8 +16,7 @@ const FIND_JOURNALIST = function* getInterests() {
 					payload: DATA(RES.data),
 				});
 			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
-				localStorage.clear();
-				history.push('/login');
+				HELPER.logout();
 				yield put({ type: 'LOGOUT' });
 			} else {
 				yield put({ type: 'FIND_JOURNALIST_FAILED', payload: ERROR(RES.data) });

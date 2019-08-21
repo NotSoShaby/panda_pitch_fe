@@ -44,13 +44,6 @@ class Index extends UnAuthorized {
 		return null;
 	};
 
-	// // identify the type of loggedIn user (journalist/pr)
-	// getUserRole = (props) => {
-	// 	const { login: { data: { user } } } = props;
-	// 	if (user && user.isPr) return 3;
-	// 	return 1;
-	// };
-
 	static getDerivedStateFromProps(props, state) {
 		const { login } = props;
 		const { step } = state;
@@ -182,7 +175,6 @@ class Index extends UnAuthorized {
 
 	// render login sign up page
 	render() {
-		// if(this.state.loading) return <div>Loading.....</div>
 		return (
 			<SignUp
 				{...this.state}
@@ -202,7 +194,6 @@ class Index extends UnAuthorized {
 				changeInput={this.onInputChange}
 				filterCompany={this.filterCompany}
 				filterPosition={this.filterPosition}
-				// onSubmit={this.handleSubmit}
 			/>
 		);
 	}

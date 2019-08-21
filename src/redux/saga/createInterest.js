@@ -3,6 +3,7 @@ import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import HELPER from '../../utils/helper';
 import { ERROR } from '../handler';
+import toStoreConfig from '../adapters/autocomplete';
 
 // create user signup request
 const CREATE_JOURNALIST_INTEREST = function* createInterest() {
@@ -13,7 +14,7 @@ const CREATE_JOURNALIST_INTEREST = function* createInterest() {
 				CONSTANT.POST, action.payload,
 			);
 			if (RES.status) {
-				const interest = { data: [{ ...RES.data }] };
+				const interest = { data: [toStoreConfig(RES.data)] };
 				yield put({
 					type: 'GET_JOURNALIST_INTEREST_SUCCESS',
 					payload: interest,

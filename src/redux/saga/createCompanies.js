@@ -4,6 +4,7 @@ import CONSTANT from '../../utils/constant';
 import { ERROR } from '../handler';
 // import toStoreConfig from '../adapters/company';
 import HELPER from '../../utils/helper';
+import toStoreConfig from '../adapters/autocomplete';
 
 // create user signup request
 const CREATE_PR_COMPANY = function* createCompany() {
@@ -14,7 +15,7 @@ const CREATE_PR_COMPANY = function* createCompany() {
 				CONSTANT.POST, action.payload,
 			);
 			if (RES.status) {
-				const company = { data: [{ ...RES.data }] };
+				const company = { data: [toStoreConfig(RES.data)] };
 				yield put({
 					type: 'GET_PR_COMPANIES_SUCCESS',
 					payload: company,

@@ -1,9 +1,7 @@
 // constant variables declaration
 
-// const local = 'http://localhost:8000';
-// const server = 'http://18.224.60.229:2312';
-const server = 'http://18.191.42.149:8000';
-// const server = 'http://192.168.2.88:8000';
+// const server = 'http://18.191.42.149:8000';
+const server = 'http://192.168.2.88:8000';
 
 class Constant {
   PUBLIC_PATH = process.env.PUBLIC_URL;
@@ -23,15 +21,10 @@ class Constant {
   SIGNUP_URL = '/api/user/';
 
   LOGIN_URL = '/api/log-in/';
-  // SIGNUP_URL = '/api/users/signup';
-
-  // LOGIN_URL = '/api/users/log-in';
 
   CREATE_PITCH_FORM1_URL = '/api/pitch/';
 
   CREATE_PITCH_FORM2_URL = '/api/personalization/';
-
-  // CREATE_PITCH_FORM3_URL = '/api/pitch/'
 
   GET_CLIENTS_URL = '/api/client/';
 
@@ -46,8 +39,6 @@ class Constant {
   GET_PR_URL = '/api/profile/pr/';
 
   SURVEY_URL = '/survey/';
-
-  // SURVEY_JOR_URL = '/api/users/survey/2';
 
   SURVEY_SUBMISSION_URL = '/survey/answer/';
 
@@ -80,8 +71,6 @@ class Constant {
   CREATE_PR_MEDIALISTS = '/api/pr/medialists/create';
 
   FIND_JOURNALIST_URL = '/api/profile/autocomplete/journalist/'
-
-	// REMOVE_SELECTED_JOURNALIST = ''
 }
 
 export default new Constant();

@@ -50,23 +50,6 @@ export const checkStatus = (response) => {
 	});
 };
 
-// export const parseJSON = (response) => {
-// 	console.log('res========pp===>', response);
-// 	if (response.status === 204 || response.status === 205) {
-// 		return {};
-// 	}
-// 	if (response.status === 401 || response.status === 500) {
-// 		return response;
-// 	}
-// 	if (response.headers) {
-// 		const contentType = response.headers.get('content-type');
-// 		if (contentType && contentType.indexOf('application/json') !== -1) {
-// 			return response.json();
-// 		}
-// 	}
-// 	return {};
-// };
-
 export const handleError = ({ response }) => {
 	if (response.status === 413) {
 		const error = {

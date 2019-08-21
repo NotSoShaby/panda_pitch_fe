@@ -2,7 +2,8 @@ import { put, takeEvery } from 'redux-saga/effects';
 import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
-import history from '../../routes/history';
+import toStoreConfig from '../adapters/autocomplete';
+import HELPER from '../../utils/helper';
 
 // create user signup request
 const GET_POSITIONS = function* getCompanies() {
@@ -11,13 +12,13 @@ const GET_POSITIONS = function* getCompanies() {
 		try {
 			const RES = yield Request(`${CONSTANT.GET_POSITIONS_URL}${action.payload}/`, CONSTANT.GET);
 			if (RES.status) {
+				const positions = RES.data.map(position => toStoreConfig(position));
 				yield put({
 					type: 'GET_POSITIONS_SUCCESS',
-					payload: DATA(RES.data),
+					payload: DATA(positions),
 				});
 			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
-				localStorage.clear();
-				history.push('/login');
+				HELPER.logout();
 				yield put({ type: 'LOGOUT' });
 			} else {
 				yield put({ type: 'GET_POSITIONS_FAILED', payload: ERROR(RES.data) });

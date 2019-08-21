@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Home from './home';
 import Modal from '../../components/modal';
-// import HELPER from '../../utils/helper';
 import { getPrPitches } from '../../redux/actions/pitches';
 
 class Index extends Component {
@@ -23,7 +22,6 @@ class Index extends Component {
 		if (isPr) {
 			const { getPitches } = this.props;
 			const prId = 1;
-			// if (data.role) { role = data.role; } else role = signup.data.role;
 			getPitches({ pageSize: 10, prId, page });
 		}
 	}
@@ -36,17 +34,6 @@ class Index extends Component {
 		const { history: { push } } = this.props;
 		push('/create_pitch');
 	}
-
-	// this.setState({ isModalOpen: true });
-
-	// isPr = () => {
-	// 	const { login: { data: { user } } } = this.props;
-
-	// 	if (user && user.is_pr) {
-	// 		return true;
-	// 	}
-	// 	return false;
-	// };
 
 	render() {
 		const { isModalOpen } = this.state;

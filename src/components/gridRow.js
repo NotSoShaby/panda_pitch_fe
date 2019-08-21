@@ -6,9 +6,9 @@ const { GOOGLE } = IMAGES;
 
 const GridRow = (props) => {
 	const {
-		title, score, description, date_posted, logo, owner_data,
+		title, score, description, date_posted, logo, ownerData,
 	} = props;
-	const { full_name, position_data } = owner_data;
+	const { full_name, position_data } = ownerData;
 	const time = new Date(date_posted);
 	return (
 		<div className="card_col">
@@ -45,10 +45,8 @@ const GridRow = (props) => {
 // props initialization ( default values )
 GridRow.defaultProps = {
 	logo: GOOGLE,
-	// image: '',
 	title: '',
 	description: '',
-	// name: '',
 	score: '',
 };
 
@@ -57,8 +55,6 @@ GridRow.propTypes = {
 	logo: PropTypes.string,
 	title: PropTypes.string,
 	description: PropTypes.string,
-	// image: PropTypes.string,
-	// name: PropTypes.string,
 	score: PropTypes.number,
 };
 

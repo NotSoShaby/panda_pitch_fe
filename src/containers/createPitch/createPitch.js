@@ -148,7 +148,6 @@ const CreatePitch = ({
 							onClick={handleAddNewClient}
 						>
 							<i className={hideNewClientDiv ? 'fa fa-plus' : 'fa fa-minus'} />
-							{/* <input type="file" placeholder="Client Website" /> */}
 							<span className="fnt_wght">{hideNewClientDiv ? 'Add New Client' : 'Don\'t want to add client now'}</span>
 						</span>
 					</div>
@@ -275,7 +274,6 @@ const CreatePitch = ({
 								name="is_private"
 								value={is_private}
 								checked={is_private}
-								// onChange={onChangeState}
 							/>
 							<span className="slider round" />
 						</label>

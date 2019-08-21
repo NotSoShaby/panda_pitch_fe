@@ -2,7 +2,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
-import history from '../../routes/history';
+import HELPER from '../../utils/helper';
 
 // create user signup request
 const GET_MEDIA_LIST = function* fetchSurvey() {
@@ -16,8 +16,7 @@ const GET_MEDIA_LIST = function* fetchSurvey() {
 					payload: DATA(RES.data),
 				});
 			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
-				localStorage.clear();
-				history.push('/login');
+				HELPER.logout();
 				yield put({ type: 'LOGOUT' });
 			} else {
 				yield put({ type: 'GET_MEDIA_LIST_FAILED', payload: ERROR(RES.data) });

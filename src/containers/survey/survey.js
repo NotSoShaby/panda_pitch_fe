@@ -4,7 +4,6 @@ import Button from '../../components/button';
 import Question from './question';
 import IMAGES from '../../assets/images';
 import StatusBar from '../../components/statusBar';
-// import HELPER from '../../utils/helper';
 
 // Login page rendering
 const Survey = ({

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { logout } from '../redux/actions/app';
 import Home from '../containers/home';
 import Authorized from './authorized';
-// import HELPER from '../utils/helper';
 import JRHeader from '../components/header/jrHeader';
 import PRHeader from '../components/header/prHeader';
 
@@ -36,7 +35,6 @@ class App extends Authorized {
 
 const mapStateToProps = state => ({
 	login: state.login,
-	// signup: state.signup,
 });
 
 // connect to store

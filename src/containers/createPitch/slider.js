@@ -2,14 +2,6 @@ import React, { Component } from 'react';
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 
-// const settings = {
-// 	dots: true,
-// 	infinite: true,
-// 	speed: 500,
-// 	slidesToShow: 1,
-// 	slidesToScroll: 1,
-// };
-
 class SimpleSlider extends Component {
 	render() {
 		const { settings } = this.props;

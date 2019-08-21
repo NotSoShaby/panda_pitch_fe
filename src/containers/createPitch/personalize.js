@@ -11,7 +11,6 @@ const Personalization = ({
 	options,
 	name,
 	value,
-	// onChangeSelect,
 	journalists,
 	mediaList,
 	getJRMediaList,

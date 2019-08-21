@@ -3,7 +3,6 @@ import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
 import toStoreConfig from '../adapters/login';
-// import history from '../../routes/history';
 import HELPER from '../../utils/helper';
 
 // create user signup request
