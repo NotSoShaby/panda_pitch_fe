@@ -6,10 +6,10 @@ const { GOOGLE } = IMAGES;
 
 const GridRow = (props) => {
 	const {
-		title, score, description, date_posted, logo, ownerData,
+		title, score, description, logo, ownerData,
 	} = props;
 	const { full_name, position_data } = ownerData;
-	const time = new Date(date_posted);
+	// const time = new Date(date_posted);
 	return (
 		<div className="card_col">
 			<div className="card_top_img">
@@ -19,11 +19,7 @@ const GridRow = (props) => {
 				<span className="cover">Coverage</span>
 				<h3>{title}</h3>
 				<p>{description}</p>
-				<span className="time">
-					{time.toLocaleString(
-						'en-US', { hour: 'numeric', minute: 'numeric', hour12: true },
-					)}
-				</span>
+				<span className="time" />
 			</div>
 			<p className="pitch_score green">
 				<span>Pitch Score</span>
