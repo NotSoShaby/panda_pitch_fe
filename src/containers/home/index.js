@@ -17,12 +17,9 @@ class Index extends Component {
 
 	getPitches = (page) => {
 		const { login: { data } } = this.props;
-		let isPr = true;
-		if (data && data.isJournalist) isPr = false;
-		if (isPr) {
+		if (data) {
 			const { getPitches } = this.props;
-			const prId = 1;
-			getPitches({ pageSize: 10, prId, page: (10 * page) });
+			getPitches({ pageSize: 10, isJournalist: data.isJournalist, page: (10 * page) });
 			this.setState({ selectedPage: page });
 		}
 	}

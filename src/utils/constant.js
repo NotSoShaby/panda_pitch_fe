@@ -58,6 +58,8 @@ class Constant {
 
   GET_PR_PITCHES_URL = '/api/pitch/pr/';
 
+  GET_JR_PITCHES_URL = '/api/pitch/journalist/';
+
   GET_PR_CLIENTS_AUTO = '/api/pr/clients-auto?q=C';
 
   GET_PR_CLIENTS = '/api/pr/clients?pr_id=1';
