@@ -8,9 +8,27 @@ const CREATE_PITCH_FORM1 = function* fetchSurvey() {
 	yield takeEvery('CREATE_PITCH_FORM1', function* generateAction(action) {
 		yield put(START('CREATE_PITCH_STARTED'));
 		try {
-			const RES = yield Request(
-				CONSTANT.CREATE_PITCH_FORM1_URL, CONSTANT.POST, action.payload, undefined, undefined, true,
-			);
+			const id = action.payload.get('id');
+			let RES;
+			if (id) {
+				RES = yield Request(
+					`${CONSTANT.CREATE_PITCH_FORM1_URL}${id}/`,
+					CONSTANT.PATCH,
+					action.payload,
+					undefined,
+					undefined,
+					true,
+				);
+			} else {
+				RES = yield Request(
+					CONSTANT.CREATE_PITCH_FORM1_URL,
+					CONSTANT.POST,
+					action.payload,
+					undefined,
+					undefined,
+					true,
+				);
+			}
 			if (RES.status) {
 				yield put({
 					type: 'CREATE_PITCH_FORM1_SUCCESS',

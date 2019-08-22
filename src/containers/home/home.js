@@ -11,26 +11,33 @@ const HomeScreen = ({
 }) => {
 	if (isPr) {
 		return <PrHome setView={setView} createNewPitch={createNewPitch} view={view} />;
-	} return <JrHome setView={setView} requestStory={requestStory} view={view} />;
+	}
+	return <JrHome setView={setView} requestStory={requestStory} view={view} />;
 };
 
-const Layout = ({ view, prPitches }) => {
+const Layout = ({ view, prPitches, onPitchClick }) => {
 	if (HELPER.isObject(prPitches.data) && prPitches.data.results && prPitches.data.results.length) {
 		if (view) {
 			return (
 				<div className="card_row">
-					{prPitches.data.results.map(pitch => <GridRow key={pitch.url} {...pitch} />)}
+					{prPitches.data.results.map(pitch => (
+						<GridRow key={pitch.url} {...pitch} onClick={onPitchClick} />
+					))}
 				</div>
 			);
 		}
-		return prPitches.data.results.map(pitch => <ListRow key={pitch.url} {...pitch} />);
+		return prPitches.data.results.map(pitch => (
+			<ListRow
+				key={pitch.url}
+				{...pitch}
+				onClick={onPitchClick}
+			/>
+		));
 	}
 	return null;
 };
 
-const Home = ({
-	pageSize, onPageChange, ...props
-}) => {
+const Home = ({ pageSize, onPageChange, ...props }) => {
 	const [view, setView] = useState(0);
 	const { prPitches: { code, data }, selectedPage } = props;
 	return (

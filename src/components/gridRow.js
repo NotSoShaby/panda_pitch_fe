@@ -6,12 +6,12 @@ const { GOOGLE } = IMAGES;
 
 const GridRow = (props) => {
 	const {
-		title, score, description, logo, ownerData, datePosted,
+		title, score, description, logo, ownerData, datePosted, onClick,
 	} = props;
 	const { full_name, position_data } = ownerData || {};
 	const time = new Date(datePosted);
 	return (
-		<div className="card_col">
+		<div className="card_col" onClick={() => onClick(props)} role="button">
 			<div className="card_top_img">
 				<img src={logo} alt="logo" />
 			</div>
@@ -46,6 +46,7 @@ GridRow.defaultProps = {
 	title: '',
 	description: '',
 	score: '',
+	onClick: () => {},
 };
 
 // props type definition
@@ -54,6 +55,7 @@ GridRow.propTypes = {
 	title: PropTypes.string,
 	description: PropTypes.string,
 	score: PropTypes.number,
+	onClick: PropTypes.func,
 };
 
 // default importing
