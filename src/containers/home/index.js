@@ -35,9 +35,12 @@ class Index extends Component {
 
 	// handle click on pitch card
 	onPitchClick = (data) => {
-		const { getPitchById } = this.props;
-		const url = data.url.split('/');
-		getPitchById(url[5]);
+		const { login } = this.props;
+		if (login.data && !login.data.isJournalist) {
+			const { getPitchById } = this.props;
+			const url = data.url.split('/');
+			getPitchById(url[5]);
+		}
 	};
 
 	render() {
