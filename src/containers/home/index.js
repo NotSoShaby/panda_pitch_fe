@@ -8,11 +8,11 @@ import { getPrPitches } from '../../redux/actions/pitches';
 class Index extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { isModalOpen: false };
+		this.state = { isModalOpen: false, selectedPage: 0 };
 	}
 
 	componentDidMount() {
-		this.getPitches(1);
+		this.getPitches(0);
 	}
 
 	getPitches = (page) => {
@@ -22,7 +22,8 @@ class Index extends Component {
 		if (isPr) {
 			const { getPitches } = this.props;
 			const prId = 1;
-			getPitches({ pageSize: 10, prId, page });
+			getPitches({ pageSize: 10, prId, page: (10 * page) });
+			this.setState({ selectedPage: page });
 		}
 	}
 

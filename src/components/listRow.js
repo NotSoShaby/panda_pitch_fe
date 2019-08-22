@@ -6,10 +6,10 @@ const { GOOGLE } = IMAGES;
 
 const ListRow = (props) => {
 	const {
-		title, description, logo, ownerData,
+		title, description, logo, ownerData, datePosted,
 	} = props;
-	const { full_name, position_data } = ownerData;
-	// const time = new Date(date_posted);
+	const { full_name, position_data } = ownerData || {};
+	const time = new Date(datePosted);
 	return (
 		<div className="list_col">
 			<div className="list_lft">
@@ -21,7 +21,9 @@ const ListRow = (props) => {
 				<p>
 					<span className="list_cover">Covrage</span>
 					{' '}
-					<span className="list_time" />
+					<span className="list_time">
+						{time.toLocaleString('en-US', { hour: 'numeric', hour12: true })}
+					</span>
 				</p>
 			</div>
 			<div className="list_rgt">
