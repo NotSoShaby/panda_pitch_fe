@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Home from './home';
 import Modal from '../../components/modal';
-import { getPrPitches } from '../../redux/actions/pitches';
+import { getPrPitches, getPitchById } from '../../redux/actions/pitches';
 
 class Index extends Component {
 	constructor(props) {
@@ -24,7 +24,7 @@ class Index extends Component {
 			const prId = 1;
 			getPitches({ pageSize: 10, prId, page });
 		}
-	}
+	};
 
 	// close modal
 	handleModalClose = () => this.setState({ isModalOpen: false });
@@ -33,7 +33,14 @@ class Index extends Component {
 	createNewPitch = () => {
 		const { history: { push } } = this.props;
 		push('/create_pitch');
-	}
+	};
+
+	// handle click on pitch card
+	onPitchClick = (data) => {
+		const { getPitchById } = this.props;
+		const url = data.url.split('/');
+		getPitchById(url[5]);
+	};
 
 	render() {
 		const { isModalOpen } = this.state;
@@ -58,6 +65,7 @@ class Index extends Component {
 				key="home"
 				createNewPitch={this.createNewPitch}
 				onPageChange={this.getPitches}
+				onPitchClick={this.onPitchClick}
 			/>,
 		];
 	}
@@ -65,9 +73,13 @@ class Index extends Component {
 
 const mapStateToProps = state => state;
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-	getPitches: data => getPrPitches(data),
-}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{
+		getPitches: data => getPrPitches(data),
+		getPitchById: data => getPitchById(data),
+	},
+	dispatch,
+);
 
 // connect to store
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

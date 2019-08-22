@@ -24,6 +24,7 @@ import CREATE_PITCH_FORM1 from './createPitchForm1';
 import CREATE_PITCH_FORM2 from './createPitchForm2';
 import CREATE_PITCH_FORM3 from './createPitchForm3';
 import FIND_JOURNALIST_URL from './journalists';
+import GET_PITCH_BY_ID from './getPitchById';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -54,6 +55,7 @@ const rootSaga = function* rootSaga() {
 			CREATE_PITCH_FORM1(),
 			CREATE_PITCH_FORM2(),
 			CREATE_PITCH_FORM3(),
+			GET_PITCH_BY_ID(),
 		],
 	);
 };

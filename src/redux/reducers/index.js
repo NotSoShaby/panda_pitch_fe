@@ -17,6 +17,7 @@ import { positions } from './position';
 import { createClient } from './clients';
 import { createPitch } from './createPitch';
 import { mediaList } from './mediaList';
+import { pitchDetail } from './pitchDetail';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
@@ -40,6 +41,7 @@ const reducer = combineReducers({
 	createPitchReducer: createPitch,
 	pr,
 	journalists,
+	pitchDetail,
 });
 
 const initialState = { code: 'UNINITIATED', isLoading: false };
@@ -65,6 +67,7 @@ const defaultState = {
 	createPitchReducer: initialState,
 	pr: initialState,
 	journalists: initialState,
+	pitchDetail: initialState,
 };
 
 // Empty state when user logout

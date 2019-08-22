@@ -12,7 +12,12 @@ import {
 } from '../../redux/actions/pitches';
 import { getJournalistInterests, createInterest } from '../../redux/actions/signup';
 import { createClient } from '../../redux/actions/clients';
-import { createPitchActionForm1, createPitchActionForm2, createPitchActionForm3 } from '../../redux/actions/pitch';
+import {
+	createPitchActionForm1,
+	createPitchActionForm2,
+	createPitchActionForm3,
+	clearCreatePitchForm,
+} from '../../redux/actions/pitch';
 import Personalization from './personalize';
 import FinalizePitch from './finalize';
 import CommonHelper from '../../utils/helper';
@@ -47,25 +52,74 @@ class Index extends Authorized {
 		errors: {},
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const { createPitchReducer, createClientReducer } = nextProps;
-		const { props } = this;
-		const { isLoading } = createClientReducer;
-		if ((createClientReducer !== props.createClientReducer) && (!isLoading && (typeof isLoading === 'boolean'))) {
-			const { data, error } = createClientReducer;
-			if (data && (typeof data === 'object') && Object.keys(data).length) {
-				this.setState({ hideNewClientDiv: true, newClient: {}, errors: {} });
-			} else if (error && ((typeof error === 'object') || (typeof error === 'string'))) {
-				this.setState({ errors: { clientApiError: (typeof error === 'object') ? JSON.stringify(error) : error } });
-			}
-		}
-		if (createPitchReducer !== props.createPitchReducer) {
-			const { isLoading } = createPitchReducer;
-			if (!isLoading && (typeof isLoading === 'boolean')) {
-				this.handleFormSubmit(createPitchReducer);
-			}
-		}
-	}
+  autoFillState = () => {
+  	const { pitchDetail: { code, data } } = this.props;
+  	if (code === 'SUCCESS') {
+  		const {
+  			topicsData, content, cta, images, pressRelease, clientData, availability,
+  		} = data;
+  		const allInterests = topicsData.map(({ name, url }) => ({
+  			isActive: true,
+  			url,
+  			value: name,
+  		}));
+  		const ctaObj = cta.map(ct => ({ isActive: true, value: ct, apiValue: ct }));
+  		let progressValue = 0;
+  		let is_private = false;
+  		const MediaImages = images;
+  		const selectedClient = clientData;
+  		const press_release = pressRelease;
+  		if (availability === 'embargo') {
+  			progressValue = 10;
+  			is_private = true;
+  		} else if (availability === 'exclusive') {
+  			progressValue = 20;
+  			is_private = true;
+  		}
+
+  		return {
+  			allInterests,
+  			content,
+  			cta: ctaObj,
+  			progressValue,
+  			is_private,
+  			MediaImages,
+  			selectedClient,
+  			press_release,
+  			pressReleaseImage: press_release,
+  			mediaFiles: MediaImages,
+  		};
+  	}
+  	return this.state;
+  }
+
+  componentDidMount() {
+  	const { clearCreatePitchForm } = this.props;
+  	clearCreatePitchForm();
+  	const data = this.autoFillState();
+  	this.setState(data);
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+  	const { createPitchReducer, createClientReducer } = nextProps;
+  	const { props } = this;
+  	const { isLoading } = createClientReducer;
+  	if ((createClientReducer !== props.createClientReducer) && (!isLoading && (typeof isLoading === 'boolean'))) {
+  		const { data, error } = createClientReducer;
+  		if (data && (typeof data === 'object') && Object.keys(data).length) {
+  			this.setState({ hideNewClientDiv: true, newClient: {}, errors: {} });
+  		} else if (error && ((typeof error === 'object') || (typeof error === 'string'))) {
+  			this.setState({ errors: { clientApiError: (typeof error === 'object') ? JSON.stringify(error) : error } });
+  		}
+  	}
+  	if (createPitchReducer !== props.createPitchReducer) {
+  		const { isLoading } = createPitchReducer;
+  		if (!isLoading && (typeof isLoading === 'boolean')) {
+  			this.handleFormSubmit(createPitchReducer);
+  		}
+  	}
+  }
 
 
 	handleFormSubmit = (createPitchReducer) => {
@@ -217,6 +271,12 @@ class Index extends Authorized {
 		});
 		form_data.append('content', content);
 		form_data.append('availability', this.availabilityType());
+		const { createPitchReducer: { form1 } } = this.props;
+		if (form1 && form1.url) {
+			const url = form1.url.split('/');
+			form_data.append('id', url[5]);
+		}
+
 		return form_data;
 	}
 
@@ -476,6 +536,7 @@ class Index extends Authorized {
 	}
 
 	render() {
+		console.log('statte==========>', this.state);
 		return (<>{this.displayScreen()}</>);
 	}
 }
@@ -496,6 +557,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		createPitchActionForm1: data => createPitchActionForm1(data),
 		createPitchActionForm2: data => createPitchActionForm2(data),
 		createPitchActionForm3: data => createPitchActionForm3(data),
+		clearCreatePitchForm: data => clearCreatePitchForm(data),
 	},
 	dispatch,
 );

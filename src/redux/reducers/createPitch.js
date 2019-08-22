@@ -20,6 +20,13 @@ export function createPitch(state = defaultState, action) {
 		case 'CREATE_PITCH_FORM3_SUCCESS': {
 			return { ...state, ...action.payload, form3: action.payload.data };
 		}
+		case 'CLEAR_CREATE_PITCH_FORM': {
+			return {
+				code: 'SUCCESS',
+				isLoading: false,
+				data: {},
+			};
+		}
 		case 'CREATE_PITCH_FAILED': {
 			return {
 				...state,

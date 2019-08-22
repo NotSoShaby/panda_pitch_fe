@@ -6,12 +6,12 @@ const { GOOGLE } = IMAGES;
 
 const ListRow = (props) => {
 	const {
-		title, description, date_posted, logo, ownerData,
+		title, description, date_posted, logo, ownerData, onClick,
 	} = props;
 	const { full_name, position_data } = ownerData;
 	const time = new Date(date_posted);
 	return (
-		<div className="list_col">
+		<div className="list_col" onClick={() => onClick(props)} role="button">
 			<div className="list_lft">
 				<img src={logo} alt="logo" />
 			</div>
@@ -44,10 +44,9 @@ const ListRow = (props) => {
 // props initialization ( default values )
 ListRow.defaultProps = {
 	logo: GOOGLE,
-	// image: '',
 	title: '',
 	description: '',
-	// name: '',
+	onClick: () => {},
 };
 
 // props type definition
@@ -55,8 +54,7 @@ ListRow.propTypes = {
 	logo: PropTypes.string,
 	title: PropTypes.string,
 	description: PropTypes.string,
-	// image: PropTypes.string,
-	// name: PropTypes.string,
+	onClick: PropTypes.func,
 };
 
 // default importing
