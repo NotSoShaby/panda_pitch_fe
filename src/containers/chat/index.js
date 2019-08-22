@@ -87,7 +87,6 @@ class Index extends Component {
 	createNewChat = () => {
 		const { createChannel } = this.props;
 		const data = {
-			messages: ['hii'],
 			participants: ['http://18.191.42.149:8000/api/profile/3/', 'http://18.191.42.149:8000/api/profile/4/'],
 		};
 		createChannel(data);
