@@ -7,7 +7,7 @@ import { survey } from './survey';
 import { journalistInterests } from './interests';
 import { prPitches } from './pitches';
 import { createChannel } from './createChannel';
-import { channels } from './channels';
+import { channels, channel } from './channels';
 import history from '../../routes/history';
 
 // Wrap all reducers in a container
@@ -21,6 +21,7 @@ const reducer = combineReducers({
 	prPitches,
 	createChannel,
 	channels,
+	channel,
 });
 
 const initialState = { code: 'UNINITIATED', isLoading: false };
@@ -36,6 +37,7 @@ const defaultState = {
 	prPitches: initialState,
 	createChannel: initialState,
 	channels: initialState,
+	channel: initialState,
 };
 
 // Empty state when user logout

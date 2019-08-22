@@ -9,7 +9,7 @@ import GET_JOURNALIST_INTERESTS from './interests';
 import CREATE_JOURNALIST_INTEREST from './createInterest';
 import GET_PR_PITCHES from './pitches';
 import CREATE_A_NEW_CHANNEL from './createChannel';
-import GET_USER_CHANNELS from './channels';
+import { GET_USER_CHANNELS, GET_CHANNEL_BY_ID } from './channels';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -25,6 +25,7 @@ const rootSaga = function* rootSaga() {
 		GET_PR_PITCHES(),
 		CREATE_A_NEW_CHANNEL(),
 		GET_USER_CHANNELS(),
+		GET_CHANNEL_BY_ID(),
 	]);
 };
 

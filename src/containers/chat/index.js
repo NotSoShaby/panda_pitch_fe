@@ -3,19 +3,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Chat from './chat';
 import WebSocketInstance from './websocket';
-import { createChannel, getAllChannels } from '../../redux/actions/chat';
+import { createChannel, getAllChannels, getChannelByChannelId } from '../../redux/actions/chat';
 import { logout } from '../../redux/actions/login';
 
-const chatID = '1';
+// const chatID = '1';
 const username = 'admin';
 const email = 'sakshi.gupta@ongraph.ca';
 
 class Index extends Component {
 	constructor(props) {
 		super(props);
+		const activeChannelId = 1;
 		this.state = {
 			tabName: 'Latest',
 			messages: [],
+			activeChannelId,
 		};
 		const currentUser = username;
 		this.waitForSocketConnection(() => {
@@ -24,15 +26,28 @@ class Index extends Component {
 				this.addMessage.bind(this),
 				this.handleAuthenticationError.bind(this),
 			);
-			WebSocketInstance.sendMessage({ message: 'ping', chatId: chatID, email });
-			WebSocketInstance.fetchMessages(currentUser, chatID);
+			const { activeChannelId } = this.state;
+			WebSocketInstance.sendMessage({ message: 'ping', chatId: activeChannelId, email });
+			WebSocketInstance.fetchMessages(currentUser, activeChannelId);
 		});
 
 		WebSocketInstance.connect(1);
 	}
 
+	static getDerivedStateFromProps(props, state) {
+		const { messages } = state;
+		const { channel: { data } } = props;
+		if (messages.length === 0 && data.messages) {
+			return {
+				messages: data.messages,
+			};
+		}
+		return null;
+	}
+
 	componentDidMount() {
-		WebSocketInstance.connect();
+		const { activeChannelId } = this.state;
+		WebSocketInstance.connect(activeChannelId);
 		const { getAllChannels } = this.props;
 		getAllChannels();
 	}
@@ -72,11 +87,11 @@ class Index extends Component {
 
 	sendMessageHandler = (e) => {
 		e.preventDefault();
-		const { message } = this.state;
+		const { message, activeChannelId } = this.state;
 		const messageObject = {
 			from: 'admin',
 			content: message,
-			chatID,
+			chatID: activeChannelId,
 		};
 		WebSocketInstance.newChatMessages(messageObject);
 		this.setState({ message: '' });
@@ -113,12 +128,25 @@ class Index extends Component {
 		return prefix;
 	};
 
-
 	onChange = e => this.setState({ [e.target.name]: e.target.value });
 
+	onChannelChange = ({ id }) => {
+		this.setState({ activeChannelId: id, messages: [] });
+		const { getChannelByChannelId } = this.props;
+		getChannelByChannelId(id);
+		WebSocketInstance.connect(id);
+	}
+
 	addMessage(message) {
-		const { messages } = this.state;
-		this.setState({ messages: [...messages, message] });
+		const { messages, activeChannelId } = this.state;
+		const obj = {
+			chat: activeChannelId,
+			content: message,
+			id: messages.length,
+			owner: 'admin',
+			timestamp: new Date(),
+		};
+		this.setState({ messages: [...messages, obj] });
 	}
 
 	waitForSocketConnection(callback) {
@@ -146,6 +174,7 @@ class Index extends Component {
 		return (
 			<Chat
 				{...this.state}
+				{...this.props}
 				renderMessages={this.renderMessages}
 				messageChangeHandler={this.messageChangeHandler}
 				sendMessageHandler={this.sendMessageHandler}
@@ -154,6 +183,7 @@ class Index extends Component {
 				createNewChat={this.createNewChat}
 				onChange={this.onChange}
 				sendMessage={this.sendMessageHandler}
+				onChannelChange={this.onChannelChange}
 			/>
 		);
 	}
@@ -165,6 +195,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 	{
 		createChannel: data => createChannel(data),
 		getAllChannels: data => getAllChannels(data),
+		getChannelByChannelId: data => getChannelByChannelId(data),
 		logout: data => logout(data),
 	},
 	dispatch,

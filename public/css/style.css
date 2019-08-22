@@ -1271,6 +1271,9 @@ ul.msg-tab button:focus{
 .mt-0{
     margin: 0px;
 }
+.chat-info::-webkit-scrollbar{
+  display: none;
+}
 
 
 /*=================Media query====================*/

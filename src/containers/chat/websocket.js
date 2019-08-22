@@ -21,8 +21,8 @@ class WebSocketService extends Component {
 		return this.socketRef.readyState || null;
 	}
 
-	connect() {
-		const path = `ws://18.191.42.149:8000/ws/chat/1/?token=${localStorage.getItem('token')}`;
+	connect(id) {
+		const path = `ws://18.191.42.149:8000/ws/chat/${id}/?token=${localStorage.getItem('token')}`;
 		this.socketRef = new WebSocket(path);
 		this.socketRef.onopen = () => {
 			console.log('websocket open');
@@ -36,7 +36,7 @@ class WebSocketService extends Component {
 		};
 		this.socketRef.onclose = () => {
 			console.log('websocket is closed');
-			this.connect();
+			this.connect(id);
 		};
 	}
 

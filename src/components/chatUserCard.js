@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ChatUserCard = ({ data }) => (
-	<div className="card_pro_row msg-crd-col">
+const ChatUserCard = ({ data, onClick }) => (
+	<div className="card_pro_row msg-crd-col" onClick={onClick} role="button">
 		<div className="card_pro_img msg-crd-img">
 			<img src={data.profileImg} alt="user" />
 		</div>
