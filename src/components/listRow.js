@@ -1,19 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IMAGES from '../assets/images';
-
-const { GOOGLE } = IMAGES;
 
 const ListRow = (props) => {
 	const {
-		title, description, logo, ownerData, datePosted,
+		title, description, clientData, ownerData, datePosted,
 	} = props;
 	const { full_name, position_data } = ownerData || {};
+	const { image } = clientData || {};
 	const time = new Date(datePosted);
 	return (
 		<div className="list_col">
 			<div className="list_lft">
-				<img src={logo} alt="logo" />
+				<img src={image} alt="logo" />
 			</div>
 			<div className="list_middle">
 				<h3>{title}</h3>
@@ -41,7 +39,6 @@ const ListRow = (props) => {
 
 // props initialization ( default values )
 ListRow.defaultProps = {
-	logo: GOOGLE,
 	// image: '',
 	title: '',
 	description: '',
@@ -50,7 +47,6 @@ ListRow.defaultProps = {
 
 // props type definition
 ListRow.propTypes = {
-	logo: PropTypes.string,
 	title: PropTypes.string,
 	description: PropTypes.string,
 	// image: PropTypes.string,
