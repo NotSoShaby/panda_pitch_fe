@@ -6,5 +6,4 @@ export const login = ({ username, password }) => ({
 	},
 });
 
-
-export const Hello = 'kkk';
+export const logout = () => ({ type: 'LOGOUT' });

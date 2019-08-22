@@ -13,9 +13,7 @@ class Index extends Component {
 	}
 
 	componentDidMount() {
-		console.log('iscomint11');
 		if (this.isPr()) {
-			console.log('iscomint');
 			const { getPitches } = this.props;
 			getPitches();
 		}

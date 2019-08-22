@@ -22,18 +22,13 @@ class WebSocketService extends Component {
 	}
 
 	connect() {
-		const path = 'ws://127.0.0.1:8000/ws/chat/pr@pr.com/';
+		const path = `ws://18.191.42.149:8000/ws/chat/1/?token=${localStorage.getItem('token')}`;
 		this.socketRef = new WebSocket(path);
 		this.socketRef.onopen = () => {
 			console.log('websocket open');
 		};
-		// this.socketNewMessage(
-		// 	JSON.stringify({
-		// 		command: 'fetch_messages',
-		// 	}),
-		// );
 		this.socketRef.onmessage = (e) => {
-			console.log('message ============> ', e);
+			console.log('message ', e);
 			this.socketNewMessage(e.data);
 		};
 		this.socketRef.onerror = (e) => {
@@ -57,6 +52,14 @@ class WebSocketService extends Component {
 		if (command === 'new_message') {
 			this.callbacks[command](parsedData.message);
 		}
+		if (parsedData.user === 'sakshi.gupta@ongraph.ca') {
+			const key = 'new_message';
+			this.callbacks[key](parsedData.message);
+		}
+		if (parsedData.user === 'Anonymous user') {
+			const key = 'authentication';
+			this.callbacks[key](parsedData.message);
+		}
 	}
 
 	fetchMessages(username, chatId) {
@@ -69,9 +72,10 @@ class WebSocketService extends Component {
 		});
 	}
 
-	addCallbacks(messagesCallback, newMessageCallback) {
+	addCallbacks(messagesCallback, newMessageCallback, authenticationCallback) {
 		this.callbacks.messages = messagesCallback;
 		this.callbacks.new_message = newMessageCallback;
+		this.callbacks.authentication = authenticationCallback;
 	}
 
 	sendMessage(data) {

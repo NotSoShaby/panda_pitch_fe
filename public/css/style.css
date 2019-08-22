@@ -967,7 +967,7 @@ p.pitch_score {
     width: 54%;
     float: left;
     position: relative;
-    min-height: 650px;
+    min-height: 500px;
     border-right: 1px solid #bebebe;
     border-left: 1px solid #bebebe;}
 .msg-col-3{
@@ -1137,12 +1137,17 @@ ul.msg-tab button:focus{
     width: 100%;
     float: left;
     overflow-y: auto;
-    height: calc(100vh - 235px);
+    height: calc(100vh - 435px);
 }
 .msg-col-2 .msg-ipt{
      position: absolute;
     bottom: 0;
     width: 100%;
+}
+.msg-col-2 .msg-ipt button{
+  background: transparent;
+  outline: none;
+  border: none;
 }
 .msg-col-2 .msg-ipt .ipt-chat{
     position: relative;

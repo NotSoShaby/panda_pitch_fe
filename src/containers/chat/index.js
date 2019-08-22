@@ -3,19 +3,28 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Chat from './chat';
 import WebSocketInstance from './websocket';
+import { createChannel, getAllChannels } from '../../redux/actions/chat';
+import { logout } from '../../redux/actions/login';
 
 const chatID = '1';
 const username = 'admin';
+const email = 'sakshi.gupta@ongraph.ca';
 
 class Index extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			tabName: 'Latest',
+			messages: [],
 		};
 		const currentUser = username;
 		this.waitForSocketConnection(() => {
-			WebSocketInstance.addCallbacks(this.setMessages.bind(this), this.addMessage.bind(this));
+			WebSocketInstance.addCallbacks(
+				this.setMessages.bind(this),
+				this.addMessage.bind(this),
+				this.handleAuthenticationError.bind(this),
+			);
+			WebSocketInstance.sendMessage({ message: 'ping', chatId: chatID, email });
 			WebSocketInstance.fetchMessages(currentUser, chatID);
 		});
 
@@ -24,6 +33,8 @@ class Index extends Component {
 
 	componentDidMount() {
 		WebSocketInstance.connect();
+		const { getAllChannels } = this.props;
+		getAllChannels();
 	}
 
 	setMessages(messages) {
@@ -32,11 +43,11 @@ class Index extends Component {
 
 	onTabChange = (tabName) => {
 		this.setState({ tabName });
-	}
+	};
 
 	handleSearchUser = (e) => {
 		alert('eeeeeeeeeeeeeeee', e);
-	}
+	};
 
 	renderMessages = () => {
 		const { messages } = this.state;
@@ -52,9 +63,7 @@ class Index extends Component {
 					<p>
 						{message.content}
 						<br />
-						<small>
-							{this.renderTimestamp(message.timestamp)}
-						</small>
+						<small>{this.renderTimestamp(message.timestamp)}</small>
 					</p>
 				</li>
 			))
@@ -75,10 +84,14 @@ class Index extends Component {
 
 	messageChangeHandler = e => this.setState({ message: e.target.value });
 
-	addMessage(message) {
-		const { messages } = this.state;
-		this.setState({ messages: [...messages, message] });
-	}
+	createNewChat = () => {
+		const { createChannel } = this.props;
+		const data = {
+			messages: ['hii'],
+			participants: ['http://18.191.42.149:8000/api/profile/3/', 'http://18.191.42.149:8000/api/profile/4/'],
+		};
+		createChannel(data);
+	};
 
 	renderTimestamp = (timestamp) => {
 		let prefix = '';
@@ -101,6 +114,14 @@ class Index extends Component {
 		return prefix;
 	};
 
+
+	onChange = e => this.setState({ [e.target.name]: e.target.value });
+
+	addMessage(message) {
+		const { messages } = this.state;
+		this.setState({ messages: [...messages, message] });
+	}
+
 	waitForSocketConnection(callback) {
 		const component = this;
 		setTimeout(() => {
@@ -114,6 +135,14 @@ class Index extends Component {
 		}, 100);
 	}
 
+	handleAuthenticationError(messages) {
+		localStorage.clear();
+		const { history, logout } = this.props;
+		logout();
+		history.push('/login');
+		console.log('authentication error', messages);
+	}
+
 	render() {
 		return (
 			<Chat
@@ -123,6 +152,9 @@ class Index extends Component {
 				sendMessageHandler={this.sendMessageHandler}
 				onTabChange={this.onTabChange}
 				handleSearchUser={this.handleSearchUser}
+				createNewChat={this.createNewChat}
+				onChange={this.onChange}
+				sendMessage={this.sendMessageHandler}
 			/>
 		);
 	}
@@ -130,7 +162,14 @@ class Index extends Component {
 
 const mapStateToProps = state => state;
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{
+		createChannel: data => createChannel(data),
+		getAllChannels: data => getAllChannels(data),
+		logout: data => logout(data),
+	},
+	dispatch,
+);
 
 // connect to store
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

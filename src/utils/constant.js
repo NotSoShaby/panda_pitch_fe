@@ -28,6 +28,10 @@ class Constant {
 
   GET_PR_PITCHES_URL = '/api/pr/mypitch?pr_id=1'
 
+  CREATE_CHANNEL = '/api/chat/'
+
+  GET_USER_CHANNELS = '/api/chat/by_user/'
+
   GET = 'get';
 
 	POST = 'post';

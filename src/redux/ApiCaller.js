@@ -6,7 +6,7 @@ export default async (url, method = 'get', body) => fetch(`${CONSTANT.URL}${url}
 	method,
 	body: JSON.stringify(body),
 	headers: {
-		// Authorization: `Bearer ${localStorage.getItem('authentication_token')}`,
+		Authorization: `JWT ${localStorage.getItem('token')}`,
 		'Content-Type': 'application/json',
 	},
 })
