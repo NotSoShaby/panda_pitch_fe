@@ -8,10 +8,12 @@ import HELPER from '../../utils/helper';
 
 // create user signup request
 const GET_PR_PITCHES = function* getPitches() {
-	yield takeEvery('GET_PR_PITCHES', function* getPitches({ payload: { page, pageSize } }) {
+	yield takeEvery('GET_PR_PITCHES', function* getPitches({ payload: { page, pageSize, isJournalist } }) {
 		yield put(START('GET_PR_PITCHES_STARTED'));
 		try {
-			const RES = yield Request(`${CONSTANT.GET_PR_PITCHES_URL}?offset=${page}&limit=${pageSize}`, CONSTANT.GET);
+			const RES = yield Request(`
+				${isJournalist ? CONSTANT.GET_JR_PITCHES_URL : CONSTANT.GET_PR_PITCHES_URL}?offset=${page}&limit=${pageSize}
+			`, CONSTANT.GET);
 			if (RES.status) {
 				const pitches = yield toStorePaginationConfig({
 					...RES.data,

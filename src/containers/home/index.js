@@ -17,12 +17,9 @@ class Index extends Component {
 
 	getPitches = (page) => {
 		const { login: { data } } = this.props;
-		let isPr = true;
-		if (data && data.isJournalist) isPr = false;
-		if (isPr) {
+		if (data) {
 			const { getPitches } = this.props;
-			const prId = 1;
-			getPitches({ pageSize: 10, prId, page: (10 * page) });
+			getPitches({ pageSize: 10, isJournalist: data.isJournalist, page: (10 * page) });
 			this.setState({ selectedPage: page });
 		}
 	};
@@ -38,9 +35,12 @@ class Index extends Component {
 
 	// handle click on pitch card
 	onPitchClick = (data) => {
-		const { getPitchById } = this.props;
-		const url = data.url.split('/');
-		getPitchById(url[5]);
+		const { login } = this.props;
+		if (login.data && !login.data.isJournalist) {
+			const { getPitchById } = this.props;
+			const url = data.url.split('/');
+			getPitchById(url[5]);
+		}
 	};
 
 	render() {
