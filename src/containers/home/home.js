@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 // import { Link } from 'react-router-dom';
 // import METADATA from '../../utils/metadata';
+import { Link } from 'react-router-dom';
 import ListRow from '../../components/listRow';
 import GridRow from '../../components/gridRow';
 import JrHome from './jrHome';
@@ -97,6 +98,7 @@ const Home = (props) => {
 		<div>
 			<div className="container cstm_container bg_skyblue">
 				<HomeScreen {...props} view={view} setView={setView} />
+				<Link to="/chat">Go To Chat</Link>
 				<Layout view={view} {...props} />
 				<Pagination />
 			</div>
