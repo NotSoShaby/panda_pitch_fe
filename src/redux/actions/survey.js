@@ -12,15 +12,15 @@ const initialState = {
 
 
 const getJournalistState = (state = store.getState()) => {
-	if (state.journalistProfile) {
-		return state.journalistProfile;
+	if (state.profile) {
+		return state.profile;
 	}
 	return initialState;
 };
 
 const getPrState = (state = store.getState()) => {
-	if (state.prProfile) {
-		return state.prProfile;
+	if (state.profile) {
+		return state.profile;
 	}
 	return initialState;
 };

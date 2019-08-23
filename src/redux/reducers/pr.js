@@ -2,18 +2,18 @@ export const defaultState = {
 	data: {},
 };
 
-export function prProfile(state = defaultState, action) {
+export function profile(state = defaultState, action) {
 	switch (action.type) {
-		case 'CREATE_PR_PROFILE_INITIATED': {
+		case 'CREATE_USER_PROFILE_INITIATED': {
 			return { ...state, code: 'uninitiated' };
 		}
-		case 'CREATE_PR_PROFILE_STARTED': {
+		case 'CREATE_USER_PROFILE_STARTED': {
 			return { ...state };
 		}
-		case 'CREATE_PR_PROFILE_SUCCESS': {
+		case 'CREATE_USER_PROFILE_SUCCESS': {
 			return { ...state, ...action.payload };
 		}
-		case 'CREATE_PR_PROFILE_FAILED': {
+		case 'CREATE_USER_PROFILE_FAILED': {
 			return {
 				...state,
 				...action.payload,
