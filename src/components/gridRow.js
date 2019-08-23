@@ -34,7 +34,7 @@ const GridRow = (props) => {
 				</div>
 				<div className="card_pro_contnt">
 					<h3>{full_name}</h3>
-					<p>{position_data['0'].name}</p>
+					<p>{position_data && position_data['0'].name}</p>
 				</div>
 			</div>
 		</div>

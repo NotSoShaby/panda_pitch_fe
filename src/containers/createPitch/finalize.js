@@ -13,9 +13,17 @@ const settings = {
 	autoplay: true,
 };
 
+// const mediaSettings = {
+// 	dots: true,
+// 	infinite: true,
+// 	speed: 500,
+// 	slideToShow: 5,
+// 	slidesToScroll: 5,
+// };
+
 const FinalizePitch = ({
 	changeToPreviousScreen, selectedJournalists, removeJournalist, changeNextScreen,
-	title, content,
+	title, content, mediaFiles, is_private,
 }) => {
 	const [index, changeSlide] = useState(0);
 	let slider = null;
@@ -84,9 +92,9 @@ Coverage
 											<span>26/05/19</span>
 										</p>
 										<div className="pri-cont">
-											<p className="mg">Private</p>
+											<p className="mg">{is_private ? 'Private' : 'Public'}</p>
 											<ul className="pri-link grey">
-												{interests_data.map(({ name }) => <li><a href="ss">{name}</a></li>)}
+												{interests_data.map(({ name, url }) => <li><a target="blank" href={url}>{name}</a></li>)}
 											</ul>
 										</div>
 
@@ -101,10 +109,28 @@ Coverage
 								<h2>{title}</h2>
 								<div dangerouslySetInnerHTML={{ __html: content }} />
 							</div>
-							<div className="view-img">
-								<img src={imagepath} alt="" />
+							{/* <Slider
+								settings={mediaSettings}
+							>
+								{(mediaFiles.filter(data => data)).map(imageData => (
+									imageData
+										? (
+											<div className="cnp-snipt-img" key={imageData}>
+												<img src={imageData} alt="" />
+											</div>
+										) : null
+								))}
+							</Slider> */}
+							<div className="cnp-snipt media-snpt view-img">
+								{(mediaFiles.filter(data => data)).map(imageData => (
+									imageData
+										? (
+											<div className="cnp-snipt-img" key={imageData}>
+												<img src={imageData} alt="" />
+											</div>
+										) : null
+								))}
 							</div>
-
 							<div className="dlete_icn_row" role="button" onClick={() => removeJournalist(index)}>
 								<i className="fa fa-trash" aria-hidden="true" />
 							</div>

@@ -469,6 +469,13 @@ class Index extends Authorized {
 		this.setState({ pressReleaseImage: DOCUMENT });
 	}
 
+	handleAddMoreMedia = () => {
+		const { mediaFiles, MediaImages } = this.state;
+		const DATA = [...mediaFiles, ''];
+		const MediaImagesData = [...MediaImages, ''];
+		this.setState({ mediaFiles: DATA, MediaImages: MediaImagesData });
+	}
+
 	// return conditional form rendering
 	displayScreen = () => {
 		const { active } = this.state;
@@ -501,6 +508,7 @@ class Index extends Authorized {
 						onChangeState={this.onChangeState}
 						onChangeContent={this.onChangeContent}
 						onLodingImgError={this.onLodingImgError}
+						handleAddMoreMedia={this.handleAddMoreMedia}
 					/>
 				</Loader>
 			);
@@ -536,7 +544,6 @@ class Index extends Authorized {
 	}
 
 	render() {
-		console.log('statte==========>', this.state);
 		return (<>{this.displayScreen()}</>);
 	}
 }

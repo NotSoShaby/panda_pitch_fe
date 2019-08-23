@@ -66,6 +66,8 @@ const CreatePitch = ({
 	title,
 	errors,
 	onLodingImgError,
+	handleAddMoreMedia,
+	selectedClient,
 }) => (
 	<div className="create_new_pitch_form">
 		<div className="form_wrapper pitch_form_wraper">
@@ -83,6 +85,7 @@ const CreatePitch = ({
 							onSelect={handleClient}
 							setSearchValue={setSearchValue}
 							searchString={searchString}
+							value={selectedClient.name}
 						/>
 						<div className="error">
 							<p>{errors.selectedClient}</p>
@@ -231,6 +234,16 @@ const CreatePitch = ({
 							{mediaFiles.map((media, index) => (media
 								? renderMediaImages(index, media, handleRemoveMedia)
 								: renderMediaFiles(index, handleAddMedia)))}
+						</div>
+						<div className="ad-pernl-conts cnp-col">
+							<span
+								className="cnp-file"
+								role="button"
+								onClick={handleAddMoreMedia}
+							>
+								<i className="fa fa-plus" />
+								<span className="fnt_wght">Add More Images</span>
+							</span>
 						</div>
 						<div className="error">
 							<p>{errors.mediaImages}</p>
