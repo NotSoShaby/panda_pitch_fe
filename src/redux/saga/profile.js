@@ -7,24 +7,24 @@ import toStoreConfig from '../adapters/profile';
 import HELPER from '../../utils/helper';
 
 // create user signup request
-const CREATE_PR_PROFILE = function* createPrProfile() {
-	yield takeEvery('CREATE_PR_PROFILE', function* generateAction(action) {
-		yield put(START('CREATE_PR_PROFILE_STARTED'));
+const CREATE_USER_PROFILE = function* createPrProfile() {
+	yield takeEvery('CREATE_USER_PROFILE', function* generateAction(action) {
+		yield put(START('CREATE_USER_PROFILE_STARTED'));
 		try {
 			const RES = yield Request(CONSTANT.CREATE_PR_URL, CONSTANT.POST, action.payload);
 			if (RES.status) {
-				yield put({ type: 'CREATE_PR_PROFILE_SUCCESS', payload: DATA(toStoreConfig(RES.data)) });
+				yield put({ type: 'CREATE_USER_PROFILE_SUCCESS', payload: DATA(toStoreConfig(RES.data)) });
 				history.push('/survey');
 			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
 				HELPER.logout();
 				yield put({ type: 'LOGOUT' });
 			} else {
-				yield put({ type: 'CREATE_PR_PROFILE_FAILED', payload: ERROR(RES.data) });
+				yield put({ type: 'CREATE_USER_PROFILE_FAILED', payload: ERROR(RES.data) });
 			}
 		} catch (error) {
-			yield put({ type: 'CREATE_PR_PROFILE_FAILED', payload: ERROR(error) });
+			yield put({ type: 'CREATE_USER_PROFILE_FAILED', payload: ERROR(error) });
 		}
 	});
 };
 
-export default CREATE_PR_PROFILE;
+export default CREATE_USER_PROFILE;

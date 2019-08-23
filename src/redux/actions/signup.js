@@ -45,7 +45,7 @@ export const signUp = ({
 export const createPrProfile = ({
 	positionList, companiesList, linkedIn, twitter, url, fullName = null,
 }) => ({
-	type: 'CREATE_PR_PROFILE',
+	type: 'CREATE_USER_PROFILE',
 	payload: {
 		user: url,
 		full_name: fullName,
@@ -63,7 +63,7 @@ export const createJournalistProfile = ({
     && interestsList.value);
 	interestsList = interestsList.map(({ url }) => url);
 	return {
-		type: 'CREATE_JOURNALIST_PROFILE',
+		type: 'CREATE_USER_PROFILE',
 		payload: {
 			full_name: fullName,
 			user_id: getUserId(),
