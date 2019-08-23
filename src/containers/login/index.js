@@ -18,7 +18,8 @@ class Index extends UnAuthorized {
 	};
 
 	// handle login
-	handleSubmit = () => {
+	handleSubmit = (e) => {
+		e.preventDefault();
 		const { doLogin } = this.props;
 		const obj = this.state;
 		const res = HELPER.loginValidation(obj);

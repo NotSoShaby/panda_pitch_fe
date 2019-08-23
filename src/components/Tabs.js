@@ -5,7 +5,7 @@ const Tabs = ({ tabData, onTabChange, tabName }) => (
 	<ul className="msg-tab nav nav-pills">
 		{
 			tabData.map(tab => (
-				<li className={tab === tabName ? 'activeTab' : ''}>
+				<li key={tab} className={tab === tabName ? 'activeTab' : ''}>
 					<button onClick={() => onTabChange(tab)}>{tab}</button>
 				</li>
 			))

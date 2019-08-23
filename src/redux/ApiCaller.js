@@ -1,20 +1,25 @@
-import fetch from 'cross-fetch';
+import axios from 'axios';
 import CONSTANT from '../utils/constant';
+import { checkStatus, handleError } from './handler';
+
+
+const headerData = (isAuthenticationRequired, multipart) => ({
+	Authorization: isAuthenticationRequired && `JWT ${localStorage.getItem('token')}`,
+	'content-type': multipart ? 'multipart/form-data' : 'application/json',
+});
 
 // Make an api call
-export default async (url, method = 'get', body) => fetch(`${CONSTANT.URL}${url}`, {
+export default (
+	endpoint,
+	method = CONSTANT.GET,
+	body,
+	isAuthenticationRequired = true,
+	hostName = CONSTANT.URL,
+	multipart = false,
+) => axios(`${hostName}${endpoint}`, {
+	headers: headerData(isAuthenticationRequired, multipart),
 	method,
-	body: JSON.stringify(body),
-	headers: {
-		Authorization: `JWT ${localStorage.getItem('token')}`,
-		'Content-Type': 'application/json',
-	},
+	data: multipart ? body : JSON.stringify(body),
 })
-	.then(response => response.json().then(json => ({ json, response })))
-	.then(({ json, response }) => {
-		if (!response.ok) {
-			return Promise.reject(json);
-		}
-		return json;
-	})
-	.then(response => response, error => error);
+	.then(checkStatus)
+	.catch(handleError);

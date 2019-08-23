@@ -41,7 +41,25 @@ class MetaData {
 		},
 	];
 
-  PIT
+	CTA = [
+		{ value: 'Interview', isActive: false, apiValue: 'interview' },
+		{ value: 'Coverage', isActive: false, apiValue: 'coverage' },
+		{ value: 'Written Q&A', isActive: false, apiValue: 'written_qa' },
+		{ value: 'Byllined Article', isActive: false, apiValue: 'bylined_article' },
+		{ value: 'Event Invite', isActive: false, apiValue: 'event_invite' },
+		{ value: 'News', isActive: false, apiValue: 'news' },
+		{ value: 'Product Review', isActive: false, apiValue: 'product_review' },
+	];
+
+	TOPICS = [
+		{ value: 'Travel', isActive: false },
+		{ value: 'Food', isActive: false },
+		{ value: 'Leisure', isActive: false },
+		{ value: 'Healthcare', isActive: false },
+		{ value: 'Technology', isActive: false },
+	]
+
+	PIT
 }
 
 export default new MetaData();

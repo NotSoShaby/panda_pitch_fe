@@ -3,43 +3,53 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Home from './home';
 import Modal from '../../components/modal';
-import HELPER from '../../utils/helper';
-import { getPrPitches } from '../../redux/actions/pitches';
+import { getPrPitches, getPitchById } from '../../redux/actions/pitches';
 
 class Index extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { isModalOpen: false };
+		this.state = { isModalOpen: false, selectedPage: 0 };
 	}
 
 	componentDidMount() {
-		if (this.isPr()) {
-			const { getPitches } = this.props;
-			getPitches();
-		}
+		this.getPitches(0);
 	}
 
+	getPitches = (page) => {
+		const { login: { data } } = this.props;
+		if (data) {
+			const { getPitches } = this.props;
+			getPitches({ pageSize: 10, isJournalist: data.isJournalist, page: (10 * page) });
+			this.setState({ selectedPage: page });
+		}
+	};
 
 	// close modal
 	handleModalClose = () => this.setState({ isModalOpen: false });
 
 	// create new pitch
-	createNewPitch = () => this.setState({ isModalOpen: true });
+	createNewPitch = () => {
+		const { history: { push } } = this.props;
+		push('/create_pitch');
+	};
 
-	isPr = () => {
-		const { login: { data: { role } }, signup } = this.props;
-		let type = role;
-		if (!type) {
-			type = signup.data.role;
+	// handle click on pitch card
+	onPitchClick = (data) => {
+		const { login } = this.props;
+		if (login.data && !login.data.isJournalist) {
+			const { getPitchById } = this.props;
+			const url = data.url.split('/');
+			getPitchById(url[5]);
 		}
-		if (HELPER.isPr(type)) {
-			return true;
-		}
-		return false;
 	};
 
 	render() {
 		const { isModalOpen } = this.state;
+		const { login: { data } } = this.props;
+		let isPr = true;
+		if (data && data.isJournalist) {
+			isPr = false;
+		}
 		return [
 			<Modal key="modal" onClose={this.handleModalClose} isOpen={isModalOpen} autoClose>
 				<p>Feature Coming Soon !</p>
@@ -49,16 +59,28 @@ class Index extends Component {
 					</button>
 				</div>
 			</Modal>,
-			<Home isPr={this.isPr()} {...this.props} key="home" createNewPitch={this.createNewPitch} />,
+			<Home
+				isPr={isPr}
+				{...this.props}
+				{...this.state}
+				key="home"
+				createNewPitch={this.createNewPitch}
+				onPageChange={this.getPitches}
+				onPitchClick={this.onPitchClick}
+			/>,
 		];
 	}
 }
 
 const mapStateToProps = state => state;
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-	getPitches: data => getPrPitches(data),
-}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{
+		getPitches: data => getPrPitches(data),
+		getPitchById: data => getPitchById(data),
+	},
+	dispatch,
+);
 
 // connect to store
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

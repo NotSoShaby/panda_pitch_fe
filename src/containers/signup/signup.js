@@ -1,5 +1,5 @@
 import React from 'react';
-import StatusBar from './statusBar';
+import StatusBar from '../../components/statusBar';
 import Form1 from './form1';
 import Form2 from './form2';
 import Form3 from './form3';
@@ -17,7 +17,7 @@ const RenderForm = ({ ...props }) => {
 };
 
 // status bar and sign up form
-const SignUp = ({ ...props }) => {
+const SignUp = ({ onSubmit, ...props }) => {
 	const { step, role } = props;
 	let totalSteps = 4;
 	if (HELPER.isPr(role)) { totalSteps = 3; }
@@ -27,10 +27,10 @@ const SignUp = ({ ...props }) => {
 			<div className="form_logo">
 				<img src={IMAGES.WHITE_LOGO} alt="" />
 			</div>
-			<div className="form_wrapper">
+			<form onSubmit={onSubmit} className="form_wrapper">
 				{step !== 1 && <StatusBar steps={totalSteps} active={step - 1} />}
 				<RenderForm {...props} />
-			</div>
+			</form>
 		</div>
 	);
 };

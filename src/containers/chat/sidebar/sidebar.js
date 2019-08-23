@@ -21,7 +21,7 @@ const Sidebar = ({
 			<div className="tab-pane fade in active" id="home">
 				{data.map(channel => (
 					<ChatUserCard
-						key={data.id}
+						key={channel.id}
 						data={{ ...UserCardData[0], name: channel.name }}
 						onClick={() => onChannelChange(channel)}
 					/>

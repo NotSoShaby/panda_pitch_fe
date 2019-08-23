@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Survey from './survey';
 import Authorized from '../../routes/authorized';
-import { getJRSurvey, getPRSurvey, surveySubmission } from '../../redux/actions/survey';
+import { getSurvey, surveySubmission } from '../../redux/actions/survey';
 import HELPER from '../../utils/helper';
 import Loader from '../../components/loader';
 
@@ -30,14 +30,8 @@ class Index extends Authorized {
 
 	// request for survey
 	componentDidMount() {
-		const { role } = this.props.signup.data;
-		const { getJRSurvey, getPRSurvey } = this.props;
-		if (HELPER.isJournalist(role)) {
-			getJRSurvey();
-		} else {
-			getPRSurvey();
-		}
-		// getSurvey();
+		const { getSurvey, login: { data: { isJournalist } } } = this.props;
+		getSurvey({ id: isJournalist ? 2 : 1 });
 	}
 
 	// handle survey answers
@@ -51,7 +45,10 @@ class Index extends Authorized {
 	handleCancel = () => this.props.history.push('/');
 
 	// handle survey submission and redirect to the home screen
-	handleSubmit = () => surveySubmission(this.state);
+	handleSubmit = () => {
+		const { login: { data: { isJournalist } } } = this.props;
+		surveySubmission({ ...this.state, survey: isJournalist ? 2 : 1 });
+	}
 
 	render() {
 		return (
@@ -74,8 +71,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{
-		getJRSurvey: () => getJRSurvey(),
-		getPRSurvey: () => getPRSurvey(),
+		getSurvey: data => getSurvey(data),
 	},
 	dispatch,
 );
