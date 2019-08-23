@@ -1,17 +1,12 @@
 import { combineReducers } from 'redux';
-// import { login } from './user';
-// import { signup } from './signup';
 import { login } from './login';
-import { journalistProfile } from './journalist';
 import { journalists } from './journalists';
-import { prProfile, pr } from './pr';
+import { profile, pr } from './pr';
 import { survey } from './survey';
 import { journalistInterests, interests } from './interests';
 import { prPitches } from './pitches';
 import { prClientsAuto } from './prClientsAuto';
 import { prClient, client, clientAutoComplete } from './prClient';
-// import { prMediaList } from './prMedialist';
-// import history from '../../routes/history';
 import { prCompanies } from './company';
 import { positions } from './position';
 import { createClient } from './clients';
@@ -21,11 +16,8 @@ import { pitchDetail } from './pitchDetail';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
-	// signup,
-	// login,
 	login,
-	journalistProfile,
-	prProfile,
+	profile,
 	survey,
 	journalistInterests,
 	prPitches,
@@ -49,8 +41,7 @@ const initialState = { code: 'UNINITIATED', isLoading: false };
 // module default state for when user logout
 const defaultState = {
 	login: initialState,
-	journalistProfile: initialState,
-	prProfile: initialState,
+	profile: initialState,
 	survey: initialState,
 	journalistInterests: initialState,
 	prPitches: initialState,
@@ -60,7 +51,6 @@ const defaultState = {
 	prCompanies: initialState,
 	positions: initialState,
 	client: initialState,
-	getClientsAuto: initialState,
 	clientAutoComplete: initialState,
 	interests: initialState,
 	createClientReducer: initialState,
