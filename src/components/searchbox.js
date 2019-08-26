@@ -15,6 +15,11 @@ class SearchBox extends React.Component {
 		};
 	}
 
+	componentWillReceiveProps(nextprops) {
+		const { value } = nextprops;
+		this.setState({ value });
+	}
+
 	changeSelection = (dataValue) => {
 		const { onSelect } = this.props;
 		this.setState({ value: dataValue.name, listVisible: false });

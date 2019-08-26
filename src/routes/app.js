@@ -6,6 +6,7 @@ import Home from '../containers/home';
 import Authorized from './authorized';
 import JRHeader from '../components/header/jrHeader';
 import PRHeader from '../components/header/prHeader';
+import CreatePitch from '../containers/createPitch';
 
 class App extends Authorized {
 	handleLogout = () => {
@@ -28,6 +29,7 @@ class App extends Authorized {
 			<div className="wrapper">
 				{this.renderHeader()}
 				<Route exact path="/" component={props => <Home {...props} />} />
+				<Route exact path="/create_pitch" component={props => <CreatePitch {...props} />} />
 			</div>
 		);
 	}

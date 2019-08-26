@@ -16,40 +16,49 @@ import {
 	createPitchActionForm1,
 	createPitchActionForm2,
 	createPitchActionForm3,
-	clearCreatePitchForm,
+	clearReducer,
 } from '../../redux/actions/pitch';
 import Personalization from './personalize';
 import FinalizePitch from './finalize';
 import CommonHelper from '../../utils/helper';
 import IMAGES from '../../assets/images';
+import METADATA from '../../utils/metadata';
 
 const { DOCUMENT } = IMAGES;
 
+const { CTA } = METADATA;
+
 class Index extends Authorized {
-	state = {
-		hideNewClientDiv: true,
-		progressValue: 0,
-		newClient: { name: '', website: '', image: null },
-		pressReleaseImage: '',
-		steps: 3,
-		active: 1,
-		selectedMediaList: [],
-		name: '',
-		value: '',
-		searchString: '',
-		selectedClient: {},
-		allInterests: [],
-		journalists: [{ id: 1, name: 'shhh koi h' }, { id: 2, name: 'chal be' }, { id: 3, name: 'koi nhi hai' }],
-		selectedJournalists: [],
-		mediaFiles: ['', '', ''],
-		MediaImages: ['', '', ''],
-		cta: [],
-		title: '',
-		is_private: false,
-		press_release: '',
-		saveAndNext: false,
-		selectedForm: 1,
-		errors: {},
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			hideNewClientDiv: true,
+			progressValue: 0,
+			newClient: { name: '', website: '', image: null },
+			pressReleaseImage: '',
+			steps: 3,
+			active: 1,
+			selectedMediaList: [],
+			name: '',
+			value: '',
+			searchString: '',
+			selectedClient: {},
+			allInterests: [],
+			journalists: [{ id: 1, name: 'shhh koi h' }, { id: 2, name: 'chal be' }, { id: 3, name: 'koi nhi hai' }],
+			selectedJournalists: [],
+			mediaFiles: ['', '', ''],
+			MediaImages: ['', '', ''],
+			cta: JSON.parse(JSON.stringify(CTA)),
+			title: '',
+			is_private: false,
+			press_release: '',
+			saveAndNext: false,
+			selectedForm: 1,
+			errors: {},
+			loadContent: false,
+			pitchUrl: '',
+		};
 	}
 
   autoFillState = () => {
@@ -57,18 +66,22 @@ class Index extends Authorized {
   	if (code === 'SUCCESS') {
   		const {
   			topicsData, content, cta, images, pressRelease, clientData, availability,
+  			title, url,
   		} = data;
   		const allInterests = topicsData.map(({ name, url }) => ({
   			isActive: true,
   			url,
   			value: name,
   		}));
-  		const ctaObj = cta.map(ct => ({ isActive: true, value: ct, apiValue: ct }));
+  		const ctaObj = cta.map(ct => ({
+  			isActive: true, value: CommonHelper.getCtaUserValue(ct), apiValue: ct,
+  		}));
   		let progressValue = 0;
   		let is_private = false;
-  		const MediaImages = images;
+  		const MediaImages = images.map(data => data.image);
   		const selectedClient = clientData;
   		const press_release = pressRelease;
+
   		if (availability === 'embargo') {
   			progressValue = 10;
   			is_private = true;
@@ -76,11 +89,13 @@ class Index extends Authorized {
   			progressValue = 20;
   			is_private = true;
   		}
+  		const UnselectedCta = CTA.filter(data => !cta.includes(data.apiValue));
 
   		return {
   			allInterests,
   			content,
-  			cta: ctaObj,
+  			title,
+  			cta: [...UnselectedCta, ...ctaObj],
   			progressValue,
   			is_private,
   			MediaImages,
@@ -88,16 +103,16 @@ class Index extends Authorized {
   			press_release,
   			pressReleaseImage: press_release,
   			mediaFiles: MediaImages,
+  			pitchUrl: url,
   		};
   	}
   	return this.state;
   }
 
-  componentDidMount() {
-  	const { clearCreatePitchForm } = this.props;
-  	clearCreatePitchForm();
+  async componentDidMount() {
   	const data = this.autoFillState();
-  	this.setState(data);
+  	await this.setState(data);
+  	await this.setState({ loadContent: true });
   }
 
 
@@ -119,6 +134,12 @@ class Index extends Authorized {
   			this.handleFormSubmit(createPitchReducer);
   		}
   	}
+  }
+
+  componentWillUnmount() {
+  	const { clearReducer } = this.props;
+  	clearReducer('CLEAR_GET_PITCH_BY_ID');
+  	clearReducer('CLEAR_CREATE_PITCH_FORM');
   }
 
 
@@ -272,8 +293,10 @@ class Index extends Authorized {
 		form_data.append('content', content);
 		form_data.append('availability', this.availabilityType());
 		const { createPitchReducer: { form1 } } = this.props;
-		if (form1 && form1.url) {
-			const url = form1.url.split('/');
+		const { pitchUrl } = this.state;
+		const pitchId = ((form1 && form1.url) || pitchUrl);
+		if (pitchId) {
+			const url = pitchId.split('/');
 			form_data.append('id', url[5]);
 		}
 
@@ -564,7 +587,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		createPitchActionForm1: data => createPitchActionForm1(data),
 		createPitchActionForm2: data => createPitchActionForm2(data),
 		createPitchActionForm3: data => createPitchActionForm3(data),
-		clearCreatePitchForm: data => clearCreatePitchForm(data),
+		clearReducer: data => clearReducer(data),
 	},
 	dispatch,
 );

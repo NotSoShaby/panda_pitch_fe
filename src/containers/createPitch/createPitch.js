@@ -7,9 +7,6 @@ import InputRangeSelector from '../../components/inputRange';
 import SearchBox from '../../components/searchbox';
 import AutoComplete from '../../components/autoComplete';
 import StatusBar from '../../components/statusBar';
-import METADATA from '../../utils/metadata';
-
-const { CTA } = METADATA;
 
 const renderMediaFiles = (index, handleAddMedia) => (
 	<div className="cnp-snipt-img">
@@ -68,6 +65,8 @@ const CreatePitch = ({
 	onLodingImgError,
 	handleAddMoreMedia,
 	selectedClient,
+	cta,
+	loadContent,
 }) => (
 	<div className="create_new_pitch_form">
 		<div className="form_wrapper pitch_form_wraper">
@@ -165,7 +164,7 @@ const CreatePitch = ({
 							}
 							onCreate={onCreate}
 							onSelect={onCTASelection}
-							boxes={CTA}
+							boxes={cta}
 							maxLength={2}
 							onChange={getJournalistInterests}
 						/>
@@ -192,16 +191,19 @@ const CreatePitch = ({
 					<div className="full_widt pos_relative">
 						<h3>The Pitch</h3>
 						<div className="new_field cstm_editor">
-							<TinyMCE
-								content={content}
-								config={{
-									plugins: 'autolink link image lists print preview',
-									toolbar:
-                      'undo redo | bold italic | alignleft aligncenter alignright',
-									browser_spellcheck: true,
-								}}
-								onChange={x => onChangeContent(x)}
-							/>
+							{loadContent
+								? (
+									<TinyMCE
+										content={content}
+										config={{
+											plugins: 'autolink link image lists print preview',
+											toolbar:
+												'undo redo | bold italic | alignleft aligncenter alignright',
+											browser_spellcheck: true,
+										}}
+										onChange={x => onChangeContent(x)}
+									/>
+								) : null}
 						</div>
 						<div className="hint">
 							<img src="images/bulb_icn.png" alt="alert" />
