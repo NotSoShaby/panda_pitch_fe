@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { logout } from '../redux/actions/app';
 import Home from '../containers/home';
 import Authorized from './authorized';
@@ -8,12 +9,23 @@ import JRHeader from '../components/header/jrHeader';
 import PRHeader from '../components/header/prHeader';
 
 class App extends Authorized {
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
+
 	handleLogout = () => {
-		const { history } = this.props;
-		localStorage.clear();
+		const { logout } = this.props;
 		logout();
-		history.push('/login');
 	};
+
+	static getDerivedStateFromProps(props) {
+		const { login: { data }, logout } = props;
+		if (!data || (data && Object.keys(data).length === 0 && data.constructor === Object)) {
+			logout();
+		}
+		return null;
+	}
 
 	renderHeader = () => {
 		const { login: { data } } = this.props;
@@ -37,5 +49,12 @@ const mapStateToProps = state => ({
 	login: state.login,
 });
 
+const mapDispatchToProps = dispatch => bindActionCreators(
+	{
+		logout: values => logout(values),
+	},
+	dispatch,
+);
+
 // connect to store
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
