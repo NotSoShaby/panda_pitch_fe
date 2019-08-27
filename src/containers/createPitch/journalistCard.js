@@ -22,9 +22,9 @@ const JournalistCard = ({
 					<div className="card_pro_contnt">
 						<h3>
 							{full_name}
-							<span>{position_data[0].name}</span>
+							<span>{position_data && position_data[0] && position_data[0].name}</span>
 						</h3>
-						<p>{company_data.name}</p>
+						<p>{company_data && company_data.name}</p>
 					</div>
 				</div>
 			</div>

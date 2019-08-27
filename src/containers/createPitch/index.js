@@ -79,9 +79,9 @@ class Index extends Authorized {
   		let progressValue = 0;
   		let is_private = false;
   		const MediaImages = images.map(data => data.image);
+  		const mediaFiles = images.map(data => new File([data.image], 'mediaImage.png'));
   		const selectedClient = clientData;
   		const press_release = pressRelease;
-
   		if (availability === 'embargo') {
   			progressValue = 10;
   			is_private = true;
@@ -90,7 +90,6 @@ class Index extends Authorized {
   			is_private = true;
   		}
   		const UnselectedCta = CTA.filter(data => !cta.includes(data.apiValue));
-
   		return {
   			allInterests,
   			content,
@@ -98,11 +97,11 @@ class Index extends Authorized {
   			cta: [...UnselectedCta, ...ctaObj],
   			progressValue,
   			is_private,
-  			MediaImages,
+  			MediaImages: mediaFiles.length ? mediaFiles : ['', '', ''],
   			selectedClient,
-  			press_release,
   			pressReleaseImage: press_release,
-  			mediaFiles: MediaImages,
+  			press_release: new File([pressRelease], 'pressRelease.png') || '',
+  			mediaFiles: MediaImages.length ? MediaImages : ['', '', ''],
   			pitchUrl: url,
   		};
   	}

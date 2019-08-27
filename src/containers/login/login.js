@@ -51,7 +51,7 @@ const Login = ({
 						<div className="error">{login.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 					)}
 					<div className="step_btn_wrapper">
-						<Button className="green_bg_btn btn_cntr" onClick={onSubmit}>Submit</Button>
+						<Button type="submit" className="green_bg_btn btn_cntr" onClick={onSubmit}>Submit</Button>
 					</div>
 				</div>
 				<p className="text-center sign_up_marg">

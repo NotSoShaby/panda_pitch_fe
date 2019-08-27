@@ -69,9 +69,9 @@ const FinalizePitch = ({
 												<h3>
 													{full_name}
 ,
-													<span className="side_contnt">{position_data[0].name}</span>
+													<span className="side_contnt">{position_data && position_data[0] && position_data[0].name}</span>
 												</h3>
-												<p>{company_data.name}</p>
+												<p>{company_data && company_data.name}</p>
 											</span>
 										</div>
 										<div className="view-detail bdr_botm0">

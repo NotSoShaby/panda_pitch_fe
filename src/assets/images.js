@@ -24,6 +24,10 @@ class Images {
   GOOGLE = `${publicPath}/images/google.png`;
 
   DOCUMENT = `${publicPath}/images/documentImg.png`;
+
+  LOGO_SAMPLE = `${publicPath}/images/logoSample.jpeg`;
+
+  DELETE = `${publicPath}/images/delete.jpg`;
 }
 
 export default new Images();

@@ -66,7 +66,7 @@ class Index extends Component {
 				key="home"
 				createNewPitch={this.createNewPitch}
 				onPageChange={this.getPitches}
-				onPitchClick={this.onPitchClick}
+				onPitchClick={() => console.log('add pitch update feature')}
 			/>,
 		];
 	}
