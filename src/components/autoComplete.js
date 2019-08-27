@@ -11,6 +11,11 @@ class AutoComplete extends Component {
 		};
 	}
 
+	componentWillReceiveProps(nextProps) {
+		const { boxes } = nextProps;
+		this.setState({ box: boxes });
+	}
+
 	// add item in selected tag list
 	putInBox = (val) => {
 		const { box } = this.state;
