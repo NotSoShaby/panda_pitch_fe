@@ -100,7 +100,7 @@ class Index extends Authorized {
   			MediaImages: mediaFiles.length ? mediaFiles : ['', '', ''],
   			selectedClient,
   			pressReleaseImage: press_release,
-  			press_release: new File([pressRelease], 'pressRelease.png') || '',
+  			press_release: '',
   			mediaFiles: MediaImages.length ? MediaImages : ['', '', ''],
   			pitchUrl: url,
   		};
