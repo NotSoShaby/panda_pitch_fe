@@ -844,6 +844,7 @@ span.cover {
   margin-bottom: 19px;
 }
 .card_top_img {
+  min-height: 137px;
   width: 100%;
   text-align: center;
   border-bottom: 1px solid #f5f5f5;
@@ -905,6 +906,25 @@ p.pitch_score {
   padding: 0 24px;
   margin-bottom: 26px;
 }
+
+.pitch_list {
+  margin-top: 12px;
+}
+
+.pitch_list_action {
+  margin-top: -10px;
+  background-color: transparent;
+  border-width: 0;
+}
+
+.pitch_list_img {
+  max-width: 52px;
+}
+
+.pitch_list_action_img {
+  max-width: 30px;
+}
+
 .card_pro_img {
   width: 55px;
   height: 55px;
@@ -1731,7 +1751,7 @@ ul.pri-link a {
 .hint {
   border: 1px solid #ddd;
   border-radius: 4px;
-  width: 281px;
+  width: 219px;
   padding: 13px;
   text-align: center;
   position: absolute;
