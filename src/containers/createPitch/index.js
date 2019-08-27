@@ -79,7 +79,14 @@ class Index extends Authorized {
   		let progressValue = 0;
   		let is_private = false;
   		const MediaImages = images.map(data => data.image);
-  		const mediaFiles = images.map(data => new File([data.image], 'mediaImage.png'));
+  		const mediaFiles = images.map((data) => {
+  			const imageProp = CommonHelper.getImageProp(data.image);
+  			if (imageProp) {
+  				const { name, type } = imageProp;
+  				return new File([data.image], name, { type });
+  			}
+  			return '';
+  		});
   		const selectedClient = clientData;
   		const press_release = pressRelease;
   		if (availability === 'embargo') {
@@ -90,6 +97,12 @@ class Index extends Authorized {
   			is_private = true;
   		}
   		const UnselectedCta = CTA.filter(data => !cta.includes(data.apiValue));
+  		const imageProp = CommonHelper.getImageProp(press_release);
+  		let press_release_data = '';
+  		if (imageProp) {
+  			const { name, type } = imageProp;
+  			press_release_data = new File([data.image], name, { type });
+  		}
   		return {
   			allInterests,
   			content,
@@ -100,7 +113,7 @@ class Index extends Authorized {
   			MediaImages: mediaFiles.length ? mediaFiles : ['', '', ''],
   			selectedClient,
   			pressReleaseImage: press_release,
-  			press_release: '',
+  			press_release: press_release_data,
   			mediaFiles: MediaImages.length ? MediaImages : ['', '', ''],
   			pitchUrl: url,
   		};

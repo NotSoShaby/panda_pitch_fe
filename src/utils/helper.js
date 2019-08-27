@@ -266,6 +266,50 @@ class Helper {
 				return '';
 		}
 	}
+
+	getImageProp = (data) => {
+		if (data && typeof data === 'string') {
+			const imageName = data.split('/');
+			const name = imageName.length ? imageName[imageName.length - 1] : '';
+			const imageType = name ? name.split('.') : [];
+			const type = imageType.length ? this.getImageMimeType(imageType[1]) : '';
+			if (name && type) {
+				return { type, name };
+			}
+		}
+		return '';
+	}
+
+	getImageMimeType = (type) => {
+		switch (type) {
+			case 'png':
+				return 'image/png';
+			case 'gif':
+				return 'image/gif';
+			case 'jpeg':
+				return 'image/jpeg';
+			case 'jpg':
+				return 'image/jpeg';
+			case 'svg':
+				return 'image/svg+xml';
+			case 'webp':
+				return 'image/webp';
+			case 'bmp':
+				return 'image/x-ms-bmp';
+			case 'jng':
+				return 'image/x-jng';
+			case 'ico':
+				return 'image/x-icon';
+			case 'wbmp':
+				return 'image/vnd.wap.wbmp';
+			case 'tif':
+				return 'image/tiff';
+			case 'tiff':
+				return 'image/tiff';
+			default:
+				return '';
+		}
+	}
 }
 
 export default new Helper();
