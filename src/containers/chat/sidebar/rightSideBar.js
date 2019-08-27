@@ -1,20 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import IMAGES from '../../../assets/images';
 
-const RightSideBar = () => (
+const RightSideBar = (
+	{ profile: { data: { fullName, companyData = {}, positionData = [] } = {} } },
+) => (
 	<div className="msg-col-3">
 		<div className="card_pro_row msg-crd-col ">
 			<div className="card_pro_img crd-img ">
 				<img src={IMAGES.CARD_PRO} alt="selectedUser" />
 			</div>
 			<div className="card_pro_contnt crd-cont">
-				<h3>Hillel Holland</h3>
-				<p>Bloomberg News</p>
-				<p>Senior Writer</p>
+				<h3>{fullName}</h3>
+				<p>{companyData.name}</p>
+				<p>{positionData[0] && positionData[0].name}</p>
 			</div>
 		</div>
 		<div className="crd-para">
-			<p>Senior Writer for Bloomberg News Views expressed In Twitter feed are my own.</p>
+			<p>
+				{positionData[0] && positionData[0].name}
+				{' '}
+        for
+				{' '}
+				{companyData.name}
+				{' '}
+        News Views expressed In Twitter feed are my own.
+			</p>
 			<p>
 				<span>
 					coverage area :
@@ -23,7 +34,7 @@ const RightSideBar = () => (
 			</p>
 		</div>
 		<span className="msg-go-btn">
-			<button type="button" className="btn new_pitch_btn disc-btn">GO TO PROFILE</button>
+			<button type="button" className="btn new_pitch_btn disc-btn"><Link to="/profile">GO TO PROFILE</Link></button>
 		</span>
 	</div>
 );

@@ -52,7 +52,7 @@ const Chat = ({
 							<p>Lorem Ipsum has been the industry's.</p>
 						</div>
 					</div>
-					{messages.map(message => <Message key={message.id} {...message} />)}
+					{messages.map(message => <Message key={message.id} {...message} {...props} />)}
 					<div ref={(ref) => { messagesEndRef = ref; return null; }} className="card_pro_row msg-crd-col cht-box" />
 					<div className="msg-ipt">
 						<form className="ipt-chat" onSubmit={sendMessage}>
@@ -69,7 +69,7 @@ const Chat = ({
 
 				</div>
 			</div>
-			<RightSidebar />
+			<RightSidebar {...props} />
 		</div>
 	);
 };

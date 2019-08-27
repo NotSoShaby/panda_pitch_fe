@@ -22,7 +22,7 @@ class WebSocketService extends Component {
 	}
 
 	connect(id) {
-		const path = `ws://18.191.42.149:8000/ws/chat/${id}/?token=${localStorage.getItem('token')}`;
+		const path = `ws://18.191.202.211:8000/ws/chat/${id}/?token=${localStorage.getItem('token')}`;
 		this.socketRef = new WebSocket(path);
 		this.socketRef.onopen = () => {
 			console.log('websocket open');
@@ -52,9 +52,9 @@ class WebSocketService extends Component {
 		if (command === 'new_message') {
 			this.callbacks[command](parsedData.message);
 		}
-		if (parsedData.user === 'sakshi.gupta@ongraph.ca') {
+		if (parsedData.user) {
 			const key = 'new_message';
-			this.callbacks[key](parsedData.message);
+			this.callbacks[key](parsedData.message, parsedData.user);
 		}
 		if (parsedData.user === 'Anonymous user') {
 			const key = 'authentication';
@@ -68,7 +68,10 @@ class WebSocketService extends Component {
 
 	newChatMessages(message) {
 		this.sendMessage({
-			command: 'new_message', from: message.from, message: message.content, chatId: message.chatId,
+			// command: 'new_message',
+			// from: message.from,
+			message: message.content,
+			chatId: message.chatId,
 		});
 	}
 

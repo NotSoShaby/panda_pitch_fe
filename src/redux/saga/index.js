@@ -24,6 +24,7 @@ import FIND_JOURNALIST_URL from './journalists';
 import GET_PITCH_BY_ID from './getPitchById';
 import CREATE_A_NEW_CHANNEL from './createChannel';
 import { GET_USER_CHANNELS, GET_CHANNEL_BY_ID } from './channels';
+import GET_USER_BY_ID from './getUserById';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -55,6 +56,7 @@ const rootSaga = function* rootSaga() {
 			CREATE_A_NEW_CHANNEL(),
 			GET_USER_CHANNELS(),
 			GET_CHANNEL_BY_ID(),
+			GET_USER_BY_ID(),
 		],
 	);
 };

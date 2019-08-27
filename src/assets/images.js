@@ -1,29 +1,29 @@
-import CONSTANT from '../utils/constant';
+// import CONSTANT from '../utils/constant';
 
-const publicPath = CONSTANT.PUBLIC_PATH;
+// const publicPath = CONSTANT.PUBLIC_PATH;
 
 class Images {
-  LOGO = `${publicPath}/images/logo.svg`;
+  LOGO = '/images/logo.svg';
 
-  WHITE_LOGO = `${publicPath}/images/white_logo.svg`;
+  WHITE_LOGO = '/images/white_logo.svg';
 
-  USER = `${publicPath}/images/user.png`;
+  USER = '/images/user.png';
 
-  Message = `${publicPath}/images/message.png`;
+  Message = '/images/message.png';
 
-  SEARCH_ICON = `${publicPath}/images/srch_icn.svg`;
+  SEARCH_ICON = '/images/srch_icn.svg';
 
-  PROFILE_PIC = `${publicPath}/images/pro_pic.jpg`;
+  PROFILE_PIC = '/images/pro_pic.jpg';
 
-  SAMSUNG = `${publicPath}/images/samsung.png`;
+  SAMSUNG = '/images/samsung.png';
 
-  CARD_PRO = `${publicPath}/images/card_pro.jpg`;
+  CARD_PRO = '/images/card_pro.jpg';
 
-  APPLE = `${publicPath}/images/apple_logo.png`;
+  APPLE = '/images/apple_logo.png';
 
-  GOOGLE = `${publicPath}/images/google.png`;
+  GOOGLE = '/images/google.png';
 
-  DOCUMENT = `${publicPath}/images/documentImg.png`;
+  DOCUMENT = '/images/documentImg.png';
 }
 
 export default new Images();

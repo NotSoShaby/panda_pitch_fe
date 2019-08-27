@@ -5,10 +5,11 @@ import Chat from './chat';
 import WebSocketInstance from './websocket';
 import { createChannel, getAllChannels, getChannelByChannelId } from '../../redux/actions/chat';
 import { logout } from '../../redux/actions/login';
+import { getUserById } from '../../redux/actions/user';
 
 // const chatID = '1';
 const username = 'admin';
-const email = 'sakshi.gupta@ongraph.ca';
+const email = 'pr@pr.com';
 
 class Index extends Component {
 	constructor(props) {
@@ -36,7 +37,7 @@ class Index extends Component {
 
 	static getDerivedStateFromProps(props, state) {
 		const { messages } = state;
-		const { channel: { data } } = props;
+		const { channel: { data = {} } } = props;
 		if (messages.length === 0 && data.messages) {
 			return {
 				messages: data.messages,
@@ -48,8 +49,12 @@ class Index extends Component {
 	componentDidMount() {
 		const { activeChannelId } = this.state;
 		WebSocketInstance.connect(activeChannelId);
-		const { getAllChannels } = this.props;
-		getAllChannels();
+		const {
+			login: { data = {} }, channels, profile, getAllChannels, getUserById,
+		} = this.props;
+		console.log('con===========>', channels.code !== 'SUCCESS', (profile.code !== 'SUCCESS' && data));
+		if (channels.code !== 'SUCCESS') { getAllChannels(); }
+		if (profile.code !== 'SUCCESS' && data) { getUserById(data.id); }
 	}
 
 	setMessages(messages) {
@@ -91,7 +96,7 @@ class Index extends Component {
 		const messageObject = {
 			from: 'admin',
 			content: message,
-			chatID: activeChannelId,
+			chatId: activeChannelId,
 		};
 		WebSocketInstance.newChatMessages(messageObject);
 		this.setState({ message: '' });
@@ -102,7 +107,7 @@ class Index extends Component {
 	createNewChat = () => {
 		const { createChannel } = this.props;
 		const data = {
-			participants: ['http://18.191.42.149:8000/api/profile/3/', 'http://18.191.42.149:8000/api/profile/4/'],
+			participants: ['http://18.191.202.211:8000/api/profile/1/', 'http://18.191.202.211:8000/api/profile/3/'],
 		};
 		createChannel(data);
 	};
@@ -137,13 +142,13 @@ class Index extends Component {
 		WebSocketInstance.connect(id);
 	}
 
-	addMessage(message) {
+	addMessage(message, user) {
 		const { messages, activeChannelId } = this.state;
 		const obj = {
 			chat: activeChannelId,
 			content: message,
 			id: messages.length,
-			owner: 'admin',
+			owner: user,
 			timestamp: new Date(),
 		};
 		this.setState({ messages: [...messages, obj] });
@@ -175,6 +180,7 @@ class Index extends Component {
 			<Chat
 				{...this.state}
 				{...this.props}
+				email={email}
 				renderMessages={this.renderMessages}
 				messageChangeHandler={this.messageChangeHandler}
 				sendMessageHandler={this.sendMessageHandler}
@@ -197,6 +203,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		getAllChannels: data => getAllChannels(data),
 		getChannelByChannelId: data => getChannelByChannelId(data),
 		logout: data => logout(data),
+		getUserById: data => getUserById(data),
 	},
 	dispatch,
 );
