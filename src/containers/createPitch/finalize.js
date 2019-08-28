@@ -13,13 +13,13 @@ const settings = {
 	autoplay: true,
 };
 
-// const mediaSettings = {
-// 	dots: true,
-// 	infinite: true,
-// 	speed: 500,
-// 	slideToShow: 5,
-// 	slidesToScroll: 5,
-// };
+const mediaSettings = {
+	dots: true,
+	infinite: true,
+	speed: 500,
+	slideToShow: 3,
+	slidesToScroll: 3,
+};
 
 const FinalizePitch = ({
 	changeToPreviousScreen, selectedJournalists, removeJournalist, changeNextScreen,
@@ -27,6 +27,7 @@ const FinalizePitch = ({
 }) => {
 	const [index, changeSlide] = useState(0);
 	let slider = null;
+	let mediaSlider = null;
 	return (
 		<div className="create_new_pitch_form">
 			<div className="form_wrapper pitch_form_wraper">
@@ -109,19 +110,31 @@ Coverage
 								<h2>{title}</h2>
 								<div dangerouslySetInnerHTML={{ __html: content }} />
 							</div>
-							{/* <Slider
+							<Slider
 								settings={mediaSettings}
+								ref={(c) => { mediaSlider = c; return true; }}
 							>
 								{(mediaFiles.filter(data => data)).map(imageData => (
 									imageData
 										? (
 											<div className="cnp-snipt-img" key={imageData}>
-												<img src={imageData} alt="" />
+												<img src={imageData} alt="" className="media" />
 											</div>
 										) : null
 								))}
-							</Slider> */}
-							<div className="cnp-snipt media-snpt view-img">
+							</Slider>
+							{(mediaFiles.filter(data => data)).length > 1
+								? (
+									<div className="arrow_btn">
+										<span onClick={() => mediaSlider.slickPrev()} role="button">
+											<i className="fa fa-chevron-left" />
+										</span>
+										<span onClick={() => mediaSlider.slickNext()} role="button">
+											<i className="fa fa-chevron-right" />
+										</span>
+									</div>
+								) : null}
+							{/* <div className="cnp-snipt media-snpt view-img">
 								{(mediaFiles.filter(data => data)).map(imageData => (
 									imageData
 										? (
@@ -130,7 +143,7 @@ Coverage
 											</div>
 										) : null
 								))}
-							</div>
+							</div> */}
 							<div className="dlete_icn_row" role="button" onClick={() => removeJournalist(index)}>
 								<i className="fa fa-trash" aria-hidden="true" />
 							</div>
