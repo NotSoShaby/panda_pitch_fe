@@ -857,6 +857,10 @@ span.cover {
   font-weight: 700;
   font-size: 17px;
   line-height: 22px;
+  width: 243px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .card_contnt p {
   color: #a6a6a6;

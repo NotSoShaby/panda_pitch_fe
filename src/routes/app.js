@@ -8,6 +8,7 @@ import Authorized from './authorized';
 import JRHeader from '../components/header/jrHeader';
 import PRHeader from '../components/header/prHeader';
 import CreatePitch from '../containers/createPitch';
+import { getUserById } from '../redux/actions/user';
 
 class App extends Authorized {
 	constructor(props) {
@@ -28,12 +29,19 @@ class App extends Authorized {
 		return null;
 	}
 
+	componentDidMount() {
+		const {
+			login: { data = {} }, profile, getUserById,
+		} = this.props;
+		if (profile.code !== 'SUCCESS' && data) { getUserById(data.id); }
+	}
+
 	renderHeader = () => {
 		const { login: { data } } = this.props;
 		if (data && !data.isJournalist) {
-			return <PRHeader onLogout={this.handleLogout} />;
+			return <PRHeader onLogout={this.handleLogout} {...this.props} />;
 		}
-		return <JRHeader onLogout={this.handleLogout} />;
+		return <JRHeader onLogout={this.handleLogout} {...this.props} />;
 	};
 
 	render() {
@@ -49,11 +57,13 @@ class App extends Authorized {
 
 const mapStateToProps = state => ({
 	login: state.login,
+	profile: state.profile,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{
 		logout: values => logout(values),
+		getUserById: data => getUserById(data),
 	},
 	dispatch,
 );

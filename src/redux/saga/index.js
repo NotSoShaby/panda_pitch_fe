@@ -24,6 +24,7 @@ import FIND_JOURNALIST_URL from './journalists';
 import GET_PITCH_BY_ID from './getPitchById';
 import LOGOUT from './logout';
 import DELETE_PITCH_BY_ID from './deletePitch';
+import GET_USER_BY_ID from './getUserById';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -54,6 +55,7 @@ const rootSaga = function* rootSaga() {
 			GET_PITCH_BY_ID(),
 			DELETE_PITCH_BY_ID(),
 			LOGOUT(),
+			GET_USER_BY_ID(),
 		],
 	);
 };

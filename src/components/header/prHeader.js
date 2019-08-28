@@ -5,7 +5,7 @@ import IMAGES from '../../assets/images';
 
 const { LOGO, USER, Message } = IMAGES;
 
-const PRHeader = ({ onLogout }) => {
+const PRHeader = ({ onLogout, profile: { data } }) => {
 	const [isOpen, setOpen] = useState(false);
 	const [isNavbarOpen, setNavbarOpen] = useState(false);
 
@@ -25,7 +25,7 @@ const PRHeader = ({ onLogout }) => {
 								data-toggle="dropdown"
 								onClick={() => setOpen(!isOpen)}
 							>
-								<span>Jerry</span>
+								<span>{data.fullName}</span>
 								<i className="fa fa-angle-down cstm_angle" aria-hidden="true" />
 							</button>
 							<ul className="dropdown-menu">
@@ -73,7 +73,7 @@ const PRHeader = ({ onLogout }) => {
 							data-toggle="dropdown"
 							onClick={() => setOpen(!isOpen)}
 						>
-							<span>Jerry</span>
+							<span>{data.fullName}</span>
 							<i className="fa fa-angle-down cstm_angle" aria-hidden="true" />
 						</button>
 						<ul className="dropdown-menu">
