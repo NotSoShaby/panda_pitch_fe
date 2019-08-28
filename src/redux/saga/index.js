@@ -25,6 +25,7 @@ import GET_PITCH_BY_ID from './getPitchById';
 import CREATE_A_NEW_CHANNEL from './createChannel';
 import { GET_USER_CHANNELS, GET_CHANNEL_BY_ID } from './channels';
 import GET_USER_BY_ID from './getUserById';
+import LOGOUT from './logout';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -57,6 +58,7 @@ const rootSaga = function* rootSaga() {
 			GET_USER_CHANNELS(),
 			GET_CHANNEL_BY_ID(),
 			GET_USER_BY_ID(),
+			LOGOUT(),
 		],
 	);
 };

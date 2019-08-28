@@ -245,6 +245,27 @@ class Helper {
 		localStorage.clear();
 		history.push('/login');
 	};
+
+	getCtaUserValue = (data) => {
+		switch (data) {
+			case 'interview':
+				return 'Interview';
+			case 'coverage':
+				return 'Coverage';
+			case 'written_qa':
+				return 'Written Q&A';
+			case 'bylined_article':
+				return 'Byllined Article';
+			case 'event_invite':
+				return 'Event Invite';
+			case 'news':
+				return 'News';
+			case 'product_review':
+				return 'Product Review';
+			default:
+				return '';
+		}
+	}
 }
 
 export default new Helper();

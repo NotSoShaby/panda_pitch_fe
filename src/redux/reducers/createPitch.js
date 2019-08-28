@@ -22,8 +22,7 @@ export function createPitch(state = defaultState, action) {
 		}
 		case 'CLEAR_CREATE_PITCH_FORM': {
 			return {
-				code: 'SUCCESS',
-				isLoading: false,
+				isLoading: true,
 				data: {},
 			};
 		}

@@ -33,7 +33,7 @@ const JRHeader = ({ onLogout }) => {
 									<Link to="/">My Profile</Link>
 								</li>
 								<li>
-									<Link to="/" onClick={onLogout}>Logout</Link>
+									<Link to="/login" onClick={onLogout}>Logout</Link>
 								</li>
 							</ul>
 						</div>

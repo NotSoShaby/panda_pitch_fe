@@ -72,7 +72,7 @@ const defaultState = {
 export default (state, action) => {
 	if (
 		action.type
-    === 'LOGOUT'
+    === 'LOGOUT_SUCCESS'
 	) {
 		return defaultState;
 	}

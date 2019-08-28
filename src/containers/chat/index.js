@@ -52,7 +52,6 @@ class Index extends Component {
 		const {
 			login: { data = {} }, channels, profile, getAllChannels, getUserById,
 		} = this.props;
-		console.log('con===========>', channels.code !== 'SUCCESS', (profile.code !== 'SUCCESS' && data));
 		if (channels.code !== 'SUCCESS') { getAllChannels(); }
 		if (profile.code !== 'SUCCESS' && data) { getUserById(data.id); }
 	}
@@ -107,7 +106,7 @@ class Index extends Component {
 	createNewChat = () => {
 		const { createChannel } = this.props;
 		const data = {
-			participants: ['http://18.191.202.211:8000/api/profile/1/', 'http://18.191.202.211:8000/api/profile/3/'],
+			participants: ['http://18.191.202.211:8000/api/profile/4/', 'http://18.191.202.211:8000/api/profile/5/'],
 		};
 		createChannel(data);
 	};

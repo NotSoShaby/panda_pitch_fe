@@ -3,12 +3,11 @@ import IMAGES from '../../../assets/images';
 
 const Message = (props) => {
 	const {
-		id, timestamp, content, owner, email,
+		id, timestamp, content, owner, email, login: { data },
 	} = props;
 	const date = new Date(timestamp);
 	return (
-		<div key={id} className={`card_pro_row msg-crd-col ${email === owner ? 'cht-box-2' : 'cht-box'}`}>
-			{console.log('ooo========>', email, owner)}
+		<div key={id} className={`card_pro_row msg-crd-col ${data.email === owner ? 'cht-box-2' : 'cht-box'}`}>
 			{email !== owner && (
 				<div className="card_pro_img msg-crd-img cht-img">
 					<img src={IMAGES.CARD_PRO} alt="chatUser" />

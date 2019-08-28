@@ -1404,6 +1404,12 @@ ul.msg-tab button:focus{
   float: left;
   margin-top: 20px;
 }
+
+.finalize_contnt .slick-slider {
+  display: inline-grid;
+}
+
+
 .form_wrapper .coverge {
   color: #40c252;
   text-align: left;
@@ -1741,7 +1747,13 @@ ul.pri-link a {
 .cnp-snipt {
   display: flex;
   margin-top: 12px;
+  flex-wrap: wrap;
 }
+.media-snpt {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
 .cnp-snipt-img {
   width: 100px;
   height: 100px;
@@ -1920,6 +1932,7 @@ ul.pri-link a {
   margin-right: 20px;
   border-radius: 6px;
   position: relative;
+  margin-bottom: 15px;
 }
 .cnp-snipt-img img {
   width: 100px;

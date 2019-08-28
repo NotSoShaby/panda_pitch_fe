@@ -30,7 +30,7 @@ const ListRow = (props) => {
 				</div>
 				<div className="list_rgt_cont">
 					<h4>{full_name}</h4>
-					<p>{position_data['0'].name}</p>
+					<p>{position_data && position_data['0'].name}</p>
 				</div>
 			</div>
 		</div>
