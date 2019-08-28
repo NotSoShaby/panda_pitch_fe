@@ -1107,6 +1107,9 @@ p.pitch_score {
   display: inline-grid;
 }
 
+.slick-slide .media {
+  display: inherit !important;
+}
 
 .form_wrapper .coverge {
   color: #40c252;
