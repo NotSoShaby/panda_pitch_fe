@@ -13,14 +13,6 @@ const settings = {
 	autoplay: true,
 };
 
-// const mediaSettings = {
-// 	dots: true,
-// 	infinite: true,
-// 	speed: 500,
-// 	slideToShow: 5,
-// 	slidesToScroll: 5,
-// };
-
 const FinalizePitch = ({
 	changeToPreviousScreen, selectedJournalists, removeJournalist, changeNextScreen,
 	title, content, mediaFiles, is_private,
@@ -109,32 +101,28 @@ Coverage
 								<h2>{title}</h2>
 								<div dangerouslySetInnerHTML={{ __html: content }} />
 							</div>
-							{/* <Slider
-								settings={mediaSettings}
-							>
-								{(mediaFiles.filter(data => data)).map(imageData => (
-									imageData
-										? (
-											<div className="cnp-snipt-img" key={imageData}>
-												<img src={imageData} alt="" />
-											</div>
-										) : null
-								))}
-							</Slider> */}
-							<div className="cnp-snipt media-snpt view-img">
-								{(mediaFiles.filter(data => data)).map(imageData => (
-									imageData
-										? (
-											<div className="cnp-snipt-img" key={imageData}>
-												<img src={imageData} alt="" />
-											</div>
-										) : null
-								))}
+						</div>
+						<div className="finalize_contnt" style={{ width: '100px' }}>
+							<div className="cnp-snipt view-img">
+								{/* .media-snpt */}
+								<Slider
+									settings={settings}
+								>
+									{(mediaFiles.filter(data => data)).map(imageData => (
+										imageData
+											? (
+												<div className="cnp-snipt-img" key={imageData}>
+													<img src={imageData} alt="" />
+												</div>
+											) : null
+									))}
+								</Slider>
 							</div>
+						</div>
+						<div className="finalize_contnt">
 							<div className="dlete_icn_row" role="button" onClick={() => removeJournalist(index)}>
 								<i className="fa fa-trash" aria-hidden="true" />
 							</div>
-
 						</div>
 
 					</div>
@@ -144,9 +132,6 @@ Coverage
 						<span className="view-btn-rgt">
 							<button type="button" className="btn new_pitch_btn disc-btn" onClick={changeToPreviousScreen}>Back</button>
 							<button type="button" className="btn new_pitch_btn snd-btn" onClick={changeNextScreen}>Send Pitches</button>
-							{/*
-								<button type="button" className="btn new_pitch_btn disc-btn">Save Template</button>
-							*/}
 						</span>
 					</div>
 
@@ -157,5 +142,6 @@ Coverage
 	);
 };
 // }
+
 
 export default FinalizePitch;

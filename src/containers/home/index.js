@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Home from './home';
 import Modal from '../../components/modal';
-import { getPrPitches, getPitchById } from '../../redux/actions/pitches';
+import { getPrPitches, getPitchById, deletePitchById } from '../../redux/actions/pitches';
 
 class Index extends Component {
 	constructor(props) {
@@ -19,7 +19,7 @@ class Index extends Component {
 		const { login: { data } } = this.props;
 		if (data) {
 			const { getPitches } = this.props;
-			getPitches({ pageSize: 10, isJournalist: data.isJournalist, page: (10 * page) });
+			getPitches({ pageSize: 10, isJournalist: data.isJournalist, page: 10 * page });
 			this.setState({ selectedPage: page });
 		}
 	};
@@ -40,6 +40,17 @@ class Index extends Component {
 			const { getPitchById } = this.props;
 			const url = data.url.split('/');
 			getPitchById(url[5]);
+		}
+	};
+
+	// handle click on delete button on pitch card
+	deletePitch = (id) => {
+		const { login: { data }, deletePitchById } = this.props;
+		const { selectedPage } = this.state;
+		if (data) {
+			deletePitchById({
+				id, pageSize: 10, isJournalist: data.isJournalist, page: 10 * selectedPage,
+			});
 		}
 	};
 
@@ -67,6 +78,7 @@ class Index extends Component {
 				createNewPitch={this.createNewPitch}
 				onPageChange={this.getPitches}
 				onPitchClick={() => console.log('add pitch update feature')}
+				deletePitch={this.deletePitch}
 			/>,
 		];
 	}
@@ -78,6 +90,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 	{
 		getPitches: data => getPrPitches(data),
 		getPitchById: data => getPitchById(data),
+		deletePitchById: data => deletePitchById(data),
 	},
 	dispatch,
 );

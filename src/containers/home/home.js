@@ -16,14 +16,20 @@ const HomeScreen = ({
 };
 
 const Layout = ({
-	view, prPitches, onPitchClick, login,
+	view, prPitches, onPitchClick, login, deletePitch,
 }) => {
 	if (HELPER.isObject(prPitches.data) && prPitches.data.results && prPitches.data.results.length) {
 		if (view) {
 			return (
 				<div className="card_row">
 					{prPitches.data.results.map(pitch => (
-						<GridRow key={pitch.url} {...pitch} onClick={onPitchClick} login={login} />
+						<GridRow
+							key={pitch.url}
+							{...pitch}
+							onClick={onPitchClick}
+							login={login}
+							onDelete={deletePitch}
+						/>
 					))}
 				</div>
 			);

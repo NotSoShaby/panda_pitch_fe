@@ -9,7 +9,7 @@ const { MONTHS } = METADATA;
 
 const GridRow = (props) => {
 	const {
-		title, description, clientData, ownerData, datePosted, onClick, login,
+		title, description, clientData, ownerData, datePosted, onClick, login, onDelete, url,
 	} = props;
 	const { full_name, position_data } = ownerData || {};
 	const { image } = clientData || {};
@@ -42,7 +42,7 @@ const GridRow = (props) => {
 			{login.data && !login.data.isJournalist
 				? (
 					<button className="card_pro_row pitch_list_action ">
-						<img src={DELETE} alt="profile_pic" className="pitch_list_action_img" />
+						<img src={DELETE} alt="profile_pic" className="pitch_list_action_img" onClick={() => onDelete(url)} role="button" />
 						<span>Delete</span>
 					</button>
 				) : null}
