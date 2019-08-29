@@ -43,7 +43,7 @@ class SearchBox extends React.Component {
 				{data
 					&& data.length
 					&& data.map((dataValue) => {
-						const { name } = dataValue;
+						const { name, image } = dataValue;
 						if (searchString && name.toLowerCase().includes(searchString.toLowerCase())) {
 							return (
 								<div
@@ -53,7 +53,7 @@ class SearchBox extends React.Component {
 									onClick={() => this.changeSelection(dataValue)}
 								>
 									<div className="srch_pic">
-										<img src={imagepath} alt="profile_pic" />
+										<img src={image || imagepath} alt="profile_pic" />
 									</div>
 									<span className="pro_detail">
 										<h3>{name}</h3>

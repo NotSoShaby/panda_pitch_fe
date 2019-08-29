@@ -28,6 +28,8 @@ class Images {
   LOGO_SAMPLE = `${publicPath}/images/logoSample.jpeg`;
 
   DELETE = `${publicPath}/images/delete.jpg`;
+
+	// LOADER = `https://i.gifer.com/7YUz.gif`;
 }
 
 export default new Images();

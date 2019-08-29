@@ -1,6 +1,6 @@
 export const defaultState = {
 	data: {},
-	isLoading: true,
+	isLoading: false,
 };
 
 export function createPitch(state = defaultState, action) {
@@ -22,7 +22,7 @@ export function createPitch(state = defaultState, action) {
 		}
 		case 'CLEAR_CREATE_PITCH_FORM': {
 			return {
-				isLoading: true,
+				isLoading: false,
 				data: {},
 			};
 		}

@@ -706,6 +706,8 @@ img.srch_icn {
   max-height: 100%;
   max-width: 100%;
   border-radius: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .pro_detail h3 {
@@ -1463,6 +1465,7 @@ ul.pri-link a {
   width: 100px;
   height: 100px;
   background: black;
+  cursor: pointer;
 }
 
 .create_new_pitch_form {
@@ -1624,6 +1627,8 @@ ul.pri-link a {
   display: inline-block;
   opacity: 0;
   padding: 0px;
+  padding-left: 17px;
+  cursor: pointer;
   margin-left: 0px !important;
 }
 .cnp-file span {
@@ -1838,6 +1843,26 @@ ul.pri-link a {
 }
 .media_list ul{
   top: -5px !important
+}
+
+/* ================ custome ======================= */
+.loading{
+  pointer-events: none;
+}
+.loader{
+  text-align: center;
+    padding-top: 20px;
+    position: absolute;
+    top: 50%;
+    left: 47%;
+    z-index: 99;
+    position: fixed;
+}
+.loader img{
+  width: 80px;
+}
+.loading .loader_cont{
+  opacity: 0.6;
 }
 /*=================Media query====================*/
 
