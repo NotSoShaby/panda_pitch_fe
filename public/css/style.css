@@ -1111,6 +1111,10 @@ p.pitch_score {
   display: inline-grid;
 }
 
+.slick-prev, .slick-next {
+  display: none !important;
+}
+
 .slick-slide .media {
   display: inherit !important;
 }

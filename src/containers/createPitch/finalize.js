@@ -13,9 +13,20 @@ const settings = {
 	autoplay: true,
 };
 
+const availabilityType = (progressValue) => {
+	switch (progressValue) {
+		case 20:
+			return 'exclusive';
+		case 10:
+			return 'embargo';
+		default:
+			return 'regular';
+	}
+};
+
 const FinalizePitch = ({
 	changeToPreviousScreen, selectedJournalists, removeJournalist, changeNextScreen,
-	title, content, mediaFiles, is_private,
+	title, content, mediaFiles, is_private, progressValue,
 }) => {
 	const [index, changeSlide] = useState(0);
 	let slider = null;
@@ -99,6 +110,7 @@ Coverage
 						<div className="finalize_contnt">
 							<div className="view-conts">
 								<h2>{title}</h2>
+								<h6>{availabilityType(progressValue)}</h6>
 								<div dangerouslySetInnerHTML={{ __html: content }} />
 							</div>
 						</div>
