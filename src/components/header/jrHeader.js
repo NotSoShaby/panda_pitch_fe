@@ -5,7 +5,7 @@ import IMAGES from '../../assets/images';
 
 const { LOGO, USER, Message } = IMAGES;
 
-const JRHeader = ({ onLogout, profile: { data } }) => {
+const JRHeader = ({ onLogout, profile: { data = {} } }) => {
 	const [isOpen, setOpen] = useState(false);
 	const [isNavbarOpen, setNavbarOpen] = useState(false);
 
