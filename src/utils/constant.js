@@ -69,7 +69,9 @@ class Constant {
 
   // GET_PR_MEDIALISTS = '/api/pr/medialists?pr_id=1';
 
-  GET_MEDIA_LIST = '/api/media-list/autocomplete/';
+  GET_MEDIA_LIST_AUTOCOMPLETE = '/api/media-list/autocomplete/';
+
+  GET_MEDIA_LIST = '/api/media-list/';
 
   CREATE_PR_MEDIALISTS = '/api/pr/medialists/create';
 

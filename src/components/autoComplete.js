@@ -18,7 +18,7 @@ class AutoComplete extends Component {
 
 	// add item in selected tag list
 	putInBox = (val) => {
-		const { box } = this.state;
+		const { box = [] } = this.state;
 		const {
 			onSelect, list, maxLength,
 		} = this.props;
@@ -97,7 +97,7 @@ class AutoComplete extends Component {
 
 	// get dropdown list
 	getDropdownList = () => {
-		const { box, val } = this.state;
+		const { box = [], val } = this.state;
 		const { list } = this.props;
 		const dropdownList = [];
 		if (list && list.length) {
@@ -118,7 +118,7 @@ class AutoComplete extends Component {
 	// toggle status of selected tag
 	toggleStatus = (index) => {
 		const { onSelect, maxLength } = this.props;
-		const { box } = this.state;
+		const { box = [] } = this.state;
 		let pushItem = true;
 		if (!box[index].isActive && maxLength) {
 			const activeItem = box.filter(dataValue => dataValue.isActive);
@@ -147,7 +147,7 @@ class AutoComplete extends Component {
 	}
 
 	render() {
-		const { box, val, singleValidationError } = this.state;
+		const { box = [], val, singleValidationError } = this.state;
 		const {
 			showTextBox, name, errors, className,
 		} = this.props;

@@ -15,6 +15,7 @@ import { mediaList } from './mediaList';
 import { pitchDetail } from './pitchDetail';
 import { createChannel } from './createChannel';
 import { channels, channel } from './channels';
+import { getUserById } from './getUserById';
 
 // Wrap all reducers in a container
 const reducer = combineReducers({
@@ -39,6 +40,7 @@ const reducer = combineReducers({
 	pr,
 	journalists,
 	pitchDetail,
+	getUserById,
 });
 
 const initialState = { code: 'UNINITIATED', isLoading: false };
@@ -66,6 +68,7 @@ const defaultState = {
 	pr: initialState,
 	journalists: initialState,
 	pitchDetail: initialState,
+	getUserById: initialState,
 };
 
 // Empty state when user logout

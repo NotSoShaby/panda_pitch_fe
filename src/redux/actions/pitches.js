@@ -8,6 +8,7 @@ export const getClients = () => ({ type: 'GET_CLIENTS' });
 export const getInterests = () => ({ type: 'GET_INTERESTS' });
 export const getClientsAuto = data => ({ type: 'GET_CLIENTS_AUTOCOMPLETE', payload: data });
 export const findJournalist = data => ({ type: 'FIND_JOURNALIST', payload: data });
+export const getMediaListAutoComplete = data => ({ type: 'GET_MEDIA_LIST_AUTOCOMPLETE', payload: data });
 export const getMediaList = data => ({ type: 'GET_MEDIA_LIST', payload: data });
 export const getPr = () => ({ type: 'GET_PR' });
 export const getPitchById = data => ({ type: 'GET_PITCH_BY_ID', payload: data });

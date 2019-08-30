@@ -8,7 +8,7 @@ import GET_JOURNALIST_INTERESTS from './journalistInterests';
 import CREATE_JOURNALIST_INTEREST from './createInterest';
 import GET_PR_PITCHES from './pitches';
 import GET_PR_CLIENTS_AUTO from './prClientsAuto';
-import GET_MEDIA_LIST from './mediaList';
+import { GET_MEDIA_LIST, GET_MEDIA_LIST_AUTOCOMPLETE } from './mediaList';
 import GET_PR_COMPANIES from './companies';
 import CREATE_PR_COMPANY from './createCompanies';
 import GET_POSITIONS from './positions';
@@ -25,6 +25,7 @@ import GET_PITCH_BY_ID from './getPitchById';
 import CREATE_A_NEW_CHANNEL from './createChannel';
 import { GET_USER_CHANNELS, GET_CHANNEL_BY_ID } from './channels';
 import GET_USER_BY_ID from './getUserById';
+import GET_LOGGED_IN_USER_PROFILE from './getLoggedInUserprofile';
 import LOGOUT from './logout';
 
 // Wrap all sagas in a container
@@ -57,7 +58,9 @@ const rootSaga = function* rootSaga() {
 			CREATE_A_NEW_CHANNEL(),
 			GET_USER_CHANNELS(),
 			GET_CHANNEL_BY_ID(),
+			GET_LOGGED_IN_USER_PROFILE(),
 			GET_USER_BY_ID(),
+			GET_MEDIA_LIST_AUTOCOMPLETE(),
 			LOGOUT(),
 		],
 	);

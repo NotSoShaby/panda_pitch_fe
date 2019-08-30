@@ -24,6 +24,8 @@ class Images {
   GOOGLE = '/images/google.png';
 
   DOCUMENT = '/images/documentImg.png';
+
+  TWITTER_ICON = '/images/twitter_icon.svg'
 }
 
 export default new Images();

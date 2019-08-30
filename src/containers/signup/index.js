@@ -177,8 +177,8 @@ class Index extends UnAuthorized {
 	render() {
 		return (
 			<SignUp
-				{...this.state}
 				{...this.props}
+				{...this.state}
 				onSubmit={this.handleSubmit}
 				onBack={this.handleCancel}
 				onChange={this.handleChange}

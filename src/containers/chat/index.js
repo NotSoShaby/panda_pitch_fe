@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import Chat from './chat';
 import WebSocketInstance from './websocket';
 import { createChannel, getAllChannels, getChannelByChannelId } from '../../redux/actions/chat';
-import { logout } from '../../redux/actions/login';
-import { getUserById } from '../../redux/actions/user';
+import { logout, getLoggedInUserProfile } from '../../redux/actions/login';
+// import { getLoggedInUserProfile } from '../../redux/actions/login';
 
 // const chatID = '1';
 const username = 'admin';
@@ -50,10 +50,10 @@ class Index extends Component {
 		const { activeChannelId } = this.state;
 		WebSocketInstance.connect(activeChannelId);
 		const {
-			login: { data = {} }, channels, profile, getAllChannels, getUserById,
+			login: { data = {} }, channels, profile, getAllChannels, getLoggedInUserProfile,
 		} = this.props;
 		if (channels.code !== 'SUCCESS') { getAllChannels(); }
-		if (profile.code !== 'SUCCESS' && data) { getUserById(data.id); }
+		if (profile.code !== 'SUCCESS' && data) { getLoggedInUserProfile(data.id); }
 	}
 
 	setMessages(messages) {
@@ -202,7 +202,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		getAllChannels: data => getAllChannels(data),
 		getChannelByChannelId: data => getChannelByChannelId(data),
 		logout: data => logout(data),
-		getUserById: data => getUserById(data),
+		getLoggedInUserProfile: data => getLoggedInUserProfile(data),
 	},
 	dispatch,
 );

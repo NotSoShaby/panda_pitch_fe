@@ -17,12 +17,13 @@ const Form4 = ({
 		<h2 className="mbot30">What do you write about?</h2>
 		<div className="full_widt mbot_zero">
 			<h3>Interests</h3>
+			{console.log('jjjjj=========>', journalistInterests, interests)}
 			<AutoComplete
 				list={journalistInterests.data}
 				name="Interest"
 				onCreate={onCreate}
 				onSelect={onTodoSelection}
-				boxes={interests.data}
+				boxes={interests}
 				onChange={getJournalistInterests}
 			/>
 		</div>
