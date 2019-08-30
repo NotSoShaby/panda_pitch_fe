@@ -103,7 +103,7 @@ class AutoComplete extends Component {
 		if (list && list.length) {
 			list.map((item) => {
 				const isExist = box.filter(item1 => item1.value.toLowerCase() === item.name.toLowerCase());
-				if (!isExist.length && item.name && item.name.toLowerCase().includes(val.toLowerCase())) {
+				if (!isExist.length && item.name && item.name.toLowerCase().startsWith(val.toLowerCase())) {
 					const isCreate = item.name.toLowerCase().split(' ');
 					if (isCreate[0] !== 'create') {
 						dropdownList.push(item.name);

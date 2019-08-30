@@ -10,6 +10,7 @@ import PRHeader from '../components/header/prHeader';
 import Chat from '../containers/chat';
 import Profile from '../containers/profile';
 import CreatePitch from '../containers/createPitch';
+import { getLoggedInUserProfile } from '../redux/actions/login';
 
 class App extends Authorized {
 	constructor(props) {
@@ -30,12 +31,19 @@ class App extends Authorized {
 		return null;
 	}
 
+	componentDidMount() {
+		const {
+			login: { data = {} }, profile, getLoggedInUserProfile,
+		} = this.props;
+		if (profile.code !== 'SUCCESS' && data) { getLoggedInUserProfile(data.id); }
+	}
+
 	renderHeader = () => {
 		const { login: { data } } = this.props;
 		if (data && !data.isJournalist) {
-			return <PRHeader onLogout={this.handleLogout} />;
+			return <PRHeader onLogout={this.handleLogout} {...this.props} />;
 		}
-		return <JRHeader onLogout={this.handleLogout} />;
+		return <JRHeader onLogout={this.handleLogout} {...this.props} />;
 	};
 
 	render() {
@@ -53,11 +61,13 @@ class App extends Authorized {
 
 const mapStateToProps = state => ({
 	login: state.login,
+	profile: state.profile,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{
 		logout: values => logout(values),
+		getLoggedInUserProfile: data => getLoggedInUserProfile(data),
 	},
 	dispatch,
 );

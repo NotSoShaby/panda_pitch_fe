@@ -14,6 +14,7 @@ const renderMediaFiles = (index, handleAddMedia) => (
 		<input
 			type="file"
 			accept="image/png, image/jpeg"
+			role="button"
 			onChange={e => handleAddMedia(index, e.target.files[0])}
 		/>
 	</div>
@@ -173,11 +174,11 @@ const CreatePitch = ({
 						</div>
 					</div>
 					<div className="full_widt">
-						<h3>Headline (up to 50 characters) *</h3>
+						<h3>Headline (up to 60 characters) *</h3>
 						<div className="new_field">
 							<input
 								type="text"
-								maxLength="50"
+								maxLength="60"
 								name="title"
 								value={title}
 								onChange={onChangeState}
@@ -266,6 +267,7 @@ const CreatePitch = ({
 							<i className="fa fa-plus" />
 							<input
 								type="file"
+								role="button"
 								placeholder="Client Website"
 								onChange={e => handleAddPressRelease(e)}
 							/>

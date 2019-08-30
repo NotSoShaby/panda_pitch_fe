@@ -1,5 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import IMAGES from '../assets/images';
+import METADATA from '../utils/metadata';
+
+const { LOGO_SAMPLE } = IMAGES;
+
+const { MONTHS } = METADATA;
 
 const ListRow = (props) => {
 	const {
@@ -11,7 +17,7 @@ const ListRow = (props) => {
 	return (
 		<div className="list_col" onClick={() => onClick(props)} role="button">
 			<div className="list_lft">
-				<img src={image} alt="logo" />
+				<img src={image || LOGO_SAMPLE} alt="logo" />
 			</div>
 			<div className="list_middle">
 				<h3>{title}</h3>
@@ -20,7 +26,8 @@ const ListRow = (props) => {
 					<span className="list_cover">Covrage</span>
 					{' '}
 					<span className="list_time">
-						{time.toLocaleString('en-US', { hour: 'numeric', hour12: true })}
+						{/* {time.toLocaleString('en-US', { hour: 'numeric', hour12: true })} */}
+						{`${MONTHS[time.getMonth()]} ${time.getDate()}`}
 					</span>
 				</p>
 			</div>

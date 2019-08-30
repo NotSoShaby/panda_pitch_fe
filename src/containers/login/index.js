@@ -31,12 +31,14 @@ class Index extends UnAuthorized {
 
 	render() {
 		return (
-			<Login
-				{...this.state}
-				{...this.props}
-				onChange={this.handleChange}
-				onSubmit={this.handleSubmit}
-			/>
+			<form onSubmit={this.handleSubmit}>
+				<Login
+					{...this.state}
+					{...this.props}
+					onChange={this.handleChange}
+					onSubmit={this.handleSubmit}
+				/>
+			</form>
 		);
 	}
 }

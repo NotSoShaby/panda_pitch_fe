@@ -31,7 +31,6 @@ const { CTA } = METADATA;
 class Index extends Authorized {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			hideNewClientDiv: true,
 			progressValue: 0,
@@ -79,9 +78,9 @@ class Index extends Authorized {
   		let progressValue = 0;
   		let is_private = false;
   		const MediaImages = images.map(data => data.image);
+  		const mediaFiles = images.map(data => new File([data.image], 'mediaImage.png'));
   		const selectedClient = clientData;
   		const press_release = pressRelease;
-
   		if (availability === 'embargo') {
   			progressValue = 10;
   			is_private = true;
@@ -90,7 +89,6 @@ class Index extends Authorized {
   			is_private = true;
   		}
   		const UnselectedCta = CTA.filter(data => !cta.includes(data.apiValue));
-
   		return {
   			allInterests,
   			content,
@@ -98,11 +96,11 @@ class Index extends Authorized {
   			cta: [...UnselectedCta, ...ctaObj],
   			progressValue,
   			is_private,
-  			MediaImages,
+  			MediaImages: mediaFiles.length ? mediaFiles : ['', '', ''],
   			selectedClient,
-  			press_release,
   			pressReleaseImage: press_release,
-  			mediaFiles: MediaImages,
+  			press_release: new File([pressRelease], 'pressRelease.png') || '',
+  			mediaFiles: MediaImages.length ? MediaImages : ['', '', ''],
   			pitchUrl: url,
   		};
   	}
@@ -120,6 +118,7 @@ class Index extends Authorized {
   	const { createPitchReducer, createClientReducer } = nextProps;
   	const { props } = this;
   	const { isLoading } = createClientReducer;
+
   	if ((createClientReducer !== props.createClientReducer) && (!isLoading && (typeof isLoading === 'boolean'))) {
   		const { data, error } = createClientReducer;
   		if (data && (typeof data === 'object') && Object.keys(data).length) {
@@ -233,11 +232,13 @@ class Index extends Authorized {
 	handleNextScreen = () => {
 		const { active, selectedJournalists } = this.state;
 		if (active === 1) {
+  	window.scrollTo(0, 0);
 			this.setState({ saveAndNext: true, selectedForm: 2 }, () => {
 				this.saveScreenData();
 			});
 		} else if (active === 2) {
 			if (selectedJournalists.length) {
+      	window.scrollTo(0, 0);
 				this.setState({ saveAndNext: true, selectedForm: 3, errors: {} }, () => {
 					this.savePersonalizeData();
 				});
@@ -506,34 +507,28 @@ class Index extends Authorized {
 		let render;
 		if (active === 1) {
 			render = (
-				<Loader
-					isLoading={
-						false
-					}
-				>
-					<CreatePitch
-						{...this.state}
-						{...this.props}
-						handleClient={this.handleClient}
-						handleAddNewClient={this.handleAddNewClient}
-						handleAddMedia={this.handleAddMedia}
-						handleAddPressRelease={this.handleAddPressRelease}
-						onRangeChange={this.handleRangeChange}
-						changeNextScreen={this.handleNextScreen}
-						saveScreenData={this.saveScreenData}
-						setSearchValue={this.filterClients}
-						handleRemoveMedia={this.handleRemoveMedia}
-						onSelectInterest={this.handleInterestSelection}
-						onCreateInterest={val => createInterest(val)}
-						createClient={this.createClient}
-						onChangeClientProperty={this.handleClientPropertyChange}
-						onCTASelection={this.onCTASelection}
-						onChangeState={this.onChangeState}
-						onChangeContent={this.onChangeContent}
-						onLodingImgError={this.onLodingImgError}
-						handleAddMoreMedia={this.handleAddMoreMedia}
-					/>
-				</Loader>
+				<CreatePitch
+					{...this.state}
+					{...this.props}
+					handleClient={this.handleClient}
+					handleAddNewClient={this.handleAddNewClient}
+					handleAddMedia={this.handleAddMedia}
+					handleAddPressRelease={this.handleAddPressRelease}
+					onRangeChange={this.handleRangeChange}
+					changeNextScreen={this.handleNextScreen}
+					saveScreenData={this.saveScreenData}
+					setSearchValue={this.filterClients}
+					handleRemoveMedia={this.handleRemoveMedia}
+					onSelectInterest={this.handleInterestSelection}
+					onCreateInterest={val => createInterest(val)}
+					createClient={this.createClient}
+					onChangeClientProperty={this.handleClientPropertyChange}
+					onCTASelection={this.onCTASelection}
+					onChangeState={this.onChangeState}
+					onChangeContent={this.onChangeContent}
+					onLodingImgError={this.onLodingImgError}
+					handleAddMoreMedia={this.handleAddMoreMedia}
+				/>
 			);
 		}
 		if (active === 2) {
@@ -567,7 +562,12 @@ class Index extends Authorized {
 	}
 
 	render() {
-		return (<>{this.displayScreen()}</>);
+		const { createPitchReducer: { isLoading } } = this.props;
+		return (
+			<Loader isLoading={isLoading}>
+				{this.displayScreen()}
+			</Loader>
+		);
 	}
 }
 

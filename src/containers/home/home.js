@@ -16,13 +16,21 @@ const HomeScreen = ({
 	return <JrHome setView={setView} requestStory={requestStory} view={view} />;
 };
 
-const Layout = ({ view, prPitches, onPitchClick }) => {
+const Layout = ({
+	view, prPitches, onPitchClick, login, deletePitch,
+}) => {
 	if (HELPER.isObject(prPitches.data) && prPitches.data.results && prPitches.data.results.length) {
 		if (view) {
 			return (
 				<div className="card_row">
 					{prPitches.data.results.map(pitch => (
-						<GridRow key={pitch.url} {...pitch} onClick={onPitchClick} />
+						<GridRow
+							key={pitch.url}
+							{...pitch}
+							onClick={onPitchClick}
+							login={login}
+							onDelete={deletePitch}
+						/>
 					))}
 				</div>
 			);
@@ -31,6 +39,7 @@ const Layout = ({ view, prPitches, onPitchClick }) => {
 			<ListRow
 				key={pitch.url}
 				{...pitch}
+				login={login}
 				onClick={onPitchClick}
 			/>
 		));

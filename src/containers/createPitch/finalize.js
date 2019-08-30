@@ -13,17 +13,20 @@ const settings = {
 	autoplay: true,
 };
 
-// const mediaSettings = {
-// 	dots: true,
-// 	infinite: true,
-// 	speed: 500,
-// 	slideToShow: 5,
-// 	slidesToScroll: 5,
-// };
+const availabilityType = (progressValue) => {
+	switch (progressValue) {
+		case 20:
+			return 'exclusive';
+		case 10:
+			return 'embargo';
+		default:
+			return 'regular';
+	}
+};
 
 const FinalizePitch = ({
 	changeToPreviousScreen, selectedJournalists, removeJournalist, changeNextScreen,
-	title, content, mediaFiles, is_private,
+	title, content, mediaFiles, is_private, progressValue,
 }) => {
 	const [index, changeSlide] = useState(0);
 	let slider = null;
@@ -69,9 +72,9 @@ const FinalizePitch = ({
 												<h3>
 													{full_name}
 ,
-													<span className="side_contnt">{position_data[0].name}</span>
+													<span className="side_contnt">{position_data && position_data[0] && position_data[0].name}</span>
 												</h3>
-												<p>{company_data.name}</p>
+												<p>{company_data && company_data.name}</p>
 											</span>
 										</div>
 										<div className="view-detail bdr_botm0">
@@ -107,34 +110,31 @@ Coverage
 						<div className="finalize_contnt">
 							<div className="view-conts">
 								<h2>{title}</h2>
+								<h6>{availabilityType(progressValue)}</h6>
 								<div dangerouslySetInnerHTML={{ __html: content }} />
 							</div>
-							{/* <Slider
-								settings={mediaSettings}
-							>
-								{(mediaFiles.filter(data => data)).map(imageData => (
-									imageData
-										? (
-											<div className="cnp-snipt-img" key={imageData}>
-												<img src={imageData} alt="" />
-											</div>
-										) : null
-								))}
-							</Slider> */}
-							<div className="cnp-snipt media-snpt view-img">
-								{(mediaFiles.filter(data => data)).map(imageData => (
-									imageData
-										? (
-											<div className="cnp-snipt-img" key={imageData}>
-												<img src={imageData} alt="" />
-											</div>
-										) : null
-								))}
+						</div>
+						<div className="finalize_contnt" style={{ width: '100px' }}>
+							<div className="cnp-snipt view-img">
+								{/* .media-snpt */}
+								<Slider
+									settings={settings}
+								>
+									{(mediaFiles.filter(data => data)).map(imageData => (
+										imageData
+											? (
+												<div className="cnp-snipt-img" key={imageData}>
+													<img src={imageData} alt="" />
+												</div>
+											) : null
+									))}
+								</Slider>
 							</div>
+						</div>
+						<div className="finalize_contnt">
 							<div className="dlete_icn_row" role="button" onClick={() => removeJournalist(index)}>
 								<i className="fa fa-trash" aria-hidden="true" />
 							</div>
-
 						</div>
 
 					</div>
@@ -144,9 +144,6 @@ Coverage
 						<span className="view-btn-rgt">
 							<button type="button" className="btn new_pitch_btn disc-btn" onClick={changeToPreviousScreen}>Back</button>
 							<button type="button" className="btn new_pitch_btn snd-btn" onClick={changeNextScreen}>Send Pitches</button>
-							{/*
-								<button type="button" className="btn new_pitch_btn disc-btn">Save Template</button>
-							*/}
 						</span>
 					</div>
 
@@ -157,5 +154,6 @@ Coverage
 	);
 };
 // }
+
 
 export default FinalizePitch;

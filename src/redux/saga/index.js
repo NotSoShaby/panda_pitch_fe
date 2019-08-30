@@ -27,6 +27,8 @@ import { GET_USER_CHANNELS, GET_CHANNEL_BY_ID } from './channels';
 import GET_USER_BY_ID from './getUserById';
 import GET_LOGGED_IN_USER_PROFILE from './getLoggedInUserprofile';
 import LOGOUT from './logout';
+import DELETE_PITCH_BY_ID from './deletePitch';
+// import GET_USER_BY_ID from './getUserById';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -61,7 +63,9 @@ const rootSaga = function* rootSaga() {
 			GET_LOGGED_IN_USER_PROFILE(),
 			GET_USER_BY_ID(),
 			GET_MEDIA_LIST_AUTOCOMPLETE(),
+			DELETE_PITCH_BY_ID(),
 			LOGOUT(),
+			GET_USER_BY_ID(),
 		],
 	);
 };

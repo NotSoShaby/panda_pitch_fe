@@ -25,7 +25,11 @@ class Images {
 
   DOCUMENT = '/images/documentImg.png';
 
-  TWITTER_ICON = '/images/twitter_icon.svg'
+  TWITTER_ICON = '/images/twitter_icon.svg';
+
+  LOGO_SAMPLE = '/images/logoSample.jpeg';
+
+  DELETE = '/images/delete.jpg';
 }
 
 export default new Images();
