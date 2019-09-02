@@ -87,9 +87,20 @@ class AutoComplete extends Component {
 	// show create button
 	renderCreateButton = () => {
 		const { val } = this.state;
-		const { showAddButton } = this.props;
+		const { showAddButton, createButton } = this.props;
 		const list = this.getDropdownList();
 		if (!list.length && val !== '' && showAddButton) {
+			if (createButton) {
+				return (
+					<div className="auto-selection-list">
+						<ul>
+							<li onClick={() => this.onCreate(val)} role="button">
+								<span>Create</span>
+							</li>
+						</ul>
+					</div>
+				);
+			}
 			return <i className="fa fa-plus" aria-hidden="true" onClick={() => this.onCreate(val)} />;
 		}
 		return null;
@@ -205,6 +216,7 @@ AutoComplete.defaultProps = {
 	onChange: () => { },
 	onSelect: () => { },
 	maxLength: 0,
+	createButton: false,
 };
 
 // props type definition
@@ -218,6 +230,7 @@ AutoComplete.propTypes = {
 	onChange: PropTypes.func,
 	className: PropTypes.string,
 	maxLength: PropTypes.number,
+	createButton: PropTypes.bool,
 };
 
 // default importing

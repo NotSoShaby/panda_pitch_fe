@@ -225,6 +225,7 @@ const CreatePitch = ({
 								onSelect={onSelectInterest}
 								boxes={allInterests}
 								onChange={getJournalistInterests}
+								createButton
 							/>
 						</div>
 						<div className="error">
