@@ -17,7 +17,8 @@ const GET_PR_PITCHES = function* getPitches() {
 			if (RES.status) {
 				const pitches = yield toStorePaginationConfig({
 					...RES.data,
-					results: RES.data.results.map((pitch = {}) => toStorePitchConfig(pitch)),
+					results: RES.data.results
+						? RES.data.results.map((pitch = {}) => toStorePitchConfig(pitch)) : [],
 				});
 				yield put({
 					type: 'GET_PR_PITCHES_SUCCESS',

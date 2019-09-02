@@ -8,7 +8,7 @@ import Loader from '../../components/loader';
 import Authorized from '../../routes/authorized';
 import CreatePitch from './createPitch';
 import {
-	getClientsAuto, findJournalist, getMediaList, removeJournalist,
+	getClientsAuto, findJournalist, getMediaListAutoComplete, removeJournalist,
 } from '../../redux/actions/pitches';
 import { getJournalistInterests, createInterest } from '../../redux/actions/signup';
 import { createClient } from '../../redux/actions/clients';
@@ -432,8 +432,8 @@ class Index extends Authorized {
 
   // return filter media list
   getJRMediaList = (val) => {
-  	const { getMediaList } = this.props;
-  	getMediaList(val);
+  	const { getMediaListAutoComplete } = this.props;
+  	getMediaListAutoComplete(val);
   }
 
   // handle media-list selection
@@ -581,7 +581,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		getClientsAuto: data => getClientsAuto(data),
 		findJournalist: data => findJournalist(data),
 		createClient: data => createClient(data),
-		getMediaList: data => getMediaList(data),
+		getMediaListAutoComplete: data => getMediaListAutoComplete(data),
 		getJournalistInterests: data => getJournalistInterests(data),
 		createInterest: data => createInterest(data),
 		createPitchActionForm1: data => createPitchActionForm1(data),

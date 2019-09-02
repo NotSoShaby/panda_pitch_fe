@@ -8,7 +8,7 @@ import toStoreConfig from '../adapters/profile';
 // create user signup request
 const GET_USER_BY_ID = function* getUserById() {
 	yield takeEvery('GET_USER_BY_ID', function* generateAction(action) {
-		yield put(START('CREATE_USER_PROFILE_STARTED'));
+		yield put(START('GET_USER_BY_ID_STARTED'));
 		try {
 			const RES = yield Request(
 				`${CONSTANT.CREATE_PR_URL}${action.payload}/`,
@@ -16,17 +16,17 @@ const GET_USER_BY_ID = function* getUserById() {
 			);
 			if (RES.status) {
 				yield put({
-					type: 'CREATE_USER_PROFILE_SUCCESS',
+					type: 'GET_USER_BY_ID_SUCCESS',
 					payload: DATA(toStoreConfig(RES.data)),
 				});
 			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
 				HELPER.logout();
 				yield put({ type: 'LOGOUT' });
 			} else {
-				yield put({ type: 'CREATE_USER_PROFILE_FAILED', payload: ERROR(RES.data) });
+				yield put({ type: 'GET_USER_BY_ID_FAILED', payload: ERROR(RES.data) });
 			}
 		} catch (error) {
-			yield put({ type: 'CREATE_USER_PROFILE_FAILED', payload: error });
+			yield put({ type: 'GET_USER_BY_ID_FAILED', payload: error });
 		}
 	});
 };

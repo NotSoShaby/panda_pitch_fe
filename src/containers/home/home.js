@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
+import { Link } from 'react-router-dom';
 import ListRow from '../../components/listRow';
 import GridRow from '../../components/gridRow';
 import JrHome from './jrHome';
@@ -53,6 +54,7 @@ const Home = ({ pageSize, onPageChange, ...props }) => {
 		<div>
 			<div className="container cstm_container bg_skyblue">
 				<HomeScreen {...props} view={view} setView={setView} />
+				<Link to="/chat">Go To Chat</Link>
 				<Layout view={view} {...props} />
 				{((code === 'SUCCESS') && data && (typeof data === 'object') && Math.ceil(data.count / 10) > 1)
 					? (

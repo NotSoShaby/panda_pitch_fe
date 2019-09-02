@@ -17,7 +17,7 @@ const Login = ({
 			</div>
 			<div className="form_wrapper">
 				<h2>Login</h2>
-				<div className="step_form_col">
+				<form className="step_form_col" onSubmit={onSubmit}>
 					<div className="custom_field">
 						<input
 							type="text"
@@ -51,9 +51,9 @@ const Login = ({
 						<div className="error">{login.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 					)}
 					<div className="step_btn_wrapper">
-						<Button type="submit" className="green_bg_btn btn_cntr" onClick={onSubmit}>Submit</Button>
+						<Button type="submit" className="green_bg_btn btn_cntr">Submit</Button>
 					</div>
-				</div>
+				</form>
 				<p className="text-center sign_up_marg">
 					<span>New user?</span>
 					<span>

@@ -7,8 +7,11 @@ import Home from '../containers/home';
 import Authorized from './authorized';
 import JRHeader from '../components/header/jrHeader';
 import PRHeader from '../components/header/prHeader';
+import Chat from '../containers/chat';
+import Profile from '../containers/profile';
 import CreatePitch from '../containers/createPitch';
-import { getUserById } from '../redux/actions/user';
+import { getLoggedInUserProfile } from '../redux/actions/login';
+import NotFound from './notFound';
 
 class App extends Authorized {
 	constructor(props) {
@@ -31,9 +34,9 @@ class App extends Authorized {
 
 	componentDidMount() {
 		const {
-			login: { data = {} }, profile, getUserById,
+			login: { data = {} }, profile, getLoggedInUserProfile,
 		} = this.props;
-		if (profile.code !== 'SUCCESS' && data) { getUserById(data.id); }
+		if (profile.code !== 'SUCCESS' && data) { getLoggedInUserProfile(data.id); }
 	}
 
 	renderHeader = () => {
@@ -49,6 +52,9 @@ class App extends Authorized {
 			<div className="wrapper">
 				{this.renderHeader()}
 				<Route exact path="/" component={props => <Home {...props} />} />
+				<Route exact path="/chat" component={props => <Chat {...props} />} />
+				<Route exact path="/profile" component={props => <Profile {...props} />} />
+				<Route exact path="/not_found" component={props => <NotFound {...props} />} />
 				<Route exact path="/create_pitch" component={props => <CreatePitch {...props} />} />
 			</div>
 		);
@@ -63,7 +69,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators(
 	{
 		logout: values => logout(values),
-		getUserById: data => getUserById(data),
+		getLoggedInUserProfile: data => getLoggedInUserProfile(data),
 	},
 	dispatch,
 );

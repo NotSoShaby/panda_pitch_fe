@@ -1,7 +1,8 @@
 // constant variables declaration
 
-const server = 'http://18.191.42.149:8000'; // server
+// const server = 'http://18.191.42.149:8000'; // server
 // const server = 'http://192.168.2.88:8000'; // local
+const server = 'http://18.191.202.211:8000'; // socket
 
 class Constant {
   PUBLIC_PATH = process.env.PUBLIC_URL;
@@ -36,6 +37,8 @@ class Constant {
 
   CREATE_PR_URL = '/api/profile/';
 
+  LOGGED_IN_PROFILE = '/api/profile/myprofile/';
+
   GET_PR_URL = '/api/profile/pr/';
 
   SURVEY_URL = '/survey/';
@@ -68,11 +71,17 @@ class Constant {
 
   // GET_PR_MEDIALISTS = '/api/pr/medialists?pr_id=1';
 
-  GET_MEDIA_LIST = '/api/media-list/autocomplete/';
+  GET_MEDIA_LIST_AUTOCOMPLETE = '/api/media-list/autocomplete/';
+
+  GET_MEDIA_LIST = '/api/media-list/';
 
   CREATE_PR_MEDIALISTS = '/api/pr/medialists/create';
 
   FIND_JOURNALIST_URL = '/api/profile/autocomplete/journalist/'
+
+  CREATE_CHANNEL = '/api/chat/'
+
+  GET_USER_CHANNELS = '/api/chat/by_user/'
 }
 
 export default new Constant();
