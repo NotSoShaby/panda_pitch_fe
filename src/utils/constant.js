@@ -1,36 +1,78 @@
 // constant variables declaration
 
-const local = 'http://d8fba5a9.ngrok.io';
-// const server = 'http://18.224.60.229:2312';
+const server = 'http://18.191.42.149:8000'; // server
+// const server = 'http://192.168.2.88:8000'; // local
 
 class Constant {
   PUBLIC_PATH = process.env.PUBLIC_URL;
 
-  URL = local;
+  URL = server;
 
-	SIGNUP_URL = '/api/users/signup';
-
-	LOGIN_URL = '/api/users/log-in';
-
-	CREATE_JOURNALIST_URL = '/api/journalist/create-journalist';
-
-  CREATE_PR_URL = '/api/pr/create-pr-profile';
-
-  SURVEY_PR_URL = '/api/users/survey/1';
-
-  SURVEY_JOR_URL = '/api/users/survey/2';
-
-  SURVEY_SUBMISSION_URL = '/api/users/survey/answer';
-
-  GET_JOURNALIST_INTERESTS_URL = '/auto/interest-autocomplete';
-
-  CREATE_JOURNALIST_INTEREST_URL = '/api/users/interest/create';
-
-  GET_PR_PITCHES_URL = '/api/pr/mypitch?pr_id=1'
+  AUTHENTICATION_ERROR = 'Authentication error'
 
   GET = 'get';
 
-	POST = 'post';
+  POST = 'post';
+
+  PATCH = 'patch';
+
+  DELETE = 'delete';
+
+  SIGNUP_URL = '/api/user/';
+
+  LOGIN_URL = '/api/log-in/';
+
+  CREATE_PITCH_FORM1_URL = '/api/pitch/';
+
+  CREATE_PITCH_FORM2_URL = '/api/personalization/';
+
+  GET_CLIENTS_URL = '/api/client/';
+
+  CREATE_CLIENT_URL = '/api/client/';
+
+  GET_CLIENTS_AUTOCOMPLETE_URL = '/api/client/autocomplete/';
+
+  CREATE_JOURNALIST_URL = '/api/profile/';
+
+  CREATE_PR_URL = '/api/profile/';
+
+  GET_PR_URL = '/api/profile/pr/';
+
+  SURVEY_URL = '/survey/';
+
+  SURVEY_SUBMISSION_URL = '/survey/answer/';
+
+  GET_INTERESTS_URL = '/api/interest/';
+
+  GET_JOURNALIST_INTERESTS_URL = '/api/interest/autocomplete/';
+
+  CREATE_JOURNALIST_INTEREST_URL = '/api/interest/';
+
+  GET_COMPAINES_URL = '/api/company/autocomplete/';
+
+  CREATE_COMPANIES_URL = '/api/company/';
+
+  GET_POSITIONS_URL = '/api/position/autocomplete/';
+
+  CREATE_POSITION_URL = '/api/position/';
+
+  GET_PR_PITCHES_URL = '/api/pitch/pr/';
+
+  GET_JR_PITCHES_URL = '/api/pitch/journalist/';
+
+  GET_PR_CLIENTS_AUTO = '/api/pr/clients-auto?q=C';
+
+  GET_PR_CLIENTS = '/api/pr/clients?pr_id=1';
+
+  CREATE_PR_CLIENT = '/api/pr/client/create';
+
+  // GET_PR_MEDIALISTS = '/api/pr/medialists?pr_id=1';
+
+  GET_MEDIA_LIST = '/api/media-list/autocomplete/';
+
+  CREATE_PR_MEDIALISTS = '/api/pr/medialists/create';
+
+  FIND_JOURNALIST_URL = '/api/profile/autocomplete/journalist/'
 }
 
 export default new Constant();

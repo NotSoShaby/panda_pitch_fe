@@ -2,12 +2,14 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Authorized from '../routes/authorized';
+import Store from '../redux/Store';
 
 class App extends Authorized {
 	// clear user storage
-	handleLogout = () => {
-		localStorage.clear();
-		this.props.history.push('/login');
+	handleLogout = async () => {
+		await localStorage.clear();
+		await this.props.history.push('/login');
+		await Store.dispatch({ type: 'LOGOUT' });
 	};
 
 	render() {

@@ -1,14 +1,13 @@
 // common methods definition
-// const _log = console.log;
-// console.log = function (logMessage) {
-// 	_log.apply(console, arguments);
-// };
+import history from '../routes/history';
 
 class Helper {
 	// form validation service
 	ValidationService = {
 		messages: {},
-		emailExpr: new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+		emailExpr: new RegExp(
+			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+		),
 		linkExpr: new RegExp(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/),
 		required(field, value) {
 			if (value.trim().length < 1) {
@@ -35,7 +34,7 @@ class Helper {
 		},
 
 		validEmail(field, value) {
-			if (!this.emailExpr.test(value)) {
+			if (value !== '' && !this.emailExpr.test(value)) {
 				if (Object.prototype.hasOwnProperty.call(this.messages, field)) {
 					if (Object.prototype.hasOwnProperty.call(this.messages[field], 'validEmail')) {
 						return this.messages[field].validEmail;
@@ -125,64 +124,89 @@ class Helper {
 
 	// validate sign up form3
 	SignUpStep3Validation = ({
-		outlet = '',
-		position = '',
-		company = '',
-		role = '',
-		twitter = '',
-		linkedIn = '',
+		positionList = '',
+		companiesList = '',
+		// isJournalist = '',
+		// role = '',
 	}) => {
 		const validateRule = {
-			position: {
-				value: position,
+			positionList: {
+				value: positionList,
 				rules: {
-					required: true,
+					requiredArray: true,
 				},
 			},
-			twitter: {
-				value: twitter,
+			// twitter: {
+			// 	value: twitter,
+			// 	rules: {
+			// 		validLink: true,
+			// 	},
+			// },
+			companiesList: {
+				value: companiesList,
 				rules: {
-					validLink: true,
+					requiredArray: true,
 				},
 			},
 		};
-		if (this.isJournalist(role)) {
-			validateRule.outlet = {
-				value: outlet,
-				rules: {
-					required: true,
-				},
-			};
-		} else {
-			validateRule.company = {
-				value: company,
-				rules: {
-					required: true,
-				},
-			};
-			validateRule.linkedIn = {
-				value: linkedIn,
-				rules: {
-					validLink: true,
-				},
-			};
-		}
+
+		// if (role !== 'Journalist') {
+		// 	validateRule.linkedIn = {
+		// 		value: linkedIn,
+		// 		rules: {
+		// 			validLink: true,
+		// 		},
+		// 	};
+		// }
 		return this.ValidationService.validate(validateRule);
+		// return null;
+	};
+
+	validateCreatePitchStep1 = (data) => {
+		const {
+			selectedClient, cta, title, allInterests,
+		} = data;
+		const Errors = {};
+		if (!title) {
+			Errors.title = 'Headline is required';
+		}
+		if (!selectedClient || !selectedClient.url) {
+			Errors.selectedClient = 'client is required';
+		}
+		if (!allInterests || !allInterests.filter(data => data.isActive).length) {
+			Errors.allInterests = 'At least one active topic is required';
+		}
+		if (!cta || !cta.filter(data => data.isActive).length) {
+			Errors.cta = 'At least one active cta is required';
+		}
+		return Errors;
+	};
+
+	validateCreateClient = (data) => {
+		const { name, website } = data;
+		const Errors = {};
+		if (!name) {
+			Errors.clientName = 'Client Name is required';
+		}
+		if (website && !this.ValidationService.linkExpr.test(website)) {
+			Errors.clientWebSite = 'Enter a valid website url';
+		}
+		return Errors;
 	};
 
 	// validate sign up form4
-	SignUpStep4Validation = ({ topics = [] }) => this.ValidationService.validate({
-		topics: {
-			value: topics,
+	SignUpStep4Validation = ({ journoInterests }) => this.ValidationService.validate({
+		interests: {
+			value: journoInterests,
 			rules: {
 				requiredArray: true,
 			},
 		},
 	});
 
-	loginValidation = ({ username = '', password = '' }) => this.ValidationService.validate({
-		username: {
-			value: username,
+	loginValidation = ({ email = '', password = '' }) => this.ValidationService.validate({
+		email: {
+			value: email,
 			rules: {
 				required: true,
 			},
@@ -206,16 +230,42 @@ class Helper {
 	getItemFromSession = key => JSON.parse(localStorage.getItem(key));
 
 	// return true if loggedIn user is journalist
-	isJournalist = type => type === 'journalist';
+	isJournalist = type => type === 'journalist' || type === 'Journalist';
 
 	// return true if loggedIn user is pr
-	isPr = type => (type === 'pr' || type === 'Pr');
+	isPr = type => type === 'pr' || type === 'Pr';
 
 	// return true if object is empty
-  isEmptyObject = obj => Object.entries(obj).length === 0 && obj.constructor === Object;
+	isEmptyObject = obj => Object.entries(obj).length === 0 && obj.constructor === Object;
 
-  // return true if object is empty
-  isObject = obj => ((typeof obj === 'object' || typeof obj === 'function') && (obj !== null))
+	// return true if object is empty
+	isObject = obj => (typeof obj === 'object' || typeof obj === 'function') && obj !== null;
+
+	logout = () => {
+		localStorage.clear();
+		history.push('/login');
+	};
+
+	getCtaUserValue = (data) => {
+		switch (data) {
+			case 'interview':
+				return 'Interview';
+			case 'coverage':
+				return 'Coverage';
+			case 'written_qa':
+				return 'Written Q&A';
+			case 'bylined_article':
+				return 'Byllined Article';
+			case 'event_invite':
+				return 'Event Invite';
+			case 'news':
+				return 'News';
+			case 'product_review':
+				return 'Product Review';
+			default:
+				return '';
+		}
+	}
 }
 
 export default new Helper();

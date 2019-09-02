@@ -1,15 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
 const Loader = ({ children, isLoading, className }) => {
-	if (isLoading) return <div className={className}>isLoading...</div>;
+	if (isLoading) {
+		return (
+			<div className={className}>
+				<div className="loader">
+					<img src="https://i.gifer.com/7YUz.gif" alt="loader" />
+				</div>
+				<div className="loader_cont">
+					{children || 'isLoading...'}
+				</div>
+			</div>
+		);
+	}
 	return children;
 };
 
 // props initialization ( default values )
 Loader.defaultProps = {
 	isLoading: true,
-	className: '',
+	className: 'loading',
 };
 
 // props type definition

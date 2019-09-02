@@ -2,18 +2,18 @@ export const defaultState = {
 	data: {},
 };
 
-export function journalistProfile(state = defaultState, action) {
+export function prClientsAuto(state = defaultState, action) {
 	switch (action.type) {
-		case 'CREATE_JOURNALIST_PROFILE_INITIATED': {
+		case 'GET_PR_CLIENTS_AUTO': {
 			return { ...state, code: 'uninitiated' };
 		}
-		case 'CREATE_JOURNALIST_PROFILE_STARTED': {
+		case 'GET_PR_CLIENTS_AUTO_STARTED': {
 			return { ...state };
 		}
-		case 'CREATE_JOURNALIST_PROFILE_SUCCESS': {
+		case 'GET_PR_CLIENTS_AUTO_SUCCESS': {
 			return { ...state, ...action.payload };
 		}
-		case 'CREATE_JOURNALIST_PROFILE_FAILED': {
+		case 'GET_PR_CLIENTS_AUTO_FAILED': {
 			return {
 				...state,
 				...action.payload,

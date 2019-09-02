@@ -18,7 +18,8 @@ class Index extends UnAuthorized {
 	};
 
 	// handle login
-	handleSubmit = () => {
+	handleSubmit = (e) => {
+		e.preventDefault();
 		const { doLogin } = this.props;
 		const obj = this.state;
 		const res = HELPER.loginValidation(obj);
@@ -30,12 +31,14 @@ class Index extends UnAuthorized {
 
 	render() {
 		return (
-			<Login
-				{...this.state}
-				{...this.props}
-				onChange={this.handleChange}
-				onSubmit={this.handleSubmit}
-			/>
+			<form onSubmit={this.handleSubmit}>
+				<Login
+					{...this.state}
+					{...this.props}
+					onChange={this.handleChange}
+					onSubmit={this.handleSubmit}
+				/>
+			</form>
 		);
 	}
 }

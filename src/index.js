@@ -5,6 +5,8 @@ import ProjectRoutes from './routes/projectRoutes';
 import Store from './redux/Store';
 import * as serviceWorker from './serviceWorker';
 import '../public/css/index.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 ReactDOM.render(
 	<Provider store={Store}>

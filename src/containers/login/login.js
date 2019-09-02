@@ -21,16 +21,16 @@ const Login = ({
 					<div className="custom_field">
 						<input
 							type="text"
-							name="username"
-							id="username"
+							name="email"
+							id="email"
 							placeholder="JaneAppleseed@gmail.com"
 							onChange={onChange}
 						/>
-						<label htmlFor="username">Email Id</label>
+						<label htmlFor="email">Email</label>
 					</div>
 					{error
-					&& error.username && (
-						<div className="error">{error.username.map(msg => <p key={msg}>{msg}</p>)}</div>
+					&& error.email && (
+						<div className="error">{error.email.map(msg => <p key={msg}>{msg}</p>)}</div>
 					)}
 					<div className="custom_field">
 						<input
@@ -51,7 +51,7 @@ const Login = ({
 						<div className="error">{login.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 					)}
 					<div className="step_btn_wrapper">
-						<Button className="green_bg_btn btn_cntr" onClick={onSubmit}>Submit</Button>
+						<Button type="submit" className="green_bg_btn btn_cntr" onClick={onSubmit}>Submit</Button>
 					</div>
 				</div>
 				<p className="text-center sign_up_marg">

@@ -1,23 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import IMAGES from '../assets/images';
+import METADATA from '../utils/metadata';
 
-const { GOOGLE } = IMAGES;
+const { LOGO_SAMPLE } = IMAGES;
 
-const ListRow = ({
-	logo,
-	title,
-	time,
-	description,
-	profile,
-	author: { image },
-	author: { user },
-}) => {
-	const { first_name, last_name } = user;
+const { MONTHS } = METADATA;
+
+const ListRow = (props) => {
+	const {
+		title, description, clientData, ownerData, datePosted, onClick,
+	} = props;
+	const { full_name, position_data } = ownerData || {};
+	const { image } = clientData || {};
+	const time = new Date(datePosted);
 	return (
-		<div className="list_col">
+		<div className="list_col" onClick={() => onClick(props)} role="button">
 			<div className="list_lft">
-				<img src={logo} alt="logo" />
+				<img src={image || LOGO_SAMPLE} alt="logo" />
 			</div>
 			<div className="list_middle">
 				<h3>{title}</h3>
@@ -25,16 +25,19 @@ const ListRow = ({
 				<p>
 					<span className="list_cover">Covrage</span>
 					{' '}
-					<span className="list_time">{time}</span>
+					<span className="list_time">
+						{/* {time.toLocaleString('en-US', { hour: 'numeric', hour12: true })} */}
+						{`${MONTHS[time.getMonth()]} ${time.getDate()}`}
+					</span>
 				</p>
 			</div>
 			<div className="list_rgt">
 				<div className="list_rgt_pro">
-					<img src={image} alt="profile_pic" />
+					{/* <img src={GOOGLE} alt="profile_pic" /> */}
 				</div>
 				<div className="list_rgt_cont">
-					<h4>{`${first_name} ${last_name}`}</h4>
-					<p>{profile}</p>
+					<h4>{full_name}</h4>
+					<p>{position_data && position_data['0'].name}</p>
 				</div>
 			</div>
 		</div>
@@ -43,24 +46,16 @@ const ListRow = ({
 
 // props initialization ( default values )
 ListRow.defaultProps = {
-	logo: GOOGLE,
-	// profilePic: CARD_PRO,
 	title: '',
-	time: '',
 	description: '',
-	// name: '',
-	profile: '',
+	onClick: () => {},
 };
 
 // props type definition
 ListRow.propTypes = {
-	logo: PropTypes.string,
 	title: PropTypes.string,
-	time: PropTypes.string,
 	description: PropTypes.string,
-	// profilePic: PropTypes.string,
-	// name: PropTypes.string,
-	profile: PropTypes.string,
+	onClick: PropTypes.func,
 };
 
 // default importing

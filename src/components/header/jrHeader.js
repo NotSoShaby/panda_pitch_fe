@@ -5,7 +5,7 @@ import IMAGES from '../../assets/images';
 
 const { LOGO, USER, Message } = IMAGES;
 
-const JRHeader = ({ onLogout }) => {
+const JRHeader = ({ onLogout, profile: { data = {} } }) => {
 	const [isOpen, setOpen] = useState(false);
 	const [isNavbarOpen, setNavbarOpen] = useState(false);
 
@@ -25,7 +25,7 @@ const JRHeader = ({ onLogout }) => {
 								data-toggle="dropdown"
 								onClick={() => setOpen(!isOpen)}
 							>
-								<span>Jerry</span>
+								<span>{data.fullName}</span>
 								<i className="fa fa-angle-down cstm_angle" aria-hidden="true" />
 							</button>
 							<ul className="dropdown-menu">
@@ -33,7 +33,7 @@ const JRHeader = ({ onLogout }) => {
 									<Link to="/">My Profile</Link>
 								</li>
 								<li>
-									<Link to="/">Logout</Link>
+									<Link to="/login" onClick={onLogout}>Logout</Link>
 								</li>
 							</ul>
 						</div>
@@ -73,7 +73,7 @@ const JRHeader = ({ onLogout }) => {
 							data-toggle="dropdown"
 							onClick={() => setOpen(!isOpen)}
 						>
-							<span>Shelly</span>
+							<span>{data.fullName}</span>
 							<i className="fa fa-angle-down cstm_angle" aria-hidden="true" />
 						</button>
 						<ul className="dropdown-menu">

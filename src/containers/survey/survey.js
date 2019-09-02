@@ -1,24 +1,20 @@
 import React from 'react';
+import _ from 'lodash';
 import Button from '../../components/button';
 import Question from './question';
 import IMAGES from '../../assets/images';
-import StatusBar from '../signup/statusBar';
-import HELPER from '../../utils/helper';
+import StatusBar from '../../components/statusBar';
 
 // Login page rendering
 const Survey = ({
-	onBack, onSubmit, survey, answers, onRangeChange, login: { data }, signup,
+	onBack, onSubmit, survey, answers, onRangeChange, login: { data: { user } },
 }) => {
-	const questions = survey.data.questions || [];
-	let { role } = data;
-	if (!role) {
-		const { data } = signup;
-		role = data.role;
-	}
+	const questions = _.orderBy(survey.data.questions, 'id', 'asc') || [];
 	let totalSteps = 4;
-	if (HELPER.isPr(role)) {
+	if (user && user.is_pr) {
 		totalSteps = 3;
 	}
+
 	return (
 		<div className="form_section">
 			<div className="form_logo">
