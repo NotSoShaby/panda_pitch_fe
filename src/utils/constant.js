@@ -37,6 +37,8 @@ class Constant {
 
   CREATE_PR_URL = '/api/profile/';
 
+  LOGGED_IN_PROFILE = '/api/profile/myprofile/';
+
   GET_PR_URL = '/api/profile/pr/';
 
   SURVEY_URL = '/survey/';

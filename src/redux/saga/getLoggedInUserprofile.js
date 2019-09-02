@@ -4,6 +4,7 @@ import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
 import toStoreConfig from '../adapters/profile';
 import HELPER from '../../utils/helper';
+import history from '../../routes/history';
 
 // create user signup request
 const GET_LOGGED_IN_USER_PROFILE = function* getLoggedInUserById() {
@@ -11,9 +12,12 @@ const GET_LOGGED_IN_USER_PROFILE = function* getLoggedInUserById() {
 		yield put(START('CREATE_USER_PROFILE_STARTED'));
 		try {
 			const RES = yield Request(
-				`${CONSTANT.CREATE_PR_URL}${action.payload}/`,
+				`${CONSTANT.LOGGED_IN_PROFILE}`,
 				CONSTANT.GET, action.payload,
 			);
+			if (RES.message === 'Not Found' && RES.status === false) {
+				history.push('/not_found', RES.message);
+			}
 			if (RES.status) {
 				yield put({
 					type: 'CREATE_USER_PROFILE_SUCCESS',

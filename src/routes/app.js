@@ -11,6 +11,7 @@ import Chat from '../containers/chat';
 import Profile from '../containers/profile';
 import CreatePitch from '../containers/createPitch';
 import { getLoggedInUserProfile } from '../redux/actions/login';
+import NotFound from './notFound';
 
 class App extends Authorized {
 	constructor(props) {
@@ -53,6 +54,7 @@ class App extends Authorized {
 				<Route exact path="/" component={props => <Home {...props} />} />
 				<Route exact path="/chat" component={props => <Chat {...props} />} />
 				<Route exact path="/profile" component={props => <Profile {...props} />} />
+				<Route exact path="/not_found" component={props => <NotFound {...props} />} />
 				<Route exact path="/create_pitch" component={props => <CreatePitch {...props} />} />
 			</div>
 		);

@@ -9,7 +9,7 @@ import StatusBar from '../../components/statusBar';
 const Survey = ({
 	onBack, onSubmit, survey, answers, onRangeChange, login: { data: { user } },
 }) => {
-	const questions = _.orderBy(survey.data.questions, 'id', 'asc') || [];
+	const questions = _.orderBy(survey.data && survey.data.questions, 'id', 'asc') || [];
 	let totalSteps = 4;
 	if (user && user.is_pr) {
 		totalSteps = 3;

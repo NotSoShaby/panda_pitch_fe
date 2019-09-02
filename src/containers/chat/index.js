@@ -38,7 +38,7 @@ class Index extends Component {
 	static getDerivedStateFromProps(props, state) {
 		const { messages } = state;
 		const { channel: { data = {} } } = props;
-		if (messages.length === 0 && data.messages) {
+		if (messages.length === 0 && data.messages && messages !== data.mess) {
 			return {
 				messages: data.messages,
 			};
@@ -50,10 +50,12 @@ class Index extends Component {
 		const { activeChannelId } = this.state;
 		WebSocketInstance.connect(activeChannelId);
 		const {
-			login: { data = {} }, channels, profile, getAllChannels, getLoggedInUserProfile,
+			channels, profile, getAllChannels,
+			getLoggedInUserProfile,
 		} = this.props;
+		console.log('coming again', channels, profile);
 		if (channels.code !== 'SUCCESS') { getAllChannels(); }
-		if (profile.code !== 'SUCCESS' && data) { getLoggedInUserProfile(data.id); }
+		if (profile.code !== 'SUCCESS') { getLoggedInUserProfile(); }
 	}
 
 	setMessages(messages) {

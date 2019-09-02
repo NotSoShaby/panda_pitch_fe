@@ -12,7 +12,7 @@ const SIGNUP = function* performSignup() {
 		try {
 			const RES = yield Request(CONSTANT.SIGNUP_URL, CONSTANT.POST, action.payload, false);
 			const signup = toStoreConfig(RES.data);
-			if (RES.status) {
+			if (RES.status && RES.data.user) {
 				localStorage.setItem('token', signup.token);
 				localStorage.setItem('user', JSON.stringify(signup));
 				yield put({ type: 'SIGNUP_SUCCESS', payload: DATA(signup) });
