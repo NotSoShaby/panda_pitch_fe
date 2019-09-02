@@ -95,7 +95,7 @@ class AutoComplete extends Component {
 					<div className="auto-selection-list">
 						<ul>
 							<li onClick={() => this.onCreate(val)} role="button">
-								<span>Create</span>
+								<span>+ Create</span>
 							</li>
 						</ul>
 					</div>
