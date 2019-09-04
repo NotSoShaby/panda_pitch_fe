@@ -7,8 +7,8 @@ const { PROFILE_PIC, TWITTER_ICON } = IMAGES;
 const Profile = ({
 	getUserById: {
 		data: {
-			fullName = 'hhh', positionData, interestsData, companyData,
-		} = {},
+			fullName = '', positionData, interestsData, companyData, user,
+		} = { user: {} },
 	},
 	isVisible,
 	mediaList: { data = [] },
@@ -33,12 +33,10 @@ const Profile = ({
 					</div>
 				</div>
 				<div className="abt_btn relative" onClick={onMediaListButtonClick} role="button">
-					{/* <Link to="/"> */}
           Add to Media List
-					{/* </Link> */}
-					{Array.isArray(data) && isVisible && interestsData && (
+					{Array.isArray(data) && isVisible && user.is_journalist && (
 						<ul className="absolute abtul_btn">
-							{data.map(item => <li key={item.name} onClick={addUserInMediaList} role="button">{item.name}</li>)}
+							{data.map(item => <li key={item.name} onClick={() => addUserInMediaList(item.id)} role="button">{item.name}</li>)}
 						</ul>
 					)}
 				</div>
@@ -65,7 +63,9 @@ Cut the bullsh*t.  No more than 150 word/Pitch. Read my
 			<div className="abt_intrest wdth100">
 				<h4>Interested In</h4>
 				<ul>
-					{interestsData && interestsData.map(item => <li>{item}</li>)}
+					{Array.isArray(interestsData) && interestsData.map(
+						item => <li key={item.name}>{item.name}</li>,
+					)}
 				</ul>
 			</div>
 		</div>

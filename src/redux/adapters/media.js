@@ -1,4 +1,5 @@
 function Media({
+	id = '',
 	journalists = [],
 	journalists_data = [],
 	name = '',
@@ -6,6 +7,7 @@ function Media({
 	slug = '',
 	time_created = '',
 }) {
+	this.id = id;
 	this.journalists = journalists;
 	this.journalistsData = journalists_data;
 	this.name = name;
