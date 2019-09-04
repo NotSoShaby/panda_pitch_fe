@@ -10,7 +10,7 @@ export const GET_MEDIA_LIST = function* fetchSurvey() {
 	yield takeEvery('GET_MEDIA_LIST', function* generateAction() {
 		yield put(START('GET_MEDIA_LIST_STARTED'));
 		try {
-			const RES = yield Request(`${CONSTANT.GET_MEDIA_LIST}`, CONSTANT.GET, '', true, 'http://18.191.42.149:8000');
+			const RES = yield Request(`${CONSTANT.GET_MEDIA_LIST}`, CONSTANT.GET, '');
 			if (RES.status) {
 				const mediaList = RES.data.map(media => toStoreConfig(media));
 				yield put({
@@ -47,6 +47,22 @@ export const GET_MEDIA_LIST_AUTOCOMPLETE = function* fetchSurvey() {
 			}
 		} catch (error) {
 			yield put({ type: 'GET_MEDIA_LIST_FAILED', payload: ERROR(error) });
+		}
+	});
+};
+
+export const UPDATE_MEDIA_BY_ID = function* fetchSurvey() {
+	yield takeEvery('UPDATE_MEDIA_BY_ID', function* generateAction(action) {
+		const RES = yield Request(`${CONSTANT.GET_MEDIA_LIST}${action.payload.id}/`, CONSTANT.PATCH, action.payload);
+		if (RES.status) {
+			if (RES.message === 'OK') {
+				yield put({
+					type: 'GET_MEDIA_LIST',
+				});
+			}
+		} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
+			HELPER.logout();
+			yield put({ type: 'LOGOUT' });
 		}
 	});
 };

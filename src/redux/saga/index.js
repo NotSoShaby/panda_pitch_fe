@@ -8,7 +8,7 @@ import GET_JOURNALIST_INTERESTS from './journalistInterests';
 import CREATE_JOURNALIST_INTEREST from './createInterest';
 import GET_PR_PITCHES from './pitches';
 import GET_PR_CLIENTS_AUTO from './prClientsAuto';
-import { GET_MEDIA_LIST, GET_MEDIA_LIST_AUTOCOMPLETE } from './mediaList';
+import { GET_MEDIA_LIST, GET_MEDIA_LIST_AUTOCOMPLETE, UPDATE_MEDIA_BY_ID } from './mediaList';
 import GET_PR_COMPANIES from './companies';
 import CREATE_PR_COMPANY from './createCompanies';
 import GET_POSITIONS from './positions';
@@ -28,7 +28,6 @@ import GET_USER_BY_ID from './getUserById';
 import GET_LOGGED_IN_USER_PROFILE from './getLoggedInUserprofile';
 import LOGOUT from './logout';
 import DELETE_PITCH_BY_ID from './deletePitch';
-// import GET_USER_BY_ID from './getUserById';
 
 // Wrap all sagas in a container
 const rootSaga = function* rootSaga() {
@@ -66,6 +65,7 @@ const rootSaga = function* rootSaga() {
 			DELETE_PITCH_BY_ID(),
 			LOGOUT(),
 			GET_USER_BY_ID(),
+			UPDATE_MEDIA_BY_ID(),
 		],
 	);
 };

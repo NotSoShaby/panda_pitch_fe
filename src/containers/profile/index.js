@@ -4,9 +4,8 @@ import { bindActionCreators } from 'redux';
 import Profile from './profile';
 import { getUserById } from '../../redux/actions/user';
 import { getMediaList } from '../../redux/actions/pitches';
+import { updateMediaById } from '../../redux/actions/media';
 import Loader from '../../components/loader';
-
-// import Loader from '../../components/loader';
 
 class Index extends Component {
 	constructor(props) {
@@ -16,13 +15,11 @@ class Index extends Component {
 
 	componentDidMount() {
 		const {
-			getUserByUserId, getUserById, getMediaList, mediaList, history: { location: { search } },
+			getUserByUserId, getMediaList, mediaList, history: { location: { search } },
 		} = this.props;
-		if (!getUserById.code) {
-			const id = search.split('=')[1];
-			getUserByUserId(id);
-		}
-		if (!mediaList.code) {
+		const id = search.split('=')[1];
+		getUserByUserId(id);
+		if (!mediaList.code || mediaList.code !== 'SUCCESS') {
 			getMediaList();
 		}
 	}
@@ -30,7 +27,18 @@ class Index extends Component {
 	onMediaListButtonClick = () => {
 		const { isVisible } = this.state;
 		this.setState({ isVisible: !isVisible });
-	}
+	};
+
+	addUserInMediaList = (id) => {
+		const {
+			mediaList: { data = [] },
+			updateMediaById, getUserById: { data: { url } },
+		} = this.props;
+		const selectedMedia = data.filter(item => item.id === id);
+		if (selectedMedia) {
+			updateMediaById({ id, journalists: [...selectedMedia[0].journalists, url] });
+		}
+	};
 
 	render() {
 		const { getUserById: { isLoading } } = this.props;
@@ -40,6 +48,7 @@ class Index extends Component {
 					{...this.props}
 					{...this.state}
 					onMediaListButtonClick={this.onMediaListButtonClick}
+					addUserInMediaList={this.addUserInMediaList}
 				/>
 			</Loader>
 		);
@@ -54,6 +63,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 	{
 		getUserByUserId: data => getUserById(data),
 		getMediaList: data => getMediaList(data),
+		updateMediaById: data => updateMediaById(data),
 	},
 	dispatch,
 );

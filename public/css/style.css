@@ -1058,13 +1058,15 @@ p.pitch_score {
     width: 54%;
     float: left;
     position: relative;
-    min-height: 500px;
+    min-height: calc(100vh - 105px);
     border-right: 1px solid #bebebe;
     border-left: 1px solid #bebebe;}
 .msg-col-3{
      width: 23%;
     float: right;
     padding: 10px 32px;
+    height: calc(100vh - 105px);
+    overflow-y: scroll;
 } 
 .bg-white{
     background: #fafbfe;
@@ -1121,6 +1123,10 @@ ul.msg-tab button:focus{
 .msg-crd-row{
     width: 100%;
     float: left;
+}
+.msg-crd-row.tab-content{
+  overflow-y: auto;
+  height: calc(100vh - 232px);
 }
 .msg-crd-col{
     margin-bottom: 0px;

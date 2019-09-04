@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CONSTANT from '../../utils/constant';
 
 class WebSocketService extends Component {
 	static instance = null;
@@ -22,7 +23,7 @@ class WebSocketService extends Component {
 	}
 
 	connect(id) {
-		const path = `ws://18.191.202.211:8000/ws/chat/${id}/?token=${localStorage.getItem('token')}`;
+		const path = `${CONSTANT.SOCKET_URL}/ws/chat/${id}/?token=${localStorage.getItem('token')}`;
 		this.socketRef = new WebSocket(path);
 		this.socketRef.onopen = () => {
 			console.log('websocket open');

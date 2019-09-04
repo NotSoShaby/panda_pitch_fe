@@ -5,9 +5,8 @@ import Chat from './chat';
 import WebSocketInstance from './websocket';
 import { createChannel, getAllChannels, getChannelByChannelId } from '../../redux/actions/chat';
 import { logout, getLoggedInUserProfile } from '../../redux/actions/login';
-// import { getLoggedInUserProfile } from '../../redux/actions/login';
 
-// const chatID = '1';
+
 const username = 'admin';
 const email = 'pr@pr.com';
 
@@ -51,11 +50,9 @@ class Index extends Component {
 		WebSocketInstance.connect(activeChannelId);
 		const {
 			channels, profile, getAllChannels,
-			getLoggedInUserProfile,
 		} = this.props;
 		console.log('coming again', channels, profile);
 		if (channels.code !== 'SUCCESS') { getAllChannels(); }
-		if (profile.code !== 'SUCCESS') { getLoggedInUserProfile(); }
 	}
 
 	setMessages(messages) {
@@ -108,7 +105,7 @@ class Index extends Component {
 	createNewChat = () => {
 		const { createChannel } = this.props;
 		const data = {
-			participants: ['http://18.191.202.211:8000/api/profile/4/', 'http://18.191.202.211:8000/api/profile/5/'],
+			participants: ['http://192.168.2.88:8000/api/profile/3/', 'http://192.168.2.88:8000/api/profile/4/'],
 		};
 		createChannel(data);
 	};
