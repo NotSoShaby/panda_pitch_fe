@@ -13,7 +13,7 @@ const JRHeader = ({ onLogout, profile: { data = {} } }) => {
 		<header>
 			<div className="hdr_lft">
 				<div className="logo">
-					<img src={LOGO} alt="logo" />
+					<Link to="/"><img src={LOGO} alt="logo" /></Link>
 					<span className="profile_detail desktop_none">
 						<div className="user_img">
 							<Link to="/"><img src={USER} alt="user" /></Link>
@@ -30,7 +30,7 @@ const JRHeader = ({ onLogout, profile: { data = {} } }) => {
 							</button>
 							<ul className="dropdown-menu">
 								<li>
-									<Link to="/">My Profile</Link>
+									<Link to="/profile" onClick={() => setOpen(!isOpen)}>My Profile</Link>
 								</li>
 								<li>
 									<Link to="/login" onClick={onLogout}>Logout</Link>
@@ -78,7 +78,7 @@ const JRHeader = ({ onLogout, profile: { data = {} } }) => {
 						</button>
 						<ul className="dropdown-menu">
 							<li>
-								<Link to="/">My Profile</Link>
+								<Link to="/profile" onClick={() => setOpen(!isOpen)}>My Profile</Link>
 							</li>
 							<li>
 								<Link to="/" onClick={onLogout}>Logout</Link>

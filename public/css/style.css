@@ -636,7 +636,7 @@ span.profile_detail {
 }
 
 .profile_detail .dropdown-menu {
-  left: -100px;
+  left: -42px;
   padding: 0 0;
   margin-top: 12px;
 }
@@ -2040,6 +2040,7 @@ ul.pri-link a {
   padding: 0 15px;
   width: 100%;
   margin-top: 13px;
+  color: #333;
 }
 .form_wrapper.pitch_form_wraper .full_widt {
   margin-bottom: 30px;

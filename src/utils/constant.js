@@ -1,13 +1,13 @@
 // constant variables declaration
 
 
-// const server = 'http://18.191.42.149:8000'; // server
+const server = 'http://18.191.42.149:8000'; // server
 // const server = 'http://192.168.2.88:8000'; // local
-const server = 'http://18.191.202.211:8000'; // socket
+// const server = 'http://18.191.202.211:8000'; // socket
 
-// const socket = 'ws://18.191.42.149:8000'; // server
+const socket = 'ws://18.191.42.149:8000'; // server
 // const socket = 'ws://192.168.2.88:8000'; // local
-const socket = 'ws://18.191.202.211:8000'; // socket
+// const socket = 'ws://18.191.202.211:8000'; // socket
 
 class Constant {
   PUBLIC_PATH = process.env.PUBLIC_URL;

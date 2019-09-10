@@ -8,12 +8,12 @@ import PrHome from './prHome';
 import HELPER from '../../utils/helper';
 
 const HomeScreen = ({
-	createNewPitch, requestStory, view, setView, isPr,
+	createNewPitch, requestStory, view, setView, isPr, ...props
 }) => {
 	if (isPr) {
-		return <PrHome setView={setView} createNewPitch={createNewPitch} view={view} />;
+		return <PrHome setView={setView} createNewPitch={createNewPitch} view={view} {...props} />;
 	}
-	return <JrHome setView={setView} requestStory={requestStory} view={view} />;
+	return <JrHome setView={setView} requestStory={requestStory} view={view} {...props} />;
 };
 
 const Layout = ({

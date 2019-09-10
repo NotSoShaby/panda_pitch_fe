@@ -3,6 +3,7 @@ import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
 import HELPER from '../../utils/helper';
+import toStoreConfig from '../adapters/profile';
 
 // create user signup request
 const FIND_JOURNALIST = function* getInterests() {
@@ -11,9 +12,10 @@ const FIND_JOURNALIST = function* getInterests() {
 		try {
 			const RES = yield Request(`${CONSTANT.FIND_JOURNALIST_URL}${action.payload}`, CONSTANT.GET);
 			if (RES.status) {
+				const journalists = RES.data.map(journalist => toStoreConfig(journalist));
 				yield put({
 					type: 'FIND_JOURNALIST_SUCCESS',
-					payload: DATA(RES.data),
+					payload: DATA(journalists),
 				});
 			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
 				HELPER.logout();

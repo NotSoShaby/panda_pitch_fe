@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import IMAGES from '../../assets/images';
-import METADATA from '../../utils/metadata';
 
-const { SEARCH_ICON } = IMAGES;
-const { PITCHES } = METADATA;
+const { SEARCH_ICON, USER } = IMAGES;
 
-const JrHome = ({ requestStory, view, setView }) => {
+const JrHome = ({
+	requestStory, view, setView, findJournalist, journalists,
+}) => {
 	const [val, setVal] = useState('');
-
 	return [
 		<div key="create" className="new_pitch">
 			<h4>Stop receiving irrelevant pitches by requesting your own stories</h4>
 			<button className="btn new_pitch_btn" onClick={requestStory}>Request Stories</button>
 		</div>,
 		<div key="search_box" className="srch_row">
+
 			<div className="search_auto_wrapper">
 				<div className="srch_col">
 					<input
 						type="search"
-						placeholder="Search for journalists or media outlets"
 						value={val}
-						onChange={e => setVal(e.target.value)}
+						placeholder="Search for journalists or media outlets"
+						onChange={(e) => { setVal(e.target.value); findJournalist(e.target.value); }}
 					/>
 					<button type="button">
 						<img className="srch_icn" src={SEARCH_ICON} alt="search" />
 					</button>
 				</div>
-				<Search val={val} />
+				{Array.isArray(journalists.data) && val && <Search list={journalists.data} />}
 			</div>
 		</div>,
 		<div key="view" className="pitches_row">
@@ -43,24 +44,21 @@ const JrHome = ({ requestStory, view, setView }) => {
 	];
 };
 
-const Search = ({ val }) => PITCHES.length > 0 && (
+const Search = ({ list }) => list.length > 0 && (
 	<div className="srch_lst_row">
-		{PITCHES.map(({ name, profile, profilePic }) => {
-			if (val && name.toLowerCase().includes(val.toLowerCase())) {
-				return (
-					<div key={name} className="srch_lst_col">
-						<div className="srch_pic">
-							<img src={profilePic} alt="profile_pic" />
-						</div>
-						<span className="pro_detail">
-							<h3>{name}</h3>
-							<p>{profile}</p>
-						</span>
+		{list.map(({ fullName, positionData, id }) => (
+			<div key={fullName} className="srch_lst_col">
+				<Link to={`/profile?id=${id}`}>
+					<div className="srch_pic">
+						<img src={USER} alt="profile_pic" />
 					</div>
-				);
-			}
-			return null;
-		})}
+				</Link>
+				<span className="pro_detail">
+					<h3>{fullName}</h3>
+					<p>{positionData && positionData[0].name}</p>
+				</span>
+			</div>
+		))}
 	</div>
 );
 

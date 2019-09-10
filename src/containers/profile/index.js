@@ -15,10 +15,15 @@ class Index extends Component {
 
 	componentDidMount() {
 		const {
-			getUserByUserId, getMediaList, mediaList, history: { location: { search } },
+			getUserByUserId, getMediaList, mediaList,
+			history: { location: { search } }, profile: { data },
 		} = this.props;
 		const id = search.split('=')[1];
-		getUserByUserId(id);
+		if (id) {
+			getUserByUserId(id);
+		} else if (data.id) {
+			getUserByUserId(data.id);
+		}
 		if (!mediaList.code || mediaList.code !== 'SUCCESS') {
 			getMediaList();
 		}

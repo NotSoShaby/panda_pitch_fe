@@ -53,7 +53,7 @@ class WebSocketService extends Component {
 		if (command === 'new_message') {
 			this.callbacks[command](parsedData.message);
 		}
-		if (parsedData.user) {
+		if (parsedData.user && parsedData.message) {
 			const key = 'new_message';
 			this.callbacks[key](parsedData.message, parsedData.user);
 		}

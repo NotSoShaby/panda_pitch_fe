@@ -49,9 +49,8 @@ class Index extends Component {
 		const { activeChannelId } = this.state;
 		WebSocketInstance.connect(activeChannelId);
 		const {
-			channels, profile, getAllChannels,
+			channels, getAllChannels,
 		} = this.props;
-		console.log('coming again', channels, profile);
 		if (channels.code !== 'SUCCESS') { getAllChannels(); }
 	}
 
@@ -64,7 +63,7 @@ class Index extends Component {
 	};
 
 	handleSearchUser = (e) => {
-		alert('eeeeeeeeeeeeeeee', e);
+		console.log('eeeeeeeeeeeeeeee', e);
 	};
 
 	renderMessages = () => {
@@ -91,13 +90,15 @@ class Index extends Component {
 	sendMessageHandler = (e) => {
 		e.preventDefault();
 		const { message, activeChannelId } = this.state;
-		const messageObject = {
-			from: 'admin',
-			content: message,
-			chatId: activeChannelId,
-		};
-		WebSocketInstance.newChatMessages(messageObject);
-		this.setState({ message: '' });
+		if (message) {
+			const messageObject = {
+				from: 'admin',
+				content: message,
+				chatId: activeChannelId,
+			};
+			WebSocketInstance.newChatMessages(messageObject);
+			this.setState({ message: '' });
+		}
 	};
 
 	messageChangeHandler = e => this.setState({ message: e.target.value });
@@ -134,10 +135,26 @@ class Index extends Component {
 	onChange = e => this.setState({ [e.target.name]: e.target.value });
 
 	onChannelChange = ({ id }) => {
+		let channelsInChache = JSON.parse(localStorage.getItem('channels'));
+		let isConnectionExist = false;
+		if (Array.isArray(channelsInChache) && channelsInChache.length > 0) {
+			const channel = channelsInChache.filter(channelId => channelId === parseInt(id, 10));
+			if (channel.length > 0) {
+				isConnectionExist = true;
+			} else {
+				channelsInChache.push(id);
+				localStorage.setItem('channels', JSON.stringify(channelsInChache));
+			}
+		} else {
+			channelsInChache = [id];
+			localStorage.setItem('channels', JSON.stringify(channelsInChache));
+		}
 		this.setState({ activeChannelId: id, messages: [] });
-		const { getChannelByChannelId } = this.props;
-		getChannelByChannelId(id);
-		WebSocketInstance.connect(id);
+		if (!isConnectionExist) {
+			const { getChannelByChannelId } = this.props;
+			getChannelByChannelId(id);
+			WebSocketInstance.connect(id);
+		}
 	}
 
 	addMessage(message, user) {

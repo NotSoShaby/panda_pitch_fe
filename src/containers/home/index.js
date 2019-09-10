@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Home from './home';
 import Modal from '../../components/modal';
-import { getPrPitches, getPitchById, deletePitchById } from '../../redux/actions/pitches';
+import {
+	getPrPitches, getPitchById, deletePitchById, findJournalist,
+} from '../../redux/actions/pitches';
 
 class Index extends Component {
 	constructor(props) {
@@ -91,6 +93,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 		getPitches: data => getPrPitches(data),
 		getPitchById: data => getPitchById(data),
 		deletePitchById: data => deletePitchById(data),
+		findJournalist: data => findJournalist(data),
 	},
 	dispatch,
 );

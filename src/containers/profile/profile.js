@@ -32,14 +32,16 @@ const Profile = ({
 						<p><span>{companyData && companyData.name}</span></p>
 					</div>
 				</div>
-				<div className="abt_btn relative" onClick={onMediaListButtonClick} role="button">
+				{user && user.is_journalist && (
+					<div className="abt_btn relative" onClick={onMediaListButtonClick} role="button">
           Add to Media List
-					{Array.isArray(data) && isVisible && user.is_journalist && (
-						<ul className="absolute abtul_btn">
-							{data.map(item => <li key={item.name} onClick={() => addUserInMediaList(item.id)} role="button">{item.name}</li>)}
-						</ul>
-					)}
-				</div>
+						{Array.isArray(data) && isVisible && (
+							<ul className="absolute abtul_btn">
+								{data.map(item => <li key={item.name} onClick={() => addUserInMediaList(item.id)} role="button">{item.name}</li>)}
+							</ul>
+						)}
+					</div>
+				)}
 			</div>
 			<div className="abt_info">
 				<div className="info_lft">
