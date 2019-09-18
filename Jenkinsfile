@@ -53,7 +53,7 @@ node (label) {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("kelly")
+        app = docker.build("abbey")
     }
 
     stage('Test image') {
