@@ -5,12 +5,14 @@ import ProjectRoutes from './routes/projectRoutes';
 import Store from './redux/Store';
 import * as serviceWorker from './serviceWorker';
 import '../public/css/index.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 ReactDOM.render(
 	<Provider store={Store}>
 		<ProjectRoutes />
 	</Provider>,
-	document.getElementById('root')
+	document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

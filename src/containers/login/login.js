@@ -1,12 +1,14 @@
 import React from 'react';
-import Button from '../../components/button';
 import { Link } from 'react-router-dom';
 import HELPER from '../../utils/helper';
 import IMAGES from '../../assets/images';
+import Button from '../../components/button';
 
 // Login page rendering
-const Login = ({ onSubmit, onChange, login, error }) => {
-	let { code } = login;
+const Login = ({
+	onSubmit, onChange, login, error,
+}) => {
+	const { code } = login;
 
 	return (
 		<div className="form_section">
@@ -15,37 +17,46 @@ const Login = ({ onSubmit, onChange, login, error }) => {
 			</div>
 			<div className="form_wrapper">
 				<h2>Login</h2>
-				<div className="step_form_col">
+				<form className="step_form_col" onSubmit={onSubmit}>
 					<div className="custom_field">
 						<input
 							type="text"
-							name="username"
-							id="username"
+							name="email"
+							id="email"
 							placeholder="JaneAppleseed@gmail.com"
 							onChange={onChange}
 						/>
-						<label htmlFor="username">Email Id</label>
+						<label htmlFor="email">Email</label>
 					</div>
-					{error &&
-					error.username && <div className="error">{error.username.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
+					{error
+					&& error.email && (
+						<div className="error">{error.email.map(msg => <p key={msg}>{msg}</p>)}</div>
+					)}
 					<div className="custom_field">
-						<input type="password" name="password" id="password" placeholder="··················" onChange={onChange} />
+						<input
+							type="password"
+							name="password"
+							id="password"
+							placeholder="··················"
+							onChange={onChange}
+						/>
 						<label htmlFor="password">Password</label>
 					</div>
-         	{error &&
-					error.password && <div className="error">{error.password.map((msg, index) => <p key={index}>{msg}</p>)}</div>}
-					{HELPER.isErrorInApi(code) &&
-					login.error.non_field_errors && (
-						<div className="error">{login.error.non_field_errors.map((msg, index) => <p key={index}>{msg}</p>)}</div>
+					{error
+					&& error.password && (
+						<div className="error">{error.password.map(msg => <p key={msg}>{msg}</p>)}</div>
+					)}
+					{HELPER.isErrorInApi(code)
+					&& login.error.non_field_errors && (
+						<div className="error">{login.error.non_field_errors.map(msg => <p key={msg}>{msg}</p>)}</div>
 					)}
 					<div className="step_btn_wrapper">
-						<Button className="green_bg_btn btn_cntr" onClick={onSubmit}>
-							Submit
-						</Button>
+						<Button type="submit" className="green_bg_btn btn_cntr">Submit</Button>
 					</div>
-				</div>
+				</form>
 				<p className="text-center sign_up_marg">
-					New user?<span>
+					<span>New user?</span>
+					<span>
 						<Link to="/signup">Signup</Link>
 					</span>
 				</p>

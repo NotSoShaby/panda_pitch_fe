@@ -1,19 +1,32 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import Request from '../ApiCaller';
 import CONSTANT from '../../utils/constant';
+import HELPER from '../../utils/helper';
+import { ERROR } from '../handler';
+import toStoreConfig from '../adapters/autocomplete';
 
 // create user signup request
-const CREATE_JOURNALIST_INTEREST = function* performChecks() {
-	yield takeEvery('CREATE_JOURNALIST_INTEREST', function*(action) {
+const CREATE_JOURNALIST_INTEREST = function* createInterest() {
+	yield takeEvery('CREATE_JOURNALIST_INTEREST', function* generateAction(action) {
 		try {
-      const DATA = yield Request(CONSTANT.CREATE_JOURNALIST_INTEREST_URL, CONSTANT.POST, action.payload);
-      if(DATA)
-        yield put({
-          type: 'GET_JOURNALIST_INTERESTS',
-          payload: DATA.name
-        });
+			const RES = yield Request(
+				CONSTANT.CREATE_JOURNALIST_INTEREST_URL,
+				CONSTANT.POST, action.payload,
+			);
+			if (RES.status) {
+				const interest = { data: [toStoreConfig(RES.data)] };
+				yield put({
+					type: 'GET_JOURNALIST_INTEREST_SUCCESS',
+					payload: interest,
+				});
+			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
+				HELPER.logout();
+				yield put({ type: 'LOGOUT' });
+			} else {
+				yield put({ type: 'GET_JOURNALIST_INTEREST_FAILED', payload: ERROR(RES.data) });
+			}
 		} catch (error) {
-			yield put({ type: 'GET_JOURNALIST_FAILED', payload: error });
+			yield put({ type: 'GET_JOURNALIST_INTEREST_FAILED', payload: error });
 		}
 	});
 };

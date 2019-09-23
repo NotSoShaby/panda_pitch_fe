@@ -1,7 +1,7 @@
 import HELPER from '../../utils/helper';
 
 export const defaultState = {
-	data: { ...HELPER.getItemFromSession('user') }
+	data: HELPER.getItemFromSession('user') || {},
 };
 
 export function login(state = defaultState, action) {
@@ -13,12 +13,24 @@ export function login(state = defaultState, action) {
 			return { ...state };
 		}
 		case 'LOGIN_SUCCESS': {
-			return { ...state, ...action.payload };
+			return { ...state, ...action.payload, error: {} };
 		}
 		case 'LOGIN_FAILED': {
 			return {
 				...state,
-				...action.payload
+				...action.payload,
+			};
+		}
+		case 'SIGNUP_STARTED': {
+			return { ...state, code: 'ongoing', isLoading: true };
+		}
+		case 'SIGNUP_SUCCESS': {
+			return { ...state, ...action.payload, error: {} };
+		}
+		case 'SIGNUP_FAILED': {
+			return {
+				...state,
+				...action.payload,
 			};
 		}
 		default: {

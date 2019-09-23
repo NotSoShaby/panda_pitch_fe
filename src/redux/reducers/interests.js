@@ -1,22 +1,45 @@
 export const defaultState = {
-	data: {}
+	data: {},
 };
 
 export function journalistInterests(state = defaultState, action) {
 	switch (action.type) {
-		case 'GET_JOURNALIST_INITIATED': {
+		case 'GET_JOURNALIST_INTEREST_INITIATED': {
 			return { ...state, code: 'uninitiated' };
 		}
-		case 'GET_JOURNALIST_STARTED': {
+		case 'GET_JOURNALIST_INTEREST_STARTED': {
 			return { ...state };
 		}
-		case 'GET_JOURNALIST_SUCCESS': {
+		case 'GET_JOURNALIST_INTEREST_SUCCESS': {
 			return { ...state, ...action.payload };
 		}
-		case 'GET_JOURNALIST_FAILED': {
+		case 'GET_JOURNALIST_INTEREST_FAILED': {
 			return {
 				...state,
-				...action.payload
+				...action.payload,
+			};
+		}
+		default: {
+			return state;
+		}
+	}
+}
+
+export function interests(state = { data: [] }, action) {
+	switch (action.type) {
+		case 'GET_INTEREST_INITIATED': {
+			return { ...state, code: 'uninitiated' };
+		}
+		case 'GET_INTEREST_STARTED': {
+			return { ...state };
+		}
+		case 'GET_INTEREST_SUCCESS': {
+			return { ...state, ...action.payload };
+		}
+		case 'GET_INTEREST_FAILED': {
+			return {
+				...state,
+				...action.payload,
 			};
 		}
 		default: {
