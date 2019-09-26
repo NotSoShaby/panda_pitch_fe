@@ -4,6 +4,7 @@ import CONSTANT from '../../utils/constant';
 import { START, DATA, ERROR } from '../handler';
 import HELPER from '../../utils/helper';
 import toStoreConfig from '../adapters/media';
+import history from '../../routes/history';
 
 // create user signup request
 export const GET_MEDIA_LIST = function* fetchSurvey() {
@@ -35,9 +36,10 @@ export const GET_MEDIA_LIST_AUTOCOMPLETE = function* fetchSurvey() {
 		try {
 			const RES = yield Request(`${CONSTANT.GET_MEDIA_LIST_AUTOCOMPLETE}${action.payload}`, CONSTANT.GET);
 			if (RES.status) {
+				const mediaList = RES.data.map(media => toStoreConfig(media));
 				yield put({
 					type: 'GET_MEDIA_LIST_SUCCESS',
-					payload: DATA(RES.data),
+					payload: DATA(mediaList),
 				});
 			} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
 				HELPER.logout();
@@ -60,6 +62,21 @@ export const UPDATE_MEDIA_BY_ID = function* fetchSurvey() {
 					type: 'GET_MEDIA_LIST',
 				});
 			}
+		} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
+			HELPER.logout();
+			yield put({ type: 'LOGOUT' });
+		}
+	});
+};
+
+export const CREATE_MEDIA = function* fetchSurvey() {
+	yield takeEvery('CREATE_MEDIA', function* generateAction(action) {
+		const RES = yield Request(`${CONSTANT.GET_MEDIA_LIST}`, CONSTANT.POST, action.payload);
+		if (RES.status) {
+			history.push('/media_list');
+			yield put({
+				type: 'GET_MEDIA_LIST',
+			});
 		} else if (RES.message === CONSTANT.AUTHENTICATION_ERROR) {
 			HELPER.logout();
 			yield put({ type: 'LOGOUT' });

@@ -49,9 +49,8 @@ class Index extends Component {
 		const { activeChannelId } = this.state;
 		WebSocketInstance.connect(activeChannelId);
 		const {
-			channels, profile, getAllChannels,
+			channels, getAllChannels,
 		} = this.props;
-		console.log('coming again', channels, profile);
 		if (channels.code !== 'SUCCESS') { getAllChannels(); }
 	}
 

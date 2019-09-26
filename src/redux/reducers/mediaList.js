@@ -8,7 +8,7 @@ export function mediaList(state = defaultState, action) {
 			return { ...state, code: 'uninitiated' };
 		}
 		case 'GET_MEDIA_LIST_STARTED': {
-			return { ...state };
+			return { ...state, ...action.payload };
 		}
 		case 'GET_MEDIA_LIST_SUCCESS': {
 			return { ...state, ...action.payload };

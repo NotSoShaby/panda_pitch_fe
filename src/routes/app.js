@@ -12,6 +12,8 @@ import Profile from '../containers/profile';
 import CreatePitch from '../containers/createPitch';
 import { getLoggedInUserProfile } from '../redux/actions/login';
 import NotFound from './notFound';
+import MediaList from '../containers/mediaList';
+import CreateMedia from '../containers/createMedia';
 
 class App extends Authorized {
 	constructor(props) {
@@ -56,6 +58,9 @@ class App extends Authorized {
 				<Route exact path="/profile" component={props => <Profile {...props} />} />
 				<Route exact path="/not_found" component={props => <NotFound {...props} />} />
 				<Route exact path="/create_pitch" component={props => <CreatePitch {...props} />} />
+				{/* <Route exact path="/media" component={props => <Media {...props} />} /> */}
+				<Route exact path="/media_list" component={props => <MediaList {...props} />} />
+				<Route exact path="/media" component={props => <CreateMedia {...props} />} />
 			</div>
 		);
 	}

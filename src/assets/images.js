@@ -30,6 +30,8 @@ class Images {
   LOGO_SAMPLE = '/images/logoSample.jpeg';
 
   DELETE = '/images/delete.jpg';
+
+  ADJUST = '/images/adjust.png';
 }
 
 export default new Images();

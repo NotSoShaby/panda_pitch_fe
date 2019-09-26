@@ -246,6 +246,11 @@ class Helper {
 		history.push('/login');
 	};
 
+	getValidDate = (str) => {
+		const date = new Date(str);
+		return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+	};
+
 	getCtaUserValue = (data) => {
 		switch (data) {
 			case 'interview':
@@ -265,7 +270,70 @@ class Helper {
 			default:
 				return '';
 		}
-	}
+	};
+
+	outerJoinInTwoArray = (arr1, arr2) => {
+		const a = [];
+		const diff = [];
+
+		for (let i = 0; i < arr1.length; i++) {
+			a[arr1[i]] = true;
+		}
+
+		for (let i = 0; i < arr2.length; i++) {
+			if (a[arr2[i]]) {
+				delete a[arr2[i]];
+			} else {
+				a[arr2[i]] = true;
+			}
+		}
+		a.map((item, index) => diff.push(index));
+
+		return diff;
+	};
+
+	outerJoinInLeftArray = (arr1, arr2) => {
+		const a = [];
+		const diff = [];
+
+		for (let i = 0; i < arr1.length; i++) {
+			a[arr1[i]] = true;
+		}
+
+		for (let i = 0; i < arr2.length; i++) {
+			if (a[arr2[i]]) {
+				delete a[arr2[i]];
+			}
+		}
+		a.map((item, index) => diff.push(index));
+
+		return diff;
+	};
+
+	innerJoinInTwoArray = (ar1, ar2) => {
+		const a = [];
+		const diff = [];
+		let arr1 = ar1;
+		let arr2 = ar2;
+		if (arr1.length > arr2.length) {
+			const arr = arr2;
+			arr2 = arr1;
+			arr1 = arr;
+		}
+
+		for (let i = 0; i < arr1.length; i++) {
+			a[arr1[i]] = true;
+		}
+
+		for (let i = 0; i < arr2.length; i++) {
+			if (!a[arr2[i]]) {
+				delete a[arr2[i]];
+			}
+		}
+		a.map((item, index) => diff.push(index));
+
+		return diff;
+	};
 }
 
 export default new Helper();

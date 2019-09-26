@@ -8,7 +8,9 @@ import GET_JOURNALIST_INTERESTS from './journalistInterests';
 import CREATE_JOURNALIST_INTEREST from './createInterest';
 import GET_PR_PITCHES from './pitches';
 import GET_PR_CLIENTS_AUTO from './prClientsAuto';
-import { GET_MEDIA_LIST, GET_MEDIA_LIST_AUTOCOMPLETE, UPDATE_MEDIA_BY_ID } from './mediaList';
+import {
+	GET_MEDIA_LIST, GET_MEDIA_LIST_AUTOCOMPLETE, UPDATE_MEDIA_BY_ID, CREATE_MEDIA,
+} from './mediaList';
 import GET_PR_COMPANIES from './companies';
 import CREATE_PR_COMPANY from './createCompanies';
 import GET_POSITIONS from './positions';
@@ -20,7 +22,7 @@ import CREATE_CLIENT from './createClient';
 import CREATE_PITCH_FORM1 from './createPitchForm1';
 import CREATE_PITCH_FORM2 from './createPitchForm2';
 import CREATE_PITCH_FORM3 from './createPitchForm3';
-import FIND_JOURNALIST_URL from './journalists';
+import { FIND_JOURNALIST, GET_JOURNALISTS } from './journalists';
 import GET_PITCH_BY_ID from './getPitchById';
 import CREATE_A_NEW_CHANNEL from './createChannel';
 import { GET_USER_CHANNELS, GET_CHANNEL_BY_ID } from './channels';
@@ -51,7 +53,8 @@ const rootSaga = function* rootSaga() {
 			GET_CLIENTS_AUTOCOMPLETE(),
 			GET_INTERESTS(),
 			CREATE_CLIENT(),
-			FIND_JOURNALIST_URL(),
+			FIND_JOURNALIST(),
+			GET_JOURNALISTS(),
 			CREATE_PITCH_FORM1(),
 			CREATE_PITCH_FORM2(),
 			CREATE_PITCH_FORM3(),
@@ -66,6 +69,7 @@ const rootSaga = function* rootSaga() {
 			LOGOUT(),
 			GET_USER_BY_ID(),
 			UPDATE_MEDIA_BY_ID(),
+			CREATE_MEDIA(),
 		],
 	);
 };
